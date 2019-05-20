@@ -32,6 +32,7 @@ export default {
 
 <style lang="scss">
 @import './style/common.scss';
+@import './style/dd_style.scss';
 /* this rule will be remove */
 * {
   transition: width 2s;
