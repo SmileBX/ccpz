@@ -97,7 +97,7 @@
               <div class="img"></div>
               <div class="txtBox">
                 <p class="title"><span class="name">新银座</span>商铺拼租可月付</p>
-                <p class="other"><span class="priceArea"><span class="price">3000</span>元/月</span><span class="msg">1室</span><span class="msg">100m<em class="up">2</em></span><span class="msg">罗湖</span></p>
+                <p class="other"><span class="priceArea"><span class="price">3000</span>元/月</span><span class="msgList"><span>1室</span><span>100m<em class="up">2</em></span><span>罗湖</span></span></p>
               </div>
             </div>
           </div>
@@ -115,7 +115,54 @@
         <span class="icon-arrow icon-arrowRight"></span>
       </div>
       <div class="section__bd">
-        
+        <!-- 筛选条件 -->
+        <div class="filterMenu">
+          <ul class="menu li_20">
+            <li>
+              <div class="item">
+                行业<span class="icon-sj"></span>
+              </div>
+            </li>
+            <li>
+              <div class="item">
+                区域<span class="icon-sj"></span>
+              </div>
+            </li>
+            <li>
+              <div class="item">
+                面积<span class="icon-sj"></span>
+              </div>
+            </li>
+            <li>
+              <div class="item">
+                价格<span class="icon-sj"></span>
+              </div>
+            </li>
+            <li>
+              <div class="item">
+                更多<span class="icon-sj"></span>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <!-- 结果 -->
+        <div class="filterContent">
+          <ul class="column levelPanel">
+            <li class="item">
+              <div class="outside">
+                <div class="pictrueAll">
+                  <div class="pictrue img"></div>
+                </div>
+                <div class="txtBox">
+                  <p class="title"><span class="typeName">拼办公室</span>深圳连锁办公室拼租</p>
+                  <p class="priceArea"><span class="price">3000</span>元/月</p>
+                  <p class="msgList"><span>1室</span><span>100m<em class="up">2</em></span><span>罗湖</span></p>
+                  <p class="tipsList"><span>股份合作</span><span>可使用公司资质</span><span>可挂牌</span></p>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

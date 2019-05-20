@@ -422,3 +422,304 @@ page {
     overflow: hidden;
     white-space: nowrap;
 }
+
+
+/* (分两列) */
+
+.column {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    -o-align-items: center;
+    align-items: center;
+    padding: 0 10rpx;
+}
+
+.column .right {
+    margin-left: 20rpx;
+}
+
+.column .item {
+    position: relative;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+}
+
+.column .item .title {
+    line-height: 38rpx;
+    font-size: 30rpx;
+    margin: 10rpx 0;
+}
+
+.column .title.line2 {
+    height: 76rpx;
+    overflow: hidden;
+}
+
+.column .item .tit_con {
+    font-size: 26rpx;
+    color: #7f7f7f;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-bottom: 10rpx;
+    line-height: 1.3;
+}
+
+.column .item .time {
+    font-size: 26rpx;
+    color: #999999;
+}
+
+.column .item .price {
+    margin-bottom: 10rpx;
+    font-size: 30rpx;
+}
+
+.column .outside {
+    display: block;
+}
+
+.column .pictrueAll {
+    position: relative;
+    margin-bottom: 16rpx;
+}
+
+.column .pictrueAll .pictrue {
+    position: relative;
+    width: 100%;
+    padding-top: 100%;
+}
+
+.column .pictrueAll .pictrue image {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+.levelPanel {
+    display: block;
+    padding: 0;
+}
+
+.levelPanel .item {
+    margin-bottom: 20rpx;
+    background: #fff;
+}
+
+.levelPanel .item__hd {
+    padding: 20rpx;
+    font-size: 28rpx;
+    color: #999999;
+}
+
+.levelPanel .item__hd .status {
+    color: #ff6666;
+}
+
+.levelPanel .item .box {
+    padding-bottom: 20rpx;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 0;
+}
+
+.levelPanel .item .outside {
+    padding: 20rpx 30rpx 0;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    -o-align-items: center;
+    align-items: center;
+    position: relative;
+}
+
+.levelPanel .item .outside .right {
+    margin-left: 20rpx;
+}
+
+.levelPanel .item .outside .pictrueAll {
+    width: 22%;
+    margin-bottom: 0;
+    margin-right: 20rpx;
+}
+
+.levelPanel .item .outside .txtBox {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: hidden;
+}
+
+.levelPanel .item .outside .txtBox .title {
+    margin-bottom: 10rpx;
+    margin-top: 0;
+}
+
+.levelPanel .item .outside .txtBox .progressLine {
+    margin-top: 20rpx;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-flex;
+    display: -ms-flex;
+    display: -o-flex;
+    display: flex;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -moz-align-items: center;
+    -ms-align-items: center;
+    -o-align-items: center;
+    align-items: center;
+}
+
+.levelPanel .item .outside .txtBox .progressLine .right {
+    margin-left: 20rpx;
+}
+
+.levelPanel .item .outside .txtBox .progressLine .left {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+}
+
+.levelPanel .item .outside .txtBox .progressLine .right .btn {
+    width: 160rpx;
+    line-height: 50rpx;
+    border: 1px solid #f48f18;
+    text-align: center;
+    border-radius: 6rpx;
+    color: #fff;
+    font-size: 48rpx;
+    background: #f48f18;
+    outline: none;
+}
+
+.levelPanel .item .outside .txtBox .progressLine .right .btn.btn-disable {
+    border: 1px solid #ccc !important;
+    background: #ccc;
+}
+
+.levelPanel .item .outside .txtBox .type {
+    font-size: 26rpx;
+    color: #999;
+    margin-bottom: 8rpx;
+}
+
+.levelPanel .item .outside .txtBox .skuBox {
+    font-size: 26rpx;
+    color: #999999;
+    padding: 0;
+    border-bottom: none;
+}
+
+.levelPanel .item .outside .btn_refund {
+    color: #999;
+    border-color: #999;
+    padding: 0 14rpx;
+    font-size: 26rpx;
+    margin-right: 0;
+    margin-bottom: 0;
+    line-height: 46rpx;
+}
+
+.levelPanel .item .outside .txtBox .subStatus {
+    color: #fd9d35;
+}
+
+.levelPanel .item .outside .txtBox .btnBuy {
+    display: block;
+    line-height: 48rpx;
+    border-color: #cab38b;
+    color: #cab38b;
+    font-size: 28rpx;
+    padding: 0 20rpx;
+}
+
+.levelPanel .item .buyNum {
+    color: #999;
+    font-size: 26rpx;
+}
+
+.levelPanel .item .outside .txtBox .new-price {
+    color: #ff6666;
+    font-size: 36rpx;
+    font-family: arial;
+}
+
+.levelPanel .priceAllBox {
+    padding: 20rpx 30rpx;
+    font-size: 24rpx;
+    color: #333;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.levelPanel .priceAllBox .hj_price {
+    font-size: 32rpx;
+}
+
+.levelPanel .item__ft {
+    text-align: right;
+    padding: 20rpx 30rpx;
+}
+
+.levelPanel .item__ft .weui-btn {
+    min-width: 150rpx;
+    line-height: 60rpx;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 28rpx;
+    color: #666666;
+    margin-left: 20rpx;
+    border-radius: 200rpx;
+    background: none;
+    border: 1px solid #e5e5e5;
+    text-align: center;
+}
+
+.levelPanel .item__ft .weui-btn.active {
+    color: #f0370b;
+    border-color: #ff6666;
+}
+
+.button {
+    line-height: 60rpx;
+    padding: 0 20rpx;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 26rpx;
+    color: #666666;
+    margin-left: 20rpx;
+    border-radius: 50rpx;
+    background: none;
+    border: 1px solid #e5e5e5;
+    text-align: center;
+}
+
+.button.active {
+    color: #f0370b!important;
+    border-color: #ff6666!important;
+}
+
+.bg__levelPanel .item .box {
+    background: #f6f6f6;
+}
