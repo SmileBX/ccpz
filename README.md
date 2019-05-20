@@ -1,6 +1,9 @@
 # ccpinzu
 
-> A Mpvue project
+>成成拼车
+
+## 主颜色
+   字体颜色：#ff952e
 
 ## Build Setup
 
@@ -10,7 +13,7 @@ vue init mpvue/mpvue-quickstart myproject
 cd myproject
 
 # 安装依赖
-yarn
+npm install/npm i
 
 # 开发时构建
 npm dev
