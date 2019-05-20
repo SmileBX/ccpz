@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div class="index">
+    <div class="res"></div>
   </div>
 </template>
 
