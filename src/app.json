@@ -12,6 +12,15 @@
     "navigationBarTitleText": "WeChat",
     "navigationBarTextStyle": "black"
   },
+  "subpackages": [
+    {
+      "root": "pages/pagesNewsletter",
+      "pages": [
+        "index/main",
+        "group/main"
+      ]
+    }
+  ],
   "tabBar": {
     "color": "#999",
     "backgroundColor": "#ffffff",
@@ -25,7 +34,7 @@
       "selectedIconPath": "static/tabs/home-active.png"
     }, {
       "text": "通讯录",
-      "pagePath": "pages/newsletter/main",
+      "pagePath": "pages/newsletter/main", 
       "iconPath": "static/tabs/newsletter.png",
       "selectedIconPath": "static/tabs/newsletter-active.png"
     }, {
