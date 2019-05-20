@@ -1,0 +1,51 @@
+{
+  "pages": [
+    "pages/index/main",
+    "pages/my/main",
+    "pages/newsletter/main",
+    "pages/message/main",
+    "pages/publish/main"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#999",
+    "backgroundColor": "#ffffff",
+    "selectedColor": "#ff952e",
+    "borderStyle": "black",
+
+    "list": [{
+      "text": "首页",
+      "pagePath": "pages/index/main",
+      "iconPath": "static/tabs/home.png",
+      "selectedIconPath": "static/tabs/home-active.png"
+    }, {
+      "text": "通讯录",
+      "pagePath": "pages/newsletter/main",
+      "iconPath": "static/tabs/newsletter.png",
+      "selectedIconPath": "static/tabs/newsletter-active.png"
+    }, {
+      "text": "发布",
+      "pagePath": "pages/publish/main",
+      "iconPath": "static/tabs/publish.png",
+      "selectedIconPath": "static/tabs/publish-active.png"
+    }, {
+      "text": "消息",
+      "pagePath": "pages/message/main",
+      "iconPath": "static/tabs/message.png",
+      "selectedIconPath": "static/tabs/message-active.png"
+    }, {
+      "text": "我的",
+      "pagePath": "pages/my/main",
+      "iconPath": "static/tabs/my.png",
+      "selectedIconPath": "static/tabs/my-active.png"
+    }
+  ],
+
+    "position": "bottom"
+  }
+}
