@@ -109,7 +109,15 @@
       <img src="" alt="">
     </div>
     <!-- 为您推荐 -->
-    <div class="section"></div>
+    <div class="section">
+      <div class="section__hd">
+        <p class="title">为您推荐</p>
+        <span class="icon-arrow icon-arrowRight"></span>
+      </div>
+      <div class="section__bd">
+        
+      </div>
+    </div>
   </div>
 </template>
 

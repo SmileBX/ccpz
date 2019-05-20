@@ -10,7 +10,7 @@
     "miniprogramRoot": "dist/wx/",
     "compileType": "miniprogram",
     "appid": "touristappid",
-    "projectname": "ccpinzu",
+    "projectname": "ccpinzu2",
     "condition": {
         "search": {
             "current": -1,
