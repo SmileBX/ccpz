@@ -16,6 +16,21 @@
           </div>
       </div>
       <div class="setclass">设置备注与分组</div>
+      <div class="bg_fff group boxSize">
+          <div class="flex flexAlignCenter slide boxSize sign">
+              <p>备注</p>
+              <input type="text"  v-model="specName" class="flex1">
+          </div>
+          <div class="flex flexAlignCenter slide boxSize">
+              <p>分组</p>
+              <p class="flex flex1">
+                  <input type="text"  v-model="specPlace" class="flex1">
+                  <span class="icon-arrow arrow-right"></span>
+              </p>
+          </div>
+      </div>
+      <!--加好友-->
+      <div class="btnSub addtop">加好友</div>
   </div>
 </template>
 
@@ -25,13 +40,23 @@ export default {
   data () {
     return {
       verMsg:'我是',
+      specName:'傻不傻',
+      specPlace:'我的好友',
     }
+  },
+   onLoad() {
+    this.setBarTitle();
   },
 
   components: {
   },
 
   methods: {
+    setBarTitle() {
+      wx.setNavigationBarTitle({
+        title: "添加好友"
+      });
+    }
   },
 
   created () {

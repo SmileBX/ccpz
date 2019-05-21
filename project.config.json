@@ -31,7 +31,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 2,
+			"current": 6,
 			"list": [
 				{
 					"id": -1,
@@ -51,6 +51,34 @@
 					"id": -1,
 					"name": "拼租列表列表",
 					"pathName": "pages/rent/list/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "添加好友",
+					"pathName": "pages/messages/addFre/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "消息",
+					"pathName": "pages/message/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 5,
+					"name": "新朋友",
+					"pathName": "pages/messages/newPromise/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "聊天对话框",
+					"pathName": "pages/messages/chatRoom/main",
 					"query": "",
 					"scene": null
 				}
