@@ -22,13 +22,39 @@
 			"current": -1,
 			"list": []
 		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
 		"game": {
 			"currentL": -1,
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
-			"list": []
+			"current": 2,
+			"list": [
+				{
+					"id": -1,
+					"name": "头条详情",
+					"pathName": "pages/topNewsDetail/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 1,
+					"name": "头条列表",
+					"pathName": "pages/topNewsList/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "拼租列表列表",
+					"pathName": "pages/rent/list/main",
+					"query": "",
+					"scene": null
+				}
+			]
 		}
 	}
 }
