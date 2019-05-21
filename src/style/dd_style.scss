@@ -92,6 +92,14 @@ page {
     padding-top: 60rpx !important;
 }
 
+.pb10 {
+    padding-bottom: 20rpx !important;
+}
+
+.pb15 {
+    padding-bottom: 30rpx !important;
+}
+
 .pb20 {
     padding-bottom: 40rpx !important;
 }
@@ -132,8 +140,20 @@ page {
     background: #fff !important;
 }
 
+.bg_ff952e {
+    background: #ff952e !important;
+}
+
+.bg_ed3435 {
+    background: #ed3435 !important;
+}
+
 .color_fd5412 {
     color: #fd5412 !important;
+}
+
+.color_fff {
+    color: #fff !important;
 }
 
 .ellipsis {
@@ -416,11 +436,23 @@ page {
     }
 }
 
+//固定定位
+.fixed {
+    position: fixed;
+    z-index: 4;
+    width: 100%;
+}
+
+.bm0 {
+    bottom: 0 !important;
+}
+
 // 上标
 .sup {
     display: inline-block;
     vertical-align: text-top;
-    margin-left: -4rpx;
+    // margin-left: -4rpx;
+    font-size: 20rpx;
 }
 
 // 搜索
@@ -829,6 +861,48 @@ page {
     display: block;
 }
 
+//tipsList
+.tipsList {
+    color: #ff952e;
+    // line-height: 1;
+    font-size: 22rpx;
+    margin-top: 22rpx;
+    span {
+        background: #fff4ea;
+        padding: 2rpx 8rpx;
+        margin-right: 14rpx;
+        border-radius: 4rpx;
+    }
+    span:last-child {
+        margin-right: 0;
+    }
+    &.border__tipsList {
+        span {
+            border: 1px solid #ff952e;
+            background: none;
+            color: #ff952e;
+            font-size: 28rpx;
+            margin-right: 30rpx;
+            margin-bottom: 18rpx;
+        }
+    }
+}
+
+//msgList
+.msgList {
+    font-size: 20rpx;
+    color: #999999;
+    line-height: 1;
+    .msgItem {
+        border-left: 1px solid #e5e5e5;
+        padding: 0 4rpx;
+    }
+    .msgItem:first-child {
+        border-left: none;
+        padding-left: 0 !important;
+    }
+}
+
 
 /**************首页****************/
 
@@ -946,18 +1020,6 @@ page {
         .pictrue img {
             border-radius: 10rpx;
         }
-        .msgList {
-            font-size: 20rpx;
-            color: #999999;
-            line-height: 1;
-            .msgItem {
-                border-left: 1px solid #e5e5e5;
-                padding: 0 4rpx;
-            }
-            .msgItem:first-child {
-                border-left: none;
-            }
-        }
         .priceArea {
             font-size: 24rpx;
             color: #ed3435;
@@ -1021,13 +1083,6 @@ page {
                 }
             }
         }
-        .title .typeName {
-            font-size: 22rpx;
-            line-height: 1;
-            padding: 0 4rpx;
-            background: #ff952e;
-            color: #fff;
-        }
         .msgList {
             font-size: 24rpx;
             margin-top: 10rpx;
@@ -1035,19 +1090,12 @@ page {
                 padding: 0 8rpx;
             }
         }
-        .tipsList {
-            color: #ff952e;
-            // line-height: 1;
+        .title .typeName {
             font-size: 22rpx;
-            margin-top: 22rpx;
-            span {
-                background: #fff4ea;
-                padding: 2rpx 8rpx;
-                margin-right: 14rpx;
-            }
-            span:last-child {
-                margin-right: 0;
-            }
+            line-height: 1;
+            padding: 0 4rpx;
+            background: #ff952e;
+            color: #fff;
         }
     }
 }
@@ -1129,5 +1177,163 @@ page {
         display: block;
         height: 350rpx;
         margin-top: 40rpx;
+    }
+}
+
+
+/*********************商铺详情************/
+
+.storeDetail {
+    .label {
+        color: #999;
+        padding-right: 10rpx;
+    }
+    .section {
+        background: #fff;
+        margin-bottom: 20rpx;
+    }
+    .shortInfo {
+        margin: 0 30rpx;
+        margin-top: -80rpx;
+        background: #fff;
+        position: relative;
+        z-index: 3;
+        padding: 26rpx 30rpx;
+        border-radius: 16rpx;
+        box-shadow: 0 10rpx 20rpx #efefef;
+        .name {
+            font-size: 32rpx;
+            margin-bottom: 8rpx;
+            // font-weight: 600;
+        }
+        .priceArea {
+            color: #ed3435;
+            font-size: 34rpx;
+            // font-weight: 600;
+            margin-bottom: 10rpx;
+        }
+        .msgList {
+            font-size: 30rpx;
+            color: #ff952e;
+            .msgItem {
+                padding: 0 20rpx;
+            }
+        }
+        .tipsList {
+            margin-top: 26rpx;
+        }
+        .purpose {
+            margin-top: 20rpx;
+            color: #333;
+            font-size: 28rpx;
+            span {
+                margin-right: 20rpx;
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+}
+
+.column__weui-cells {
+    font-size: 28rpx;
+    line-height: 1.5;
+    .weui-cell {
+        padding-top: 6rpx;
+        padding-bottom: 6rpx;
+    }
+    .weui-cell__hd {
+        color: #999;
+        margin-right: 26rpx;
+    }
+}
+
+.comAbout .about {
+    padding: 0 30rpx;
+    .item {
+        margin-top: 20rpx;
+    }
+}
+
+.detail__title {
+    font-size: 32rpx;
+}
+
+.locationBox {
+    line-height: 1.4;
+    .title {
+        margin-bottom: 10rpx;
+    }
+    .title,
+    .address {
+        font-size: 32rpx;
+    }
+    .space {
+        color: #999;
+    }
+    .map {
+        width: 47rpx;
+        height: 47rpx;
+        margin-left: 30rpx;
+    }
+}
+
+//底部
+.ftBtn {
+    height: 100rpx;
+    // line-height: 90rpx;
+    .inner {
+        background: #fff;
+    }
+    .iconGroup {
+        .item {
+            width: 118rpx;
+            text-align: center;
+            font-size: 24rpx;
+            line-height: 1.4;
+        }
+        img {
+            width: 42rpx;
+            height: 42rpx;
+            display: block;
+            margin: 8rpx auto;
+        }
+    }
+    .btns {
+        .btn {
+            line-height: 100rpx;
+            font-size: 32rpx;
+        }
+    }
+}
+
+.perInfo {
+    text-align: center;
+    img {
+        width: 100rpx;
+        height: 100rpx;
+        border-radius: 50%;
+        display: block;
+        margin: 10rpx auto;
+    }
+    .name {
+        font-size: 30rpx;
+    }
+}
+
+.contactList {
+    font-size: 30rpx;
+    margin-top: 10rpx;
+    .item {
+        width: 50%;
+        float: left;
+        padding: 12rpx 0;
+    }
+    .icon {
+        width: 41rpx;
+        height: 41rpx;
+        vertical-align: middle;
+        margin-right: 10rpx;
     }
 }

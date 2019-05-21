@@ -9,7 +9,7 @@
 	},
 	"miniprogramRoot": "dist/wx/",
 	"compileType": "miniprogram",
-	"appid": "wx3fef1ccc9946eb7b",
+	"appid": "wx73dbae1cbf851757",
 	"projectname": "ccpinzu2",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
@@ -54,6 +54,13 @@
 					"query": "",
 					"scene": null
 				},
+				{
+                    "id": -1,
+                    "name": "商铺详情",
+                    "pathName": "pages/rent/storeDetail/main",
+                    "query": "",
+                    "scene": null
+                },
 				{
 					"id": 3,
 					"name": "添加好友",
