@@ -1,6 +1,6 @@
 <template>
   <div >
-    <button @click="goGroup">跳转分组</button>
+    <button @click="goGroup">分组页面</button>
   </div>
 </template>
 
@@ -17,7 +17,7 @@ export default {
 
   methods: {
     goGroup(){
-      wx.navigateTo({url: '/pages/pagesNewsletter/group/main'})
+      wx.navigateTo({url: '/pages/newsletter/main'})
     }
   },
 

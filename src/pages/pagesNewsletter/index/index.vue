@@ -17,7 +17,7 @@ export default {
 
   methods: {
     goGroup(){
-      wx.navigateTo({url: '/pages/pagesNewsletter/group/main'})
+      wx.navigateTo({url: '/pagesNewsletter/group/main'})
     }
   },
 
@@ -26,3 +26,7 @@ export default {
   }
 }
 </script>
+<style lang="scss">
+
+</style>
+
