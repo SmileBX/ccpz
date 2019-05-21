@@ -57,9 +57,7 @@
 </template>
 
 <script>
-import "../../css/common.css";
-import "../../css/global.css";
-import { mapState, mapMutations } from "vuex"; //vuex辅助函数
+// import { mapState, mapMutations } from "vuex"; //vuex辅助函数
 export default {
   props:{
     cityName:{
@@ -220,8 +218,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-  @import "./style";
-  @import "../../css/common.css";
+  // @import "./style";
   .searchpic{
     width:26rpx;
     height:26rpx;
