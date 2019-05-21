@@ -8,13 +8,32 @@
           <span class="icon-arrow arrow-down"></span>
         </div>
         <div class="searchBox flex1">
-          <span class="icon_search"></span>
-          <span>搜索</span>
+          <div class="search">
+            <img src="/static/images/icons/search.png" class="icon_search" alt>
+            <span>搜索</span>
+          </div>
         </div>
       </div>
     </div>
     <!-- banner -->
-
+    <div class="bannerBox">
+      <swiper
+        indicator-dots="true"
+        autoplay="true"
+        interval="3000"
+        class="banner"
+        previous-margin="60rpx"
+        next-margin="30rpx"
+        circular="true"
+      >
+        <block v-for="(item,index) in picList" :key="index">
+          <swiper-item class="item">
+            <img :src="item.picUrl" alt="">
+            <!-- <image src="item" class="slide-image" width="355" height="150"> -->
+          </swiper-item>
+        </block>
+      </swiper>
+    </div>
     <!-- 导航 -->
     <div class="section">
       <ul class="navList li_25 center navList2">
@@ -126,7 +145,7 @@
               <div class="outside">
                 <div class="pictrueAll">
                   <div class="pictrue img">
-                    <img src="/static/images/of/index_a1.jpg" alt="">
+                    <img src="/static/images/of/index_a1.jpg" alt>
                   </div>
                 </div>
                 <div class="txtBox">
@@ -139,11 +158,11 @@
                     </span>
                     <span class="msgList">
                       <span class="msgItem">1室</span>
-                      <span  class="msgItem">
+                      <span class="msgItem">
                         100m
                         <span class="sup">2</span>
                       </span>
-                      <span  class="msgItem">罗湖</span>
+                      <span class="msgItem">罗湖</span>
                     </span>
                   </p>
                 </div>
@@ -153,7 +172,7 @@
               <div class="outside">
                 <div class="pictrueAll">
                   <div class="pictrue img">
-                    <img src="/static/images/of/index_a1.jpg" alt="">
+                    <img src="/static/images/of/index_a1.jpg" alt>
                   </div>
                 </div>
                 <div class="txtBox">
@@ -166,11 +185,11 @@
                     </span>
                     <span class="msgList">
                       <span class="msgItem">1室</span>
-                      <span  class="msgItem">
+                      <span class="msgItem">
                         100m
                         <span class="sup">2</span>
                       </span>
-                      <span  class="msgItem">罗湖</span>
+                      <span class="msgItem">罗湖</span>
                     </span>
                   </p>
                 </div>
@@ -180,7 +199,7 @@
               <div class="outside">
                 <div class="pictrueAll">
                   <div class="pictrue img">
-                    <img src="/static/images/of/index_a1.jpg" alt="">
+                    <img src="/static/images/of/index_a1.jpg" alt>
                   </div>
                 </div>
                 <div class="txtBox">
@@ -193,11 +212,11 @@
                     </span>
                     <span class="msgList">
                       <span class="msgItem">1室</span>
-                      <span  class="msgItem">
+                      <span class="msgItem">
                         100m
                         <span class="sup">2</span>
                       </span>
-                      <span  class="msgItem">罗湖</span>
+                      <span class="msgItem">罗湖</span>
                     </span>
                   </p>
                 </div>
@@ -207,7 +226,7 @@
               <div class="outside">
                 <div class="pictrueAll">
                   <div class="pictrue img">
-                    <img src="/static/images/of/index_a1.jpg" alt="">
+                    <img src="/static/images/of/index_a1.jpg" alt>
                   </div>
                 </div>
                 <div class="txtBox">
@@ -220,11 +239,11 @@
                     </span>
                     <span class="msgList">
                       <span class="msgItem">1室</span>
-                      <span  class="msgItem">
+                      <span class="msgItem">
                         100m
                         <span class="sup">2</span>
                       </span>
-                      <span  class="msgItem">罗湖</span>
+                      <span class="msgItem">罗湖</span>
                     </span>
                   </p>
                 </div>
@@ -234,7 +253,7 @@
               <div class="outside">
                 <div class="pictrueAll">
                   <div class="pictrue img">
-                    <img src="/static/images/of/index_a1.jpg" alt="">
+                    <img src="/static/images/of/index_a1.jpg" alt>
                   </div>
                 </div>
                 <div class="txtBox">
@@ -247,11 +266,11 @@
                     </span>
                     <span class="msgList">
                       <span class="msgItem">1室</span>
-                      <span  class="msgItem">
+                      <span class="msgItem">
                         100m
                         <span class="sup">2</span>
                       </span>
-                      <span  class="msgItem">罗湖</span>
+                      <span class="msgItem">罗湖</span>
                     </span>
                   </p>
                 </div>
@@ -316,7 +335,7 @@
               <div class="outside">
                 <div class="pictrueAll">
                   <div class="pictrue img">
-                    <img src="/static/images/of/index_a1.jpg" alt="">
+                    <img src="/static/images/of/index_a1.jpg" alt>
                   </div>
                 </div>
                 <div class="txtBox">
@@ -327,7 +346,13 @@
                     <span class="price">3000</span>元/月
                   </p>
                   <p class="msgList">
-                    <span class="msgItem">工程设计</span><span class="msgItem">100m<span class="sup">2</span></span><span class="msgItem">3卡2独</span><span class="msgItem">罗湖</span>
+                    <span class="msgItem">工程设计</span>
+                    <span class="msgItem">
+                      100m
+                      <span class="sup">2</span>
+                    </span>
+                    <span class="msgItem">3卡2独</span>
+                    <span class="msgItem">罗湖</span>
                   </p>
                   <p class="tipsList">
                     <span>股份合作</span>
@@ -341,7 +366,7 @@
               <div class="outside">
                 <div class="pictrueAll">
                   <div class="pictrue img">
-                    <img src="/static/images/of/index_a1.jpg" alt="">
+                    <img src="/static/images/of/index_a1.jpg" alt>
                   </div>
                 </div>
                 <div class="txtBox">
@@ -352,7 +377,13 @@
                     <span class="price">3000</span>元/月
                   </p>
                   <p class="msgList">
-                    <span class="msgItem">工程设计</span><span class="msgItem">100m<span class="sup">2</span></span><span class="msgItem">3卡2独</span><span class="msgItem">罗湖</span>
+                    <span class="msgItem">工程设计</span>
+                    <span class="msgItem">
+                      100m
+                      <span class="sup">2</span>
+                    </span>
+                    <span class="msgItem">3卡2独</span>
+                    <span class="msgItem">罗湖</span>
                   </p>
                   <p class="tipsList">
                     <span>股份合作</span>
@@ -366,7 +397,7 @@
               <div class="outside">
                 <div class="pictrueAll">
                   <div class="pictrue img">
-                    <img src="/static/images/of/index_a1.jpg" alt="">
+                    <img src="/static/images/of/index_a1.jpg" alt>
                   </div>
                 </div>
                 <div class="txtBox">
@@ -377,7 +408,13 @@
                     <span class="price">3000</span>元/月
                   </p>
                   <p class="msgList">
-                    <span class="msgItem">工程设计</span><span class="msgItem">100m<span class="sup">2</span></span><span class="msgItem">3卡2独</span><span class="msgItem">罗湖</span>
+                    <span class="msgItem">工程设计</span>
+                    <span class="msgItem">
+                      100m
+                      <span class="sup">2</span>
+                    </span>
+                    <span class="msgItem">3卡2独</span>
+                    <span class="msgItem">罗湖</span>
                   </p>
                   <p class="tipsList">
                     <span>股份合作</span>
@@ -391,7 +428,7 @@
               <div class="outside">
                 <div class="pictrueAll">
                   <div class="pictrue img">
-                    <img src="/static/images/of/index_a1.jpg" alt="">
+                    <img src="/static/images/of/index_a1.jpg" alt>
                   </div>
                 </div>
                 <div class="txtBox">
@@ -402,7 +439,13 @@
                     <span class="price">3000</span>元/月
                   </p>
                   <p class="msgList">
-                    <span class="msgItem">工程设计</span><span class="msgItem">100m<span class="sup">2</span></span><span class="msgItem">3卡2独</span><span class="msgItem">罗湖</span>
+                    <span class="msgItem">工程设计</span>
+                    <span class="msgItem">
+                      100m
+                      <span class="sup">2</span>
+                    </span>
+                    <span class="msgItem">3卡2独</span>
+                    <span class="msgItem">罗湖</span>
                   </p>
                   <p class="tipsList">
                     <span>股份合作</span>
@@ -422,7 +465,14 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      picList:[
+        {'picUrl':'/static/images/of/banner1.jpg'},
+        {'picUrl':'/static/images/of/banner1.jpg'},
+        {'picUrl':'/static/images/of/banner1.jpg'},
+        {'picUrl':'/static/images/of/banner1.jpg'}
+      ]
+    };
   },
   onLoad() {
     this.setBarTitle();
