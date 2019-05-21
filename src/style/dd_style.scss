@@ -418,6 +418,30 @@ page {
     margin-left: -4rpx;
 }
 
+// 搜索
+.search {
+    padding: 14rpx 30rpx;
+    background: #fff;
+    left: 0;
+    align-items: center;
+}
+
+.search .weui-input {
+    padding: 10rpx 0;
+    font-size: 28rpx;
+}
+
+.search .btn {
+    font-size: 28rpx;
+    color: #fff;
+    background: #3f8bfe;
+    border-radius: 200rpx;
+    line-height: 50rpx;
+    height: 50rpx;
+    display: inherit;
+    padding: 0 25rpx;
+}
+
 
 /* navList */
 
@@ -805,7 +829,44 @@ page {
 /**************首页****************/
 
 // 搜索
-.headerTop {}
+.headerTop {
+    background: #fff;
+    padding: 0 30rpx;
+    .local {
+        margin-right: 10rpx;
+    }
+    .search {
+        background: #f2f2f2;
+        padding: 10rpx 20rpx;
+        border-radius: 200rpx;
+        text-align: center;
+        color: #999;
+        font-size: 24rpx;
+        .icon_search {
+            width: 28rpx;
+            height: 28rpx;
+            vertical-align: middle;
+            margin-right: 10rpx;
+        }
+    }
+}
+
+//banner
+.bannerBox {
+    background: #fff;
+    margin-bottom: 20rpx;
+    padding: 30rpx 0;
+    .banner {
+        img {
+            width: 626rpx;
+            height: 286rpx;
+        }
+        .item {
+            width: 626rpx;
+            height: 286rpx;
+        }
+    }
+}
 
 .section__hd {
     padding: 30rpx 30rpx 20rpx 30rpx;
