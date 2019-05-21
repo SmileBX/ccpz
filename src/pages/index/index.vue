@@ -25,6 +25,7 @@
         previous-margin="60rpx"
         next-margin="30rpx"
         circular="true"
+        indicator-active-color="rgba(255,255,255,0.8)"
       >
         <block v-for="(item,index) in picList" :key="index">
           <swiper-item class="item">
@@ -496,15 +497,6 @@ export default {
   background: #fff;
   margin-bottom: 20rpx;
 }
-.navList {
-  font-size: 28rpx;
-}
-.navList .icon-img {
-  margin-bottom: 16rpx;
-}
-.navList .icon-img,
-.navList .icon-img img {
-  width: 90rpx;
-  height: 90rpx;
-}
+
+
 </style>

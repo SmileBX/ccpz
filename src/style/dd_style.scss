@@ -1,9 +1,10 @@
 page {
-    background: #f4f7fc;
+    background: #f2f2f2;
     font-size: 28rpx;
     line-height: 1.5;
     min-height: 100%;
     width: 100%;
+    color: #333;
     position: relative;
 }
 
@@ -77,6 +78,10 @@ page {
 
 .pt10 {
     padding-top: 20rpx !important;
+}
+
+.pt15 {
+    padding-top: 30rpx !important;
 }
 
 .pt20 {
@@ -459,7 +464,7 @@ page {
     -o-flex-flow: row wrap;
     background-color: #fff;
     line-height: 1.4;
-    font-size: 26rpx;
+    font-size: 28rpx;
     padding: 16rpx 0;
 }
 
@@ -470,16 +475,15 @@ page {
 }
 
 .navList li .icon-img {
-    width: 64rpx;
-    height: 64rpx;
     margin: 0 auto;
-    margin-bottom: 10rpx;
     position: relative;
+    margin-bottom: 14rpx;
 }
 
-.navList li img {
-    width: 64rpx;
-    height: 64rpx;
+.navList .icon-img,
+.navList .icon-img img {
+    width: 90rpx;
+    height: 90rpx;
 }
 
 .circleNum {
@@ -872,7 +876,7 @@ page {
     padding: 30rpx 30rpx 20rpx 30rpx;
     .title {
         font-size: 34rpx;
-        // font-weight: 600;
+        font-weight: 600;
     }
     .icon-arrow {
         margin-right: -10rpx;
@@ -1057,5 +1061,73 @@ page {
         li {
             line-height: 60rpx;
         }
+    }
+}
+
+
+/**********************头条******************/
+
+// 头条列表
+.topNewsList {
+    li {
+        background: #fff;
+        margin: 20rpx 0;
+        padding: 26rpx 30rpx 30rpx;
+        p {
+            margin-bottom: 10rpx;
+        }
+        .title {
+            font-size: 32rpx;
+        }
+        .con {
+            color: #999;
+            font-size: 26rpx;
+            margin-bottom: 20rpx;
+        }
+        .pic {
+            display: block;
+            width: 100%;
+        }
+    }
+}
+
+//详情
+.content__hd {
+    text-align: center;
+    padding: 30rpx;
+    .title {
+        font-size: 36rpx;
+        margin-top: 20rpx;
+        font-weight: 600;
+        margin-bottom: 20rpx;
+    }
+}
+
+.content__bd {
+    padding: 0 30rpx 80rpx;
+}
+
+.readNum {
+    color: #999;
+    font-size: 24rpx;
+}
+
+.read {
+    width: 32rpx;
+    height: 32rpx;
+    vertical-align: middle;
+    margin-right: 8rpx;
+}
+
+.dataHtml {
+    p {
+        text-indent: 2em;
+        margin-bottom: 18rpx;
+    }
+    img {
+        width: 100%;
+        display: block;
+        height: 350rpx;
+        margin-top: 40rpx;
     }
 }
