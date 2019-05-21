@@ -1,5 +1,45 @@
-.res {
-    width:100rpx;
-    height:100rpx;
-    background:red;
+/*************************添加好友*******************/
+.head{
+    padding:0 30rpx;
+    border-top:1rpx solid #ececec;
 }
+.avatarhead{
+    padding:40rpx 0;
+    position: relative;
+}
+.avatarhead:after{
+    position: absolute;
+    content: "";
+    height: 1px;
+    width: 100%;
+    background: #ececec;
+    bottom:0;
+}
+.avatar{
+    width:80rpx;
+    height:80rpx;
+    border-radius: 50%;
+    margin-right:40rpx;
+}
+/*字体24rpx*/
+.font_four{
+    font-size:24rpx;
+    color:#9999
+}
+.vertical{
+    padding:30rpx 0 70rpx 0;
+    box-sizing: border-box
+}
+.yanz::-webkit-input-placeholder {
+    /* placeholder颜色  */
+    color: #000000;
+    /* placeholder字体大小  */
+    font-size: 12px;
+    /* placeholder位置  */
+   }
+   .setclass{
+       padding:20rpx 30rpx;
+       color:#9999;
+       box-sizing: border-box;
+       font-size: 26rpx;
+   }

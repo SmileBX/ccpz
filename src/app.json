@@ -4,7 +4,8 @@
     "pages/my/main",
     "pages/newsletter/main",
     "pages/message/main",
-    "pages/publish/main"
+    "pages/publish/main",
+    "pages/addFrends/main"
   ],
   "window": {
     "backgroundTextStyle": "light",
