@@ -66,7 +66,7 @@
         <li>
           <div class="outside">
             <div class="icon-img">
-              <img src="/static/images/icons/index_menu1.jpg" alt>
+              <img src="/static/images/icons/bangongshi.jpg" alt>
             </div>
             <p class="title">办公室</p>
           </div>
@@ -74,7 +74,7 @@
         <li>
           <div class="outside">
             <div class="icon-img">
-              <img src="/static/images/icons/index_menu2.jpg" alt>
+              <img src="/static/images/icons/kawei.jpg" alt>
             </div>
             <p class="title">卡位</p>
           </div>
@@ -82,7 +82,7 @@
         <li>
           <div class="outside">
             <div class="icon-img">
-              <img src="/static/images/icons/index_menu3.jpg" alt>
+              <img src="/static/images/icons/huiyishi.jpg" alt>
             </div>
             <p class="title">会议室</p>
           </div>
@@ -90,7 +90,7 @@
         <li>
           <div class="outside">
             <div class="icon-img">
-              <img src="/static/images/icons/index_menu4.jpg" alt>
+              <img src="/static/images/icons/peixun.jpg" alt>
             </div>
             <p class="title">培训机构</p>
           </div>
@@ -98,7 +98,7 @@
         <li>
           <div class="outside">
             <div class="icon-img">
-              <img src="/static/images/icons/index_menu4.jpg" alt>
+              <img src="/static/images/icons/duanzu.jpg" alt>
             </div>
             <p class="title">短租</p>
           </div>
@@ -106,7 +106,7 @@
         <li>
           <div class="outside">
             <div class="icon-img">
-              <img src="/static/images/icons/index_menu4.jpg" alt>
+              <img src="/static/images/icons/shangpu.jpg" alt>
             </div>
             <p class="title">商铺</p>
           </div>
@@ -114,7 +114,7 @@
         <li>
           <div class="outside">
             <div class="icon-img">
-              <img src="/static/images/icons/index_menu4.jpg" alt>
+              <img src="/static/images/icons/gongchang.jpg" alt>
             </div>
             <p class="title">工厂</p>
           </div>
@@ -122,7 +122,7 @@
         <li>
           <div class="outside">
             <div class="icon-img">
-              <img src="/static/images/icons/index_menu4.jpg" alt>
+              <img src="/static/images/icons/shebei.jpg" alt>
             </div>
             <p class="title">设备</p>
           </div>
@@ -130,7 +130,7 @@
         <li>
           <div class="outside">
             <div class="icon-img">
-              <img src="/static/images/icons/index_menu4.jpg" alt>
+              <img src="/static/images/icons/shoumaiji.jpg" alt>
             </div>
             <p class="title">自动售卖机</p>
           </div>
@@ -138,7 +138,7 @@
         <li>
           <div class="outside">
             <div class="icon-img">
-              <img src="/static/images/icons/index_menu4.jpg" alt>
+              <img src="/static/images/icons/qita.jpg" alt>
             </div>
             <p class="title">其他</p>
           </div>
