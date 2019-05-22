@@ -11,7 +11,7 @@
     "window": {
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#fff",
-        "navigationBarTitleText": "WeChat",
+        "navigationBarTitleText": "拼租",
         "navigationBarTextStyle": "black"
     },
     "subpackages": [{
@@ -25,7 +25,9 @@
             "root": "pages/rent/",
             "pages": [
                 "list/main",
-                "storeDetail/main"
+                "storeDetail/main",
+                "companyDetail/main",
+                "buildTeam/main"
             ]
         }
     ],

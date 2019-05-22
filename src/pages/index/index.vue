@@ -29,7 +29,7 @@
       >
         <block v-for="(item,index) in picList" :key="index">
           <swiper-item class="item">
-            <img :src="item.picUrl" alt="">
+            <img :src="item.picUrl" alt>
             <!-- <image src="item" class="slide-image" width="355" height="150"> -->
           </swiper-item>
         </block>
@@ -140,145 +140,137 @@
         <span class="icon-arrow arrow-right"></span>
       </div>
       <div class="section__bd">
-        <scroll-view class="storeNowrap" scroll-x>
-          <ul class="column storeList">
-            <li class="item">
-              <div class="outside">
-                <div class="pictrueAll">
-                  <div class="pictrue img">
+        <div class="storeNowrapBox">
+          <scroll-view class="storeNowrap" scroll-x>
+            <ul class="column storeList">
+              <li class="item">
+                <div class="outside">
+                  <div class="pictrueAll">
                     <img src="/static/images/of/index_a1.jpg" alt>
                   </div>
-                </div>
-                <div class="txtBox">
-                  <p class="title ellipsis">
-                    <span class="typeName">拼办公室</span>深圳连锁办公室拼租
-                  </p>
-                  <p class="other">
-                    <span class="priceArea">
-                      <span class="price">3000</span>元/月
-                    </span>
-                    <span class="msgList">
-                      <span class="msgItem">1室</span>
-                      <span class="msgItem">
-                        100m
-                        <span class="sup">2</span>
+                  <div class="txtBox">
+                    <p class="title ellipsis">
+                      <span class="typeName">拼办公室</span>深圳连锁办公室拼租
+                    </p>
+                    <p class="other">
+                      <span class="priceArea">
+                        <span class="price">3000</span>元/月
                       </span>
-                      <span class="msgItem">罗湖</span>
-                    </span>
-                  </p>
-                </div>
-              </div>
-            </li>
-            <li class="item">
-              <div class="outside">
-                <div class="pictrueAll">
-                  <div class="pictrue img">
-                    <img src="/static/images/of/index_a1.jpg" alt>
+                      <span class="msgList">
+                        <span class="msgItem">1室</span>
+                        <span class="msgItem">
+                          100m
+                          <span class="sup">2</span>
+                        </span>
+                        <span class="msgItem">罗湖</span>
+                      </span>
+                    </p>
                   </div>
                 </div>
-                <div class="txtBox">
-                  <p class="title ellipsis">
-                    <span class="typeName">拼办公室</span>深圳连锁办公室拼租
-                  </p>
-                  <p class="other">
-                    <span class="priceArea">
-                      <span class="price">3000</span>元/月
-                    </span>
-                    <span class="msgList">
-                      <span class="msgItem">1室</span>
-                      <span class="msgItem">
-                        100m
-                        <span class="sup">2</span>
-                      </span>
-                      <span class="msgItem">罗湖</span>
-                    </span>
-                  </p>
-                </div>
-              </div>
-            </li>
-            <li class="item">
-              <div class="outside">
-                <div class="pictrueAll">
-                  <div class="pictrue img">
+              </li>
+              <li class="item">
+                <div class="outside">
+                  <div class="pictrueAll">
                     <img src="/static/images/of/index_a1.jpg" alt>
                   </div>
-                </div>
-                <div class="txtBox">
-                  <p class="title ellipsis">
-                    <span class="typeName">拼办公室</span>深圳连锁办公室拼租
-                  </p>
-                  <p class="other">
-                    <span class="priceArea">
-                      <span class="price">3000</span>元/月
-                    </span>
-                    <span class="msgList">
-                      <span class="msgItem">1室</span>
-                      <span class="msgItem">
-                        100m
-                        <span class="sup">2</span>
+                  <div class="txtBox">
+                    <p class="title ellipsis">
+                      <span class="typeName">拼办公室</span>深圳连锁办公室拼租
+                    </p>
+                    <p class="other">
+                      <span class="priceArea">
+                        <span class="price">3000</span>元/月
                       </span>
-                      <span class="msgItem">罗湖</span>
-                    </span>
-                  </p>
-                </div>
-              </div>
-            </li>
-            <li class="item">
-              <div class="outside">
-                <div class="pictrueAll">
-                  <div class="pictrue img">
-                    <img src="/static/images/of/index_a1.jpg" alt>
+                      <span class="msgList">
+                        <span class="msgItem">1室</span>
+                        <span class="msgItem">
+                          100m
+                          <span class="sup">2</span>
+                        </span>
+                        <span class="msgItem">罗湖</span>
+                      </span>
+                    </p>
                   </div>
                 </div>
-                <div class="txtBox">
-                  <p class="title ellipsis">
-                    <span class="typeName">拼办公室</span>深圳连锁办公室拼租
-                  </p>
-                  <p class="other">
-                    <span class="priceArea">
-                      <span class="price">3000</span>元/月
-                    </span>
-                    <span class="msgList">
-                      <span class="msgItem">1室</span>
-                      <span class="msgItem">
-                        100m
-                        <span class="sup">2</span>
-                      </span>
-                      <span class="msgItem">罗湖</span>
-                    </span>
-                  </p>
-                </div>
-              </div>
-            </li>
-            <li class="item">
-              <div class="outside">
-                <div class="pictrueAll">
-                  <div class="pictrue img">
+              </li>
+              <li class="item">
+                <div class="outside">
+                  <div class="pictrueAll">
                     <img src="/static/images/of/index_a1.jpg" alt>
                   </div>
-                </div>
-                <div class="txtBox">
-                  <p class="title ellipsis">
-                    <span class="typeName">拼办公室</span>深圳连锁办公室拼租
-                  </p>
-                  <p class="other">
-                    <span class="priceArea">
-                      <span class="price">3000</span>元/月
-                    </span>
-                    <span class="msgList">
-                      <span class="msgItem">1室</span>
-                      <span class="msgItem">
-                        100m
-                        <span class="sup">2</span>
+                  <div class="txtBox">
+                    <p class="title ellipsis">
+                      <span class="typeName">拼办公室</span>深圳连锁办公室拼租
+                    </p>
+                    <p class="other">
+                      <span class="priceArea">
+                        <span class="price">3000</span>元/月
                       </span>
-                      <span class="msgItem">罗湖</span>
-                    </span>
-                  </p>
+                      <span class="msgList">
+                        <span class="msgItem">1室</span>
+                        <span class="msgItem">
+                          100m
+                          <span class="sup">2</span>
+                        </span>
+                        <span class="msgItem">罗湖</span>
+                      </span>
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </li>
-          </ul>
-        </scroll-view>
+              </li>
+              <li class="item">
+                <div class="outside">
+                  <div class="pictrueAll">
+                    <img src="/static/images/of/index_a1.jpg" alt>
+                  </div>
+                  <div class="txtBox">
+                    <p class="title ellipsis">
+                      <span class="typeName">拼办公室</span>深圳连锁办公室拼租
+                    </p>
+                    <p class="other">
+                      <span class="priceArea">
+                        <span class="price">3000</span>元/月
+                      </span>
+                      <span class="msgList">
+                        <span class="msgItem">1室</span>
+                        <span class="msgItem">
+                          100m
+                          <span class="sup">2</span>
+                        </span>
+                        <span class="msgItem">罗湖</span>
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </li>
+              <li class="item">
+                <div class="outside">
+                  <div class="pictrueAll">
+                    <img src="/static/images/of/index_a1.jpg" alt>
+                  </div>
+                  <div class="txtBox">
+                    <p class="title ellipsis">
+                      <span class="typeName">拼办公室</span>深圳连锁办公室拼租
+                    </p>
+                    <p class="other">
+                      <span class="priceArea">
+                        <span class="price">3000</span>元/月
+                      </span>
+                      <span class="msgList">
+                        <span class="msgItem">1室</span>
+                        <span class="msgItem">
+                          100m
+                          <span class="sup">2</span>
+                        </span>
+                        <span class="msgItem">罗湖</span>
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </scroll-view>
+        </div>
       </div>
     </div>
     <!-- 广告图 -->
@@ -467,11 +459,11 @@
 export default {
   data() {
     return {
-      picList:[
-        {'picUrl':'/static/images/of/banner1.jpg'},
-        {'picUrl':'/static/images/of/banner1.jpg'},
-        {'picUrl':'/static/images/of/banner1.jpg'},
-        {'picUrl':'/static/images/of/banner1.jpg'}
+      picList: [
+        { picUrl: "/static/images/of/banner1.jpg" },
+        { picUrl: "/static/images/of/banner1.jpg" },
+        { picUrl: "/static/images/of/banner1.jpg" },
+        { picUrl: "/static/images/of/banner1.jpg" }
       ]
     };
   },
@@ -497,6 +489,4 @@ export default {
   background: #fff;
   margin-bottom: 20rpx;
 }
-
-
 </style>

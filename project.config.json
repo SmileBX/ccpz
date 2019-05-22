@@ -1,66 +1,88 @@
 {
-    "description": "项目配置文件。",
-    "setting": {
-        "urlCheck": true,
-        "es6": false,
-        "postcss": true,
-        "minified": true,
-        "newFeature": true
-    },
-    "miniprogramRoot": "dist/wx/",
-    "compileType": "miniprogram",
-    "appid": "wx73dbae1cbf851757",
-    "projectname": "ccpinzu2",
-    "simulatorType": "wechat",
-    "simulatorPluginLibVersion": {},
-    "condition": {
-        "search": {
-            "current": -1,
-            "list": []
-        },
-        "conversation": {
-            "current": -1,
-            "list": []
-        },
-        "plugin": {
-            "current": -1,
-            "list": []
-        },
-        "game": {
-            "currentL": -1,
-            "list": []
-        },
-        "miniprogram": {
-            "current": 3,
-            "list": [{
-                    "id": -1,
-                    "name": "头条详情",
-                    "pathName": "pages/topNewsDetail/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 1,
-                    "name": "头条列表",
-                    "pathName": "pages/topNewsList/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "拼租列表列表",
-                    "pathName": "pages/rent/list/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "商铺详情",
-                    "pathName": "pages/rent/storeDetail/main",
-                    "query": "",
-                    "scene": null
-                }
-            ]
-        }
-    }
+	"description": "项目配置文件。",
+	"setting": {
+		"urlCheck": true,
+		"es6": false,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"miniprogramRoot": "dist/wx/",
+	"compileType": "miniprogram",
+	"appid": "wx73dbae1cbf851757",
+	"projectname": "ccpinzu2",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 6,
+			"list": [
+				{
+					"id": -1,
+					"name": "头条详情",
+					"pathName": "pages/topNewsDetail/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 1,
+					"name": "头条列表",
+					"pathName": "pages/topNewsList/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "拼租列表列表",
+					"pathName": "pages/rent/list/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "商铺详情",
+					"pathName": "pages/rent/storeDetail/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 4,
+					"name": "组建公司详情",
+					"pathName": "pages/rent/companyDetail/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "组建公司列表",
+					"pathName": "pages/rent/buildTeam/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的会员中心页面",
+					"pathName": "pages/my/main",
+					"query": "",
+					"scene": null
+				}
+			]
+		}
+	}
 }
