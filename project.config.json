@@ -31,7 +31,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 6,
+			"current": 9,
 			"list": [
 				{
 					"id": -1,
@@ -48,19 +48,19 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 2,
 					"name": "拼租列表列表",
 					"pathName": "pages/rent/list/main",
 					"query": "",
 					"scene": null
 				},
 				{
-                    "id": -1,
-                    "name": "商铺详情",
-                    "pathName": "pages/rent/storeDetail/main",
-                    "query": "",
-                    "scene": null
-                },
+					"id": -1,
+					"name": "商铺详情",
+					"pathName": "pages/rent/storeDetail/main",
+					"query": "",
+					"scene": null
+				},
 				{
 					"id": 3,
 					"name": "添加好友",
@@ -86,6 +86,20 @@
 					"id": -1,
 					"name": "聊天对话框",
 					"pathName": "pages/messages/chatRoom/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "拼租发布",
+					"pathName": "pages/Issue/rentOffic/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 9,
+					"name": "拼租发布二级",
+					"pathName": "pages/Issue/submenu/main",
 					"query": "",
 					"scene": null
 				}

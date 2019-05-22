@@ -1,0 +1,190 @@
+.ftbox {
+    margin: 30rpx;
+}
+
+.c_333 {
+    color: #333 !important
+}
+
+.ftbox .btn {
+    height: 80rpx;
+    line-height: 80rpx;
+    text-align: center;
+    font-size: 32rpx;
+    color: #fff;
+    background: #ff952e;
+    border-radius: 10rpx;
+}
+
+.topbgimg {
+    display: block;
+    width: 100%;
+}
+
+.formTitle {
+    padding: 50rpx 30rpx 30rpx;
+    .titletxt {
+        color: #ff952e;
+        font-size: 40rpx;
+    }
+    .subtitle {
+        color: #b3b3b3;
+        font-size: 24rpx;
+    }
+}
+
+.FormCon {
+    background: #fff;
+    border-radius: 10rpx;
+    min-height: 600rpx;
+    margin: 0 30rpx;
+}
+
+.AddBtn_info {
+    background: #fff;
+    border-radius: 10rpx;
+    margin: 0 30rpx;
+    padding: 40rpx;
+    text-align: center;
+    .icon {
+        height: 80rpx;
+        width: 80rpx;
+    }
+    .tips {
+        font-size: 26rpx;
+        color: #999
+    }
+}
+
+.form-cells {
+    .form-cells-item {
+        position: relative;
+        padding: 20rpx 30rpx;
+        &::after {
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            left: 30rpx;
+            right: 30rpx;
+            height: 1px;
+            content: "";
+            -webkit-transform: scaleY(0.5);
+            -ms-transform: scaleY(0.5);
+            transform: scaleY(0.5);
+            background-color: #eee;
+        }
+        &:last-child::after {
+            display: none;
+        }
+        .form-cells-navigate {
+            position: relative;
+            &::after {
+                position: absolute;
+                right: 0;
+                top: 50%;
+                margin-top: -7rpx;
+                content: "";
+                width: 14rpx;
+                height: 14rpx;
+                border: 1px solid #b2b2b2;
+                border-bottom-color: transparent;
+                border-left-color: transparent;
+            }
+            &.navigate-right::after {
+                transform: rotate(45deg);
+            }
+            &.navigate-bottom::after {
+                transform: rotate(135deg);
+            }
+        }
+        .form-cells-hd {
+            font-size: 28rpx;
+            color: #333;
+        }
+        .ipt {
+            height: 60rpx;
+            font-size: 28rpx;
+            padding-right: 20rpx;
+        }
+        .btns-group {
+            font-size: 0;
+            margin-top: 20rpx;
+            margin-right: -20rpx;
+            .btn {
+                display: inline-block;
+                min-width: 143rpx;
+                height: 70rpx;
+                line-height: 70rpx;
+                font-size: 24rpx;
+                padding: 0 10rpx;
+                text-align: center;
+                margin: 0 20rpx 20rpx 0;
+                border-radius: 10rpx;
+                background: #e6e6e6;
+                color: #000;
+                box-sizing: border-box;
+                &.cur {
+                    color: #fff;
+                    background: #ff952e
+                }
+            }
+        }
+    }
+    .form-cells-item2 {
+        overflow: hidden;
+        .item2-column {
+            width: 50%;
+            float: left;
+            text-align: center;
+            position: relative;
+            &::after {
+                content: "";
+                height: 100rpx;
+                width: 1px;
+                position: absolute;
+                right: 0;
+                top: 50%;
+                margin-top: -50rpx;
+                -webkit-transform: scaleX(0.5);
+                -ms-transform: scaleX(0.5);
+                transform: scaleX(0.5);
+                background-color: #EEE;
+            }
+        }
+        .item2-column:nth-child(2n)::after {
+            display: none
+        }
+    }
+}
+
+.form-cell-img {
+    padding-top: 20rpx;
+    margin-right: -20rpx;
+}
+
+.upbtn {
+    position: relative;
+    height: 200rpx;
+    width: 200rpx;
+    margin: 0 20rpx 20rpx 0;
+    border-radius: 4px;
+    display: inline-block;
+    .close {
+        position: absolute;
+        width: 40rpx;
+        height: 40rpx;
+        right: -16rpx;
+        top: -16rpx;
+        color: #fff;
+        background: #b2b2b2;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 40rpx;
+        font-size: 32rpx;
+    }
+    .upimg {
+        height: 100%;
+        width: 100%;
+        display: block
+    }
+}

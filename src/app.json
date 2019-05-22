@@ -7,7 +7,7 @@
         "pages/publish/main",
         "pages/topNewsDetail/main",
         "pages/topNewsList/main"
-        
+
     ],
     "window": {
         "backgroundTextStyle": "light",
@@ -27,6 +27,14 @@
             "pages": [
                 "list/main",
                 "storeDetail/main"
+            ]
+        },
+        {
+            "root": "pages/Issue/",
+            "pages": [
+                "submenu/main",
+                "rentOffic/main",
+                "rentDevice/main"
             ]
         },
         {
