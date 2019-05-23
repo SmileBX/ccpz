@@ -69,12 +69,16 @@
                 "contact/main",
                 "set/main",
                 "setPayPassword/main",
-                "modifyTel/main"
+                "modifyTel/main",
+                "integral/main",
+                "integralList/main",
+                "feedback/main",
+                "memberManage/main"
 
             ]
         },
         {
-            "root": "pages/member/",
+            "root": "pages/connectLetter/",
             "pages": [
                 "addTeam/main",
                 "addNewTeam/main",
