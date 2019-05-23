@@ -3,18 +3,21 @@
     "setting": {
         "urlCheck": true,
         <<
-        << << < HEAD "es6": false,
+        <<
+        << < HEAD "es6": false,
         "postcss": true,
         "minified": true,
         "newFeature": true ===
-            === =
+            ===
+            =
             "es6": true,
         "postcss": true,
         "minified": true,
         "newFeature": true,
         "autoAudits": false,
         "checkInvalidKey": true >>>
-            >>> > 8 c9693920abf8d9fa3fda6b7e4c15bf7da627f47
+            >>>
+            > 8 c9693920abf8d9fa3fda6b7e4c15bf7da627f47
     },
     "miniprogramRoot": "dist/wx/",
     "compileType": "miniprogram",
@@ -39,13 +42,9 @@
             "currentL": -1,
             "list": []
         },
-        "miniprogram": { <<
-            << << < HEAD "current": 19,
-            ===
-            === =
+        "miniprogram": {
             "current": 17,
-            >>>
-            >>> > 8 c9693920abf8d9fa3fda6b7e4c15bf7da627f47 "list": [{
+            "list": [{
                     "id": -1,
                     "name": "头条详情",
                     "pathName": "pages/topNewsDetail/main",
@@ -158,8 +157,22 @@
                     "query": "",
                     "scene": null
                 },
-                { <<
-                    << << < HEAD "id": -1,
+                {
+                    "id": -1,
+                    "name": "通讯录-新建分组",
+                    "pathName": "pages/connectLetter/addNewTeam/main",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "id": -1,
+                    "name": "通讯录-添加成员",
+                    "pathName": "pages/connectLetter/addMember/main",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "id": -1,
                     "name": "帮助中心",
                     "pathName": "pages/member/help/main",
                     "query": "",
@@ -174,47 +187,27 @@
                 },
                 {
                     "id": -1,
-                    <<
-                    << << < HEAD "name": "服务卡兑换状态页面",
+                    "name": "服务卡兑换状态页面",
                     "pathName": "pages/member/changeStatus/main",
-                    ===
-                    === =
-                    "name": "消息-新朋友",
-                    "pathName": "pages/messages/newPromise/main",
-                    >>>
-                    >>> > 8 c9693920abf8d9fa3fda6b7e4c15bf7da627f47 "query": "",
+                    "query": "",
                     "scene": null
                 },
                 {
                     "id": -1,
-                    <<
-                    << << < HEAD "name": "联系客服",
+                    "name": "联系客服",
                     "pathName": "pages/member/contact/main",
-                    ===
-                    === =
-                    "name": "通讯录",
-                    "pathName": "pages/newsletter/main",
-                    >>>
-                    >>> > 8 c9693920abf8d9fa3fda6b7e4c15bf7da627f47 "query": "",
                     "scene": null
                 },
                 {
                     "id": -1,
-                    <<
-                    << << < HEAD "name": "设置",
+                    "name": "设置",
                     "pathName": "pages/member/set/main",
-                    ===
-                    === =
-                    "name": "通讯录-新建分组",
-                    "pathName": "pages/connectLetter/addNewTeam/main",
-                    >>>
-                    >>> > 8 c9693920abf8d9fa3fda6b7e4c15bf7da627f47 "query": "",
+                    "query": "",
                     "scene": null
                 },
                 {
                     "id": -1,
-                    <<
-                    << << < HEAD "name": "设置支付密码",
+                    "name": "设置支付密码",
                     "pathName": "pages/member/setPayPassword/main",
                     "query": "",
                     "scene": null
@@ -223,13 +216,8 @@
                     "id": -1,
                     "name": "修改手机号",
                     "pathName": "pages/member/modifyTel/main",
-                    "scene": null ===
-                        === =
-                        "name": "通讯录-添加成员",
-                    "pathName": "pages/connectLetter/addMember/main",
                     "query": "",
-                    "scene": null >>>
-                        >>> > 8 c9693920abf8d9fa3fda6b7e4c15bf7da627f47
+                    "scene": null
                 }
             ]
         }
