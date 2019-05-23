@@ -1,178 +1,237 @@
 {
-	"description": "项目配置文件。",
-	"setting": {
-		"urlCheck": true,
-		"es6": false,
-		"postcss": true,
-		"minified": true,
-		"newFeature": true
-	},
-	"miniprogramRoot": "dist/wx/",
-	"compileType": "miniprogram",
-	"appid": "wx73dbae1cbf851757",
-	"projectname": "ccpinzu2",
-	"simulatorType": "wechat",
-	"simulatorPluginLibVersion": {},
-	"condition": {
-		"search": {
-			"current": -1,
-			"list": []
-		},
-		"conversation": {
-			"current": -1,
-			"list": []
-		},
-		"plugin": {
-			"current": -1,
-			"list": []
-		},
-		"game": {
-			"currentL": -1,
-			"list": []
-		},
-		"miniprogram": {
-			"current": 19,
-			"list": [
-				{
-					"id": -1,
-					"name": "头条详情",
-					"pathName": "pages/topNewsDetail/main",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 1,
-					"name": "头条列表",
-					"pathName": "pages/topNewsList/main",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "拼租列表列表",
-					"pathName": "pages/rent/list/main",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "商铺详情",
-					"pathName": "pages/rent/storeDetail/main",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 4,
-					"name": "组建公司详情",
-					"pathName": "pages/rent/companyDetail/main",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 3,
-					"name": "添加好友",
-					"pathName": "pages/messages/addFre/main",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "消息",
-					"pathName": "pages/message/main",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 5,
-					"name": "新朋友",
-					"pathName": "pages/messages/newPromise/main",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "组建公司列表",
-					"pathName": "pages/rent/buildTeam/main",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "聊天对话框",
-					"pathName": "pages/messages/chatRoom/main",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "我的会员中心页面",
-					"pathName": "pages/my/main",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "拼租发布",
-					"pathName": "pages/Issue/rentOffic/main",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": 9,
-					"name": "拼租发布二级",
-					"pathName": "pages/Issue/submenu/main",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "帮助中心",
-					"pathName": "pages/member/help/main",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "服务卡兑换",
-					"pathName": "pages/member/serviceCardChange/main",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "服务卡兑换状态页面",
-					"pathName": "pages/member/changeStatus/main",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "联系客服",
-					"pathName": "pages/member/contact/main",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "设置",
-					"pathName": "pages/member/set/main",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "设置支付密码",
-					"pathName": "pages/member/setPayPassword/main",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "修改手机号",
-					"pathName": "pages/member/modifyTel/main",
-					"scene": null
-				}
-			]
-		}
-	}
+    "description": "项目配置文件。",
+    "setting": {
+        "urlCheck": true,
+        <<
+        << << < HEAD "es6": false,
+        "postcss": true,
+        "minified": true,
+        "newFeature": true ===
+            === =
+            "es6": true,
+        "postcss": true,
+        "minified": true,
+        "newFeature": true,
+        "autoAudits": false,
+        "checkInvalidKey": true >>>
+            >>> > 8 c9693920abf8d9fa3fda6b7e4c15bf7da627f47
+    },
+    "miniprogramRoot": "dist/wx/",
+    "compileType": "miniprogram",
+    "appid": "wx73dbae1cbf851757",
+    "projectname": "ccpinzu2",
+    "simulatorType": "wechat",
+    "simulatorPluginLibVersion": {},
+    "condition": {
+        "search": {
+            "current": -1,
+            "list": []
+        },
+        "conversation": {
+            "current": -1,
+            "list": []
+        },
+        "plugin": {
+            "current": -1,
+            "list": []
+        },
+        "game": {
+            "currentL": -1,
+            "list": []
+        },
+        "miniprogram": { <<
+            << << < HEAD "current": 19,
+            ===
+            === =
+            "current": 17,
+            >>>
+            >>> > 8 c9693920abf8d9fa3fda6b7e4c15bf7da627f47 "list": [{
+                    "id": -1,
+                    "name": "头条详情",
+                    "pathName": "pages/topNewsDetail/main",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "id": 1,
+                    "name": "头条列表",
+                    "pathName": "pages/topNewsList/main",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "id": -1,
+                    "name": "拼租列表列表",
+                    "pathName": "pages/rent/list/main",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "id": -1,
+                    "name": "商铺详情",
+                    "pathName": "pages/rent/storeDetail/main",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "id": 4,
+                    "name": "组建公司详情",
+                    "pathName": "pages/rent/companyDetail/main",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "id": 3,
+                    "name": "添加好友",
+                    "pathName": "pages/messages/addFre/main",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "id": -1,
+                    "name": "消息",
+                    "pathName": "pages/message/main",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "id": 5,
+                    "name": "新朋友",
+                    "pathName": "pages/messages/newPromise/main",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "id": -1,
+                    "name": "组建公司列表",
+                    "pathName": "pages/rent/buildTeam/main",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "id": -1,
+                    "name": "聊天对话框",
+                    "pathName": "pages/messages/chatRoom/main",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "id": -1,
+                    "name": "我的会员中心页面",
+                    "pathName": "pages/my/main",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "id": -1,
+                    "name": "拼租发布",
+                    "pathName": "pages/Issue/rentOffic/main",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "id": 9,
+                    "name": "拼租发布二级",
+                    "pathName": "pages/Issue/submenu/main",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "id": 13,
+                    "name": "通讯录-分组",
+                    "pathName": "pages/connectLetter/addTeam/main",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "id": -1,
+                    "name": "消息-新朋友",
+                    "pathName": "pages/messages/newPromise/main",
+                    "query": "",
+                    "scene": null
+
+                },
+                {
+                    "id": -1,
+                    "name": "通讯录",
+                    "pathName": "pages/newsletter/main",
+                    "query": "",
+                    "scene": null
+                },
+                { <<
+                    << << < HEAD "id": -1,
+                    "name": "帮助中心",
+                    "pathName": "pages/member/help/main",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "id": -1,
+                    "name": "服务卡兑换",
+                    "pathName": "pages/member/serviceCardChange/main",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "id": -1,
+                    <<
+                    << << < HEAD "name": "服务卡兑换状态页面",
+                    "pathName": "pages/member/changeStatus/main",
+                    ===
+                    === =
+                    "name": "消息-新朋友",
+                    "pathName": "pages/messages/newPromise/main",
+                    >>>
+                    >>> > 8 c9693920abf8d9fa3fda6b7e4c15bf7da627f47 "query": "",
+                    "scene": null
+                },
+                {
+                    "id": -1,
+                    <<
+                    << << < HEAD "name": "联系客服",
+                    "pathName": "pages/member/contact/main",
+                    ===
+                    === =
+                    "name": "通讯录",
+                    "pathName": "pages/newsletter/main",
+                    >>>
+                    >>> > 8 c9693920abf8d9fa3fda6b7e4c15bf7da627f47 "query": "",
+                    "scene": null
+                },
+                {
+                    "id": -1,
+                    <<
+                    << << < HEAD "name": "设置",
+                    "pathName": "pages/member/set/main",
+                    ===
+                    === =
+                    "name": "通讯录-新建分组",
+                    "pathName": "pages/connectLetter/addNewTeam/main",
+                    >>>
+                    >>> > 8 c9693920abf8d9fa3fda6b7e4c15bf7da627f47 "query": "",
+                    "scene": null
+                },
+                {
+                    "id": -1,
+                    <<
+                    << << < HEAD "name": "设置支付密码",
+                    "pathName": "pages/member/setPayPassword/main",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "id": -1,
+                    "name": "修改手机号",
+                    "pathName": "pages/member/modifyTel/main",
+                    "scene": null ===
+                        === =
+                        "name": "通讯录-添加成员",
+                    "pathName": "pages/connectLetter/addMember/main",
+                    "query": "",
+                    "scene": null >>>
+                        >>> > 8 c9693920abf8d9fa3fda6b7e4c15bf7da627f47
+                }
+            ]
+        }
+    }
 }

@@ -1,59 +1,46 @@
 <template>
-  <div>
+  <div class="page borderTop">
       <!--顶部输入框-->
-      <div class="white">
-          <div class="topinput">
-              <input type="text" placeholder="请输入城市名称" :value="inputName" @input="bindKeyInput">
-              <img src="/static/images/search.png" class="searchpic absolu">
-              <img src="/static/images/cancle.png" class="canclepic absolu" style="z-index:40" @click="bindBlur">
-          </div>
+      <div class="bg_fff flex flexAlignCenter pall">
+          <img src="/static/images/icons/search.png" alt="" class="icon_search">
+          <input type="text" placeholder="搜索" class="flex1 bg_fff" :value="inputName" @input="bindKeyInput">
       </div>
-      <!--右侧字母 左侧列表-->
-      <div class="container-inner">
-          <div class="searchLetter touchClass">
-            <div class="thishotText" @click="hotCity">
-              <div style="margin-top:0;">当前</div>
-              <div style="margin-top:0;">热门</div>
+      <div class="slidebg"></div>
+      <div style="position:relative">
+            <!--分组按钮-->
+            <div class="bg_fff flex flexAlignCenter pall">
+                <img src="/static/images/icons/fenzu.jpg" alt="" class="icon_fenzu">
+                <span>分组</span>
             </div>
-            <div v-for="(item, idx) in searchLetter" :key="idx" style="color:#ff6325;font-size:20rpx;" :data-letter="item" @click="clickLetter">
-              {{ item }}   
-            </div>
-          </div>
-          <div class="container">
-              <scroll-view scroll-y="true" v-bind:style="{height: winHeight + 'px'}" :scroll-into-view="scrollTopId">
-              <!--定位当前城市-->
-              <div class="item mylocal" id="currentcity">定位当前城市</div>
-              <div class="itemlocat mylocal">
-                  <div class="name">{{cityName}}</div>
-                  <!-- <div class="chose" @click="choseCIty">
-                    <img src="/static/images/can.png" class="can">
-                    <text>重新定位</text>
-                  </div> -->
-              </div>
-              
-                <div class="item">热门城市</div>
-                <div class="flex-container cityhot">
-                    <div class="name" v-for="item in hotCity" :key="item.id" :data-city="item.name"  @click="bindCity">{{item.name}}</div>
-                </div>
-                <!--搜索城市-->
-                <div class="citylist" v-for="(item,sindex) in searchlist" :key="sindex">
-                    <div class="item" :id="item.initial">{{ item.initial }}</div>
-                    <div style="padding:20rpx 30rpx;border-bottom:1rpx solid #f4f4f4"  :data-city="item.city" @click="bindCity">
-                        {{item.city}}
-                    </div>  
-                </div>
-                <!--城市列表-->
-                  <div class="citylist" v-for="(item, idx) in citylist" :key="idx">
-                    <div class="item" :id="item.initial">{{ item.initial }}</div>
-                    <div style="padding:20rpx 30rpx;border-bottom:1rpx solid #f4f4f4" v-for="(cityItem, index) in item.cityInfo" :key="index" :data-code="cityItem.code" :data-city="cityItem.city" @click="bindCity">
-                        {{cityItem.city}}
-                    </div>
+            <!--右侧字母-->
+            <div class="container-inner">
+                <div class="searchLetter touchClass">
+                  <div v-for="(item, idx) in searchLetter" :key="idx"  class="letter" :data-letter="item" @click="clickLetter">
+                    {{ item }}   
                   </div>
-              </scroll-view>
-          </div>
+                </div>
+                <div class="container">
+                    <scroll-view scroll-y="true" v-bind:style="{height: winHeight + 'px'}" :scroll-into-view="scrollTopId">
+                      <!--搜索列表-->
+                      <div class="citylist" v-for="(item,sindex) in searchlist" :key="sindex">
+                          <div class="item" :id="item.initial">{{ item.initial }}</div>
+                          <div style="padding:20rpx 30rpx;border-bottom:1rpx solid #f4f4f4"  :data-city="item.city" @click="bindCity">
+                              {{item.city}}
+                          </div>  
+                      </div>
+                      <!--城市列表-->
+                        <div class="citylist" v-for="(item, idx) in citylist" :key="idx">
+                          <div class="item" :id="item.initial">{{ item.initial }}</div>
+                          <div style="padding:30rpx;border-bottom:1rpx solid #f4f4f4;background:#fff" v-for="(cityItem, index) in item.cityInfo" :key="index" :data-code="cityItem.code" :data-city="cityItem.city" @click="bindCity">
+                              {{cityItem.city}}
+                          </div>
+                        </div>
+                    </scroll-view>
+                </div>
+            </div>
       </div>
       
-  </div>
+    </div>
 </template>
 
 <script>
@@ -73,7 +60,7 @@ export default {
         scrollTopId:"",//置顶id
         inputName:"",
         winHeight:"",
-        searchLetter:['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'W', 'X', 'Y', 'Z'],
+        searchLetter:['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J', 'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'W', 'X', 'Y', 'Z','#'],
         citylist:[],//加载城市列表
         searchlist:[],//搜索城市的列表
         hotCity:[
@@ -312,6 +299,10 @@ export default {
   color: #666;
 
 }
+.letter{
+    color:#ff6325;
+    font-size:20rpx;
+}
 
 .searchLetter div {
   margin-top: 20rpx;
@@ -322,6 +313,10 @@ export default {
   color: #fff;
   padding-top: 16rpx;
   padding-bottom: 16rpx;
+  background:transparent;
+  position:absolute;
+  top:0;
+  z-index:40
 }
 
 .showSlectedLetter {

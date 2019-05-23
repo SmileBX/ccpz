@@ -1,26 +1,43 @@
 <template>
-  <div >
-    <newsletterList></newsletterList>
-    <button @click="goGroup">跳转分组</button>
+  <div>
+     <!--顶部输入框-->
+      <div class="bg_fff flex flexAlignCenter pall">
+          <img src="/static/images/icons/search.png" alt="" class="icon_search">
+          <input type="text" placeholder="搜索" class="flex1 bg_fff" :value="inputName" @input="bindKeyInput">
+      </div>
+      <div class="slidebg"></div>
+       <!--分组按钮-->
+      <div class="bg_fff flex flexAlignCenter pall">
+          <img src="/static/images/icons/fenzu.jpg" alt="" class="icon_fenzu">
+          <span>分组</span>
+      </div>
+      <div class="wrap">
+          <IndexList  :data="playerList" @choose="onChoose" v-if="playerList"></IndexList>
+      </div>
   </div>
 </template>
 
 <script>
-import newsletterList from '@/components/newsletterBook.vue'
+import IndexList from '@/components/IndexList.vue'
+import playerList from '@/utils/playlist.json'
 export default {
   data () {
     return {
+      playerList,
     }
+  },
+  onLoad(){
+    console.log(this.playerList)
   },
 
   components: {
-    newsletterList
+    IndexList
   },
 
   methods: {
-    goGroup(){
-      wx.navigateTo({url: '/pages/pagesNewsletter/group/main'})
-    }
+    // goGroup(){
+    //   wx.navigateTo({url: '/pages/pagesNewsletter/group/main'})
+    // }
   },
 
   created () {
@@ -28,3 +45,11 @@ export default {
   }
 }
 </script>
+<style>
+  .wrap {
+    position: fixed;
+    top:300rpx;
+    bottom: 0;
+    width: 100%;
+  }
+</style>

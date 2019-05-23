@@ -3,7 +3,9 @@
       <div class="head bg_fff ">
         <!--头像部分-->
           <div class="flex avatarhead">
-              <img src="/static/images/of/ava.png" alt="" class="avatar">
+              <div class="avatarbox">
+                  <img src="/static/images/of/ava.png" alt="" class="avatar">
+              </div>
               <div class="flex1">
                   <p>哈哈哈哈</p>
                   <p class="font_four">女 27岁 深圳</p>

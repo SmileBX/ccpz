@@ -1,3 +1,28 @@
+/*复选框清除默认样式*/
+.checkbox-cart .wx-checkbox-input{
+    width:40rpx;
+    height:40rpx;
+    border-radius: 50%!important;
+  }
+  .checkbox-cart .wx-checkbox-input.wx-checkbox-input-checked{
+    background: #ff9325;
+    border-radius: 50%!important;
+    border:0!important;
+    width:45rpx;
+    height:45rpx;
+  }
+  .checkbox-cart .wx-checkbox-input.wx-checkbox-input-checked::before{
+    width:45rpx;
+    height:45rpx;
+    border-radius: 50%!important;
+    line-height: 45rpx;
+    text-align: center;
+    font-size: 28rpx;
+    color: #ffffff;
+    background: transparent;
+    transform: translate(-50%, -50%) scale(1);
+    -webkit-transform: translate(-50%, -50%) scale(1);
+  }
 /*字体24rpx*/
 .font_four{
     font-size:24rpx;
@@ -6,23 +31,45 @@
 .fontColor{
     color:#9999
 }
+.fontColor99{
+    color:#ff952e
+}
 .p1{
     padding:35rpx 0!important;
 }
 .p2{
     padding:30rpx 0!important;
 }
+.p25{
+    padding:25rpx 0!important;
+}
 .p3{
-    padding:10rpx 0!important
+    padding:10rpx 0!important;
 }
 .font32{
     font-size: 32rpx;
+}
+.fontBold{
+    font-weight: 600
 }
 .boxSize{
     box-sizing: border-box
 }
 .padwid{
     padding:0 30rpx;
+}
+.pall{
+    padding:35rpx 30rpx;
+}
+.mr0{
+    margin-right:0!important
+}
+
+.mrl2{
+    margin-left:20rpx
+}
+.mrr2{
+    margin-right:20rpx
 }
 /*中间块*/
 .slidebg{
@@ -51,6 +98,17 @@
     border-radius:20rpx;
     margin:0 auto
 }
+/*按钮2*/
+.btnSub2{
+    width:100%;
+    height:88rpx;
+    background:#ff952e;
+    color:#fff;
+    line-height: 88rpx;
+    text-align: center;
+    position:fixed;
+    bottom:0
+}
 /*顶部线条*/
 .borderTop{
     border-top:1rpx solid #ececec;
@@ -73,11 +131,16 @@
     background: #ececec;
     bottom:0;
 }
-.avatar{
+.avatarbox{
     width:80rpx;
     height:80rpx;
-    border-radius: 50%;
     margin-right:40rpx;
+}
+.avatar{
+    width:100%;
+    height:100%;
+    border-radius: 50%;
+    // margin-right:40rpx;
 }
 
 .vertical{
@@ -150,11 +213,38 @@
     margin-left:20rpx;
 }
 /*******************聊天对话****************************/
-
-
-
-
-
+.tagmsg{
+    background:#ff952e;
+    color:#fff;
+    padding:20rpx;
+    border-radius:10rpx;
+    margin:0 20rpx;
+    position: relative;
+}
+/**三角*/
+.sj{
+    width:6rpx;
+    height:6rpx;
+    border-top-color:transparent;
+    border-right-color: transparent;
+    position: absolute;
+    top:50%;
+    margin-top:-3rpx!important
+}
+/*黄 右三角*/
+.rsj{
+    border:6rpx solid #ff952e;
+    background:#ff952e;
+    right:-10rpx;
+    transform: rotate(-135deg)
+}
+/*白 左三角*/
+.lsj{
+    border:6rpx solid #fff;
+    background:#fff;
+    left:-10rpx;
+    transform: rotate(45deg)
+}
 
 .bottomicon{
     position: fixed;
@@ -170,6 +260,7 @@
         border:1rpx solid #f2f2f2;
         padding:10rpx 20rpx;
         border-radius:10rpx;
+        background:#f4f4f4;
     }
 }
 .logimg{
@@ -186,4 +277,43 @@
 .icon_put{
     width:120rpx;
     height:120rpx;
+}
+/*********************通讯录**************************/
+/*分组*/
+.addteam{
+    font-size:32rpx;
+    .teamitem{
+        position: relative;
+    }
+    .teamitem:after{
+        position: absolute;
+        content:'';
+        bottom:0;
+        height:1px;
+        background:#f2f2f2;
+        width:100%;
+    }
+    
+}
+.icon_search {
+    width: 36rpx;
+    height: 37rpx;
+    vertical-align: middle;
+    margin-right: 10rpx;
+}
+.icon_add2{
+    width:30rpx;
+    height:30rpx;
+    vertical-align: middle;
+    margin-right:10rpx;
+}
+/*通讯录*/
+.icon_fenzu{
+    width:80rpx;
+    height:80rpx;
+    margin-right:20rpx;
+}
+.listname{
+    text-align:left;
+    color:#1f1f1f
 }

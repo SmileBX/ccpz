@@ -3,7 +3,7 @@
     <!--通知列表-->
     <div class="padwid">
         <div class="flex avatarhead flexAlignCenter boxSize p2">
-            <div>
+            <div class="avatarbox">
                 <img src="/static/images/of/ava.png" alt="" class="avatar">
             </div>
             <div class="flex flex1 flexAlignCenter">
@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="flex avatarhead flexAlignCenter boxSize p2">
-            <div>
+            <div class="avatarbox">
                 <img src="/static/images/of/ava.png" alt="" class="avatar">
             </div>
             <div class="flex flex1 flexAlignCenter">
