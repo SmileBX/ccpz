@@ -6,8 +6,10 @@
       <div class="perInfo level__perInfo flex">
         <img src="/static/images/of/tx.jpg" class="tx" alt>
         <div class="info flex1">
-          <p>
+          <p class="mt10">
             <span class="name">罗曼蒂克的爱情</span>
+            <img src="/static/images/icons/v2.png" class="icon_attestation" alt="">
+            <img src="/static/images/icons/attestationTag2.png" class="icon_attestationTag" alt="">
           </p>
         </div>
       </div>
@@ -64,7 +66,7 @@
         <div class="navBox">
           <ul class="navList li_25 center navList2">
             <li>
-              <div class="outside">
+              <div class="outside" @click="gotoPage(1)">
                 <div class="icon-img">
                   <img src="/static/images/icons/my_huiyuanguanli.jpg" alt>
                 </div>
@@ -72,7 +74,7 @@
               </div>
             </li>
             <li>
-              <div class="outside">
+              <div class="outside" @click="gotoPage(2)">
                 <div class="icon-img">
                   <img src="/static/images/icons/my_kaquanduihuan.jpg" alt>
                 </div>
@@ -80,7 +82,7 @@
               </div>
             </li>
             <li>
-              <div class="outside">
+              <div class="outside" @click="gotoPage(3)">
                 <div class="icon-img">
                   <img src="/static/images/icons/my_jifen.jpg" alt>
                 </div>
@@ -88,7 +90,7 @@
               </div>
             </li>
             <li>
-              <div class="outside">
+              <div class="outside" @click="gotoPage(4)">
                 <div class="icon-img">
                   <img src="/static/images/icons/my_renzheng.jpg" alt>
                 </div>
@@ -96,7 +98,7 @@
               </div>
             </li>
             <li>
-              <div class="outside">
+              <div class="outside" @click="gotoPage(5)">
                 <div class="icon-img">
                   <img src="/static/images/icons/my_youhuiquan.jpg" alt>
                 </div>
@@ -104,7 +106,7 @@
               </div>
             </li>
             <li>
-              <div class="outside">
+              <div class="outside" @click="gotoPage(6)">
                 <div class="icon-img">
                   <img src="/static/images/icons/my_fapiao.jpg" alt>
                 </div>
@@ -112,7 +114,7 @@
               </div>
             </li>
             <li>
-              <div class="outside">
+              <div class="outside" @click="gotoPage(7)">
                 <div class="icon-img">
                   <img src="/static/images/icons/my_zengzhi.jpg" alt>
                 </div>
@@ -120,7 +122,7 @@
               </div>
             </li>
             <li>
-              <div class="outside">
+              <div class="outside" @click="gotoPage(8)">
                 <div class="icon-img">
                   <img src="/static/images/icons/my_jiameng.jpg" alt>
                 </div>
@@ -128,7 +130,7 @@
               </div>
             </li>
             <li>
-              <div class="outside">
+              <div class="outside" @click="gotoPage(9)">
                 <div class="icon-img">
                   <img src="/static/images/icons/my_fankui.jpg" alt>
                 </div>
@@ -136,7 +138,7 @@
               </div>
             </li>
             <li>
-              <div class="outside">
+              <div class="outside" @click="gotoPage(10)">
                 <div class="icon-img">
                   <img src="/static/images/icons/my_bangzhu.jpg" alt>
                 </div>
@@ -144,7 +146,7 @@
               </div>
             </li>
             <li>
-              <div class="outside">
+              <div class="outside" @click="gotoPage(11)">
                 <div class="icon-img">
                   <img src="/static/images/icons/my_lianxi.jpg" alt>
                 </div>
@@ -168,6 +170,12 @@ export default {
       wx.setNavigationBarTitle({
         title: "我的"
       });
+    },
+    gotoPage(index){
+      let arr = [''];
+      wx.navigateTo({
+        url:arr[index]
+      })
     }
   }
 };
@@ -206,5 +214,13 @@ overflow: hidden;
 }
 .navList2 .icon-img{
   margin-bottom: 0 !important;
+}
+.icon_attestationTag{
+  width: 30rpx;
+  height:30rpx;
+}
+.icon_attestationTag {
+  width: 30rpx;
+  height:30rpx;  
 }
 </style>

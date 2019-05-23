@@ -46,6 +46,18 @@
                 "newPromise/main",
                 "chatRoom/main"
             ]
+        },
+        {
+            "root": "pages/member/",
+            "pages": [
+                "help/main",
+                "serviceCardChange/main",
+                "changeStatus/main",
+                "contact/main",
+                "set/main",
+                "setPayPassword/main",
+                "modifyTel/main"
+            ]
         }
     ],
     "tabBar": {
