@@ -68,6 +68,14 @@
                 "addMember/main"
                 
             ]
+        },
+        {
+            "root": "pages/mine/",
+            "pages": [
+                "helpCenter/main"
+                
+                
+            ]
         }
     ],
     "tabBar": {
