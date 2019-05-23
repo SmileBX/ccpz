@@ -26,7 +26,7 @@
         "van-area": "./static/vant/area/index",
         "van-popup": "./static/vant/popup/index",
         "van-switch": "./static/vant/switch/index",
-        "van-swipe-cell":"./static/vant/swipe-cell/index"
+        "van-swipe-cell": "./static/vant/swipe-cell/index"
     },
     "subpackages": [{
             "root": "pages/pagesNewsletter",
@@ -61,12 +61,25 @@
             ]
         },
         {
-            "root": "pages/connectLetter/",
+            "root": "pages/member/",
+            "pages": [
+                "help/main",
+                "serviceCardChange/main",
+                "changeStatus/main",
+                "contact/main",
+                "set/main",
+                "setPayPassword/main",
+                "modifyTel/main"
+
+            ]
+        },
+        {
+            "root": "pages/member/",
             "pages": [
                 "addTeam/main",
                 "addNewTeam/main",
                 "addMember/main"
-                
+
             ]
         },
         {

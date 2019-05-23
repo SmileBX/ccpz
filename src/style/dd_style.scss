@@ -160,6 +160,10 @@ page {
     color: #fd5412 !important;
 }
 
+.color_ff952e {
+    color: #ff952e !important;
+}
+
 .color_fff {
     color: #fff !important;
 }
@@ -184,6 +188,9 @@ page {
     background-color: #fff;
     margin-top: 20rpx;
     line-height: 1.8;
+    .icon-arrow {
+        margin-right: -16rpx;
+    }
 }
 
 .weui-cells__title {
@@ -422,6 +429,12 @@ page {
     left: 6rpx;
 }
 
+.icon-arrow.arrow-up::before {
+    transform: rotate(-45deg);
+    top: 12rpx;
+    left: 6rpx;
+}
+
 //小三角
 .icon-sj {
     display: inline-block;
@@ -520,6 +533,28 @@ page {
     vertical-align: text-top;
     // margin-left: -4rpx;
     font-size: 20rpx;
+}
+
+//btn
+.weui-btn {
+    display: block;
+    border: 1px solid #ccc;
+    font-size: 32rpx;
+    text-align: center;
+    color: #999;
+    border-radius: 16rpx;
+    line-height: 80rpx;
+    padding: 0 5rpx;
+}
+
+.weui-btn.btn-active {
+    color: #ff952e;
+    border-color: #ff952e;
+}
+
+.weui-btn.btn-active.fill {
+    background: #ff952e;
+    color: #fff;
 }
 
 // 搜索
@@ -1035,7 +1070,7 @@ page {
         font-weight: 600;
     }
     .icon-arrow {
-        margin-right: -10rpx;
+        margin-right: -16rpx;
     }
 }
 
@@ -1459,6 +1494,13 @@ page {
 
 /********************组建*******************/
 
+.icon_attestationTag {
+    width: 22rpx;
+    height: 22rpx;
+    // vertical-align: middle;
+    margin-right: 10rpx;
+}
+
 // 公司详情
 .legalInfo {
     position: relative;
@@ -1474,12 +1516,6 @@ page {
         line-height: 40rpx;
         top: 20rpx;
         right: 30rpx;
-    }
-    .icon_attestationTag {
-        width: 22rpx;
-        height: 22rpx;
-        // vertical-align: middle;
-        margin-right: 10rpx;
     }
     .tx {
         width: 100rpx;
@@ -1641,6 +1677,10 @@ page {
         .tx {
             border: 2px solid #fff;
         }
+        .name {
+            font-size: 32rpx;
+            margin-right: 18rpx;
+        }
     }
     .icon_set {
         position: absolute;
@@ -1660,5 +1700,102 @@ page {
         padding-left: 20rpx;
         padding-right: 14rpx;
         border-radius: 200rpx 0 0 200rpx;
+    }
+}
+
+
+/****************帮助中心**********************/
+
+.help__weui-cells {
+    .icon-arrow {
+        margin-right: -16rpx;
+    }
+    .weui-cell:before {
+        left: 0;
+        right: 0;
+    }
+    .item {
+        .weui-cell::before {
+            display: none;
+        }
+        .spread {
+            .con {
+                background: #f2f2f2;
+                padding: 20rpx 30rpx;
+                line-height: 1.5;
+                color: #999;
+            }
+            .weui-cell {
+                background: #f2f2f2;
+                &::before {
+                    display: block;
+                    background: #dcdcdc;
+                }
+            }
+        }
+    }
+}
+
+
+/***************服务卡兑换*************************/
+
+.form {
+    .line {
+        margin-top: 20rpx;
+        &.btn__line {
+            padding: 40rpx 0;
+        }
+    }
+    .borderIpt {
+        border: 1px solid #cccccc;
+        line-height: 60rpx;
+        padding: 10rpx 20rpx;
+        font-size: 30rpx;
+    }
+}
+
+.changeForm {
+    background: #fff;
+    box-shadow: 0 0 20rpx #ccc;
+    margin: 120rpx 30rpx;
+    border-radius: 10rpx;
+    padding: 30rpx;
+    position: relative;
+    z-index: 2;
+    .title {
+        font-size: 32rpx;
+        padding-bottom: 10rpx;
+    }
+    .icon-huangguan {
+        position: absolute;
+        width: 174rpx;
+        height: 97rpx;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        top: -96rpx;
+        z-index: -1;
+    }
+}
+
+//兑换结果页面
+.changeStatus {
+    padding: 120rpx 60rpx;
+    .icon-status {
+        width: 128rpx;
+        height: 128rpx;
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 50rpx;
+    }
+    .txtBox {
+        color: #5e5e5e;
+        padding-bottom: 180rpx;
+    }
+    .statusTxt {
+        font-size: 36rpx;
+        &.successTxt {
+            color: #ff952e;
+        }
     }
 }
