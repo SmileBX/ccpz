@@ -1239,9 +1239,28 @@ page {
     .menu {
         border-bottom: 1px solid #e5e5e5;
         li {
-            line-height: 60rpx;
+            line-height: 70rpx;
             &.active {
                 color: #ff952e;
+            }
+        }
+        &.bbNo__menu {
+            border-bottom: none;
+        }
+        &.bbLi__menu {
+            .item {
+                display: inline-block;
+                position: relative;
+                &::before {
+                    position: absolute;
+                    content: "";
+                    bottom: 0;
+                    width: 100%;
+                    height: 2px;
+                }
+            }
+            .active .item::before {
+                background: #ff952e;
             }
         }
     }
@@ -1796,6 +1815,137 @@ page {
         font-size: 36rpx;
         &.successTxt {
             color: #ff952e;
+        }
+    }
+}
+
+
+/************我的积分******************/
+
+//次卡
+.icons-vip.gradient-vip {
+    width: 148rpx;
+    height: 148rpx;
+    position: absolute;
+    right: 16rpx;
+    bottom: 30rpx;
+}
+
+.one__gradient {
+    background-image: linear-gradient(-180deg, #7673fa, #4d9bfc);
+    background-image: -webkit-linear-gradient(-180deg, #7673fa, #4d9bfc);
+    background-image: -ms-linear-gradient(-180deg, #7673fa, #4d9bfc);
+}
+
+//月卡
+.month__gradient {
+    background-image: linear-gradient(-180deg, #fe6b62, #ffb56f);
+    background-image: -webkit-linear-gradient(-180deg, #fe6b62, #ffb56f);
+    background-image: -ms-linear-gradient(-180deg, #fe6b62, #ffb56f);
+}
+
+//季卡
+.season__gradient {
+    background-image: linear-gradient(-180deg, #c163ff, #7d6dfe);
+    background-image: -webkit-linear-gradient(-180deg, #c163ff, #7d6dfe);
+    background-image: -ms-linear-gradient(-180deg, #c163ff, #7d6dfe);
+}
+
+//年卡
+.year__gradient {
+    background-image: linear-gradient(-180deg, #ff6325, #ff952e);
+    background-image: -webkit-linear-gradient(-180deg, #ff6325, #ff952e);
+    background-image: -ms-linear-gradient(-180deg, #ff6325, #ff952e);
+}
+
+.integralTitle {
+    padding: 30rpx;
+    font-size: 32rpx;
+    .bg_title {
+        position: relative;
+        z-index: 1;
+        display: inline-block;
+        .title {
+            position: relative;
+            z-index: 3;
+            display: inline-block;
+            line-height: 60rpx;
+        }
+        &::before {
+            position: absolute;
+            content: "";
+            width: 100%;
+            height: 30rpx;
+            bottom: 0;
+            background: #ffefd9;
+            z-index: 2;
+        }
+    }
+}
+
+.integralSwiper {
+    height: 460rpx;
+    .item {
+        width: 626rpx;
+        .outside {
+            width: 626rpx;
+        }
+        // margin-right: 20rpx;
+        .typePic {
+            height: 300rpx;
+            position: relative;
+            padding: 30rpx;
+            box-sizing: border-box;
+            border-radius: 16rpx;
+            color: #fff;
+            .type {
+                font-size: 36rpx;
+            }
+        }
+        .txtBox {
+            padding: 20rpx 16rpx;
+            .num {
+                color: #ff952e;
+            }
+        }
+        .weui-btn {
+            font-size: 28rpx;
+            line-height: 62rpx;
+            width: 156rpx;
+            text-align: center;
+            color: #ff952e;
+            border-color: #ff952e;
+        }
+    }
+}
+
+
+/********明细列表********************/
+
+.detailList {
+    background: #fff;
+    li {
+        padding: 20rpx 30rpx;
+        border-bottom: 1px solid #e5e5e5;
+        .right {
+            width: 200rpx;
+        }
+        .title {
+            font-size: 30rpx;
+        }
+        .time,
+        .num {
+            font-size: 24rpx;
+            color: #999;
+        }
+        .change {
+            font-size: 32rpx;
+            .add {
+                color: #ff6232;
+            }
+            .reduce {
+                color: #139ff7;
+            }
         }
     }
 }

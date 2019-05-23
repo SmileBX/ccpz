@@ -69,7 +69,11 @@
                 "contact/main",
                 "set/main",
                 "setPayPassword/main",
-                "modifyTel/main"
+                "modifyTel/main",
+                "integral/main",
+                "integralList/main",
+                "feedback/main",
+                "memberManage/main"
 
             ]
         },
