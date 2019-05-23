@@ -60,6 +60,10 @@ page {
     margin-top: 20rpx !important;
 }
 
+.mt15 {
+    margin-top: 30rpx !important;
+}
+
 .mt20 {
     margin-top: 40rpx !important;
 }
@@ -90,6 +94,14 @@ page {
 
 .pt30 {
     padding-top: 60rpx !important;
+}
+
+.pb10 {
+    padding-bottom: 20rpx !important;
+}
+
+.pb15 {
+    padding-bottom: 30rpx !important;
 }
 
 .pb20 {
@@ -124,6 +136,10 @@ page {
     border-radius: 20rpx !important;
 }
 
+.radius8 {
+    border-radius: 16rpx !important;
+}
+
 .bg_f4f7fc {
     background: #f4f7fc !important;
 }
@@ -132,8 +148,20 @@ page {
     background: #fff !important;
 }
 
+.bg_ff952e {
+    background: #ff952e !important;
+}
+
+.bg_ed3435 {
+    background: #ed3435 !important;
+}
+
 .color_fd5412 {
     color: #fd5412 !important;
+}
+
+.color_fff {
+    color: #fff !important;
 }
 
 .ellipsis {
@@ -346,13 +374,6 @@ page {
     -ms-justify-content: flex-end !important;
     justify-content: flex-end !important;
 }
-.justifyContentStart {
-    -webkit-justify-content: flex-start !important;
-    -moz-justify-content: flex-start !important;
-    -o-justify-content: flex-start !important;
-    -ms-justify-content: flex-start !important;
-    justify-content: flex-start !important;
-}
 
 .justifyContentCenter {
     -webkit-justify-content: center !important;
@@ -423,11 +444,82 @@ page {
     }
 }
 
+.icon-gou {
+    display: inline-block;
+    vertical-align: middle;
+    width: 40rpx;
+    height: 40rpx;
+    position: relative;
+    &::before {
+        content: "";
+        position: absolute;
+        width: 30rpx;
+        height: 10rpx;
+        border-left: 2px solid #ff952e;
+        border-bottom: 2px solid #ff952e;
+        transform: rotate(-50deg);
+    }
+}
+
+//双箭头
+.twoArrow {
+    display: inline-block;
+    width: 50rpx;
+    height: 50rpx;
+    position: relative;
+    &::before,
+    &::after {
+        content: "";
+        position: absolute;
+        width: 16rpx;
+        height: 16rpx;
+        border-left: 1px solid #939393;
+        border-bottom: 1px solid #939393;
+        left: 16rpx;
+    }
+    &.twoArrow-down {
+        &::before,
+        &::after {
+            transform: rotate(-45deg);
+        }
+        &::before {
+            top: 8rpx;
+        }
+        &::after {
+            top: 20rpx;
+        }
+    }
+    &.twoArrow-up {
+        &::before,
+        &::after {
+            transform: rotate(135deg);
+        }
+        &::before {
+            top: 14rpx;
+        }
+        &::after {
+            top: 26rpx;
+        }
+    }
+}
+
+//固定定位
+.fixed {
+    position: fixed;
+    z-index: 4;
+    width: 100%;
+}
+
+.bm0 {
+    bottom: 0 !important;
+}
+
 // 上标
 .sup {
     display: inline-block;
     vertical-align: text-top;
-    margin-left: -4rpx;
+    // margin-left: -4rpx;
+    font-size: 20rpx;
 }
 
 // 搜索
@@ -836,6 +928,63 @@ page {
     display: block;
 }
 
+//tipsList
+.tipsList {
+    color: #ff952e;
+    // line-height: 1;
+    font-size: 22rpx;
+    margin-top: 22rpx;
+    span {
+        background: #fff4ea;
+        padding: 2rpx 8rpx;
+        margin-right: 14rpx;
+        border-radius: 4rpx;
+        display: inline-block;
+        vertical-align: middle;
+    }
+    span:last-child {
+        margin-right: 0;
+    }
+    &.border__tipsList {
+        span {
+            border: 1px solid #ff952e;
+            background: none;
+            color: #ff952e;
+            font-size: 28rpx;
+            margin-right: 28rpx;
+            margin-bottom: 18rpx;
+        }
+    }
+    &.bg_grey {
+        span {
+            background: #f2f2f2;
+            color: #999;
+            border-color: #f2f2f2;
+        }
+    }
+    &.bg_active {
+        span {
+            background: #ffeedd;
+            border-color: #ffeedd;
+        }
+    }
+}
+
+//msgList
+.msgList {
+    font-size: 20rpx;
+    color: #999999;
+    line-height: 1;
+    .msgItem {
+        border-left: 1px solid #e5e5e5;
+        padding: 0 4rpx;
+    }
+    .msgItem:first-child {
+        border-left: none;
+        padding-left: 0 !important;
+    }
+}
+
 
 /**************首页****************/
 
@@ -953,18 +1102,6 @@ page {
         .pictrue img {
             border-radius: 10rpx;
         }
-        .msgList {
-            font-size: 20rpx;
-            color: #999999;
-            line-height: 1;
-            .msgItem {
-                border-left: 1px solid #e5e5e5;
-                padding: 0 4rpx;
-            }
-            .msgItem:first-child {
-                border-left: none;
-            }
-        }
         .priceArea {
             font-size: 24rpx;
             color: #ed3435;
@@ -983,20 +1120,35 @@ page {
     }
 }
 
+.storeNowrapBox {
+    padding-left: 30rpx;
+    padding-bottom: 30rpx;
+}
+
 .storeNowrap {
-    padding: 0 14rpx 0 30rpx;
+    // padding: 0 14rpx 0 30rpx;
     white-space: nowrap;
 }
 
 .storeNowrap .storeList {
     padding: 0;
+    display: block;
 }
 
 .storeNowrap .storeList .item {
+    display: inline-block;
+    vertical-align: top;
     width: 394rpx;
     margin-right: 16rpx;
+    &:last-child {
+        margin-right: 30rpx;
+    }
     .pictrue {
         padding-top: 75%;
+    }
+    .pictrueAll img {
+        width: 394rpx;
+        height: 286rpx;
     }
     .txtBox {
         padding: 1rpx 16rpx 10rpx;
@@ -1028,13 +1180,6 @@ page {
                 }
             }
         }
-        .title .typeName {
-            font-size: 22rpx;
-            line-height: 1;
-            padding: 0 4rpx;
-            background: #ff952e;
-            color: #fff;
-        }
         .msgList {
             font-size: 24rpx;
             margin-top: 10rpx;
@@ -1042,19 +1187,12 @@ page {
                 padding: 0 8rpx;
             }
         }
-        .tipsList {
-            color: #ff952e;
-            // line-height: 1;
+        .title .typeName {
             font-size: 22rpx;
-            margin-top: 22rpx;
-            span {
-                background: #fff4ea;
-                padding: 2rpx 8rpx;
-                margin-right: 14rpx;
-            }
-            span:last-child {
-                margin-right: 0;
-            }
+            line-height: 1;
+            padding: 0 4rpx;
+            background: #ff952e;
+            color: #fff;
         }
     }
 }
@@ -1067,6 +1205,9 @@ page {
         border-bottom: 1px solid #e5e5e5;
         li {
             line-height: 60rpx;
+            &.active {
+                color: #ff952e;
+            }
         }
     }
 }
@@ -1136,5 +1277,388 @@ page {
         display: block;
         height: 350rpx;
         margin-top: 40rpx;
+    }
+}
+
+
+/*********************商铺详情************/
+
+.storeDetail {
+    .label {
+        color: #999;
+        padding-right: 10rpx;
+    }
+    .section {
+        background: #fff;
+        margin-bottom: 20rpx;
+    }
+    .shortInfo {
+        margin: 0 30rpx;
+        margin-top: -80rpx;
+        background: #fff;
+        position: relative;
+        z-index: 3;
+        padding: 26rpx 30rpx;
+        border-radius: 16rpx;
+        box-shadow: 0 0 20rpx #efefef;
+        .name {
+            font-size: 32rpx;
+            margin-bottom: 8rpx;
+            // font-weight: 600;
+        }
+        .priceArea {
+            color: #ed3435;
+            font-size: 34rpx;
+            // font-weight: 600;
+            margin-bottom: 10rpx;
+        }
+        .msgList {
+            font-size: 30rpx;
+            color: #ff952e;
+            .msgItem {
+                padding: 0 20rpx;
+            }
+        }
+        .tipsList {
+            margin-top: 26rpx;
+        }
+        .purpose {
+            margin-top: 20rpx;
+            color: #333;
+            font-size: 28rpx;
+            span {
+                margin-right: 20rpx;
+                &:last-child {
+                    margin-right: 0;
+                }
+            }
+        }
+    }
+}
+
+.column__weui-cells {
+    font-size: 28rpx;
+    line-height: 1.5;
+    .weui-cell {
+        padding-top: 6rpx;
+        padding-bottom: 6rpx;
+    }
+    .weui-cell__hd {
+        color: #999;
+        margin-right: 26rpx;
+    }
+}
+
+.comAbout .about {
+    padding: 0 30rpx;
+    .item {
+        margin-top: 20rpx;
+    }
+}
+
+.detail__title {
+    font-size: 32rpx;
+}
+
+.locationBox {
+    line-height: 1.4;
+    .title {
+        margin-bottom: 10rpx;
+    }
+    .title,
+    .address {
+        font-size: 32rpx;
+    }
+    .space {
+        color: #999;
+    }
+    .map {
+        width: 47rpx;
+        height: 47rpx;
+        margin-left: 30rpx;
+    }
+}
+
+//底部
+.ftBtn {
+    height: 100rpx;
+    // line-height: 90rpx;
+    .inner {
+        background: #fff;
+    }
+    .iconGroup {
+        .item {
+            width: 118rpx;
+            text-align: center;
+            font-size: 24rpx;
+            line-height: 1.4;
+        }
+        img {
+            width: 42rpx;
+            height: 42rpx;
+            display: block;
+            margin: 8rpx auto;
+        }
+    }
+    .btns {
+        .btn {
+            line-height: 100rpx;
+            font-size: 32rpx;
+        }
+    }
+}
+
+.perInfo {
+    text-align: center;
+    .tx {
+        width: 100rpx;
+        height: 100rpx;
+        border-radius: 50%;
+        display: block;
+        margin: 10rpx auto;
+    }
+    .icon_tel {
+        width: 60rpx;
+        height: 60rpx;
+        margin-left: 40rpx;
+    }
+    .name {
+        font-size: 30rpx;
+    }
+    .serviceTime {
+        font-size: 24rpx;
+        color: #999;
+    }
+    &.level__perInfo {
+        padding-top: 30rpx;
+        text-align: left;
+        .tx {
+            margin-right: 20rpx;
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+    }
+}
+
+.contactList {
+    font-size: 30rpx;
+    margin-top: 10rpx;
+    .item {
+        width: 50%;
+        float: left;
+        padding: 12rpx 0;
+    }
+    .icon {
+        width: 41rpx;
+        height: 41rpx;
+        vertical-align: middle;
+        margin-right: 10rpx;
+    }
+}
+
+
+/********************组建*******************/
+
+// 公司详情
+.legalInfo {
+    position: relative;
+    .motion {
+        position: absolute;
+        z-index: 3;
+        font-size: 24rpx;
+        color: #fff;
+        border-radius: 4rpx;
+        background: #ff952e;
+        padding: 0 10rpx;
+        height: 40rpx;
+        line-height: 40rpx;
+        top: 20rpx;
+        right: 30rpx;
+    }
+    .icon_attestationTag {
+        width: 22rpx;
+        height: 22rpx;
+        // vertical-align: middle;
+        margin-right: 10rpx;
+    }
+    .tx {
+        width: 100rpx;
+        height: 100rpx;
+        margin-right: 20rpx;
+    }
+    img {
+        vertical-align: middle;
+    }
+    .name {
+        margin-right: 14rpx;
+        margin-bottom: 0;
+        font-size: 32rpx;
+    }
+    .msgList {
+        font-size: 24rpx !important;
+        color: #999 !important;
+        margin-bottom: 12rpx;
+        .msgItem {
+            padding: 0 8rpx !important;
+        }
+    }
+}
+
+.icon_attestation {
+    width: 28rpx;
+    height: 28rpx;
+    margin-right: 14rpx;
+}
+
+.lookAttestation {
+    font-size: 22rpx;
+    color: #ff952e;
+    background: #ffeedd;
+    border-radius: 200rpx;
+    padding: 2rpx 12rpx;
+}
+
+.attestationStatus {
+    font-size: 18rpx;
+    color: #ff952e;
+    border: 1px solid #ff952e;
+    border-radius: 4rpx;
+    margin-left: 10rpx;
+    .icon-gou {
+        width: 24rpx;
+        height: 24rpx;
+        &::before {
+            width: 16rpx;
+            height: 7rpx;
+            border-left-width: 1px;
+            border-bottom-width: 1px;
+            top: 2rpx;
+            left: 7rpx;
+        }
+    }
+}
+
+.tagBox {
+    .tipsList {
+        margin-top: 0;
+    }
+    .line {
+        padding-top: 10rpx;
+        .tagTile {
+            max-width: 116rpx;
+            margin-right: 30rpx;
+        }
+    }
+}
+
+// 教育经历等
+.icon_experience {
+    width: 60rpx;
+    height: 60rpx;
+    margin-right: 30rpx;
+}
+
+.experience__line {
+    margin-top: 20rpx;
+    .msgList {
+        font-size: 24rpx;
+        .msgItem {
+            border-left: none;
+            margin-right: 30rpx;
+            margin-bottom: 20rpx;
+        }
+    }
+}
+
+// 人员需求
+.post {
+    .item {
+        box-shadow: 0 0 20rpx #efefef;
+        border-radius: 10rpx;
+        margin-bottom: 30rpx;
+    }
+    .item__bd {
+        padding: 16rpx 0;
+        position: relative;
+        .twoArrowBox {
+            position: absolute;
+            right: 20rpx;
+            top: 18rpx;
+            z-index: 3;
+        }
+    }
+    .overed__item {
+        //已招满
+        .item__bd,
+        .weui-cells {
+            background: #f2f2f2;
+            color: #999;
+        }
+    }
+    .icons_status {
+        position: absolute;
+        width: 128rpx;
+        height: 128rpx;
+        bottom: 10rpx;
+        right: 20rpx;
+    }
+}
+
+.selectIpt {
+    line-height: 60rpx;
+    padding: 16rpx 30rpx;
+    .label {
+        width: 140rpx;
+    }
+    .twoArrow {
+        margin-right: -16rpx;
+    }
+}
+
+
+/****************组建团队列表页***********/
+
+.teamList {
+    .legalInfo {
+        background: #fff;
+        padding: 30rpx 30rpx 20rpx;
+        margin-bottom: 20rpx;
+    }
+}
+
+
+/*****************我的（个人中心页面）************************/
+
+.memberTop {
+    padding-top: 20rpx;
+    padding-bottom: 140rpx;
+    // height: 300rpx;
+    background: #ff952e;
+    color: #fff;
+    position: relative;
+    .perInfo {
+        margin: 0 60rpx;
+        .tx {
+            border: 2px solid #fff;
+        }
+    }
+    .icon_set {
+        position: absolute;
+        right: 30rpx;
+        top: 20rpx;
+        width: 40rpx;
+        height: 40rpx;
+    }
+    .btnModifyInfo {
+        top: 100rpx;
+        font-size: 24rpx;
+        position: absolute;
+        right: 0;
+        height: 50rpx;
+        line-height: 50rpx;
+        background: rgba(0, 0, 0, 0.3);
+        padding-left: 20rpx;
+        padding-right: 14rpx;
+        border-radius: 200rpx 0 0 200rpx;
     }
 }

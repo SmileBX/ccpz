@@ -7,12 +7,12 @@
         "pages/publish/main",
         "pages/topNewsDetail/main",
         "pages/topNewsList/main"
-        
+
     ],
     "window": {
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#fff",
-        "navigationBarTitleText": "WeChat",
+        "navigationBarTitleText": "拼租",
         "navigationBarTextStyle": "black"
     },
     "usingComponents": {
@@ -39,7 +39,17 @@
             "root": "pages/rent/",
             "pages": [
                 "list/main",
-                "storeDetail/main"
+                "storeDetail/main",
+                "companyDetail/main",
+                "buildTeam/main"
+            ]
+        },
+        {
+            "root": "pages/Issue/",
+            "pages": [
+                "submenu/main",
+                "rentOffic/main",
+                "rentDevice/main"
             ]
         },
         {

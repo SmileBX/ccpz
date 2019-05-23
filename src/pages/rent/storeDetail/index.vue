@@ -220,7 +220,7 @@
       <div class="section pd15">
         <h3 class="title detail__title">个人主页</h3>
         <div class="perInfo">
-            <img src="/static/images/of/tx.jpg" alt="">
+            <img src="/static/images/of/tx.jpg" class="tx" alt="">
             <p class="name">何洛洛</p>
         </div>
         <div class="contactList clear">
@@ -231,6 +231,19 @@
         </div>
       </div>
       <!-- 短租的个人主页  end -->
+      <!-- 个人主页不同的样式 -->
+      <div class="section pd15">
+        <h3 class="title detail__title">个人主页</h3>
+        <div class="perInfo flex level__perInfo flexAlignCenter">
+            <img src="/static/images/of/tx.jpg" class="tx" alt="">
+            <div class="info flex1">
+               <p class="name">何洛洛</p>
+               <p class="serviceTime">服务时间：07：00-23：00</p>
+            </div>
+            <img src="/static/images/icons/con_tel.jpg" class="icon_tel" alt="">
+        </div>
+      </div>
+      <!-- 个人主页不同的样式  end -->
       <!-- 办公室描述 -->
       <div class="section">
         <div class="locationBox pd15">
