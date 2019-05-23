@@ -74,7 +74,7 @@
             ]
         },
         {
-            "root": "pages/member/",
+            "root": "pages/connectLetter/",
             "pages": [
                 "addTeam/main",
                 "addNewTeam/main",
@@ -85,7 +85,11 @@
         {
             "root": "pages/mine/",
             "pages": [
-                "helpCenter/main"
+                "person/main",
+                "seeCertifical/main",
+                "editInfo/main",
+                "continuePerson/main",
+                "continueCompany/main"
                 
                 
             ]

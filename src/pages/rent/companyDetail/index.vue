@@ -372,4 +372,7 @@ export default {
   width: 200rpx !important;
   height: 200rpx !important;
 }
+.group{
+  padding:0;
+}
 </style>

@@ -34,6 +34,12 @@
 .fontColor99{
     color:#ff952e
 }
+.font32{
+    font-size: 32rpx;
+}
+.fontBold{
+    font-weight: 600
+}
 .p1{
     padding:35rpx 0!important;
 }
@@ -46,12 +52,7 @@
 .p3{
     padding:10rpx 0!important;
 }
-.font32{
-    font-size: 32rpx;
-}
-.fontBold{
-    font-weight: 600
-}
+
 .boxSize{
     box-sizing: border-box
 }
@@ -76,6 +77,12 @@
     background: #f2f2f2;
     height:22rpx;
     width:100%;
+}
+/*线条750**/
+.line{
+    width:100%;
+    height:1rpx;
+    background:#f2f2f2;
 }
 /*边框*/
 .sign:after,
@@ -316,4 +323,106 @@
 .listname{
     text-align:left;
     color:#1f1f1f
+}
+/*********************我的**************************/
+.icon_card{
+    width:264rpx;
+    height:156rpx;
+    position: absolute;
+    right:30rpx;
+    top:30rpx;
+}
+.person_info{
+    color:#ffffff;
+    margin-left:10rpx;
+    margin-top:5rpx;
+    .name{
+        font-size:55rpx;
+    }
+    .certical{
+        margin:20rpx 0;
+    }
+    .tips{
+        color:#fef3e9!important
+    }
+
+}
+/*上传照片*/
+.uploadSection {
+    background: #fff;
+    padding-top: 30rpx;
+}
+
+.uploadImage {
+    display: block;
+    padding-left: 30rpx;
+    padding-bottom: 20rpx;
+    margin-bottom: 20rpx;
+    position: relative;
+}
+
+.uploadTitle {
+    font-size: 30rpx;
+    padding: 0 30rpx;
+}
+
+.uploadImage .upload-img {
+    margin-top: 20rpx;
+    margin-right: 20rpx;
+}
+
+.uploadImage .upload-img .img {
+    width: 100%;
+    height: 100%;
+}
+
+.uploadImage .upload-img .cancel {
+    display: block;
+    cursor: pointer;
+    position: absolute;
+    top: -18rpx;
+    right: -18rpx;
+    text-align: center;
+    color: #bbb;
+    z-index: 5;
+}
+
+.uploadImage .button-upload,
+.uploadImage .upload-img {
+    width: 200rpx;
+    height: 200rpx;
+    float: left;
+    position: relative;
+    border-radius: 10rpx;
+    margin-right: 20rpx;
+    margin-top: 20rpx;
+}
+
+.uploadImage .button-upload {
+    color: #e8e8e8;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    /* background-position: center center !important;
+    background-size: 100% 100% !important;
+    background-repeat: no-repeat !important; */
+}
+
+.uploadImage .button-upload img,
+.uploadImage .upload-img img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.uploadImage .close {
+    position: absolute;
+    width: 40rpx !important;
+    height: 40rpx !important;
+    top: -10rpx !important;
+    right: -10rpx !important;
+    z-index: 4 !important;
+    left: inherit !important;
 }
