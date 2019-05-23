@@ -5,7 +5,7 @@
         <p style="margin-bottom:10rpx;">公司介绍</p>
         <textarea name="" id="" cols="30" rows="10" placeholder="请输入公司介绍"></textarea>
     </div>
-    <div class="line"></div>
+    <div class="line2"></div>
     <div class="pall bg_fff borderTop">
         <p style="margin-bottom:10rpx;">公司理念</p>
         <textarea name="" id="" cols="30" rows="10" placeholder="请输入公司理念"></textarea>

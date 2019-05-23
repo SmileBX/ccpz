@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 27,
+			"current": 33,
 			"list": [
 				{
 					"id": -1,
@@ -263,6 +263,13 @@
 					"id": -1,
 					"name": "个人信息-编辑公司信息2",
 					"pathName": "pages/mine/continueCompany/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "公司信息",
+					"pathName": "pages/mine/company/main",
 					"query": "",
 					"scene": null
 				}

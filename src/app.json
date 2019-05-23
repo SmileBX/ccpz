@@ -93,7 +93,8 @@
                 "seeCertifical/main",
                 "editInfo/main",
                 "continuePerson/main",
-                "continueCompany/main"
+                "continueCompany/main",
+                "company/main"
                 
                 
             ]

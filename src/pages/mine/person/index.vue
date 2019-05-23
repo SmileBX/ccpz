@@ -4,6 +4,7 @@
       <div class="section pb20">
         <div class="swiper colorBlock bg_ff952e" style="padding-top:300rpx;"></div>
         <div class="shortInfo">
+          <p class="editinfo">编辑</p>
           <div class="legalInfo flex">
             <img src="/static/images/of/tx.jpg" class="tx" alt>
             <div class="info flex1">
@@ -53,16 +54,16 @@
       </div>
       <!-- 公司理念  end -->
     </div>
-    <!-- 短租的个人主页 -->
-      <div class="section pd15 bg_fff" style="margin-top:20rpx">
-        <h3 class="title detail__title fontBold">个人主页</h3>
-        <div class="contactList clear">
-            <div class="item"><img src="/static/images/icons/con_weixin.jpg" class="icon" alt="">yekl125321</div>
-            <div class="item"><img src="/static/images/icons/con_tel.jpg" class="icon" alt="">13652365214</div>
-            <div class="item"><img src="/static/images/icons/con_email.jpg" class="icon" alt="">96854123@qq.com</div>
-            <div class="item"><img src="/static/images/icons/con_address.jpg" class="icon" alt="">布吉区-布吉关</div>
-        </div>
+    <!--个人主页 -->
+    <div class="section pd15 bg_fff" style="margin-top:20rpx">
+      <h3 class="title detail__title fontBold">个人主页</h3>
+      <div class="contactList clear">
+          <div class="item"><img src="/static/images/icons/con_weixin.jpg" class="icon" alt="">yekl125321</div>
+          <div class="item"><img src="/static/images/icons/con_tel.jpg" class="icon" alt="">13652365214</div>
+          <div class="item"><img src="/static/images/icons/con_email.jpg" class="icon" alt="">96854123@qq.com</div>
+          <div class="item"><img src="/static/images/icons/con_address.jpg" class="icon" alt="">布吉区-布吉关</div>
       </div>
+    </div>
     <!-- 底部 -->
     <div class="ftBtn">
       <div class="inner fixed bm0 flex">
@@ -122,5 +123,10 @@ export default {
 }
 .section {
   margin-bottom:0
+}
+.editinfo{
+  color:#ff9325;
+  font-size:24rpx;
+  text-align:right;
 }
 </style>

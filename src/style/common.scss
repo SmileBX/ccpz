@@ -79,7 +79,7 @@
     width:100%;
 }
 /*线条750**/
-.line{
+.line2 {
     width:100%;
     height:1rpx;
     background:#f2f2f2;
@@ -119,6 +119,9 @@
 /*顶部线条*/
 .borderTop{
     border-top:1rpx solid #ececec;
+}
+.flexWrap{
+    flex-wrap:wrap
 }
 /*************************添加好友*******************/
 .head{
