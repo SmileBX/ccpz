@@ -2,10 +2,12 @@
 	"description": "项目配置文件。",
 	"setting": {
 		"urlCheck": true,
-		"es6": false,
+		"es6": true,
 		"postcss": true,
 		"minified": true,
-		"newFeature": true
+		"newFeature": true,
+		"autoAudits": false,
+		"checkInvalidKey": true
 	},
 	"miniprogramRoot": "dist/wx/",
 	"compileType": "miniprogram",
@@ -31,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 6,
+			"current": 10,
 			"list": [
 				{
 					"id": -1,
@@ -55,12 +57,12 @@
 					"scene": null
 				},
 				{
-                    "id": -1,
-                    "name": "商铺详情",
-                    "pathName": "pages/rent/storeDetail/main",
-                    "query": "",
-                    "scene": null
-                },
+					"id": -1,
+					"name": "商铺详情",
+					"pathName": "pages/rent/storeDetail/main",
+					"query": "",
+					"scene": null
+				},
 				{
 					"id": 3,
 					"name": "添加好友",
@@ -87,6 +89,26 @@
 					"name": "聊天对话框",
 					"pathName": "pages/messages/chatRoom/main",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "通讯录-分组",
+					"pathName": "pages/connectLetter/addTeam/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "通讯录",
+					"pathName": "pages/newsletter/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "通讯录-添加好友",
+					"pathName": "pages/connectLetter/addNewTeam/main",
 					"scene": null
 				}
 			]

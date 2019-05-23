@@ -2,18 +2,32 @@
   <div class="page borderTop">
     <!--聊天列表-->
     <div class="padwid">
-        <div class="flex  flexAlignCenter boxSize p2">
-            <div>
+        <div class="flex flexAlignCenter boxSize p2 justifyContentEnd">
+            <div class="flex flexAlignEnd justifyContentEnd mrr2" style="width:75%;">
+                <span class="fontColor">已读</span>
+                <div class="tagmsg">
+                    <p class="boxSize">你好，请问房子还在吗？</p>
+                    <span class="sj rsj"></span>
+                </div>
+            </div>
+            <div class="avatarbox mr0">
                 <img src="/static/images/of/ava.png" alt="" class="avatar">
             </div>
-            <div class="flex flex1 flexAlignCenter">
-                <div class="flex flex1 flexColumn">
-                    <span class="font32">部落格格屋</span>
-                    <span class="font_four">请求添加你为好友</span>
+        </div>
+        <div class="flex flexAlignCenter boxSize p2 justifyContentStart" >
+            <div class="avatarbox mr0">
+                <img src="/static/images/of/ava.png" alt="" class="avatar">
+            </div>
+            <div class="flex flexAlignEnd mrl2" style="width:75%">
+                <!-- <span class="fontColor">已读</span> -->
+                <div class="tagmsg bg_fff">
+                  <span class="sj lsj"></span>
+                    <p class="boxSize" style="color:#1a1a1a">你好，请你好，请问房子还在吗？你好，请问房子还在吗？问房你好，请你好，请问房子还在吗？你好，请问房子还在吗？问房子还在吗？子还在吗？</p>
                 </div>
-                <div class="btnadd">已添加</div>
             </div>
         </div>
+
+
     </div>
     <!--底部按钮 输入框 下拉按钮-->
     <div class="bottomicon">
