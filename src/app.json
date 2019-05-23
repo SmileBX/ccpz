@@ -64,7 +64,8 @@
             "root": "pages/connectLetter/",
             "pages": [
                 "addTeam/main",
-                "addNewTeam/main"
+                "addNewTeam/main",
+                "addMember/main"
                 
             ]
         }

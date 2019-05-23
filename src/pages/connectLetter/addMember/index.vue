@@ -5,20 +5,16 @@
           <img src="/static/images/icons/search.png" alt="" class="icon_search">
           <input type="text" placeholder="搜索" class="flex1 bg_fff" :value="inputName" @input="bindKeyInput">
       </div>
-      <div class="slidebg"></div>
-       <!--分组按钮-->
-      <div class="bg_fff flex flexAlignCenter pall">
-          <img src="/static/images/icons/fenzu.jpg" alt="" class="icon_fenzu">
-          <span>分组</span>
-      </div>
+      <!-- <div class="slidebg"></div> -->
       <div class="wrap">
           <IndexList  :data="playerList" @choose="onChoose" v-if="playerList"></IndexList>
       </div>
+      <div class="btnSub2">完成</div>
   </div>
 </template>
 
 <script>
-import IndexList from '@/components/IndexList.vue'
+import IndexList from '@/components/IndexListMember.vue'
 import playerList from '@/utils/playlist.json'
 export default {
   data () {
@@ -48,8 +44,8 @@ export default {
 <style>
   .wrap {
     position: fixed;
-    top:300rpx;
-    bottom: 0;
+    top:120rpx;
+    bottom: 90rpx;
     width: 100%;
   }
 </style>
