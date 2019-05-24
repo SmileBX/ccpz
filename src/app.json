@@ -94,7 +94,14 @@
         {
             "root": "pages/mine/",
             "pages": [
-                "helpCenter/main"
+                "person/main",
+                "seeCertifical/main",
+                "editInfo/main",
+                "continuePerson/main",
+                "continueCompany/main",
+                "company/main",
+                "tags/main",
+                "publish/main"
 
 
             ]

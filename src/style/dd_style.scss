@@ -381,6 +381,13 @@ page {
     -ms-justify-content: flex-end !important;
     justify-content: flex-end !important;
 }
+.justifyContentStart {
+    -webkit-justify-content: flex-start !important;
+    -moz-justify-content: flex-start !important;
+    -o-justify-content: flex-start !important;
+    -ms-justify-content: flex-start !important;
+    justify-content: flex-end !important;
+}
 
 .justifyContentCenter {
     -webkit-justify-content: center !important;
