@@ -15,6 +15,7 @@
 	"projectname": "ccpinzu2",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
+	"libVersion": "2.7.0",
 	"condition": {
 		"search": {
 			"current": -1,
@@ -33,7 +34,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 27,
+			"current": 35,
 			"list": [
 				{
 					"id": -1,
@@ -229,6 +230,61 @@
 					"name": "意见反馈、合作加盟、增值服务",
 					"pathName": "pages/member/feedback/main",
 					"query": "type=3",
+					"scene": null
+				},
+				{
+					"id": 28,
+					"name": "会员管理主页",
+					"pathName": "pages/member/memberManage/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "置顶功能",
+					"pathName": "pages/member/isTopAbout/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "刷新功能",
+					"pathName": "pages/member/freshenAbout/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "结算",
+					"pathName": "pages/member/buyFunction/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "隐藏",
+					"pathName": "pages/member/hide/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的浏览",
+					"pathName": "pages/member/browse/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "新增发票",
+					"pathName": "pages/member/addInvoice/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "发票列表",
+					"pathName": "pages/member/invoiceList/main",
 					"scene": null
 				}
 			]

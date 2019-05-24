@@ -73,8 +73,13 @@
                 "integral/main",
                 "integralList/main",
                 "feedback/main",
-                "memberManage/main"
-
+                "memberManage/main",
+                "isTopAbout/main",
+                "freshenAbout/main",
+                "buyFunction/main",
+                "invoiceList/main",
+                "addInvoice/main",
+                "browse/main"
             ]
         },
         {
@@ -90,8 +95,8 @@
             "root": "pages/mine/",
             "pages": [
                 "helpCenter/main"
-                
-                
+
+
             ]
         }
     ],
