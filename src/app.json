@@ -94,7 +94,9 @@
                 "editInfo/main",
                 "continuePerson/main",
                 "continueCompany/main",
-                "company/main"
+                "company/main",
+                "tags/main",
+                "publish/main"
                 
                 
             ]

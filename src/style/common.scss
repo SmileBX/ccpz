@@ -23,6 +23,25 @@
     transform: translate(-50%, -50%) scale(1);
     -webkit-transform: translate(-50%, -50%) scale(1);
   }
+  /*遮罩层*/
+  .mask {
+    position: fixed;
+    background: rgba(0, 0, 0, .5);
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    top: 0;
+    left: 0;
+}
+.modal_mask{
+    position: fixed;
+    background:#fff;
+    width: 100%;
+    z-index: 200;
+    left: 0;
+    height: 600rpx;
+    bottom: 0!important;
+}
 /*字体24rpx*/
 .font_four{
     font-size:24rpx;
@@ -102,7 +121,7 @@
     color:#fff;
     line-height: 88rpx;
     text-align: center;
-    border-radius:20rpx;
+    border-radius:15rpx;
     margin:0 auto
 }
 /*按钮2*/
@@ -428,4 +447,33 @@
     right: -10rpx !important;
     z-index: 4 !important;
     left: inherit !important;
+}
+.pagePublish{
+    .swipe-cell{
+        width:100%;
+        .van-cell{
+            padding:20rpx 10rpx!important;
+        }
+      }
+}
+.pageContent{
+    .pickerView{
+        // width:100%;
+        // height: 500rpx;
+        .pickerColumn{
+            .pickerItem{
+                // line-height:100rpx;
+                // height:60rpx!important;
+                overflow:hidden;
+                text-align: center;
+            }
+        }
+    } 
+    .van-picker__cancel,.van-picker__confirm{
+        color:#1a1a1a
+    }
+}
+.tileText{
+    padding:30rpx;
+    justify-content: space-between;
 }

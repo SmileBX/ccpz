@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 33,
+			"current": 35,
 			"list": [
 				{
 					"id": -1,
@@ -267,9 +267,23 @@
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "公司信息",
+					"id": 33,
+					"name": "公司信息-基本信息",
 					"pathName": "pages/mine/company/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "公司信息-标签管理",
+					"pathName": "pages/mine/tags/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "个人信息-我的发布",
+					"pathName": "pages/mine/publish/main",
 					"query": "",
 					"scene": null
 				}

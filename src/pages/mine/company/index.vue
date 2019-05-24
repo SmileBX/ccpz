@@ -139,14 +139,14 @@
         </div>
         <!--公司信息-->
         <div class="weui-cells" style="margin-top:0">
-          <div class="weui-cell">
+          <div class="weui-cell" style="padding: 20rpx 30rpx;">
             <div class="weui-cell__bd">
               <p class="txt">社会信用代码</p>
             </div>
             <span class="fontColor ">968574125854X1244</span>
             <span class="icon-arrow arrow-right"></span>
           </div>
-          <div class="weui-cell">
+          <div class="weui-cell" style="padding: 20rpx 30rpx;">
             <div class="weui-cell__bd">
               <p class="txt">法定代表人籍贯</p>
             </div>
