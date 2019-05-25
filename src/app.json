@@ -6,7 +6,8 @@
         "pages/message/main",
         "pages/publish/main",
         "pages/topNewsDetail/main",
-        "pages/topNewsList/main"
+        "pages/topNewsList/main",
+        "pages/searchHistory/main"
 
     ],
     "window": {
@@ -75,6 +76,21 @@
                 "integralList/main",
                 "feedback/main",
                 "memberManage/main",
+                "isTopAbout/main",
+                "freshenAbout/main",
+                "buyFunction/main",
+                "invoiceList/main",
+                "addInvoice/main",
+                "browse/main",
+                "cardList/main",
+                "addCard/main",
+                "addCard2/main",
+                "addCard3/main",
+                "account/main",
+                "withdrawRecord/main",
+                "withdraw/main",
+                "deposit/main",
+                "report/main",
                 "myVertical/main"
 
             ]
@@ -99,8 +115,8 @@
                 "company/main",
                 "tags/main",
                 "publish/main"
-                
-                
+
+
             ]
         }
     ],
