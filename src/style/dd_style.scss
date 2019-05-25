@@ -191,6 +191,20 @@ page {
     .icon-arrow {
         margin-right: -16rpx;
     }
+    &.icon__weui-cells {
+        .icon-menu {
+            width: 80rpx;
+            height: 80rpx;
+            margin-right: 20rpx;
+        }
+    }
+    &.selectCard__weui-cells {
+        .icon-card {
+            width: 40rpx;
+            height: 40rpx;
+            margin-right: 18rpx;
+        }
+    }
 }
 
 .weui-cells__title {
@@ -381,6 +395,7 @@ page {
     -ms-justify-content: flex-end !important;
     justify-content: flex-end !important;
 }
+
 .justifyContentStart {
     -webkit-justify-content: flex-start !important;
     -moz-justify-content: flex-start !important;
@@ -611,6 +626,64 @@ page {
     height: 50rpx;
     display: inherit;
     padding: 0 25rpx;
+}
+
+
+/*****弹窗******/
+
+.shade {
+    position: fixed;
+    z-index: 100;
+    height: 100vh;
+    width: 100%;
+    top: 0;
+    left: 0;
+    .mask {
+        position: fixed;
+        z-index: 101;
+        background: rgba(0, 0, 0, .5);
+        height: 100vh;
+        width: 100%;
+        top: 0;
+        left: 0;
+    }
+    .shade__hd {
+        text-align: center;
+        height: 100rpx;
+        line-height: 100rpx;
+        font-size: 34rpx;
+        border-bottom: 1px solid #f2f2f2;
+        .icon-back {
+            width: 100rpx;
+            height: 100rpx;
+            position: absolute;
+            top: 0;
+            left: 0;
+            img {
+                width: 40rpx;
+                height: 40rpx;
+                position: absolute;
+                top: 30rpx;
+                left: 0;
+                right: 0;
+                margin: 0 auto;
+            }
+        }
+    }
+    .shadeContent {
+        background: #fff;
+        position: fixed;
+        width: 100%;
+        z-index: 120;
+    }
+    .shade__hd {
+        max-height: 1000rpx;
+    }
+    &.bottom__shade {
+        .shadeContent {
+            bottom: 0;
+        }
+    }
 }
 
 
@@ -1467,7 +1540,7 @@ page {
 
 //底部
 .ftBtn {
-    height: 100rpx;
+    height: 90rpx;
     // line-height: 90rpx;
     .inner {
         background: #fff;
@@ -1488,7 +1561,7 @@ page {
     }
     .btns {
         .btn {
-            line-height: 100rpx;
+            line-height: 90rpx;
             font-size: 32rpx;
         }
     }
@@ -1497,8 +1570,8 @@ page {
 .perInfo {
     text-align: center;
     .tx {
-        width: 100rpx;
-        height: 100rpx;
+        width: 90rpx;
+        height: 90rpx;
         border-radius: 50%;
         display: block;
         margin: 10rpx auto;

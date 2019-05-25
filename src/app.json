@@ -6,7 +6,8 @@
         "pages/message/main",
         "pages/publish/main",
         "pages/topNewsDetail/main",
-        "pages/topNewsList/main"
+        "pages/topNewsList/main",
+        "pages/searchHistory/main"
 
     ],
     "window": {
@@ -79,7 +80,16 @@
                 "buyFunction/main",
                 "invoiceList/main",
                 "addInvoice/main",
-                "browse/main"
+                "browse/main",
+                "cardList/main",
+                "addCard/main",
+                "addCard2/main",
+                "addCard3/main",
+                "account/main",
+                "withdrawRecord/main",
+                "withdraw/main",
+                "deposit/main",
+                "report/main"
             ]
         },
         {
