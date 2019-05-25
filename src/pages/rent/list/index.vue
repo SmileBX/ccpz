@@ -1,5 +1,5 @@
 <template>
-  <div class="pageContent bg_fff">
+  <div class="pageContent bg_fff" :class="(showMoreShop || showMoreEquip)?'over_hidden':''">
     <!-- 头部搜索 -->
     <div class="headerTop">
       <div class="inner flex flexAlignCenter">
@@ -317,6 +317,217 @@
             </div>
         </scroll-view>
     </div> 
+    <!--更多：弹层  start*******************************************-->
+    <!--设备、短租模板******************************-->
+    <div class="modal_mask short_rent boxSize" style="height:100%" v-if="showMoreEquip">
+        <div class="short_rent_child">
+            <p class="font30 fontBold" style="text-align:left">租赁期限</p>
+            <ul class="navList li_20 center navList2">
+              
+              <li>
+                <p>一周</p>
+              </li>
+              <li>
+                <p>半个月</p>
+              </li>
+              <li>
+                <p>1个月</p>
+              </li>
+              <li>
+                <p>2个月</p>
+              </li>
+              <li>
+                <p>3个月</p>
+              </li>
+              <li>
+                <p>4个月</p>
+              </li>
+              <li>
+                <p>5个月</p>
+              </li>
+              <li>
+                <p>6个月</p>
+              </li>
+            </ul>
+        </div>
+        <div class="short_rent_child">
+            <p class="font30 fontBold" style="text-align:left">办公开式</p>
+            <ul class="navList li_20 center navList2">
+              <li>
+                <p>写字楼</p>
+              </li>
+              <li>
+                <p>商铺</p>
+              </li>
+              <li>
+                <p>工厂</p>
+              </li>
+              <li>
+                <p>会议室</p>
+              </li>
+              <li>
+                <p>咖啡厅</p>
+              </li>
+              <li>
+                <p>茶楼</p>
+              </li>
+              <li>
+                <p>饮品店</p>
+              </li>
+            </ul>
+        </div>
+        <div class="btnSub2 flex">
+            <div class="mask_btn_cancle">取消</div>
+            <div class="mask_btn_confirm">确定</div>
+        </div>
+    </div>
+    <!--办公室、商铺筛选更多******************************-->
+    <div class="modal_mask boxSize" style="height:100%" v-if="showMoreShop">
+        <scroll-view scroll-y="true" class="scroll modal_shop_scroll">
+            <ul class="modal_mask_shop">
+                <li>
+                    <div class="modal_shop_title">业务是否外包</div>
+                    <div class="mask_shop_bd">
+                        <radio-group class="radio-group" @change="changeStatu">
+                            <label class="radio">
+                                <radio value="1" :checked="value==1" />
+                                是
+                            </label>
+                            <label class="radio">
+                                <radio value="0" :checked="value==0" />
+                                否
+                            </label>
+                        </radio-group>
+                    </div>
+                </li>
+                <li>
+                    <div class="modal_shop_title">业务是否外包</div>
+                    <div class="mask_shop_bd">
+                        <radio-group class="radio-group" @change="changeStatu">
+                            <label class="radio">
+                                <radio value="1" :checked="value==1" />
+                                是
+                            </label>
+                            <label class="radio">
+                                <radio value="0" :checked="value==0" />
+                                否
+                            </label>
+                        </radio-group>
+                    </div>
+                </li>
+                <li>
+                    <div class="modal_shop_title">业务是否外包</div>
+                    <div class="mask_shop_bd">
+                        <radio-group class="radio-group" @change="changeStatu">
+                            <label class="radio">
+                                <radio value="1" :checked="value==1" />
+                                是
+                            </label>
+                            <label class="radio">
+                                <radio value="0" :checked="value==0" />
+                                否
+                            </label>
+                        </radio-group>
+                    </div>
+                </li>
+                <li>
+                    <div class="modal_shop_title">业务是否外包</div>
+                    <div class="mask_shop_bd">
+                        <radio-group class="radio-group" @change="changeStatu">
+                            <label class="radio">
+                                <radio value="1" :checked="value==1" />
+                                是
+                            </label>
+                            <label class="radio">
+                                <radio value="0" :checked="value==0" />
+                                否
+                            </label>
+                        </radio-group>
+                    </div>
+                </li>
+                <li>
+                    <div class="modal_shop_title">业务是否外包</div>
+                    <div class="mask_shop_bd">
+                        <radio-group class="radio-group" @change="changeStatu">
+                            <label class="radio">
+                                <radio value="1" :checked="value==1" />
+                                是
+                            </label>
+                            <label class="radio">
+                                <radio value="0" :checked="value==0" />
+                                否
+                            </label>
+                        </radio-group>
+                    </div>
+                </li>
+                <li>
+                    <div class="modal_shop_title">业务是否外包</div>
+                    <div class="mask_shop_bd">
+                        <radio-group class="radio-group" @change="changeStatu">
+                            <label class="radio">
+                                <radio value="1" :checked="value==1" />
+                                是
+                            </label>
+                            <label class="radio">
+                                <radio value="0" :checked="value==0" />
+                                否
+                            </label>
+                        </radio-group>
+                    </div>
+                </li>
+                <li>
+                    <div class="modal_shop_title">业务是否外包</div>
+                    <div class="mask_shop_bd">
+                        <radio-group class="radio-group" @change="changeStatu">
+                            <label class="radio">
+                                <radio value="1" :checked="value==1" />
+                                是
+                            </label>
+                            <label class="radio">
+                                <radio value="0" :checked="value==0" />
+                                否
+                            </label>
+                        </radio-group>
+                    </div>
+                </li>
+                <li>
+                    <div class="modal_shop_title">业务是否外包</div>
+                    <div class="mask_shop_bd">
+                        <radio-group class="radio-group" @change="changeStatu">
+                            <label class="radio">
+                                <radio value="1" :checked="value==1" />
+                                是
+                            </label>
+                            <label class="radio">
+                                <radio value="0" :checked="value==0" />
+                                否
+                            </label>
+                        </radio-group>
+                    </div>
+                </li>
+                <li>
+                    <div class="modal_shop_title">业务是否外包</div>
+                    <div class="mask_shop_bd">
+                        <radio-group class="radio-group" @change="changeStatu">
+                            <label class="radio">
+                                <radio value="1" :checked="value==1" />
+                                是
+                            </label>
+                            <label class="radio">
+                                <radio value="0" :checked="value==0" />
+                                否
+                            </label>
+                        </radio-group>
+                    </div>
+                </li>
+            </ul>
+        </scroll-view>
+        <div class="btnSub2 flex">
+            <div class="mask_btn_cancle">取消</div>
+            <div class="mask_btn_confirm">确定</div>
+        </div>
+    </div>
+    <!--更多：弹层  end-->
   </div>
 </template>
 <script>
@@ -329,6 +540,9 @@ export default {
       ShowSecond:false,//二级联动
       ShowSecondRight:false,//二级联动右侧
       ShowPrice:false,//拼价格
+      showMoreEquip:false,//设备短租模板
+      showMoreShop:true,//更多办公室-设备
+
     }
   },
   onLoad() {
@@ -344,58 +558,5 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.filterMenu .tabList {
-  color: #333;
-  font-size: 32rpx;
-  border-bottom: none;
-}
-.navList {
-  font-size: 24rpx;
-  color: #999;
-  .outside {
-    color: #999;
-  }
-}
-.mask{
-  top:230rpx;
-}
-.modal_mask{
-  top:230rpx;
-  height:calc(100vh - 400rpx);
-  p{
-    text-align:center;
-    padding:20rpx 0;
-  }
-}
-.modal_mask2{
-    height:calc(100vh - 300rpx);
-}
-.mask2{
-  position: fixed;
-  background: transparent;
-  width: 100%;
-  height: 100%;
-  z-index: 100;
-  top: 0;
-  left: 0;
-}
-/*房源的时候高度*/
-// .modal_mask_house{
-//   height:calc(100vh - 800rpx)
-// }
-.scroll{
-  height:calc(100vh - 400rpx);
-}
-.scroll_price{
-    height:calc(100vh - 550rpx);
-}
-.second{
-   p{
-     text-align:left;
-     padding-left:30rpx;
-   }
-}
-.mask_btn_price{
-    position: absolute
-}
+@import "./style.scss"
 </style>

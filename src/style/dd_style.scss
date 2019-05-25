@@ -404,6 +404,13 @@ page {
     -o-justify-content: space-between;
     -ms-justify-content: space-between;
 }
+.justifyContentAround {
+    justify-content: space-around;
+    -webkit-justify-content: space-around;
+    -moz-justify-content: space-around;
+    -o-justify-content: space-around;
+    -ms-justify-content: space-around;
+}
 
 .icon-arrow {
     display: inline-block;

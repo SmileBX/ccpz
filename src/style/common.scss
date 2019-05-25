@@ -23,6 +23,39 @@
     transform: translate(-50%, -50%) scale(1);
     -webkit-transform: translate(-50%, -50%) scale(1);
   }
+  radio .wx-radio-input {
+    /* 自定义样式.... */
+    height: 40rpx;
+    width: 40rpx;
+    border-radius: 50%;
+    border: 2rpx solid #999;
+    background: transparent;
+}
+
+radio .wx-radio-input.wx-radio-input-checked {
+    border: none;
+    background: #ff9325;
+}
+
+radio .wx-radio-input.wx-radio-input-checked::before {
+    border-radius: 50%;
+    /* 圆角 */
+    width: 45rpx;
+    /* 选中后对勾大小，不要超过背景的尺寸 */
+    height: 45rpx;
+    /* 选中后对勾大小，不要超过背景的尺寸 */
+    line-height: 45rpx;
+    text-align: center;
+    font-size: 28rpx;
+    /* 对勾大小 30rpx */
+    color: #fff;
+    /* 对勾颜色 白色 */
+    background: #ff9325;
+    transform: translate(-50%, -50%) scale(1);
+    -webkit-transform: translate(-50%, -50%) scale(1);
+}
+
+
   /*遮罩层*/
   .mask {
     position: fixed;
@@ -37,7 +70,7 @@
     position: fixed;
     background:#fff;
     width: 100%;
-    z-index: 200;
+    z-index: 500;
     left: 0;
     height: 528rpx;
     bottom: 0!important;
@@ -55,6 +88,9 @@
 }
 .font32{
     font-size: 32rpx;
+}
+.font30{
+    font-size: 30rpx;
 }
 .fontBold{
     font-weight: 600
@@ -496,3 +532,67 @@
     }
 }
 /*隐藏滚动条*/
+
+
+/*我的认证*/
+.pageVertical{
+    border:1rpx solid blue;
+    height:100vh;
+    overflow: hidden;
+    overflow-y: auto;
+    .bg_certical{
+      height:300rpx;
+      width:100%;
+    }
+    .card_bd{
+      position: relative;;
+      left:30rpx;
+      right:30rpx;
+      top:-150rpx;
+      width:calc(100% - 60rpx );
+      height:calc(100vh - 150rpx);
+      overflow: visible;
+      z-index: 10;
+    }
+    
+    .filterMenu{
+      margin-top:60rpx;
+    }
+    .weui-cell{
+      font-size:26rpx;
+      width:100%;
+      .weui-cell_bd{
+        width:30%;
+      }
+    }
+    .idendityPic{
+      padding:30rpx;
+      .inendity_pic{
+        width:294rpx;
+        height:194rpx;
+      }
+    }
+    .companyPic{
+      .company_pic{
+        width:630rpx;
+        height:280rpx
+      }
+    }
+    .company_pic_title{
+        margin-bottom:20rpx
+      }
+    .otherPic{
+         padding:30rpx 0;
+      .up_pic{
+        height:200rpx;
+        width:200rpx;
+      }
+    }
+    .btn_box{
+        padding:60rpx 30rpx;
+        box-sizing: border-box;
+        
+    }
+  
+  
+  }

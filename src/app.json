@@ -41,7 +41,8 @@
                 "list/main",
                 "storeDetail/main",
                 "companyDetail/main",
-                "buildTeam/main"
+                "buildTeam/main",
+                "moreIcon/main"
             ]
         },
         {
@@ -73,7 +74,8 @@
                 "integral/main",
                 "integralList/main",
                 "feedback/main",
-                "memberManage/main"
+                "memberManage/main",
+                "myVertical/main"
 
             ]
         },

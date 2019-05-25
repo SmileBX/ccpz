@@ -1,0 +1,110 @@
+.filterMenu .tabList {
+    color: #333;
+    font-size: 32rpx;
+    border-bottom: none;
+  }
+  .navList {
+    font-size: 24rpx;
+    color: #999;
+    .outside {
+      color: #999;
+    }
+  }
+  .mask{
+    top:230rpx;
+  }
+  .modal_mask{
+    top:230rpx;
+    height:calc(100vh - 400rpx);
+    p{
+      text-align:center;
+      padding:20rpx 0;
+    }
+  }
+  .modal_mask2{
+      height:calc(100vh - 300rpx);
+  }
+  .mask2{
+    position: fixed;
+    background: transparent;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    top: 0;
+    left: 0;
+  }
+  /*房源的时候高度*/
+  // .modal_mask_house{
+  //   height:calc(100vh - 800rpx)
+  // }
+  .scroll{
+    height:calc(100vh - 400rpx);
+  }
+  .scroll_price{
+      height:calc(100vh - 550rpx);
+  }
+  .second{
+     p{
+       text-align:left;
+       padding-left:30rpx;
+     }
+  }
+  .mask_btn_price{
+      position: absolute
+  }
+.short_rent{
+    .short_rent_child{
+        margin-top:30rpx;
+        padding:30rpx
+    }
+    p{
+        padding:0
+    }
+    .navList2 li{
+        width:25%;
+        box-sizing:border-box;
+        margin-top:20rpx;
+        p{
+            width:80%;
+            border:1rpx solid #f2f2f2;
+            margin:0 auto;
+            padding:10rpx 0;
+        }
+      }
+}
+.btnSub2{
+    background: #fff
+}
+.btnSub2 div{
+    width:50%;
+}
+.mask_btn_cancle{
+    color: #b7b7b7;
+    background:#f2f2f2;
+}
+.mask_btn_confirm{
+      background:#ff9325;
+}
+.modal_mask_shop{
+    padding:40rpx 30rpx;
+    li{
+        margin-top:30rpx;
+        .modal_shop_title{
+            font-size:30rpx;
+            font-weight:bold
+        }
+        .mask_shop_bd{
+            margin-top:20rpx;
+        }
+        .radio{
+            margin-right:80rpx;
+        }
+    }
+}
+.modal_shop_scroll{
+    height:calc(100vh - 300rpx)
+}
+.over_hidden{
+    overflow: hidden;
+    height:100vh!important;
+}

@@ -33,7 +33,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 35,
+			"current": 37,
 			"list": [
 				{
 					"id": -1,
@@ -284,6 +284,20 @@
 					"id": -1,
 					"name": "个人信息-我的发布",
 					"pathName": "pages/mine/publish/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "拼租更多",
+					"pathName": "pages/rent/moreIcon/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 37,
+					"name": "我的认证",
+					"pathName": "pages/member/myVertical/main",
 					"query": "",
 					"scene": null
 				}
