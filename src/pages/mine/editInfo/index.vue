@@ -30,32 +30,32 @@
       </div>
       <div class="weui-cell" @click="choseBusiness">
         <div class="weui-cell__bd">
-            <!--个人-->
-           <p class="txt">行业</p>
            <!--公司-->
             <p class="txt" v-if="Company">公司行业</p>
+            <!--个人-->
+           <p class="txt" v-else>行业</p>
         </div>
         <span class=" fontColor">请选择</span>
       </div>
-      <div class="weui-cell" @click="choseDate">
+      <div class="weui-cell" @click="showDate=true">
         <div class="weui-cell__bd">
            <p class="txt">成立日期</p>
         </div>
         <span class="fontColor ">请选择</span>
       </div>
-      <!--个人-->
-      <div class="weui-cell" v-if="Company">
-        <div class="weui-cell__bd">
-           <p class="txt">工作年限</p>
-        </div>
-        <span class=" fontColor">请选择</span>
-      </div>
-      <!--公司-->
+       <!--公司-->
       <div class="weui-cell" v-if="Company">
         <div class="weui-cell__bd">
            <p class="txt">人员规模</p>
         </div>
         <input type="text" placeholder="请输入">
+      </div>
+      <!--个人-->
+      <div class="weui-cell" v-else @click="choseWorkTime">
+        <div class="weui-cell__bd">
+           <p class="txt">工作年限</p>
+        </div>
+        <span class=" fontColor">请选择</span>
       </div>
       <div class="weui-cell">
         <div class="weui-cell__bd">
@@ -108,7 +108,7 @@
            <span class="font32">行业</span>
            <span @click="confirmBusiness">确定</span>
         </div>
-        <picker-view class="pickerView" :value="value" indicator-style="height: 50px;" style="width: 100%; height: 250px;"@change="bindDateChangeStart">
+        <picker-view class="pickerView" :value="value" indicator-style="height: 50px;" style="width: 100%; height: 200px;"@change="bindDateChangeStart">
           <picker-view-column class="pickerColumn">
             <div class="pickerItem" v-for="(item,key) in business" :key="key" style="line-height:50px;" >{{item}}</div>
           </picker-view-column>
@@ -118,13 +118,13 @@
         </picker-view>
     </div>
     <!--工作年限-->
-    <div class="modal_mask" v-if="showBusiness">
+    <div class="modal_mask" v-if="showWorkTime">
         <div class="tileText flex">
            <span @click="cancleMask">取消</span>
-           <span class="font32">行业</span>
-           <span @click="confirmBusiness">确定</span>
+           <span class="font32">工作年限</span>
+           <span @click="confirmWorkTime">确定</span>
         </div>
-        <picker-view class="pickerView" :value="value" indicator-style="height: 50px;" style="width: 100%; height: 250px;"@change="bindDateChangeStart">
+        <picker-view class="pickerView" :value="value" indicator-style="height: 50px;" style="width: 100%; height: 200px;"@change="bindDateChangeStart">
           <picker-view-column class="pickerColumn">
             <div class="pickerItem" v-for="(item,key) in workTime" :key="key" style="line-height:50px;" >{{item}}</div>
           </picker-view-column>
@@ -154,12 +154,14 @@ export default {
       areaList,
       business:['电子商务','电子商务','电子商务','电子商务','电子商务','电子商务'],
       range:['社区电子','社区电子','社区电子','社区电子','社区电子','社区电子'],
+      workTime:['1年以下','2年经验','3年经验','4年经验','5年经验'],
       Company:false,//展示公司信息
       showDate:false,//展示时间弹层
       showArea:false,//展示地区
       showArea2:false,//展示籍贯
-      isShow:true,//自写组建遮罩层
-      showBusiness:true,//展示行业
+      isShow:false,//自写组建遮罩层
+      showBusiness:false,//展示行业
+      showWorkTime:false
 
     }
   },
@@ -171,9 +173,6 @@ export default {
       wx.setNavigationBarTitle({
         title: "编辑信息"
       });
-    },
-    choseDate(){
-      this.showDate = true
     },
     onInput(e){
         console.log(e,"时间")
@@ -212,17 +211,31 @@ export default {
       // this.area = text;
 
     },
+    //选择行业
     choseBusiness(){
        this.isShow = true
        this.showBusiness = true
     },
+    //选择工作年限
+    choseWorkTime(){
+      this.isShow = true
+      this.showWorkTime = true
+    },
+    //关闭弹框
     cancleMask(){
       this.isShow = false
       this.showBusiness = false
+      this.showWorkTime = false
     },
+    //确认行业
     confirmBusiness(){
         this.isShow = false
         this.showBusiness = false
+    },
+    //确认工作年限
+    confirmWorkTime(){
+      this.isShow = false
+      this.showWorkTime = false
     }
   }
 };

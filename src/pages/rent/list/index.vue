@@ -273,10 +273,64 @@
         </li>
       </ul>
     </div>
+    <!--弹层-->
+    <div class="mask mask2" v-if="isShow" catchtouchmove="true"></div>
+    <div class="mask" v-if="isShow" catchtouchmove="true"></div>
+    <!--弹层1：中间一级-->
+            <!--房源弹层高度:modal_mask_house :class="{'modal_mask_house':index==item.index}"-->
+    <div class="modal_mask"  v-if="ShowCenter">
+        <scroll-view scroll-y="true" class="scroll">
+            <div v-for="(item,index) in list " :key="index">
+                <p>{{item}}</p>
+            </div>
+        </scroll-view>
+    </div> 
+    <!--弹层3：中间一级 拼价格-->
+    <div class="modal_mask modal_mask2"  v-if="ShowPrice">
+        <scroll-view scroll-y="true" class="scroll scroll_price" >
+            <div v-for="(item,index) in list " :key="index">
+                <p>{{item}}</p>
+            </div>
+        </scroll-view>
+        <div>
+          <div class="scroll_price_item">
+              <div class="p3">价格区间</div>
+              <div class="flex justifyContentCenter scroll_price_itemCenter flexAlignCenter">
+                <input type="text" value="最低价">
+                <p class="mm1">--</p>
+                <input type="text" value="最高价">
+              </div>
+          </div>
+          <div class="btnSub2 mask_btn_price">确认</div>
+        </div>
+    </div> 
+    <!--弹层2：2级联动-->
+    <div class="modal_mask flex second"  v-if="ShowSecond" catchtouchmove="true">
+        <scroll-view scroll-y="true" class="scroll">
+            <div v-for="(item,index) in list " :key="index">
+                <p>{{item}}</p>
+            </div>
+        </scroll-view>
+        <scroll-view scroll-y="true" class="scroll" v-if="ShowSecondRight" style="border-left:1rpx solid #f2f2f2">
+            <div v-for="(item,index) in list " :key="index">
+                <p>{{item}}</p>
+            </div>
+        </scroll-view>
+    </div> 
   </div>
 </template>
 <script>
 export default {
+  data(){
+    return {
+      isShow:false,//蒙版
+      ShowCenter:false,//中间一级遮罩层
+      list:['不限','招商会','发布会','发布会','发布会','发布会','发布会','发布会','发布会','发布会','招商会','发布会',],//中间弹层列表
+      ShowSecond:false,//二级联动
+      ShowSecondRight:false,//二级联动右侧
+      ShowPrice:false,//拼价格
+    }
+  },
   onLoad() {
     this.setBarTitle();
   },
@@ -301,5 +355,47 @@ export default {
   .outside {
     color: #999;
   }
+}
+.mask{
+  top:230rpx;
+}
+.modal_mask{
+  top:230rpx;
+  height:calc(100vh - 400rpx);
+  p{
+    text-align:center;
+    padding:20rpx 0;
+  }
+}
+.modal_mask2{
+    height:calc(100vh - 300rpx);
+}
+.mask2{
+  position: fixed;
+  background: transparent;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  top: 0;
+  left: 0;
+}
+/*房源的时候高度*/
+// .modal_mask_house{
+//   height:calc(100vh - 800rpx)
+// }
+.scroll{
+  height:calc(100vh - 400rpx);
+}
+.scroll_price{
+    height:calc(100vh - 550rpx);
+}
+.second{
+   p{
+     text-align:left;
+     padding-left:30rpx;
+   }
+}
+.mask_btn_price{
+    position: absolute
 }
 </style>

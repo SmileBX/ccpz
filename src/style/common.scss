@@ -39,7 +39,7 @@
     width: 100%;
     z-index: 200;
     left: 0;
-    height: 600rpx;
+    height: 528rpx;
     bottom: 0!important;
 }
 /*字体24rpx*/
@@ -90,6 +90,9 @@
 }
 .mrr2{
     margin-right:20rpx
+}
+.mm1{
+    margin:0 20rpx
 }
 /*中间块*/
 .slidebg{
@@ -477,3 +480,19 @@
     padding:30rpx;
     justify-content: space-between;
 }
+.scroll_price_item{
+    padding:0 30rpx;
+    margin-top:20rpx;
+    .scroll_price_itemCenter{
+        width:70%;
+        margin:0 auto;
+    }
+    input{
+        background:#f2f2f2;
+        text-align:center;
+        font-size:24rpx;
+        width:40%;
+        color:#999
+    }
+}
+/*隐藏滚动条*/
