@@ -9,7 +9,9 @@
         "pages/topNewsList/main",
         "pages/searchHistory/main",
         "pages/loginWay/main",
-        "pages/codeLogin/main"
+        "pages/codeLogin/main",
+        "pages/bindTel/main"
+
 
     ],
     "window": {
