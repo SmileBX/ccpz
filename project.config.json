@@ -34,7 +34,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 52,
+			"current": 56,
 			"list": [
 				{
 					"id": -1,
@@ -329,7 +329,8 @@
 					"pathName": "pages/rent/moreIcon/main",
 					"query": "",
 					"scene": null
-				},{
+				},
+				{
 					"id": -1,
 					"name": "我的浏览",
 					"pathName": "pages/member/browse/main",
@@ -417,6 +418,20 @@
 					"id": 37,
 					"name": "我的认证",
 					"pathName": "pages/member/myVertical/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的收藏",
+					"pathName": "pages/member/myCollect/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的优惠券",
+					"pathName": "pages/member/myCoupon/main",
 					"query": "",
 					"scene": null
 				}
