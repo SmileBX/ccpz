@@ -17,7 +17,7 @@
     </div>
     <!-- tab切换 -->
     <div class="filterMenu pt15">
-      <ul class="tabList menu flex justifyContentBetween">
+      <ul class="tabList menu flex justifyContentBetween" v-if="pramas==4">
         <li>
           <div class="item">提供拼租</div>
         </li>
@@ -61,7 +61,8 @@
         </li>
       </ul>
     </div>
-    <div class="navBox">
+    <!--图标-->
+    <div class="navBox" v-if="pramas!=6">
       <ul class="navList li_20 center navList2">
         <li>
           <div class="outside">
@@ -534,6 +535,7 @@
 export default {
   data(){
     return {
+      pramas:"",
       isShow:false,//蒙版
       ShowCenter:false,//中间一级遮罩层
       list:['不限','招商会','发布会','发布会','发布会','发布会','发布会','发布会','发布会','发布会','招商会','发布会',],//中间弹层列表
@@ -547,6 +549,7 @@ export default {
   },
   onLoad() {
     this.setBarTitle();
+    this.pramas = this.$root.$mp.query.tip
   },
   methods: {
     setBarTitle() {

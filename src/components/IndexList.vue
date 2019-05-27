@@ -68,7 +68,7 @@ export default {
   },
   computed: {
     indexList() {
-      console.log(this.data,"this.data")
+      //console.log(this.data,"this.data")
       return this.data.map(group => {
         return group.title.substring(0, 1)
       })
@@ -80,7 +80,7 @@ export default {
     this.scrollTimer = null
   },
   mounted() {
-    console.log(this.playerList,'playerList')
+    //console.log(this.playerList,'playerList')
     setTimeout(() => {
       this._calculateHeight()
     }, 20)
@@ -89,7 +89,7 @@ export default {
     _calculateHeight() {
       this.listHeight = []
       const list = this.data
-      console.log(list,"indexGroup++++")
+      //console.log(list,"indexGroup++++")
       let height = 0
       this.listHeight.push(height)
       for (let i = 0; i < list.length; i++) {
@@ -110,7 +110,7 @@ export default {
       }).exec();
     },
     clickItem(item) {
-      console.log(666666666)
+      //console.log(666666666)
       this.$emit('choose', item)
     },
     onListWrapScroll(e) {
@@ -119,7 +119,7 @@ export default {
       this.scrollTimer = setTimeout(() => {
         // let scrollTop = this.$refs.indexWrap.scrollTop
         let scrollTop = e.mp.detail.scrollTop
-        console.log(scrollTop,"scrollTop")
+        //console.log(scrollTop,"scrollTop")
         // let scrollTop = this.scrollTopId
         const listHeight = this.listHeight
         for (let i = 0; i < listHeight.length - 1; i++) {
