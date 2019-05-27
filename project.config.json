@@ -34,7 +34,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 58,
+			"current": 15,
 			"list": [
 				{
 					"id": -1,
@@ -142,7 +142,7 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 15,
 					"name": "通讯录",
 					"pathName": "pages/newsletter/main",
 					"query": "",
@@ -446,6 +446,7 @@
 					"id": -1,
 					"name": "验证码登录",
 					"pathName": "pages/codeLogin/main",
+					"query": "",
 					"scene": null
 				}
 			]
