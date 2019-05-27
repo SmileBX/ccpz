@@ -34,7 +34,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 56,
+			"current": 58,
 			"list": [
 				{
 					"id": -1,
@@ -433,6 +433,19 @@
 					"name": "我的优惠券",
 					"pathName": "pages/member/myCoupon/main",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "登录方式",
+					"pathName": "pages/loginWay/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "验证码登录",
+					"pathName": "pages/codeLogin/main",
 					"scene": null
 				}
 			]
