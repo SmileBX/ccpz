@@ -25,7 +25,33 @@
           <!--字母对应的列表-->
           <van-swipe-cell :right-width="65" :on-close="onClose"       class="swipe-cell">
             <van-cell-group>
-              <van-cell class="teamitem">
+              <van-cell class="">
+                  <div class="flexAlignCenter flex">
+                      <div class="avatarbox mrr2">
+                        <img src="/static/images/of/ava.png" alt="" class="avatar">
+                      </div>
+                      <p class="flex1 fontBold listname">兄弟姐妹</p>
+                  </div>
+              </van-cell>
+            </van-cell-group>
+            <span slot="right" class="van-swipe-cell__right">删除</span>
+          </van-swipe-cell>
+          <van-swipe-cell :right-width="65" :on-close="onClose"       class="swipe-cell">
+            <van-cell-group>
+              <van-cell class="">
+                  <div class="flexAlignCenter flex">
+                      <div class="avatarbox mrr2">
+                        <img src="/static/images/of/ava.png" alt="" class="avatar">
+                      </div>
+                      <p class="flex1 fontBold listname">兄弟姐妹</p>
+                  </div>
+              </van-cell>
+            </van-cell-group>
+            <span slot="right" class="van-swipe-cell__right">删除</span>
+          </van-swipe-cell>
+          <van-swipe-cell :right-width="65" :on-close="onClose"       class="swipe-cell">
+            <van-cell-group>
+              <van-cell class="">
                   <div class="flexAlignCenter flex">
                       <div class="avatarbox mrr2">
                         <img src="/static/images/of/ava.png" alt="" class="avatar">

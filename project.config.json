@@ -329,7 +329,8 @@
 					"pathName": "pages/rent/moreIcon/main",
 					"query": "",
 					"scene": null
-				},{
+				},
+				{
 					"id": -1,
 					"name": "我的浏览",
 					"pathName": "pages/member/browse/main",

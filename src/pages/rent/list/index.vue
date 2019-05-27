@@ -390,11 +390,11 @@
                     <div class="mask_shop_bd">
                         <radio-group class="radio-group" @change="changeStatu">
                             <label class="radio">
-                                <radio value="1" :checked="value==1" />
+                                <radio value="1" :checked="value==1" color='#fff'/>
                                 是
                             </label>
                             <label class="radio">
-                                <radio value="0" :checked="value==0" />
+                                <radio value="0" :checked="value==0" color='#fff'/>
                                 否
                             </label>
                         </radio-group>
@@ -405,11 +405,11 @@
                     <div class="mask_shop_bd">
                         <radio-group class="radio-group" @change="changeStatu">
                             <label class="radio">
-                                <radio value="1" :checked="value==1" />
+                                <radio value="1" :checked="value==1" color='#fff'/>
                                 是
                             </label>
                             <label class="radio">
-                                <radio value="0" :checked="value==0" />
+                                <radio value="0" :checked="value==0" color='#fff'/>
                                 否
                             </label>
                         </radio-group>
@@ -541,7 +541,7 @@ export default {
       ShowSecondRight:false,//二级联动右侧
       ShowPrice:false,//拼价格
       showMoreEquip:false,//设备短租模板
-      showMoreShop:true,//更多办公室-设备
+      showMoreShop:false,//更多办公室-设备
 
     }
   },
