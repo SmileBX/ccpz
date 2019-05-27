@@ -9,11 +9,11 @@
       <!--分组名称-->
       <div class="bg_fff flex flexAlignCenter justifyContentBetween pall">
           <p>分组名称</p>
-          <input type="text" placeholder="设置分组名称" class="flex2 fontColor" style="font-size:30rpx;text-align:right">
+          <input type="text" placeholder="设置分组名称" class="flex2" style="font-size:30rpx;text-align:right">
       </div>
       <div class="slidebg"></div>
       <!--添加成员-->
-      <div class="bg_fff flex flexAlignCenter pall">
+      <div class="bg_fff flex flexAlignCenter pall" @click="addMember">
           <img src="/static/images/icons/add2.jpg" alt="" class="icon_add2">
           <span class="fontColor99">添加成员</span>
           <span class="fontColor flex1" style="text-align:right">(2)</span>
@@ -88,6 +88,9 @@ export default {
       wx.setNavigationBarTitle({
         title: "新建分组"
       });
+    },
+    addMember(){
+       wx.navigateTo({url: '/pages/connectLetter/addMember/main'})
     },
     onClose(clickPosition, instance) {
       switch (clickPosition) {

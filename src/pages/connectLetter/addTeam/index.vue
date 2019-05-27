@@ -7,7 +7,7 @@
       </div>
       <div class="slidebg"></div>
       <!--分组按钮-->
-      <div class="bg_fff flex flexAlignCenter pall">
+      <div class="bg_fff flex flexAlignCenter pall" @click="addTeam">
           <img src="/static/images/icons/add2.jpg" alt="" class="icon_add2">
           <span>新建分组</span>
       </div>
@@ -57,6 +57,9 @@ export default {
       wx.setNavigationBarTitle({
         title: "分组"
       });
+    },
+    addTeam(){
+       wx.navigateTo({url: '/pages/connectLetter/addNewTeam/main'})
     }
   },
 

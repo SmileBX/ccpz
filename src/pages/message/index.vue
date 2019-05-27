@@ -3,7 +3,9 @@
     <!--通知-->
     <div class=padwid>
         <div class="flex avatarhead flexAlignCenter boxSize">
-            <img src="/static/images/of/ava.png" alt="" class="avatar">
+            <div class="avatarbox">
+                  <img src="/static/images/of/ava.png" alt="" class="avatar">
+              </div>
             <div class="flex flexColumn flex1">
                 <div class="flex">
                     <span class="flex1 font32">系统通知</span>
@@ -13,8 +15,10 @@
             </div>
             
         </div>
-        <div class="flex flexAlignCenter p1 boxSize">
-            <img src="/static/images/of/ava.png" alt="" class="avatar">
+        <div class="flex flexAlignCenter p1 boxSize" @click="seePermistion">
+            <div class="avatarbox">
+                  <img src="/static/images/of/ava.png" alt="" class="avatar">
+            </div>
             <div class="flex1 flex circlePosition">
                 <span class="flex1 font32">好友请求</span>
                 <span class="circleNum onlynum">3</span>
@@ -24,9 +28,11 @@
     <div class="slidebg"></div>
     <!--消息列表-->
     <div class="padwid">
-        <div class="flex avatarhead flexAlignCenter boxSize p2">
+        <div class="flex avatarhead flexAlignCenter boxSize p2" @click="goChat">
             <div class="circlePosition">
-                <img src="/static/images/of/ava.png" alt="" class="avatar">
+                <div class="avatarbox">
+                  <img src="/static/images/of/ava.png" alt="" class="avatar">
+                </div>
                 <span class="circleNum msgnum">1</span>
             </div>
             <div class="flex flexColumn flex1">
@@ -39,7 +45,9 @@
         </div>
         <div class="flex avatarhead flexAlignCenter boxSize p2">
             <div class="circlePosition">
-                <img src="/static/images/of/ava.png" alt="" class="avatar">
+                <div class="avatarbox">
+                  <img src="/static/images/of/ava.png" alt="" class="avatar">
+                </div>
                 <span class="circleNum msgnum">86</span>
             </div>
             <div class="flex flexColumn flex1">
@@ -75,6 +83,12 @@ export default {
       wx.setNavigationBarTitle({
         title: "消息"
       });
+    },
+    seePermistion(){
+        wx.navigateTo({url: '/pages/messages/newPromise/main'})
+    },
+    goChat(){
+        wx.navigateTo({url: '/pages/messages/chatRoom/main'})
     }
   },
 
