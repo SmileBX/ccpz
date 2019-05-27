@@ -34,7 +34,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 58,
+			"current": 59,
 			"list": [
 				{
 					"id": -1,
@@ -446,6 +446,14 @@
 					"id": -1,
 					"name": "验证码登录",
 					"pathName": "pages/codeLogin/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "城市列表",
+					"pathName": "pages/city/main",
+					"query": "",
 					"scene": null
 				}
 			]

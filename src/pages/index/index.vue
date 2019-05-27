@@ -29,7 +29,7 @@
       >
         <block v-for="(item,index) in picList" :key="index">
           <swiper-item class="item">
-            <img :src="item.picUrl" alt>
+            <img :src="item.Pic" alt @click="record(item.Id)">
             <!-- <image src="item" class="slide-image" width="355" height="150"> -->
           </swiper-item>
         </block>
@@ -73,37 +73,16 @@
       </ul>
     </div>
     <!-- 头条 -->
-    <div class="section"   @click="goTo(1)">
+    <div class="section">
       <div class="toutiao pd15 flex">
-        <div class="left flexColumn flex justifyContentCenter center">
+        <div class="left flexColumn flex justifyContentCenter center" @click="goTo(1)">
           <span class="name">成成</span>
           <span class="tipsName">头条</span>
         </div>
         <div class="conMain flex1">
           <ul class="wenList">
-            <li>
-              <span class="type">出租</span>写字楼出租要注意什么呢？
-            </li>
-            <li>
-              <span class="type">出租</span>写字楼出租要注意什么呢？
-            </li>
-            <li>
-              <span class="type">出租</span>写字楼出租要注意什么呢？
-            </li>
-            <li>
-              <span class="type">出租</span>写字楼出租要注意什么呢？
-            </li>
-            <li>
-              <span class="type">出租</span>写字楼出租要注意什么呢？
-            </li>
-            <li>
-              <span class="type">出租</span>写字楼出租要注意什么呢？
-            </li>
-            <li>
-              <span class="type">出租</span>写字楼出租要注意什么呢？
-            </li>
-            <li>
-              <span class="type">出租</span>写字楼出租要注意什么呢？
+            <li v-for="(item,nindex) in newList" :key="nindex" @click="newsDetail(item.Id)">
+              <span class="type">{{item.Keywords}}</span>{{item.Title}}
             </li>
           </ul>
         </div>
@@ -456,21 +435,21 @@
 </template>
 
 <script>
+import { post} from "@/utils";
 export default {
   data() {
     return {
-      picList: [
-        { picUrl: "/static/images/of/banner1.jpg" },
-        { picUrl: "/static/images/of/banner1.jpg" },
-        { picUrl: "/static/images/of/banner1.jpg" },
-        { picUrl: "/static/images/of/banner1.jpg" }
-      ]
+      picList: [],//banner图
+      newList:[],//头条消息
     };
   },
   onLoad() {
     this.setBarTitle();
   },
-  onShow() {},
+  onShow() {
+    this.getBannerList()
+    this.getNews()
+  },
   components: {},
 
   methods: {
@@ -479,6 +458,48 @@ export default {
         title: "首页"
       });
     },
+    //获取轮播图
+    getBannerList(){
+       post('Banner/BannerList',{
+          Cid:1 //Cid=0:全部广告图 Cid=1:首页滚动图片 Cid=2:首页广告图 Cid=3:优质房源 Cid=4:成成企业拼租
+       }).then(res=>{
+         if(res.code==0){
+            this.picList = res.data
+         }
+       })
+    },
+    //后台获取点击广告的次数（记录）--userId token
+    record(id){
+      post('Banner/BannerHits',{
+        Id:id
+      })
+    },
+    //获取首页头条默认显示三条
+    getNews(){
+      post('About/AboutList',{
+        PageSize:3
+      }).then(res=>{
+          if(res.code==0){
+            this.newList = res.data
+          }
+      })
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     goTo(n){
         if(n==1){  //头条消息
             wx.navigateTo({url:'/pages/topNewsList/main'})
@@ -489,6 +510,10 @@ export default {
           console.log(n)
           wx.navigateTo({url:'/pages/rent/list/main?tip='+n})
         }
+    },
+    //头条详情
+    newsDetail(id){
+      wx.navigateTo({url:'/pages/topNewsDetail/main?Id='+id})
     }
   },
 
@@ -500,4 +525,5 @@ export default {
   background: #fff;
   margin-bottom: 20rpx;
 }
+
 </style>

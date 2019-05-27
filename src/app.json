@@ -10,7 +10,8 @@
         "pages/searchHistory/main",
         "pages/loginWay/main",
         "pages/codeLogin/main",
-        "pages/bindTel/main"
+        "pages/bindTel/main",
+        "pages/city/main"
 
 
     ],

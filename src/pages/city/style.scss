@@ -1,0 +1,69 @@
+.searchpic{
+    width:26rpx;
+    height:26rpx;
+    left:20rpx;
+    margin-top:-13rpx;
+}
+.canclepic{
+    width:29rpx;
+    height:29rpx;
+    right:20rpx;
+    margin-top:-15rpx;
+}
+.topinput{
+    background: #f1f1f1;
+    border-radius: 30rpx;
+    position: relative;
+    padding:8rpx;
+    margin:0 20rpx;
+}
+.topinput input{
+    font-size:24rpx;
+    padding-left:20rpx;
+    color:#ccc;
+}
+.can{
+    width:40rpx;
+    height:32rpx;
+    vertical-align: middle;
+    margin-right:15rpx;
+}
+.item{
+    font-size: 32rpx;
+    font-weight: bold;
+    padding:30rpx;
+}
+.itemlocat{
+    padding:10rpx 30rpx;
+    font-size:bold;
+    justify-content: flex-start;
+}
+.itemlocat div{
+    display: inline-block;
+}
+.name{
+    width:136rpx; 
+    height:55rpx;
+    border-radius: 5rpx;
+    line-height:55rpx;
+    text-align:center;
+    background:#f8f8f8;
+}
+.chose{
+    margin-left:50rpx;
+}
+.cityhot{
+    flex-wrap: wrap;
+    padding:0rpx 30rpx 20rpx 30rpx;
+}
+.cityhot div{
+    width:23%;
+    margin-top:20rpx;
+}
+.cityindo{
+    padding:0 30rpx;
+}
+.cityindo div{
+    padding:30rpx 0;
+    border-bottom:1rpx solid #eee;
+}
