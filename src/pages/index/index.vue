@@ -38,7 +38,7 @@
     <!-- 导航 -->
     <div class="section">
       <ul class="navList li_25 center navList2">
-        <li>
+        <li @click="goTo(4)">
           <div class="outside">
             <div class="icon-img">
               <img src="/static/images/icons/index_menu1.jpg" alt>
@@ -46,7 +46,7 @@
             <p class="title">拼租</p>
           </div>
         </li>
-        <li>
+        <li @click="goTo(5)">
           <div class="outside">
             <div class="icon-img">
               <img src="/static/images/icons/index_menu2.jpg" alt>
@@ -54,7 +54,7 @@
             <p class="title">组建团队</p>
           </div>
         </li>
-        <li>
+        <li @click="goTo(6)">
           <div class="outside">
             <div class="icon-img">
               <img src="/static/images/icons/index_menu3.jpg" alt>
@@ -62,7 +62,7 @@
             <p class="title">拼团活动</p>
           </div>
         </li>
-        <li>
+        <li @click="goTo(7)">
           <div class="outside">
             <div class="icon-img">
               <img src="/static/images/icons/index_menu4.jpg" alt>
@@ -73,7 +73,7 @@
       </ul>
     </div>
     <!-- 头条 -->
-    <div class="section">
+    <div class="section"   @click="goTo(1)">
       <div class="toutiao pd15 flex">
         <div class="left flexColumn flex justifyContentCenter center">
           <span class="name">成成</span>
@@ -111,7 +111,7 @@
     </div>
     <!-- 优质房源 -->
     <div class="section">
-      <div class="section__hd flex flexAlignCenter">
+      <div class="section__hd flex flexAlignCenter"  @click="goTo(3)">
         <div class="flex1">
           <p class="title">优质房源</p>
         </div>
@@ -133,7 +133,7 @@
     </div>
     <!-- 热门商铺 -->
     <div class="section">
-      <div class="section__hd flex flexAlignCenter">
+      <div class="section__hd flex flexAlignCenter" @click="goTo(2)">
         <div class="flex1">
           <p class="title">热门商铺</p>
         </div>
@@ -478,6 +478,17 @@ export default {
       wx.setNavigationBarTitle({
         title: "首页"
       });
+    },
+    goTo(n){
+        if(n==1){  //头条消息
+            wx.navigateTo({url:'/pages/topNewsList/main'})
+        }else if(n==5){ //5组件团队
+            wx.navigateTo({url:'/pages/rent/buildTeam/main'})
+        }else{
+          //2：热门商铺 3：优质房源 4:拼租  6：拼团活动 7：房源
+          console.log(n)
+          wx.navigateTo({url:'/pages/rent/list/main?tip='+n})
+        }
     }
   },
 
