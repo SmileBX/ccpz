@@ -7,13 +7,15 @@
         "pages/publish/main",
         "pages/topNewsDetail/main",
         "pages/topNewsList/main",
-        "pages/searchHistory/main"
+        "pages/searchHistory/main",
+        "pages/loginWay/main",
+        "pages/codeLogin/main"
 
     ],
     "window": {
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#fff",
-        "navigationBarTitleText": "拼租",
+        "navigationBarTitleText": "成成企业拼租",
         "navigationBarTextStyle": "black"
     },
     "usingComponents": {
