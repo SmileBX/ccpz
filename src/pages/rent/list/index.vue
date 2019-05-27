@@ -146,9 +146,10 @@
         </li>
       </ul>
     </div>
+    <!--列表-->
     <div class="filterContent">
       <ul class="column levelPanel storeList">
-        <li class="item">
+        <li class="item" @click="toDetail">
           <div class="outside">
             <div class="pictrueAll">
               <div class="pictrue img">
@@ -556,6 +557,9 @@ export default {
       wx.setNavigationBarTitle({
         title: "拼租"
       });
+    },
+    toDetail(){
+      wx.navigateTo({url:'/pages/rent/storeDetail/main'})
     }
   }
 };

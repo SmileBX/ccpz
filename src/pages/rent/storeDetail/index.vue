@@ -273,7 +273,7 @@
         </div>
         <div class="btns flex1 flex center">
           <div class="btn flex1 bg_ff952e color_fff">极速联系</div>
-          <div class="btn flex1 bg_ed3435 color_fff">加好友</div>
+          <div class="btn flex1 bg_ed3435 color_fff" @click="addFre">加好友</div>
         </div>
       </div>
     </div>
@@ -289,6 +289,10 @@ export default {
       wx.setNavigationBarTitle({
         title: "商铺详情"
       });
+    },
+    //添加好友
+    addFre(){
+      wx.navigateTo({url:'/pages/messages/addFre/main'})
     }
   }
 };
