@@ -23,37 +23,68 @@
     transform: translate(-50%, -50%) scale(1);
     -webkit-transform: translate(-50%, -50%) scale(1);
   }
-  radio .wx-radio-input {
-    /* 自定义样式.... */
-    height: 40rpx;
-    width: 40rpx;
+/****************修改radio样式*********************/
+/*样式1：选中后中间为圆点*/
+/*外面的边框可以这样*/
+radio .wx-radio-input{
+    height: 44rpx;
+    width: 44rpx;
     border-radius: 50%;
-    border: 2rpx solid #999;
-    background: transparent;
+    border:1rpx solid #ececec;//替换边框 隐藏原有边框
 }
-
 radio .wx-radio-input.wx-radio-input-checked {
-    border: none;
-    background: #ff9325;
+    border: 1rpx solid #ff9325!important;
 }
-
+/*中间圆点   选中的背景需要是xml中设置*/
 radio .wx-radio-input.wx-radio-input-checked::before {
     border-radius: 50%;
     /* 圆角 */
-    width: 45rpx;
+    width: 20rpx;
     /* 选中后对勾大小，不要超过背景的尺寸 */
-    height: 45rpx;
+    height: 20rpx;
     /* 选中后对勾大小，不要超过背景的尺寸 */
-    line-height: 45rpx;
     text-align: center;
-    font-size: 28rpx;
+    line-height:20rpx!important;
+    font-size: 0;
     /* 对勾大小 30rpx */
     color: #fff;
     /* 对勾颜色 白色 */
-    background: #ff9325;
+    background-color: #ff9325;
     transform: translate(-50%, -50%) scale(1);
     -webkit-transform: translate(-50%, -50%) scale(1);
 }
+/*样式2：选中后重点为对勾*/
+// radio .wx-radio-input {
+//     /* 自定义样式.... */
+//     height: 40rpx;
+//     width: 40rpx;
+//     border-radius: 50%;
+//     border: 2rpx solid #999;
+//     background: transparent;
+// }
+
+// radio .wx-radio-input.wx-radio-input-checked {
+//     border: none;
+//     background: #ff9325;
+// }
+
+// radio .wx-radio-input.wx-radio-input-checked::before {
+//     border-radius: 50%;
+//     /* 圆角 */
+//     width: 45rpx;
+//     /* 选中后对勾大小，不要超过背景的尺寸 */
+//     height: 45rpx;
+//     /* 选中后对勾大小，不要超过背景的尺寸 */
+//     line-height: 45rpx;
+//     text-align: center;
+//     font-size: 28rpx;
+//     /* 对勾大小 30rpx *
+//     color: #fff;
+//     /* 对勾颜色 白色 */
+//     background: #ff9325;
+//     transform: translate(-50%, -50%) scale(1);
+//     -webkit-transform: translate(-50%, -50%) scale(1);
+// }
 
 
   /*遮罩层*/
@@ -489,6 +520,7 @@ radio .wx-radio-input.wx-radio-input-checked::before {
 }
 .pagePublish{
     .swipe-cell{
+        border:none!important;
         width:100%;
         .van-cell{
             padding:20rpx 10rpx!important;
@@ -536,7 +568,6 @@ radio .wx-radio-input.wx-radio-input-checked::before {
 
 /*我的认证*/
 .pageVertical{
-    border:1rpx solid blue;
     height:100vh;
     overflow: hidden;
     overflow-y: auto;
@@ -550,8 +581,6 @@ radio .wx-radio-input.wx-radio-input-checked::before {
       right:30rpx;
       top:-150rpx;
       width:calc(100% - 60rpx );
-      height:calc(100vh - 150rpx);
-      overflow: visible;
       z-index: 10;
     }
     

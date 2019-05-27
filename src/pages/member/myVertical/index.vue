@@ -16,7 +16,7 @@
             </ul>
           </div>
           <!--个人模块-->
-          <div v-if="showCompany" class="bg_fff">
+          <div v-if="showCompany" >
               <div class="weui-cells">
                 <div class="weui-cell">
                   <div class="weui-cell_bd">
@@ -33,7 +33,7 @@
               </div>
           </div>
           <!--公司模块-->
-          <div v-else class="bg_fff">
+          <div v-else>
               <div class="weui-cells">
                 <div class="weui-cell">
                   <div class="weui-cell_bd">
@@ -71,7 +71,7 @@
               </div>
           </div>
           <!--企业-->
-          <div style="padding:0 30rpx" class="bg_fff">
+          <div style="padding:0 30rpx" >
               <!--企业上传营业执照-->
               <div class="companyPic">
                   <p class="font30 fontBold company_pic_title">营业执照</p>
@@ -88,7 +88,7 @@
               </div>
           </div>
           <!--企业end-->
-          <div class="flex padwid bg_fff">
+          <div class="flex padwid">
               <input type="checkbox" class="checkbox-cart">
               <p>
                 <span>已阅读并同意</span>
