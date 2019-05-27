@@ -5,7 +5,7 @@
       <div class="ftBtn">
         <div class="inner">
           <div class="btns center">
-            <div class="btn bg_3daf35">微信授权登陆</div>
+            <button  class="btn bg_3daf35" @click="loginTel" open-type="getUserInfo">微信授权登陆</button>
             <div class="btn bg_ef8120">成成账号登陆</div>
           </div>
         </div>
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import {Login } from "@/utils";
 export default {
   onLoad() {
   },
@@ -24,7 +25,9 @@ export default {
     }
   },
   methods: {
-    
+    loginTel() {
+      Login();
+    }
     
   }
 };
@@ -54,5 +57,9 @@ export default {
   color:#fff;
   border-radius: 16rpx;
   margin-top:30rpx;
+  &::before,
+  &::after{
+    display: none;
+  }
 }
 </style>
