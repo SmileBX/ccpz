@@ -9,7 +9,7 @@
       <!--分组名称-->
       <div class="bg_fff flex flexAlignCenter justifyContentBetween pall">
           <p>分组名称</p>
-          <input type="text" placeholder="设置分组名称" class="flex2" style="font-size:30rpx;text-align:right">
+          <input type="text" placeholder="设置分组名称" v-model="groupName" class="flex2" style="font-size:30rpx;text-align:right">
       </div>
       <div class="slidebg"></div>
       <!--添加成员-->
@@ -69,17 +69,28 @@
 </template>
 
 <script>
-
+import { post, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
 export default {
   data () {
     return {
       verMsg:'我是',
+      curPage: "",
+      userId: "",
+      token: "",
+      groupName:"",  //分组名称
+      groupId:""   //分组id
     }
   },
    onLoad() {
     this.setBarTitle();
   },
+  onShow(){
+    this.userId = wx.getStorageSync("userId");
+    this.token = wx.getStorageSync("token");
+    this.curPage = getCurrentPageUrlWithArgs();
+    //this.AddFriendsGroup();
 
+  },
   components: {
   },
 
@@ -90,6 +101,7 @@ export default {
       });
     },
     addMember(){
+       this.AddFriendsGroup();
        wx.navigateTo({url: '/pages/connectLetter/addMember/main'})
     },
     onClose(clickPosition, instance) {
@@ -107,6 +119,18 @@ export default {
           });
           break;
       }
+    },
+    AddFriendsGroup(){
+      let that = this;
+      post("User/AddFriendsGroup",{
+        UserId:that.userId,
+        Token:that.token,
+        GroupName:that.groupName
+      },that.curPage).then(res => {
+         if(res.code===0){
+           that.groupId = res.data;
+         }
+      })
     }
 
   },

@@ -108,8 +108,7 @@ export function post(url, data, curpage) {
 export function toLogin(objUrl) { //identity: 1:客服；2：客户；3：师傅
     const userId = wx.getStorageSync('userId');
     const token = wx.getStorageSync('token');
-    const identity = wx.getStorageSync('identity');
-    if (userId && token && identity) {
+    if (userId && token) {
         return true;
     } else {
         wx.setStorageSync('askUrl', '');
@@ -179,8 +178,25 @@ function wx_login(code, iv, encryptedData) {
             'content-type': 'application/json' // 默认值
         },
         success: function(res) {
+
+            wx.setStorageSync("openId", res.data.data.openId);
+            wx.setStorageSync("unionid", res.data.data.unionid);
             wx.hideLoading();
             if (res.data.meta.code === 0) {
+                wx.setStorageSync("openId", "");
+                wx.setStorageSync("unionid", "");
+                wx.setStorageSync("userId", res.data.meta.dic.UserId);
+                wx.setStorageSync("token", res.data.meta.dic.Token);
+                wx.showToast({
+                    title: "登录成功！",
+                    icon: 'success',
+                    duration: 1500
+                })
+                setTimeout(() => {
+                    wx.switchTab({
+                        url: '/pages/my/main'
+                    })
+                }, 1500);
 
             } else if (res.data.meta.code === 2) {
                 wx.showToast({
@@ -214,48 +230,6 @@ function wx_login(code, iv, encryptedData) {
             wx.hideLoading();
         }
     })
-
-    // post("Login/SignIn_New", {
-    //   iv,
-    //   code,
-    //   encryptedData
-    // }).then(result => {
-    //   console.log(result);
-    //   if (result.code === 0) { //登录成功
-    //     if (wx.getStorageSync("askUrl") && wx.getStorageSync("askUrl") !== "undefined") {
-    //       if (wx.getStorageSync("mobile") !== result.data.MasterMobile && wx.getStorageSync("mobile") && wx.getStorageSync("mobile") !== "undefined") {
-    //         wx.setStorageSync("askUrl", "");
-    //       }
-    //     }
-    //     wx.setStorageSync("userId", result.data.MasterId);
-    //     wx.setStorageSync("token", result.data.MasterToken);
-    //     wx.setStorageSync("openId", result.data.MasterOpenId);
-    //     wx.setStorageSync("mobile", result.data.MasterMobile);
-    //     // wx.showToast({
-    //     //   title: '登录成功',
-    //     //   icon: 'success',
-    //     //   duration: 1500,
-    //     //   success: function () {
-    //     //     if (wx.getStorageSync("askUrl") !== "undefined" && wx.getStorageSync("askUrl")) {
-    //     //       setTimeout(function () {
-    //     //         console.log(wx.getStorageSync("askUrl"))
-    //     //         wx.reLaunch({
-    //     //           url: wx.getStorageSync("askUrl")
-    //     //         });
-    //     //         wx.setStorageSync("askUrl", "");
-    //     //       }, 1500);
-    //     //     } else {
-    //     //       setTimeout(function () {
-    //     //         wx.reLaunch({
-    //     //           url: "/pages/my/main"
-    //     //         });
-    //     //       }, 1500);
-    //     //     }
-    //     //   }
-    //     // })
-    //   }
-
-    // });
 }
 
 //微信直接登录
@@ -267,7 +241,10 @@ export function Login() {
                 wx.getUserInfo({
                     success(res2) {
                         console.log(res2);
-                        wx.setStorageSync("userInfo", res2.userInfo);
+                        wx.setStorageSync("userInfo", {
+                            "nickName": res2.userInfo.nickName,
+                            "avatarUrl": res2.userInfo.avatarUrl
+                        });
                         wx_login(res.code, res2.iv, res2.encryptedData);
                     },
                     fail() {

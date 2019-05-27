@@ -6,7 +6,7 @@
         <div class="inner">
           <div class="btns center">
             <button  class="btn bg_3daf35" @click="loginTel" open-type="getUserInfo">微信授权登陆</button>
-            <div class="btn bg_ef8120">成成账号登陆</div>
+            <div class="btn bg_ef8120" style="display:none;">成成账号登陆</div>
           </div>
         </div>
       </div>
