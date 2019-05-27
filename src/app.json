@@ -91,7 +91,11 @@
                 "withdraw/main",
                 "deposit/main",
                 "report/main",
-                "myVertical/main"
+                "myVertical/main",
+                "myCollect/main",
+                "myCoupon/main",
+                "moneyList/main",
+                "aboutUs/main"
 
             ]
         },

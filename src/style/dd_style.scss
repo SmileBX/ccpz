@@ -419,6 +419,7 @@ page {
     -o-justify-content: space-between;
     -ms-justify-content: space-between;
 }
+
 .justifyContentAround {
     justify-content: space-around;
     -webkit-justify-content: space-around;
@@ -2387,4 +2388,71 @@ page {
 .addInvoice__weui-cells .msg {
     line-height: 1.2;
     font-size: 26rpx;
+}
+
+
+/***********我的优惠券***************/
+
+.couponList {
+    padding: 20rpx 30rpx 20rpx 20rpx;
+    .item {
+        background: #fff;
+        color: #999;
+        position: relative;
+        margin-bottom: 20rpx;
+        overflow: hidden;
+        .bg {
+            position: absolute;
+            width: 200rpx;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            background: #f2f2f2;
+        }
+        .icon-status {
+            position: absolute;
+            right: -20rpx;
+            top: -20rpx;
+            z-index: 4;
+            width: 108rpx;
+            height: 108rpx;
+        }
+        .priceBox {
+            width: 200rpx;
+            color: #fff;
+            // background-image: -ms-linear-gradient(right, #ff6325, #ff952e);
+            // background-image: -moz-linear-gradient(right, #ff6325, #ff952e);
+            // background-image: -webkit-linear-gradient(right, #ff6325, #ff952e);
+            // background-image: linear-gradient(right, #ff6325, #ff952e);
+            font-size: 34rpx;
+            line-height: 1.4;
+            position: relative;
+            z-index: 3;
+            .num {
+                font-size: 60rpx;
+            }
+            .type {
+                font-size: 24rpx;
+            }
+        }
+        .txtBox {
+            p {
+                margin-top: 12rpx;
+                &.title {
+                    font-size: 30rpx;
+                    font-weight: 600;
+                    color: #333;
+                    margin-top: 16rpx;
+                }
+                padding: 0 24rpx;
+                &.msg {
+                    border-top: 1px solid #f2f2f2;
+                    font-size: 22rpx;
+                    padding-top: 12rpx;
+                    padding-bottom: 12rpx;
+                }
+            }
+        }
+    }
 }

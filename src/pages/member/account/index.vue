@@ -5,22 +5,22 @@
       <p class="title">余额</p>
     </div>
     <ul class="tabList li_50 flex center">
-      <li>
+      <li @click="gotoPage(0)">
         <div class="item">充值</div>
       </li>
-      <li>
+      <li @click="gotoPage(1)"> 
         <div class="item">提现</div>
       </li>
     </ul>
     <div class="weui-cells icon__weui-cells">
-      <div class="weui-cell">
+      <div class="weui-cell" @click="gotoPage(2)">
         <img src="/static/images/icons/mingxi.jpg" class="icon-menu" alt="">
         <div class="weui-cell__bd">
           <p class="txt">明细</p>
         </div>
         <span class="icon-arrow arrow-right"></span>
       </div>
-      <div class="weui-cell">
+      <div class="weui-cell" @click="gotoPage(3)">
         <img src="/static/images/icons/yinhangkaguanli.jpg" class="icon-menu" alt="">
         <div class="weui-cell__bd">
           <p class="txt">银行卡管理</p>
@@ -39,6 +39,7 @@ export default {
   },
   data() {
     return {
+      menuArr:["/pages/member/deposit/main","/pages/member/withdraw/main","/pages/member/moneyList/main","/pages/member/cardList/main"]
     };
   },
   methods: {
@@ -46,6 +47,11 @@ export default {
       wx.setNavigationBarTitle({
         title: "我的账户"
       });
+    },
+    gotoPage(index){
+      wx.navigateTo({
+        url:this.menuArr[index]
+      })
     }
   }
 };

@@ -1,10 +1,10 @@
 <template>
   <div class="pageContent">
     <div class="memberTop">
-      <img src="/static/images/icons/set.png" class="icon_set" alt>
+      <img src="/static/images/icons/set.png" @click="gotoSet" class="icon_set" alt>
       <span class="btnModifyInfo">修改资料</span>
       <div class="perInfo level__perInfo flex">
-        <img src="/static/images/of/tx.jpg" class="tx" alt>
+        <img @click="gotoPerson" src="/static/images/of/tx.jpg" class="tx" alt>
         <div class="info flex1">
           <p class="mt10">
             <span class="name">罗曼蒂克的爱情</span>
@@ -18,7 +18,7 @@
       <div class="menuTop section radius8 bg_fff">
         <ul class="navList li_25 center">
           <li>
-            <div class="outside">
+            <div class="outside" @click="gotoPage2(0)">
               <div class="icon-img">
                 <img src="/static/images/icons/zhanghu.jpg" alt>
               </div>
@@ -26,7 +26,7 @@
             </div>
           </li>
           <li>
-            <div class="outside">
+            <div class="outside" @click="gotoPage2(1)">
               <div class="icon-img">
                 <img src="/static/images/icons/myCollect.jpg" alt>
               </div>
@@ -34,7 +34,7 @@
             </div>
           </li>
           <li>
-            <div class="outside">
+            <div class="outside" @click="gotoPage2(2)">
               <div class="icon-img">
                 <img src="/static/images/icons/fabu.jpg" alt>
               </div>
@@ -42,7 +42,7 @@
             </div>
           </li>
           <li>
-            <div class="outside">
+            <div class="outside" @click="gotoPage2(3)">
               <div class="icon-img">
                 <img src="/static/images/icons/liulan.jpg" alt>
               </div>
@@ -66,7 +66,7 @@
         <div class="navBox">
           <ul class="navList li_25 center navList2">
             <li>
-              <div class="outside" @click="gotoPage(1)">
+              <div class="outside" @click="gotoPage(0)">
                 <div class="icon-img">
                   <img src="/static/images/icons/my_huiyuanguanli.jpg" alt>
                 </div>
@@ -74,7 +74,7 @@
               </div>
             </li>
             <li>
-              <div class="outside" @click="gotoPage(2)">
+              <div class="outside" @click="gotoPage(1)">
                 <div class="icon-img">
                   <img src="/static/images/icons/my_kaquanduihuan.jpg" alt>
                 </div>
@@ -82,7 +82,7 @@
               </div>
             </li>
             <li>
-              <div class="outside" @click="gotoPage(3)">
+              <div class="outside" @click="gotoPage(2)">
                 <div class="icon-img">
                   <img src="/static/images/icons/my_jifen.jpg" alt>
                 </div>
@@ -90,7 +90,7 @@
               </div>
             </li>
             <li>
-              <div class="outside" @click="gotoPage(4)">
+              <div class="outside" @click="gotoPage(3)">
                 <div class="icon-img">
                   <img src="/static/images/icons/my_renzheng.jpg" alt>
                 </div>
@@ -98,7 +98,7 @@
               </div>
             </li>
             <li>
-              <div class="outside" @click="gotoPage(5)">
+              <div class="outside" @click="gotoPage(4)">
                 <div class="icon-img">
                   <img src="/static/images/icons/my_youhuiquan.jpg" alt>
                 </div>
@@ -106,7 +106,7 @@
               </div>
             </li>
             <li>
-              <div class="outside" @click="gotoPage(6)">
+              <div class="outside" @click="gotoPage(5)">
                 <div class="icon-img">
                   <img src="/static/images/icons/my_fapiao.jpg" alt>
                 </div>
@@ -114,7 +114,7 @@
               </div>
             </li>
             <li>
-              <div class="outside" @click="gotoPage(7)">
+              <div class="outside" @click="gotoPage(6)">
                 <div class="icon-img">
                   <img src="/static/images/icons/my_zengzhi.jpg" alt>
                 </div>
@@ -122,7 +122,7 @@
               </div>
             </li>
             <li>
-              <div class="outside" @click="gotoPage(8)">
+              <div class="outside" @click="gotoPage(7)">
                 <div class="icon-img">
                   <img src="/static/images/icons/my_jiameng.jpg" alt>
                 </div>
@@ -130,7 +130,7 @@
               </div>
             </li>
             <li>
-              <div class="outside" @click="gotoPage(9)">
+              <div class="outside" @click="gotoPage(8)">
                 <div class="icon-img">
                   <img src="/static/images/icons/my_fankui.jpg" alt>
                 </div>
@@ -138,7 +138,7 @@
               </div>
             </li>
             <li>
-              <div class="outside" @click="gotoPage(10)">
+              <div class="outside" @click="gotoPage(9)">
                 <div class="icon-img">
                   <img src="/static/images/icons/my_bangzhu.jpg" alt>
                 </div>
@@ -146,7 +146,7 @@
               </div>
             </li>
             <li>
-              <div class="outside" @click="gotoPage(11)">
+              <div class="outside" @click="gotoPage(10)">
                 <div class="icon-img">
                   <img src="/static/images/icons/my_lianxi.jpg" alt>
                 </div>
@@ -165,6 +165,12 @@ export default {
   onLoad() {
     this.setBarTitle();
   },
+  data() {
+    return {
+      menuArr:["/pages/member/memberManage/main","/pages/member/serviceCardChange/main","/pages/member/integral/main","/pages/member/myVertical/main","/pages/member/myCoupon/main","/pages/member/invoiceList/main","/pages/member/feedback/main?type=3","/pages/member/feedback/main?type=2","/pages/member/feedback/main?type=1","/pages/member/help/main","/pages/member/contact/main"],
+      menuArr2:["/pages/member/account/main","/pages/member/myCollect/main","/pages/mine/publish/main","/pages/member/browse/main"]
+    }
+  },
   methods: {
     setBarTitle() {
       wx.setNavigationBarTitle({
@@ -172,11 +178,27 @@ export default {
       });
     },
     gotoPage(index){
-      let arr = [''];
+      //type:1:意见反馈；2：合作加盟；3：增值服务
       wx.navigateTo({
-        url:arr[index]
+        url:this.menuArr[index]
+      })
+    },
+    gotoPage2(index){
+      wx.navigateTo({
+        url:this.menuArr2[index]
+      })
+    },
+    gotoPerson(){
+      wx.navigateTo({
+        url:"/pages/mine/person/main"
+      })
+    },
+    gotoSet(){
+      wx.navigateTo({
+        url:"/pages/member/set/main"
       })
     }
+    
   }
 };
 </script>
