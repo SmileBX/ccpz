@@ -2,7 +2,7 @@
   <div class="pagePublish">
       <div class="filterMenu bg_fff" style="padding:0">
           <ul class="menu bbLi__menu bbNo__menu li_33 flex center ">
-            <li class="active">
+            <li class="active" @click="show">
               <div class="item">拼租</div>
             </li>
             <li>
@@ -21,9 +21,9 @@
           <!--item-->
           <div class="flex flexAlignCenter list_item bg_fff">
               <input type="checkbox" class="checkbox-cart" checked v-if="showEdit" />
-              <van-swipe-cell :right-width="65" :on-close="onClose"    class="swipe-cell">
+              <van-swipe-cell :right-width="65" async-close @close="onClose"    class="swipe-cell">
                 <van-cell-group>
-                  <van-cell class="item" @click="onClick" >
+                  <van-cell class="item" async-close @click="onClick" clickable>
                       <div class="outside">
                         <div class="pictrueAll">
                           <div class="pictrue img">
@@ -134,6 +134,8 @@ export default {
 
   methods: {
     onClick(e){
+      e.preventDefault();
+      e.stopPropagation()
       console.log('e',e)
     },
     setBarTitle() {
@@ -141,8 +143,23 @@ export default {
         title: "新建分组"
       });//DragEvent
     },
-    onClose(event){
-      console.log(event)
+    onClose(e) {
+      console.log(e)
+      const {position, instance} = e.mp.detail
+      switch (position) {
+        case 'left':
+        case 'cell':
+        // case 'outside':
+          instance.close();
+          break;
+        case 'right':
+          Dialog.confirm({
+            message: '确定删除吗？'
+          }).then(() => {
+            instance.close();
+          });
+          break;
+      }
     }
     // onClose(clickPosition, instance) {
     //   console.log('123',clickPosition)
@@ -172,6 +189,9 @@ export default {
 </script>
 <style lang='scss' scoped>
 @import "./index";
+ .demo-swipe-cell {
+    user-select: none;
+  }
 .van-swipe-cell__left,
 .van-swipe-cell__right {
   display: inline-block;
