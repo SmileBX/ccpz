@@ -67,8 +67,8 @@ export default {
   },
 
   methods: {
-    onClose(clickPosition) { 
-     
+    onClose(e){
+      console.log('关闭',e)
     },
     setBarTitle() {
       wx.setNavigationBarTitle({
@@ -212,5 +212,16 @@ export default {
   top: 300rpx;
   bottom: 0;
   width: 100%;
+}
+.van-swipe-cell__left,
+.van-swipe-cell__right {
+  display: inline-block;
+  width: 130rpx;
+  height: 240rpx;
+  font-size: 28rpx;
+  line-height: 240rpx;
+  color: #fff;
+  text-align: center;
+  background-color: #f44;
 }
 </style>

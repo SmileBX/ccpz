@@ -57,7 +57,7 @@ function request(url, method, data, curPage, header = {}) {
             },
             success: function(res) {
                 wx.hideLoading();
-                if (res.data.code === 0) {
+                if (res.data.code === 1) {
                     resolve(res.data);
                 } else if (res.data.code === 2) {
                     wx.showToast({
@@ -178,25 +178,40 @@ function wx_login(code, iv, encryptedData) {
             'content-type': 'application/json' // 默认值
         },
         success: function(res) {
-
             wx.setStorageSync("openId", res.data.data.openId);
             wx.setStorageSync("unionid", res.data.data.unionid);
             wx.hideLoading();
+            console.log(res.data.meta, "res.meta.meta++++++++++++++++++++++++++++++++")
             if (res.data.meta.code === 0) {
                 wx.setStorageSync("openId", "");
                 wx.setStorageSync("unionid", "");
                 wx.setStorageSync("userId", res.data.meta.dic.UserId);
                 wx.setStorageSync("token", res.data.meta.dic.Token);
                 wx.showToast({
-                    title: "登录成功！",
-                    icon: 'success',
-                    duration: 1500
-                })
-                setTimeout(() => {
-                    wx.switchTab({
-                        url: '/pages/my/main'
+                        title: "登录成功！",
+                        icon: 'success',
+                        duration: 1500,
+                        success: function() {
+                            if (wx.getStorageSync("askUrl") !== "undefined" && wx.getStorageSync("askUrl")) {
+                                setTimeout(function() {
+                                    wx.reLaunch({
+                                        url: wx.getStorageSync("askUrl")
+                                    });
+                                    wx.setStorageSync("askUrl", "");
+                                }, 1500);
+                            } else {
+                                setTimeout(function() {
+                                    wx.reLaunch({
+                                        url: "/pages/my/main"
+                                    });
+                                }, 1500);
+                            }
+
+                        }
                     })
-                }, 1500);
+                    // setTimeout(() => {
+                    //   // wx.navigateBack();
+                    // }, 1500);
 
             } else if (res.data.meta.code === 2) {
                 wx.showToast({

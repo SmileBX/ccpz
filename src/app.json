@@ -5,14 +5,10 @@
         "pages/newsletter/main",
         "pages/message/main",
         "pages/publish/main",
-        "pages/topNewsDetail/main",
-        "pages/topNewsList/main",
-        "pages/searchHistory/main",
         "pages/loginWay/main",
         "pages/codeLogin/main",
         "pages/bindTel/main",
         "pages/ggg/main"
-
 
     ],
     "window": {
@@ -34,13 +30,7 @@
         "van-switch": "./static/vant/switch/index",
         "van-swipe-cell": "./static/vant/swipe-cell/index"
     },
-    "subpackages": [{
-            "root": "pages/pagesNewsletter",
-            "pages": [
-                "index/main",
-                "group/main"
-            ]
-        },
+    "subpackages": [
         {
             "root": "pages/rent/",
             "pages": [
@@ -48,15 +38,12 @@
                 "storeDetail/main",
                 "companyDetail/main",
                 "buildTeam/main",
-                "moreIcon/main"
-            ]
-        },
-        {
-            "root": "pages/Issue/",
-            "pages": [
-                "submenu/main",
+                "moreIcon/main",
                 "rentOffic/main",
-                "rentDevice/main"
+                "rentDevice/main",
+                "searchHistory/main",
+                "submenu/main",
+                "city/main"
             ]
         },
         {
@@ -64,7 +51,18 @@
             "pages": [
                 "addFre/main",
                 "newPromise/main",
-                "chatRoom/main"
+                "chatRoom/main",
+                "topNewsDetail/main",
+                "topNewsList/main"
+            ]
+        },
+        {
+            "root": "pages/connectLetter/",
+            "pages": [
+                "addTeam/main",
+                "addNewTeam/main",
+                "addMember/main"
+
             ]
         },
         {
@@ -74,42 +72,28 @@
                 "serviceCardChange/main",
                 "changeStatus/main",
                 "contact/main",
+                "browse/main",
                 "set/main",
                 "setPayPassword/main",
                 "modifyTel/main",
-                "integral/main",
-                "integralList/main",
-                "feedback/main",
-                "memberManage/main",
+                "integral/main"
+               
+            ]
+        },
+        
+        {
+            "root": "pages/member2/",
+            "pages": [
                 "isTopAbout/main",
                 "freshenAbout/main",
                 "buyFunction/main",
                 "invoiceList/main",
                 "addInvoice/main",
-                "browse/main",
                 "cardList/main",
-                "addCard/main",
-                "addCard2/main",
-                "addCard3/main",
-                "account/main",
-                "withdrawRecord/main",
-                "withdraw/main",
-                "deposit/main",
-                "report/main",
-                "myVertical/main",
-                "myCollect/main",
-                "myCoupon/main",
-                "moneyList/main",
-                "aboutUs/main"
-
-            ]
-        },
-        {
-            "root": "pages/connectLetter/",
-            "pages": [
-                "addTeam/main",
-                "addNewTeam/main",
-                "addMember/main"
+                "integralList/main",
+                "feedback/main",
+                "memberManage/main"
+                
 
             ]
         },
@@ -123,7 +107,25 @@
                 "continueCompany/main",
                 "company/main",
                 "tags/main",
-                "publish/main"
+                "publish/main",
+                "addCard/main",
+                "addCard2/main",
+                "addCard3/main"
+            ]
+        },
+        {
+            "root": "pages/mine2/",
+            "pages": [
+                "withdrawRecord/main",
+                "withdraw/main",
+                "deposit/main",
+                "report/main",
+                "account/main",
+                "aboutUs/main",
+                "myVertical/main",
+                "myCollect/main",
+                "myCoupon/main",
+                "moneyList/main"
 
 
             ]

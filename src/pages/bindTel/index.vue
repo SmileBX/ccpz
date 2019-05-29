@@ -133,9 +133,10 @@ export default {
                 duration: 1500
               });
               setTimeout(() => {
-                wx.switchTab({
-                  url: "/pages/my/main"
-                });
+              //   wx.switchTab({
+              //     url: "/pages/my/main"
+              //   });
+              wx.navigateBack()
               }, 1500);
             } else {
               wx.showToast({

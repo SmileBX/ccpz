@@ -91,7 +91,6 @@ export default {
       currentIndicator: ""
     };
   },
-
   watch: {
     currentIndex(newVal) {
       clearTimeout(this.timer);
@@ -184,7 +183,7 @@ export default {
         }
       }, 10);
     }
-  }
+  },
   // destroyed() {
   //   clearTimeout(this.timer)
   //   clearTimeout(this.scrollTimer)

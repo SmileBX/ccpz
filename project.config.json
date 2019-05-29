@@ -3,19 +3,11 @@
 	"setting": {
 		"urlCheck": false,
 		"es6": true,
-		"enhance": false,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
 		"autoAudits": false,
-		"checkInvalidKey": true,
-		"checkSiteMap": true,
-		"uploadWithSourceMap": true,
-		"babelSetting": {
-			"ignore": [],
-			"disablePlugins": [],
-			"outputPath": ""
-		}
+		"checkInvalidKey": true
 	},
 	"miniprogramRoot": "dist/wx/",
 	"compileType": "miniprogram",
@@ -42,7 +34,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 60,
+			"current": 61,
 			"list": [
 				{
 					"id": -1,
@@ -458,17 +450,23 @@
 					"scene": null
 				},
 				{
-					"id": 59,
-					"name": "通讯录",
-					"pathName": "pages/newsletter/main",
+					"id": -1,
+					"name": "城市列表",
+					"pathName": "pages/city/main",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": -1,
-					"name": "ggg",
-					"pathName": "pages/ggg/main",
+					"name": "xiaoxi",
+					"pathName": "pages/message/main",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "xiaoxi",
+					"pathName": "pages/message/main",
 					"scene": null
 				}
 			]
