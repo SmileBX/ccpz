@@ -57,7 +57,7 @@ function request(url, method, data, curPage, header = {}) {
             },
             success: function(res) {
                 wx.hideLoading();
-                if (res.data.code === 1) {
+                if (res.data.code === 0) {
                     resolve(res.data);
                 } else if (res.data.code === 2) {
                     wx.showToast({

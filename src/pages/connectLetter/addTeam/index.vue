@@ -13,38 +13,56 @@
     </div>
     <div class="slidebg"></div>
     <!--组列表-->
-    <div class="bg_fff group boxSize">
-      <div class="teamitem flexAlignCenter flex p25" v-for="(item,index) in list" :key="index" @click="gotoAddNewTeam(item.Id,item.Name)">
-        <block v-if="item.PicList.length<=4 && item.PicList.length>0">
-          <div class="avatarbox mrr2 flex justifyContentCenter flexAlignCenter alignContentCenter" :class="'num_'+item.PicList.length">
-            <img
-              :src="item2"
-              alt
-              class="avatar"
-              v-for="(item2,index2) in item.PicList"
-              :key="index2"
-            >
-          </div>
-        </block>
-        <block v-if="item.PicList.length>4">
-          <div class="avatarbox mrr2 flex justifyContentCenter flexAlignCenter alignContentCenter">
-            <img
-              :src="item2"
-              alt
-              class="avatar"
-              v-for="(item2,index2) in item.picList"
-              :key="index2"
-            >
-          </div>
-        </block>
+    <div class="bg_fff group boxSize" style="padding:0;">
+      <van-swipe-cell
+        :right-width="65"
+        class="swipe-cell"
+        v-for="(item,index) in list"
+        :key="index"
+        @click="gotoAddNewTeam(item.Id,item.Name)"
+      >
+        <van-cell-group>
+          <van-cell>
+            <div class="teamitem flexAlignCenter flex">
+              <block v-if="item.PicList.length<=4 && item.PicList.length>0">
+                <div
+                  class="avatarbox mrr2 flex justifyContentCenter flexAlignCenter alignContentCenter"
+                  :class="'num_'+item.PicList.length"
+                >
+                  <img
+                    :src="item2"
+                    alt
+                    class="avatar"
+                    v-for="(item2,index2) in item.PicList"
+                    :key="index2"
+                  >
+                </div>
+              </block>
+              <block v-if="item.PicList.length>4">
+                <div
+                  class="avatarbox mrr2 flex justifyContentCenter flexAlignCenter alignContentCenter"
+                >
+                  <img
+                    :src="item2"
+                    alt
+                    class="avatar"
+                    v-for="(item2,index2) in item.picList"
+                    :key="index2"
+                  >
+                </div>
+              </block>
 
-        <div class="flex1">
-          <p class="flex1">{{item.Name}}</p>
-        </div>
-        <div>
-          <span class="icon-arrow arrow-right"></span>
-        </div>
-      </div>
+              <div class="flex1 text_l">
+                <p class="flex1 name">{{item.Name}}</p>
+              </div>
+              <div>
+                <span class="icon-arrow arrow-right"></span>
+              </div>
+            </div>
+          </van-cell>
+        </van-cell-group>
+        <span slot="right" class="van-swipe-cell__right" @click.stop="Delete(index,item.Id)">删除</span>
+      </van-swipe-cell>
     </div>
   </div>
 </template>
@@ -83,8 +101,27 @@ export default {
     addTeam() {
       wx.navigateTo({ url: "/pages/connectLetter/addNewTeam/main" });
     },
-    gotoAddNewTeam(id,name){
-      wx.navigateTo({ url: "/pages/connectLetter/addNewTeam/main?groupId="+id+"&groupName="+name });
+    Delete(index, id) {
+      let that = this;
+      wx.showModal({
+        title: "是否删除该分组？",
+        success(res) {
+          if (res.confirm) {
+            that.DelFriendsGroup(index,id);
+          } else if (res.cancel) {
+          }
+        }
+      });
+      //点击删除按钮
+    },
+    gotoAddNewTeam(id, name) {
+      wx.navigateTo({
+        url:
+          "/pages/connectLetter/addNewTeam/main?groupId=" +
+          id +
+          "&groupName=" +
+          name
+      });
     },
     GetFriendsGroup() {
       let that = this;
@@ -96,10 +133,34 @@ export default {
         },
         that.curPage
       ).then(res => {
-        if(res.code===0){
-          if(res.data.length>0){
+        if (res.code === 0) {
+          if (res.data.length > 0) {
             that.list = res.data;
           }
+        }
+      });
+    },
+    DelFriendsGroup(index,GroupId) {
+      //删除好友分组
+      let that = this;
+      post(
+        "User/DelFriendsGroup",
+        {
+          UserId: that.userId,
+          Token: that.token,
+          GroupId
+        },
+        that.curPage
+      ).then(res => {
+        if(res.code===0){
+          wx.showToast({
+            title: '删除分组成功!',
+            icon: 'none',
+            duration: 1500,
+            success:function(){
+              that.list.splice(index,1);
+            }
+          })
         }
       });
     }
@@ -108,8 +169,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .group .avatarbox {
-  width: 90rpx;
-  height: 90rpx;
+  width: 86rpx;
+  height: 86rpx;
   border-radius: 50%;
   overflow: hidden;
   background: #ccc;
@@ -117,30 +178,77 @@ export default {
   flex-flow: row wrap-reverse;
   margin-right: 30rpx;
   .avatar {
-    width: 30rpx;
-    height: 30rpx;
+    width: 28rpx;
+    height: 28rpx;
     box-sizing: border-box;
     border: 1px solid #ccc;
     border-radius: 0 !important;
   }
-  &.num_3,&.num_2,&.num_1{
-    .avatar{
-      width: 45rpx;
-      height: 45rpx;
+  &.num_3,
+  &.num_2,
+  &.num_1 {
+    .avatar {
+      width: 43rpx;
+      height: 43rpx;
     }
   }
-  &.num_4{
-    .avatar{
-      width: 45rpx;
-      height: 45rpx;
+  &.num_4 {
+    .avatar {
+      width: 43rpx;
+      height: 43rpx;
     }
   }
 }
-.btn-addTeam{
+.btn-addTeam {
   font-size: 32rpx;
-  .icon_add2{
+  .icon_add2 {
     width: 34rpx;
     height: 34rpx;
+  }
+}
+.group /deep/ .van-cell {
+  padding: 0;
+}
+.van-swipe-cell__left,
+.van-swipe-cell__right {
+  display: inline-block;
+  // height: 100%;
+  width: 130rpx;
+  height: 126rpx;
+  font-size: 28rpx;
+  line-height: 126rpx;
+  color: #fff;
+  text-align: center;
+  background-color: #f44;
+  position: relative;
+  vertical-align: top;
+  .icon-star {
+    width: 40rpx;
+    height: 40rpx;
+    position: absolute;
+    top: 50%;
+
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    margin-top: -20rpx;
+  }
+}
+.group /deep/ .van-hairline--top::after,
+.group /deep/ .van-hairline--left::after,
+.group /deep/ .van-hairline--right::after,
+.group /deep/ .van-hairline--bottom::after,
+.group /deep/ .van-hairline--top-bottom::after,
+.group /deep/ .van-hairline--surround::after {
+  display: none !important;
+}
+.teamitem {
+  height: 86rpx;
+  line-height: 86rpx;
+  padding: 20rpx 30rpx;
+  color: #333;
+  .name {
+    font-size: 32rpx;
   }
 }
 </style>

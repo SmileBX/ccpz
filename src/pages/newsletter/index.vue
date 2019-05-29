@@ -19,28 +19,19 @@
     </div>
 
     <div class="wrap" style="z-index:20">
-      <van-swipe-cell :right-width="65" :left-width="65" @click="onClose">
-        <span slot="left">选择</span>
-        <van-cell-group>
-          <van-cell title="单元格" value="内容"/>
-        </van-cell-group>
-        <span slot="right">删除</span>
-      </van-swipe-cell>
-      <!-- <IndexList
+      <IndexList
         :data="playerList"
         @choose="onChoose"
         @btnDel="btnDelFriend"
         @setStar="btnSetStar"
         v-if="hasplayerList"
-      ></IndexList> -->
+      ></IndexList>
     </div>
   </div>
 </template>
 
 <script>
 import IndexList from "@/components/IndexList.vue";
-// import SwipeCell  from "../../../../static/vant/swipe-cell/index";
-// import playerList from "@/utils/playlist.json";
 import { post, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
 export default {
   data() {
@@ -67,8 +58,8 @@ export default {
   },
 
   methods: {
-    onClose(e){
-      console.log('关闭',e)
+    onClose(e) {
+      console.log("关闭", e);
     },
     setBarTitle() {
       wx.setNavigationBarTitle({
@@ -139,7 +130,8 @@ export default {
         }
       });
     },
-    DelFriends(friendId) {
+    DelFriends(friendId, pIndex, index) {
+      let that = this;
       //删除好友
       post(
         "User/DelFriends",
@@ -154,7 +146,13 @@ export default {
           wx.showToast({
             title: "删除好友成功!",
             icon: "none",
-            duration: 1500
+            duration: 1500,
+            success: function() {
+              setTimeout(() => {
+                that.initData();
+                that.getFriends();
+              }, 1500);
+            }
           });
         }
       });
@@ -163,9 +161,11 @@ export default {
       // IsStar:1:是  0：取消
       let str = "";
       if (IsStar == 0) {
-        str = "取消星标好友成功！";
-      } else {
         str = "设为星标好友成功！";
+        IsStar = 1;
+      } else {
+        str = "取消星标好友成功！";
+        IsStar = 0;
       }
       let that = this;
       post(
@@ -178,19 +178,34 @@ export default {
         },
         that.curPage
       ).then(res => {
-        wx.showToast({
-          title: str,
-          icon: "none",
-          duration: 1500,
-          success: function() {
-            that.$set(that.playerList[pIndex].items[index], "IsStar", IsStar);
-          }
-        });
+        if (res.code === 0) {
+          wx.showToast({
+            title: str,
+            icon: "none",
+            duration: 1500,
+            success: function() {
+              setTimeout(() => {
+                that.initData();
+                that.getFriends();
+              }, 1500);
+            }
+          });
+        }
       });
     },
-    btnDelFriend(id) {
+    btnDelFriend(id, pIndex, index) {
+      let that = this;
       //子组件点击删除好友的时候
-      DelFriends(id);
+      wx.showModal({
+        title: "是否删除该好友？",
+        success(res) {
+          if (res.confirm) {
+            that.DelFriends(id, pIndex, index);
+          } else if (res.cancel) {
+            
+          }
+        }
+      });
     },
     btnSetStar(id, isStar, pIndex, index) {
       console.log("dsdfsdfsdf");
@@ -212,16 +227,5 @@ export default {
   top: 300rpx;
   bottom: 0;
   width: 100%;
-}
-.van-swipe-cell__left,
-.van-swipe-cell__right {
-  display: inline-block;
-  width: 130rpx;
-  height: 240rpx;
-  font-size: 28rpx;
-  line-height: 240rpx;
-  color: #fff;
-  text-align: center;
-  background-color: #f44;
 }
 </style>

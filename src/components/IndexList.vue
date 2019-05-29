@@ -28,7 +28,7 @@
                 <span class="name">{{item.name}}</span>
             </li>-->
 
-            <van-swipe-cell :right-width="130"  class="swipe-cell" :on-close="onClose"   v-for="(item,sindex) in group.items" :key="sindex">
+            <van-swipe-cell :right-width="130"  class="swipe-cell"  v-for="(item,sindex) in group.items" :key="sindex">
                 <van-cell-group>
                   <van-cell>
                     <li class="index-group-item" >
@@ -38,8 +38,8 @@
                     </li>
                   </van-cell>
                 </van-cell-group>
-                <span slot="right2" class="van-swipe-cell__right van-swipe-cell__right1" @click.stop="resetStar(item.Id,item.IsStar,nindex,sindex)"><img v-if="item.IsStar===0" src="/static/images/icons/star.png" class="icon-star" alt=""><img v-if="item.IsStar===1" src="/static/images/icons/star2.png" class="icon-star" alt=""></span>
-                <span slot="right" class="van-swipe-cell__right" @click.stop="btnDel(item.Id)">删除</span>
+                <span slot="right" class="van-swipe-cell__right van-swipe-cell__right1" @click.stop="resetStar(item.Id,item.IsStar,nindex,sindex)"><img v-if="item.IsStar===0" src="/static/images/icons/star.png" class="icon-star" alt=""><img v-if="item.IsStar===1" src="/static/images/icons/star2.png" class="icon-star" alt=""></span>
+                <span slot="right" class="van-swipe-cell__right" @click.stop="Delete(item.Id,nindex,sindex)">删除</span>
             </van-swipe-cell>
           </ul>
         </li>
@@ -159,8 +159,8 @@ export default {
     resetStar(id, isStar, pIndex, index) {
       this.$emit("setStar", id, isStar, pIndex, index);
     },
-    btnDel(id) {
-      this.$emit("btnDel", item);
+    Delete(id, pIndex, index) {
+      this.$emit("btnDel", id, pIndex, index);
     },
     onListWrapScroll(e) {
       // console.log(e,"+++++++++++++++++++++++")
