@@ -212,6 +212,12 @@ radio .wx-radio-input.wx-radio-input-checked::before {
 .flexWrap{
     flex-wrap:wrap
 }
+//*文字超出隐藏*/
+.text_space{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
 /*************************添加好友*******************/
 .head{
     padding:0 30rpx;

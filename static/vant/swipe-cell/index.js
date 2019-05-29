@@ -104,7 +104,10 @@ VantComponent({
             }
         },
         onClick(event) {
+            debugger;
+            console.log('123',event)
             const { key: position = 'outside' } = event.currentTarget.dataset;
+            
             this.$emit('click', position);
             if (!this.data.offset) {
                 return;

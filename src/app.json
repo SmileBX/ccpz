@@ -87,20 +87,7 @@
                 "invoiceList/main",
                 "addInvoice/main",
                 "browse/main",
-                "cardList/main",
-                "addCard/main",
-                "addCard2/main",
-                "addCard3/main",
-                "account/main",
-                "withdrawRecord/main",
-                "withdraw/main",
-                "deposit/main",
-                "report/main",
-                "myVertical/main",
-                "myCollect/main",
-                "myCoupon/main",
-                "moneyList/main",
-                "aboutUs/main"
+                "cardList/main"
 
             ]
         },
@@ -123,7 +110,20 @@
                 "continueCompany/main",
                 "company/main",
                 "tags/main",
-                "publish/main"
+                "publish/main",
+                "addCard/main",
+                "addCard2/main",
+                "addCard3/main",
+                "account/main",
+                "withdrawRecord/main",
+                "withdraw/main",
+                "deposit/main",
+                "report/main",
+                "myVertical/main",
+                "myCollect/main",
+                "myCoupon/main",
+                "moneyList/main",
+                "aboutUs/main"
 
 
             ]

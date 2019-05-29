@@ -19,6 +19,16 @@ import {Login } from "@/utils";
 export default {
   onLoad() {
   },
+  onShow(){
+    if (this.$root.$mp.query.askUrl) {
+      let askUrl = this.$root.$mp.query.askUrl
+        .toString()
+        .replace(/\%3F/g, "?")
+        .replace(/\%3D/g, "=")
+        .replace(/\%26/g, "&");
+      wx.setStorageSync('askUrl',askUrl);
+    }
+  },
   data() {
     return {
       

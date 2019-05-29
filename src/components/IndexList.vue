@@ -21,9 +21,9 @@
         <li v-for="(item,index) in indexList" :key="index" @touchstart.prevent="_onTouchStartIndex(index)" :data-index="index" class="nav-item" :class="{'active':currentIndex===index}">{{item}}</li>
       </ul>
     </div>
-    <transition name="fade">
+    <!-- <transition name="fade">
       <div class="index-indicator" v-show="moving">{{currentIndicator}}</div>
-    </transition>
+    </transition> -->
   </div>
 </template>
 <script type="text/javascript">
@@ -56,6 +56,7 @@ export default {
       currentIndicator: ''
     }
   },
+ 
   watch: {
     currentIndex(newVal) {
       clearTimeout(this.timer)
@@ -135,10 +136,10 @@ export default {
       },10)
     }
   },
-  destroyed() {
-    clearTimeout(this.timer)
-    clearTimeout(this.scrollTimer)
-  }
+  // destroyed() {
+  //   clearTimeout(this.timer)
+  //   clearTimeout(this.scrollTimer)
+  // }
 }
 </script>
 

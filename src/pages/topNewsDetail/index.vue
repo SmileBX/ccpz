@@ -3,7 +3,10 @@
     <div class="content__hd">
       <h2 class="title">{{newsInfo.Title}}</h2>
       <p class="text_r">
-        <span class="readNum">
+        <span class="readNum"  v-if="param=='message'">
+          <img src="/static/images/icons/time.jpg" alt class="read" style="margin-right:30rpx">{{newsInfo.PubTime}}
+        </span>
+        <span class="readNum" v-else>
           <img src="/static/images/icons/read.png" alt class="read">{{newsInfo.Hits}}
         </span>
       </p>
@@ -22,11 +25,15 @@
 </template>
 <script>
 //图片在内容里面
-import { post} from "@/utils";
+import { post,getCurrentPageUrlWithArgs} from "@/utils";
 export default {
   data(){
     return {
       newsId:'',
+      param:'',
+      userId:'',
+      token:'',
+      curPage:'',
       newsInfo:{}
     }
   },
@@ -34,8 +41,19 @@ export default {
     this.setBarTitle();
   },
   onShow(){
+    this.userId = wx.getStorageSync("userId");
+    this.token = wx.getStorageSync("token");
+    this.curPage = getCurrentPageUrlWithArgs();
     this.newsId = this.$root.$mp.query.Id
-    this.getNewsDetail()
+    this.param = this.$root.$mp.query.url
+    if(this.param == 'index'){
+         console.log('头条')
+        this.getNewsDetail() //获取头条详情
+    }
+    if(this.param == 'message'){ //获取通知详情
+      console.log('通知')
+        this.getNoticeDetail()
+    }
   },
   methods: {
     setBarTitle() {
@@ -43,13 +61,30 @@ export default {
         title: "成成头条"
       });
     },
-    //获取消息详情
+    //获取头条消息详情
     getNewsDetail(){
       post('About/GetAbout',{
         Id:this.newsId
       }).then(res=>{
          if(res.code==0){
            this.newsInfo = res.data
+         }
+      })
+    },
+    //通知详情
+    getNoticeDetail(){
+      post('User/ReadSysNotice',{
+          UserId: this.userId,
+          Token: this.token,
+          NoticeId:this.newsId  
+      },this.curPage).then(res=>{
+        console.log(res.data.Memo,"通知详情")
+        if(res.code==0){
+           this.newsInfo = {
+             Title:res.data.Title,
+             PubTime:res.data.PubTime.split(" ")[0].split("-").join("."),
+             Content:res.data.Memo
+           }
          }
       })
     }

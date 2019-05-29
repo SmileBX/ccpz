@@ -21,9 +21,9 @@
           <!--item-->
           <div class="flex flexAlignCenter list_item bg_fff">
               <input type="checkbox" class="checkbox-cart" checked v-if="showEdit" />
-              <van-swipe-cell :right-width="65" :on-close="onClose"       class="swipe-cell">
+              <van-swipe-cell :right-width="65" :on-close="onClose"    class="swipe-cell">
                 <van-cell-group>
-                  <van-cell class="item">
+                  <van-cell class="item" @click="onClick" >
                       <div class="outside">
                         <div class="pictrueAll">
                           <div class="pictrue img">
@@ -112,11 +112,12 @@
       <!-- <div class="ftBtn fixed bm0">
           <div class="btns">编辑</div>
       </div> -->
+      <van-dialog id="van-dialog"/>
   </div>
 </template>
 
 <script>
-
+import Dialog from "../../../../static/vant/dialog/dialog";
 export default {
   data () {
     return {
@@ -132,27 +133,35 @@ export default {
   },
 
   methods: {
+    onClick(e){
+      console.log('e',e)
+    },
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "新建分组"
-      });
+      });//DragEvent
     },
-    onClose(clickPosition, instance) {
-      switch (clickPosition) {
-        case 'left':
-        case 'cell':
-        case 'outside':
-          instance.close();
-          break;
-        case 'right':
-          Dialog.confirm({
-            message: '确定删除吗？'
-          }).then(() => {
-            instance.close();
-          });
-          break;
-      }
+    onClose(event){
+      console.log(event)
     }
+    // onClose(clickPosition, instance) {
+    //   console.log('123',clickPosition)
+    //   return false;
+    //   switch (clickPosition) {
+    //     case 'left':
+    //     case 'cell':
+    //     case 'outside':
+    //       instance.close();
+    //       break;
+    //     case 'right':
+    //       Dialog.confirm({
+    //         message: '确定删除吗？'
+    //       }).then(() => {
+    //         instance.close();
+    //       });
+    //       break;
+    //   }
+    // }
 
   },
 

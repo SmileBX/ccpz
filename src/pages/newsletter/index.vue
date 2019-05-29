@@ -51,6 +51,9 @@ export default {
   },
 
   methods: {
+    onClose(e){
+      console.log('关闭',e)
+    },
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "通讯录"
@@ -67,6 +70,9 @@ export default {
       },that.curPage).then(res => {
         console.log(res);
       });
+    },
+    onChoose(e){
+      console.log(e,"66666666666+++++++++++++++++++")
     }
   },
 
@@ -81,5 +87,16 @@ export default {
   top: 300rpx;
   bottom: 0;
   width: 100%;
+}
+.van-swipe-cell__left,
+.van-swipe-cell__right {
+  display: inline-block;
+  width: 130rpx;
+  height: 240rpx;
+  font-size: 28rpx;
+  line-height: 240rpx;
+  color: #fff;
+  text-align: center;
+  background-color: #f44;
 }
 </style>

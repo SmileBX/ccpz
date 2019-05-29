@@ -435,7 +435,7 @@
 </template>
 
 <script>
-import { post} from "@/utils";
+import { post,getCurrentPageUrlWithArgs} from "@/utils";
 export default {
   data() {
     return {
@@ -492,17 +492,9 @@ export default {
 
 
 
-
-
-
-
-
-
-
-
     goTo(n){
         if(n==1){  //头条消息
-            wx.navigateTo({url:'/pages/topNewsList/main'})
+            wx.navigateTo({url:'/pages/topNewsList/main?url=index'})
         }else if(n==5){ //5组件团队
             wx.navigateTo({url:'/pages/rent/buildTeam/main'})
         }else{
@@ -513,7 +505,7 @@ export default {
     },
     //头条详情
     newsDetail(id){
-      wx.navigateTo({url:'/pages/topNewsDetail/main?Id='+id})
+      wx.navigateTo({url:'/pages/topNewsDetail/main?url=index&Id='+id})
     }
   },
 

@@ -86,6 +86,7 @@ export default {
     this.setBarTitle();
     this.cityList()
   },
+ 
   methods: {
      bindBlur(e) {
       this.inputName = '';
