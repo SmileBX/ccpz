@@ -67,7 +67,7 @@ function request(url, method, data, curPage, header = {}) {
                     })
                     setTimeout(() => {
                         wx.redirectTo({
-                            url: '/pages/login2/main?askUrl=' + curPage
+                            url: '/pages/loginWay/main?askUrl=' + curPage
                         })
                     }, 1500);
 

@@ -3,11 +3,19 @@
 	"setting": {
 		"urlCheck": false,
 		"es6": true,
+		"enhance": false,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
 		"autoAudits": false,
-		"checkInvalidKey": true
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
 	},
 	"miniprogramRoot": "dist/wx/",
 	"compileType": "miniprogram",
@@ -34,7 +42,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 15,
+			"current": 60,
 			"list": [
 				{
 					"id": -1,
@@ -446,6 +454,20 @@
 					"id": -1,
 					"name": "验证码登录",
 					"pathName": "pages/codeLogin/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 59,
+					"name": "通讯录",
+					"pathName": "pages/newsletter/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "ggg",
+					"pathName": "pages/ggg/main",
 					"query": "",
 					"scene": null
 				}

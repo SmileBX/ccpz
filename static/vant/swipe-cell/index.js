@@ -61,11 +61,9 @@ VantComponent({
             if (direction > 0 && -offset > rightWidth * threshold && rightWidth > 0) {
                 this.open('right');
                 // left
-            }
-            else if (direction < 0 && offset > leftWidth * threshold && leftWidth > 0) {
+            } else if (direction < 0 && offset > leftWidth * threshold && leftWidth > 0) {
                 this.open('left');
-            }
-            else {
+            } else {
                 this.swipeMove();
             }
         },
@@ -104,15 +102,17 @@ VantComponent({
             }
         },
         onClick(event) {
+            console.log(event.currentTarget.dataset);
             const { key: position = 'outside' } = event.currentTarget.dataset;
+            console.log("点击了");
             this.$emit('click', position);
+
             if (!this.data.offset) {
                 return;
             }
             if (this.data.asyncClose) {
                 this.$emit('close', { position, instance: this });
-            }
-            else {
+            } else {
                 this.swipeMove(0);
             }
         }

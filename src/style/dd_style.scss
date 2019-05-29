@@ -428,6 +428,14 @@ page {
     -ms-justify-content: space-around;
 }
 
+.alignContentCenter {
+    align-content: center;
+    -webkit-align-content: center;
+    -moz-align-content: center;
+    -ms-align-content: center;
+    -o-align-content: center;
+}
+
 .icon-arrow {
     display: inline-block;
     font-size: 0;
