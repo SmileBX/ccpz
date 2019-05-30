@@ -19,11 +19,14 @@
         class="swipe-cell"
         v-for="(item,index) in list"
         :key="index"
-        @click="gotoAddNewTeam(item.Id,item.Name)"
+        
       >
         <van-cell-group>
           <van-cell>
-            <div class="teamitem flexAlignCenter flex">
+            <div class="teamitem flexAlignCenter flex" @click="gotoAddNewTeam(item.Id,item.Name)">
+              <block v-if="item.PicList.length===0">
+                <img src="/static/images/icons/ava_bg.jpg" class="avatar" style="width:86rpx;height:86rpx;margin-right:30rpx;" alt="">
+              </block>
               <block v-if="item.PicList.length<=4 && item.PicList.length>0">
                 <div
                   class="avatarbox mrr2 flex justifyContentCenter flexAlignCenter alignContentCenter"
@@ -115,6 +118,7 @@ export default {
       //点击删除按钮
     },
     gotoAddNewTeam(id, name) {
+      console.log("fsdfsdfsd__________");
       wx.navigateTo({
         url:
           "/pages/connectLetter/addNewTeam/main?groupId=" +

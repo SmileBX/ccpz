@@ -21,6 +21,7 @@
     <div class="wrap" style="z-index:20">
       <IndexList
         :data="playerList"
+        :hasSetStar="true"
         @choose="onChoose"
         @btnDel="btnDelFriend"
         @setStar="btnSetStar"
@@ -100,9 +101,10 @@ export default {
             starArr.forEach(item => {
               that.playerList[0].items.push({
                 Id: item.Id,
-                name: item.NickName,
-                avatar: item.Headimgurl,
-                IsStar: item.IsStar
+                NickName: item.NickName,
+                Headimgurl: item.Headimgurl,
+                IsStar: item.IsStar,
+                NoteName:item.NoteName
               });
             });
           }
@@ -117,9 +119,10 @@ export default {
               if (item2.FirstCode == item.title) {
                 item.items.push({
                   Id: item2.Id,
-                  name: item2.NickName,
-                  avatar: item2.Headimgurl,
-                  IsStar: item2.IsStar
+                  NickName: item2.NickName,
+                  Headimgurl: item2.Headimgurl,
+                  IsStar: item2.IsStar,
+                  NoteName:item.NoteName
                 });
               }
             });

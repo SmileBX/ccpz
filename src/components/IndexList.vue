@@ -28,17 +28,17 @@
                 <span class="name">{{item.name}}</span>
             </li>-->
 
-            <van-swipe-cell :right-width="130"  class="swipe-cell"  v-for="(item,sindex) in group.items" :key="sindex">
+            <van-swipe-cell :right-width="[hasSetStar ? 130 : 65]"  class="swipe-cell"  v-for="(item,sindex) in group.items" :key="sindex">
                 <van-cell-group>
                   <van-cell>
                     <li class="index-group-item" >
-                      <img v-if="useLazyLoad"  :src="item.avatar" class="avatar" alt="">
-                      <img v-else :src="item.avatar" class="avatar" alt="">
-                      <span class="name">{{item.name}}</span>
+                      <!-- <img v-if="useLazyLoad"  :src="item.avatar" class="avatar" alt=""> -->
+                      <img :src="item.Headimgurl" class="avatar" alt="">
+                      <span class="name">{{item.NickName}}</span>
                     </li>
                   </van-cell>
                 </van-cell-group>
-                <span slot="right" class="van-swipe-cell__right van-swipe-cell__right1" @click.stop="resetStar(item.Id,item.IsStar,nindex,sindex)"><img v-if="item.IsStar===0" src="/static/images/icons/star.png" class="icon-star" alt=""><img v-if="item.IsStar===1" src="/static/images/icons/star2.png" class="icon-star" alt=""></span>
+                <span slot="right" v-if="hasSetStar" class="van-swipe-cell__right van-swipe-cell__right1" @click.stop="resetStar(item.Id,item.IsStar,nindex,sindex)"><img v-if="item.IsStar===0" src="/static/images/icons/star.png" class="icon-star" alt=""><img v-if="item.IsStar===1" src="/static/images/icons/star2.png" class="icon-star" alt=""></span>
                 <span slot="right" class="van-swipe-cell__right" @click.stop="Delete(item.Id,nindex,sindex)">删除</span>
             </van-swipe-cell>
           </ul>
@@ -75,6 +75,10 @@ export default {
       default: function() {
         return [];
       }
+    },
+    hasSetStar:{
+      type: Boolean,
+      default: false
     },
     useLazyLoad: {
       type: Boolean,
@@ -228,7 +232,7 @@ export default {
     }
 
     .name {
-      margin-left: 40rpx;
+      margin-left: 30rpx;
       color: #333;
       font-size: 28rpx;
     }

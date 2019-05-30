@@ -1,19 +1,22 @@
 /*复选框清除默认样式*/
-.checkbox-cart .wx-checkbox-input{
-    width:40rpx;
-    height:40rpx;
+
+.checkbox-cart .wx-checkbox-input {
+    width: 40rpx;
+    height: 40rpx;
     border-radius: 50%!important;
-  }
-  .checkbox-cart .wx-checkbox-input.wx-checkbox-input-checked{
+}
+
+.checkbox-cart .wx-checkbox-input.wx-checkbox-input-checked {
     background: #ff9325;
     border-radius: 50%!important;
-    border:0!important;
-    width:45rpx;
-    height:45rpx;
-  }
-  .checkbox-cart .wx-checkbox-input.wx-checkbox-input-checked::before{
-    width:45rpx;
-    height:45rpx;
+    border: 0!important;
+    width: 45rpx;
+    height: 45rpx;
+}
+
+.checkbox-cart .wx-checkbox-input.wx-checkbox-input-checked::before {
+    width: 45rpx;
+    height: 45rpx;
     border-radius: 50%!important;
     line-height: 45rpx;
     text-align: center;
@@ -22,20 +25,31 @@
     background: transparent;
     transform: translate(-50%, -50%) scale(1);
     -webkit-transform: translate(-50%, -50%) scale(1);
-  }
+}
+
+
 /****************修改radio样式*********************/
+
+
 /*样式1：选中后中间为圆点*/
+
+
 /*外面的边框可以这样*/
-radio .wx-radio-input{
+
+radio .wx-radio-input {
     height: 44rpx;
     width: 44rpx;
     border-radius: 50%;
-    border:1rpx solid #ececec;//替换边框 隐藏原有边框
+    border: 1rpx solid #ececec; //替换边框 隐藏原有边框
 }
+
 radio .wx-radio-input.wx-radio-input-checked {
     border: 1rpx solid #ff9325!important;
 }
+
+
 /*中间圆点   选中的背景需要是xml中设置*/
+
 radio .wx-radio-input.wx-radio-input-checked::before {
     border-radius: 50%;
     /* 圆角 */
@@ -44,7 +58,7 @@ radio .wx-radio-input.wx-radio-input-checked::before {
     height: 20rpx;
     /* 选中后对勾大小，不要超过背景的尺寸 */
     text-align: center;
-    line-height:20rpx!important;
+    line-height: 20rpx!important;
     font-size: 0;
     /* 对勾大小 30rpx */
     color: #fff;
@@ -53,7 +67,10 @@ radio .wx-radio-input.wx-radio-input-checked::before {
     transform: translate(-50%, -50%) scale(1);
     -webkit-transform: translate(-50%, -50%) scale(1);
 }
+
+
 /*样式2：选中后重点为对勾*/
+
 // radio .wx-radio-input {
 //     /* 自定义样式.... */
 //     height: 40rpx;
@@ -62,12 +79,10 @@ radio .wx-radio-input.wx-radio-input-checked::before {
 //     border: 2rpx solid #999;
 //     background: transparent;
 // }
-
 // radio .wx-radio-input.wx-radio-input-checked {
 //     border: none;
 //     background: #ff9325;
 // }
-
 // radio .wx-radio-input.wx-radio-input-checked::before {
 //     border-radius: 50%;
 //     /* 圆角 */
@@ -86,9 +101,9 @@ radio .wx-radio-input.wx-radio-input-checked::before {
 //     -webkit-transform: translate(-50%, -50%) scale(1);
 // }
 
+/*遮罩层*/
 
-  /*遮罩层*/
-  .mask {
+.mask {
     position: fixed;
     background: rgba(0, 0, 0, .5);
     width: 100%;
@@ -97,355 +112,446 @@ radio .wx-radio-input.wx-radio-input-checked::before {
     top: 0;
     left: 0;
 }
-.modal_mask{
+
+.modal_mask {
     position: fixed;
-    background:#fff;
+    background: #fff;
     width: 100%;
     z-index: 500;
     left: 0;
     height: 528rpx;
     bottom: 0!important;
 }
+
+
 /*字体24rpx*/
-.font_four{
-    font-size:24rpx;
-    color:#9999
+
+.font_four {
+    font-size: 24rpx;
+    color: #9999
 }
-.fontColor{
-    color:#9999
+
+.fontColor {
+    color: #9999
 }
-.fontColor99{
-    color:#ff952e
+
+.fontColor99 {
+    color: #ff952e
 }
-.font32{
+
+.font32 {
     font-size: 32rpx;
 }
-.font30{
+
+.font30 {
     font-size: 30rpx;
 }
-.fontBold{
+
+.fontBold {
     font-weight: 600
 }
-.p1{
-    padding:35rpx 0!important;
-}
-.p2{
-    padding:30rpx 0!important;
-}
-.p25{
-    padding:25rpx 0!important;
-}
-.p3{
-    padding:10rpx 0!important;
+
+.p1 {
+    padding: 35rpx 0!important;
 }
 
-.boxSize{
+.p2 {
+    padding: 30rpx 0!important;
+}
+
+.p25 {
+    padding: 25rpx 0!important;
+}
+
+.p3 {
+    padding: 10rpx 0!important;
+}
+
+.boxSize {
     box-sizing: border-box
 }
-.padwid{
-    padding:0 30rpx;
-}
-.pall{
-    padding:35rpx 30rpx;
-}
-.mr0{
-    margin-right:0!important
+
+.padwid {
+    padding: 0 30rpx;
 }
 
-.mrl2{
-    margin-left:20rpx
+.pall {
+    padding: 35rpx 30rpx;
 }
-.mrr2{
-    margin-right:20rpx
+
+.mr0 {
+    margin-right: 0!important
 }
-.mm1{
-    margin:0 20rpx
+
+.mrl2 {
+    margin-left: 20rpx
 }
+
+.mrr2 {
+    margin-right: 20rpx
+}
+
+.mm1 {
+    margin: 0 20rpx
+}
+
+
 /*中间块*/
-.slidebg{
+
+.slidebg {
     background: #f2f2f2;
-    height:22rpx;
-    width:100%;
+    height: 22rpx;
+    width: 100%;
 }
+
+
 /*线条750**/
+
 .line2 {
-    width:100%;
-    height:1rpx;
-    background:#f2f2f2;
+    width: 100%;
+    height: 1rpx;
+    background: #f2f2f2;
 }
+
+
 /*边框*/
+
 .sign:after,
-.avatarhead:after{
+.avatarhead:after {
     position: absolute;
     content: "";
     height: 1px;
     width: 100%;
     background: #ececec;
-    bottom:0;
+    bottom: 0;
 }
+
+
 /*按钮1*/
-.btnSub{
-    width:690rpx;
-    height:88rpx;
-    background:#ff952e;
-    color:#fff;
+
+.btnSub {
+    width: 690rpx;
+    height: 88rpx;
+    background: #ff952e;
+    color: #fff;
     line-height: 88rpx;
     text-align: center;
-    border-radius:15rpx;
-    margin:0 auto
+    border-radius: 15rpx;
+    margin: 0 auto
 }
+
+
 /*按钮2*/
-.btnSub2{
-    width:100%;
-    height:88rpx;
-    background:#ff952e;
-    color:#fff;
+
+.btnSub2 {
+    width: 100%;
+    height: 88rpx;
+    background: #ff952e;
+    color: #fff;
     line-height: 88rpx;
     text-align: center;
-    position:fixed;
-    bottom:0
+    position: fixed;
+    bottom: 0
 }
+
+
 /*顶部线条*/
-.borderTop{
-    border-top:1rpx solid #ececec;
+
+.borderTop {
+    border-top: 1rpx solid #ececec;
 }
-.flexWrap{
-    flex-wrap:wrap
+
+.flexWrap {
+    flex-wrap: wrap
 }
+
 //*文字超出隐藏*/
-.text_space{
+.text_space {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
 }
+
+
 /*************************添加好友*******************/
-.head{
-    padding:0 30rpx;
-    border-top:1rpx solid #ececec;
+
+.head {
+    padding: 0 30rpx;
+    border-top: 1rpx solid #ececec;
 }
-.avatarhead{
-    padding:40rpx 0;
+
+.avatarhead {
+    padding: 40rpx 0;
     position: relative;
 }
+
 .sign:after,
-.avatarhead:after{
+.avatarhead:after {
     position: absolute;
     content: "";
     height: 1px;
     width: 100%;
     background: #ececec;
-    bottom:0;
+    bottom: 0;
 }
-.avatarbox{
-    width:80rpx;
-    height:80rpx;
-    margin-right:40rpx;
+
+.avatarbox {
+    width: 80rpx;
+    height: 80rpx;
+    margin-right: 40rpx;
 }
-.avatar{
-    width:100%;
-    height:100%;
+
+.avatar {
+    width: 100%;
+    height: 100%;
     border-radius: 50%;
     // margin-right:40rpx;
 }
 
-.vertical{
-    padding:30rpx 0 70rpx 0;
+.vertical {
+    padding: 30rpx 0 70rpx 0;
     box-sizing: border-box
 }
+
 .yanz::-webkit-input-placeholder {
     /* placeholder颜色  */
     color: #000000;
     /* placeholder字体大小  */
     font-size: 12px;
     /* placeholder位置  */
-   }
-   .setclass{
-       padding:20rpx 30rpx;
-       color:#9999;
-       box-sizing: border-box;
-       font-size: 26rpx;
-   }
-   .group{
-       padding:0 30rpx;
-       .slide{
-           padding:20rpx 0;
-           p:first-child{
-               color:#9999;
-               margin-right:40rpx;
-           }
-       }
-   }
-   .sign{
-       position: relative;
-   }
-  .addtop{
-      margin-top:70rpx;
-  }
-  /********************消息*********************/
-  .circlePosition{
-      position: relative;
-  }
-.onlynum{
+}
+
+.setclass {
+    padding: 20rpx 30rpx;
+    color: #9999;
+    box-sizing: border-box;
+    font-size: 26rpx;
+}
+
+.group {
+    padding: 0 30rpx;
+    .slide {
+        padding: 20rpx 0;
+        p:first-child {
+            color: #9999;
+            margin-right: 40rpx;
+        }
+    }
+}
+
+.sign {
+    position: relative;
+}
+
+.addtop {
+    margin-top: 70rpx;
+}
+
+
+/********************消息*********************/
+
+.circlePosition {
+    position: relative;
+}
+
+.onlynum {
     top: 0!important;
     right: 0!important;
-    background:#f00!important
+    background: #f00!important
 }
-.msgnum{
-    right:29rpx!important;
-    background:#f00!important
+
+.msgnum {
+    right: 29rpx!important;
+    background: #f00!important
 }
+
+
 /********************新朋友*********************/
-.btnadd{
-    background:#f4f4f4;
-    padding:5rpx 15rpx;
-    font-weight:400
+
+.btnadd {
+    background: #f4f4f4;
+    padding: 5rpx 15rpx;
+    font-weight: 400
 }
-.ignoreBtn span{
+
+.ignoreBtn span {
     display: inline-block;
-    width:100rpx;
-    height:56rpx;
+    width: 100rpx;
+    height: 56rpx;
     line-height: 56rpx;
     text-align: center;
     border-radius: 8rpx;
 }
-.ignore{
-    border:1rpx solid #ff952e;
-    color:#ff952e
+
+.ignore {
+    border: 1rpx solid #ff952e;
+    color: #ff952e
 }
-.pass{
-    background:#ff952e;
-    color:#fff;
-    margin-left:20rpx;
+
+.pass {
+    background: #ff952e;
+    color: #fff;
+    margin-left: 20rpx;
 }
+
+
 /*******************聊天对话****************************/
-.tagmsg{
-    background:#ff952e;
-    color:#fff;
-    padding:20rpx;
-    border-radius:10rpx;
-    margin:0 20rpx;
+
+.tagmsg {
+    background: #ff952e;
+    color: #fff;
+    padding: 20rpx;
+    border-radius: 10rpx;
+    margin: 0 20rpx;
     position: relative;
 }
+
+
 /**三角*/
-.sj{
-    width:6rpx;
-    height:6rpx;
-    border-top-color:transparent;
+
+.sj {
+    width: 6rpx;
+    height: 6rpx;
+    border-top-color: transparent;
     border-right-color: transparent;
     position: absolute;
-    top:50%;
-    margin-top:-3rpx!important
+    top: 50%;
+    margin-top: -3rpx!important
 }
+
+
 /*黄 右三角*/
-.rsj{
-    border:6rpx solid #ff952e;
-    background:#ff952e;
-    right:-10rpx;
+
+.rsj {
+    border: 6rpx solid #ff952e;
+    background: #ff952e;
+    right: -10rpx;
     transform: rotate(-135deg)
 }
+
+
 /*白 左三角*/
-.lsj{
-    border:6rpx solid #fff;
-    background:#fff;
-    left:-10rpx;
+
+.lsj {
+    border: 6rpx solid #fff;
+    background: #fff;
+    left: -10rpx;
     transform: rotate(45deg)
 }
 
-.bottomicon{
+.bottomicon {
     position: fixed;
-    bottom:0;
-    width:100%;
+    bottom: 0;
+    width: 100%;
+}
+
+.inputbtn {
+    border: 1rpx solid #f2f2f2;
+    padding: 10rpx 30rpx;
+    input {
+        border: 1rpx solid #f2f2f2;
+        padding: 10rpx 20rpx;
+        border-radius: 10rpx;
+        background: #f4f4f4;
+    }
+}
+
+.logimg {
+    width: 54rpx;
+    height: 54rpx;
+    margin-left: 30rpx;
+}
+
+.icon_box {
+    padding: 30rpx;
+    div {
+        margin-right: 60rpx;
+    }
+}
+
+.icon_put {
+    width: 120rpx;
+    height: 120rpx;
 }
 
 
-.inputbtn{
-    border:1rpx solid #f2f2f2;
-    padding:10rpx 30rpx;
-    input{
-        border:1rpx solid #f2f2f2;
-        padding:10rpx 20rpx;
-        border-radius:10rpx;
-        background:#f4f4f4;
-    }
-}
-.logimg{
-    width:54rpx;
-    height:54rpx;
-    margin-left:30rpx;
-}
-.icon_box{
-    padding:30rpx;
-    div{
-        margin-right:60rpx;
-    }
-}
-.icon_put{
-    width:120rpx;
-    height:120rpx;
-}
 /*********************通讯录**************************/
+
+
 /*分组*/
-.addteam{
-    font-size:32rpx;
-    .teamitem{
+
+.addteam {
+    font-size: 32rpx;
+    .teamitem {
         position: relative;
     }
-    .teamitem:after{
+    .teamitem:after {
         position: absolute;
-        content:'';
-        bottom:0;
-        height:1px;
-        background:#f2f2f2;
-        width:100%;
+        content: '';
+        bottom: 0;
+        height: 1px;
+        background: #f2f2f2;
+        width: 100%;
     }
-    
 }
+
 .icon_search {
     width: 36rpx;
     height: 37rpx;
     vertical-align: middle;
     margin-right: 10rpx;
 }
-.icon_add2{
-    width:30rpx;
-    height:30rpx;
-    vertical-align: middle;
-    margin-right:10rpx;
-}
-/*通讯录*/
-.icon_fenzu{
-    width:80rpx;
-    height:80rpx;
-    margin-right:20rpx;
-}
-.listname{
-    text-align:left;
-    color:#1f1f1f
-}
-/*********************我的**************************/
-.icon_card{
-    width:264rpx;
-    height:156rpx;
-    position: absolute;
-    right:30rpx;
-    top:30rpx;
-}
-.person_info{
-    color:#ffffff;
-    margin-left:10rpx;
-    margin-top:5rpx;
-    .name{
-        font-size:55rpx;
-    }
-    .certical{
-        margin:20rpx 0;
-    }
-    .tips{
-        color:#fef3e9!important
-    }
 
+.icon_add2 {
+    width: 30rpx;
+    height: 30rpx;
+    vertical-align: middle;
+    margin-right: 10rpx;
 }
+
+
+/*通讯录*/
+
+.icon_fenzu {
+    width: 80rpx;
+    height: 80rpx;
+    margin-right: 30rpx;
+}
+
+.listname {
+    text-align: left;
+    color: #1f1f1f
+}
+
+
+/*********************我的**************************/
+
+.icon_card {
+    width: 264rpx;
+    height: 156rpx;
+    position: absolute;
+    right: 30rpx;
+    top: 30rpx;
+}
+
+.person_info {
+    color: #ffffff;
+    margin-left: 10rpx;
+    margin-top: 5rpx;
+    .name {
+        font-size: 55rpx;
+    }
+    .certical {
+        margin: 20rpx 0;
+    }
+    .tips {
+        color: #fef3e9!important
+    }
+}
+
+
 /*上传照片*/
+
 .uploadSection {
     background: #fff;
     padding-top: 30rpx;
@@ -524,110 +630,115 @@ radio .wx-radio-input.wx-radio-input-checked::before {
     z-index: 4 !important;
     left: inherit !important;
 }
-.pagePublish{
-    .swipe-cell{
-        border:none!important;
-        width:100%;
-        .van-cell{
-            padding:20rpx 10rpx!important;
+
+.pagePublish {
+    .swipe-cell {
+        border: none!important;
+        width: 100%;
+        .van-cell {
+            padding: 20rpx 10rpx!important;
         }
-      }
+    }
 }
-.pageContent{
-    .pickerView{
+
+.pageContent {
+    .pickerView {
         // width:100%;
         // height: 500rpx;
-        .pickerColumn{
-            .pickerItem{
+        .pickerColumn {
+            .pickerItem {
                 // line-height:100rpx;
                 // height:60rpx!important;
-                overflow:hidden;
+                overflow: hidden;
                 text-align: center;
             }
         }
-    } 
-    .van-picker__cancel,.van-picker__confirm{
-        color:#1a1a1a
+    }
+    .van-picker__cancel,
+    .van-picker__confirm {
+        color: #1a1a1a
     }
 }
-.tileText{
-    padding:30rpx;
+
+.tileText {
+    padding: 30rpx;
     justify-content: space-between;
 }
-.scroll_price_item{
-    padding:0 30rpx;
-    margin-top:20rpx;
-    .scroll_price_itemCenter{
-        width:70%;
-        margin:0 auto;
+
+.scroll_price_item {
+    padding: 0 30rpx;
+    margin-top: 20rpx;
+    .scroll_price_itemCenter {
+        width: 70%;
+        margin: 0 auto;
     }
-    input{
-        background:#f2f2f2;
-        text-align:center;
-        font-size:24rpx;
-        width:40%;
-        color:#999
+    input {
+        background: #f2f2f2;
+        text-align: center;
+        font-size: 24rpx;
+        width: 40%;
+        color: #999
     }
 }
+
+
 /*隐藏滚动条*/
 
 
 /*我的认证*/
-.pageVertical{
-    height:100vh;
+
+.pageVertical {
+    height: 100vh;
     overflow: hidden;
     overflow-y: auto;
-    .bg_certical{
-      height:300rpx;
-      width:100%;
+    .bg_certical {
+        height: 300rpx;
+        width: 100%;
     }
-    .card_bd{
-      position: relative;;
-      left:30rpx;
-      right:30rpx;
-      top:-150rpx;
-      width:calc(100% - 60rpx );
-      z-index: 10;
+    .card_bd {
+        position: relative;
+        ;
+        left: 30rpx;
+        right: 30rpx;
+        top: -150rpx;
+        width: calc(100% - 60rpx);
+        z-index: 10;
     }
-    
-    .filterMenu{
-      margin-top:60rpx;
+    .filterMenu {
+        margin-top: 60rpx;
     }
-    .weui-cell{
-      font-size:26rpx;
-      width:100%;
-      .weui-cell_bd{
-        width:30%;
-      }
+    .weui-cell {
+        font-size: 26rpx;
+        width: 100%;
+        .weui-cell_bd {
+            width: 30%;
+        }
     }
-    .idendityPic{
-      padding:30rpx;
-      .inendity_pic{
-        width:294rpx;
-        height:194rpx;
-      }
+    .idendityPic {
+        padding: 30rpx;
+        .inendity_pic {
+            width: 294rpx;
+            height: 194rpx;
+        }
     }
-    .companyPic{
-      .company_pic{
-        width:630rpx;
-        height:280rpx
-      }
+    .companyPic {
+        .company_pic {
+            width: 630rpx;
+            height: 280rpx
+        }
     }
-    .company_pic_title{
-        margin-bottom:20rpx
-      }
-    .otherPic{
-         padding:30rpx 0;
-      .up_pic{
-        height:200rpx;
-        width:200rpx;
-      }
+    .company_pic_title {
+        margin-bottom: 20rpx
     }
-    .btn_box{
-        padding:60rpx 30rpx;
+    .otherPic {
+        padding: 30rpx 0;
+        .up_pic {
+            height: 200rpx;
+            width: 200rpx;
+        }
+    }
+    .btn_box {
+        padding: 60rpx 30rpx;
         box-sizing: border-box;
-        
     }
-  
-  
-  }
+}

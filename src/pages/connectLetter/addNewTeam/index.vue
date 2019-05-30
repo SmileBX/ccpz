@@ -22,52 +22,11 @@
     <div class="bg_fff flex flexAlignCenter pall" @click="addMember">
       <img src="/static/images/icons/add2.jpg" alt class="icon_add2">
       <span class="fontColor99">添加成员</span>
-      <span class="fontColor flex1" style="text-align:right">(2)</span>
+      <span class="fontColor flex1" style="text-align:right">&nbsp;</span>
     </div>
     <!--组列表-->
     <div class="boxSize">
-      <!--字母-->
-      <div class="lettertip">A</div>
-      <!--字母对应的列表-->
-      <van-swipe-cell :right-width="65" :on-close="onClose" class="swipe-cell">
-        <van-cell-group>
-          <van-cell class>
-            <div class="flexAlignCenter flex">
-              <div class="avatarbox mrr2">
-                <img src="/static/images/of/ava.png" alt class="avatar">
-              </div>
-              <p class="flex1 fontBold listname">兄弟姐妹</p>
-            </div>
-          </van-cell>
-        </van-cell-group>
-        <span slot="right" class="van-swipe-cell__right">删除</span>
-      </van-swipe-cell>
-      <van-swipe-cell :right-width="65" :on-close="onClose" class="swipe-cell">
-        <van-cell-group>
-          <van-cell class>
-            <div class="flexAlignCenter flex">
-              <div class="avatarbox mrr2">
-                <img src="/static/images/of/ava.png" alt class="avatar">
-              </div>
-              <p class="flex1 fontBold listname">兄弟姐妹</p>
-            </div>
-          </van-cell>
-        </van-cell-group>
-        <span slot="right" class="van-swipe-cell__right">删除</span>
-      </van-swipe-cell>
-      <van-swipe-cell :right-width="65" :on-close="onClose" class="swipe-cell">
-        <van-cell-group>
-          <van-cell class>
-            <div class="flexAlignCenter flex">
-              <div class="avatarbox mrr2">
-                <img src="/static/images/of/ava.png" alt class="avatar">
-              </div>
-              <p class="flex1 fontBold listname">兄弟姐妹</p>
-            </div>
-          </van-cell>
-        </van-cell-group>
-        <span slot="right" class="van-swipe-cell__right">删除</span>
-      </van-swipe-cell>
+      <IndexList :data="playerList" @btnDel="btnDelFriend" @setStar="btnSetStar" v-if="isShow"></IndexList>
     </div>
     <!--底部按钮-->
     <div class="btnSub2" @click="btnSubmit">完成</div>
@@ -76,6 +35,7 @@
 
 <script>
 import { post, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
+import IndexList from "@/components/IndexList.vue";
 export default {
   data() {
     return {
@@ -85,26 +45,30 @@ export default {
       token: "",
       groupName: "", //分组名称
       groupId: "", //分组id
-      friendIdArr: []
+      playerList: [], //重组过后的
+      isShow: false
     };
   },
   onLoad() {
     this.setBarTitle();
   },
   onShow() {
+    this.initData();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
-    
-    if(this.$root.$mp.query.groupId && this.$root.$mp.query.groupId !=="undefined"){
+    if (
+      this.$root.$mp.query.groupId &&
+      this.$root.$mp.query.groupId !== "undefined"
+    ) {
       this.groupId = this.$root.$mp.query.groupId;
       this.groupName = this.$root.$mp.query.groupName;
-      console.log("名称："+this.groupName);
       this.GetFriendsForGroup();
     }
-
   },
-  components: {},
+  components: {
+    IndexList
+  },
 
   methods: {
     setBarTitle() {
@@ -112,94 +76,194 @@ export default {
         title: "新建分组"
       });
     },
+    initData() {
+      this.playerList = []; //重组过后的
+      this.isShow = false;
+      this.groupName = "";
+    },
+    getResetFriends(arr) {
+      let that = this;
+      let strArr = [];
+      arr.forEach(item => {
+        strArr.push(item.FirstCode);
+      });
+      strArr = Array.from(new Set(strArr)); //数组去重
+      strArr.forEach(item => {
+        that.playerList.push({ title: item, items: [] });
+      });
+      arr.forEach(item2 => {
+        that.playerList.forEach(item => {
+          if (item2.FirstCode == item.title) {
+            item.items.push({
+              Id: item2.Id,
+              NickName: item2.NickName,
+              Headimgurl: item2.Headimgurl,
+              IsStar: item2.IsStar,
+              NoteName: item2.NoteName
+            });
+          }
+        });
+      });
+      console.log("这个是组合好的@@@@@@@@@@@@@");
+      console.log(that.playerList);
+      that.isShow = true;
+    },
     addMember() {
-      // if(this.groupId=="" || this.groupId=="undefined"){
-      //   this.AddFriendsGroup();
-      // }
-      wx.navigateTo({ url: "/pages/connectLetter/addMember/main" });
-    },
-    onClose(clickPosition, instance) {
-      switch (clickPosition) {
-        case "left":
-        case "cell":
-        case "outside":
-          instance.close();
-          break;
-        case "right":
-          Dialog.confirm({
-            message: "确定删除吗？"
-          }).then(() => {
-            instance.close();
-          });
-          break;
+      //点击添加成员
+      if (!this.groupName || this.groupName == "") {
+        wx.showToast({
+          title: "请输入分组名称！",
+          icon: "none",
+          duration: 1500
+        });
+        return false;
       }
+      let objUrl = "";
+      if (this.groupId && this.groupId !== "") {
+        objUrl =
+          "/pages/connectLetter/addMember/main?groupId=" +
+          this.groupId +
+          "&groupName=" +
+          this.groupName;
+      } else {
+        objUrl =
+          "/pages/connectLetter/addMember/main?groupName=" + this.groupName;
+      }
+      wx.navigateTo({ url: objUrl });
     },
-    // AddFriendsGroup(){  //新建分组
-    //   let that = this;
-    //   post("User/AddFriendsGroup",{
-    //     UserId:that.userId,
-    //     Token:that.token,
-    //     GroupName:that.groupName
-    //   },that.curPage).then(res => {
-    //      if(res.code===0){
-    //        that.groupId = res.data;
-    //      }
-    //   })
+    // onClose(clickPosition, instance) {
+    //   switch (clickPosition) {
+    //     case "left":
+    //     case "cell":
+    //     case "outside":
+    //       instance.close();
+    //       break;
+    //     case "right":
+    //       Dialog.confirm({
+    //         message: "确定删除吗？"
+    //       }).then(() => {
+    //         instance.close();
+    //       });
+    //       break;
+    //   }
     // },
-    AddFriendsGroup() {
-      //把好友加入分组
+    GetFriendsForGroup() {
+      //获取某个分组里面的好友
       let that = this;
       post(
-        "User/AddFriendsGroup",
+        "User/GetFriendsForGroup",
         {
           UserId: that.userId,
           Token: that.token,
-          GroupName: that.groupName,
-          FriendId: that.friendIdArr.join(",")
+          GroupId: that.groupId
+        },
+        that.curPage
+      ).then(res => {
+        if (res.code === 0 && res.data.length) {
+          that.getResetFriends(res.data);
+        }
+      });
+    },
+    EditFriendsGroup() {
+      //编辑好友分组
+      let that = this;
+      post(
+        "User/EditFriendsGroup",
+        {
+          UserId: that.userId,
+          Token: that.token,
+          GroupId: that.groupId,
+          GroupName: that.groupName
         },
         that.curPage
       ).then(res => {
         if (res.code === 0) {
           wx.showToast({
-            title: "创建成功!",
+            title: "编辑成功!",
             icon: "none",
             duration: 1500
           });
         }
       });
     },
-    // EditFriendsGroup(){  //编辑好友组名
-    //   let that = this;
-    //   post("User/EditFriendsGroup",{
-    //     UserId:that.userId,
-    //     Token:that.token,
-    //     GroupId:that.groupId,
-    //     GroupName:that.groupName
-    //   },that.curPage).then(res => {
-
-    //   })
-    // },
-    GetFriendsForGroup(){  //获取某个分组里面的好友
-       let that = this;
-       post("User/GetFriendsForGroup",{
-         UserId:that.userId,
-         Token:that.token,
-         GroupId:that.groupId
-       },that.curPage).then(res => {
-         
-       })
-
+    AddFriendsGroup() {
+      //没有选择组员的时候，创建分组
+      let that = this;
+      post(
+        "User/AddFriendsGroup",
+        {
+          UserId: that.userId,
+          Token: that.token,
+          GroupName: that.groupName
+        },
+        that.curPage
+      ).then(res => {
+        if (res.code === 0) {
+          wx.showToast({
+            title: "创建成功",
+            icon: "none",
+            duration: 1500
+          });
+        }
+      });
     },
     btnSubmit() {
-      if (this.groupName == "") {
+      if (this.groupName == "" || !this.groupName) {
         wx.showToast({
           title: "请输入分组名称！",
           icon: "none",
           duration: 1500
         });
-      }else{
-        this.AddFriendsGroup();
+      } else {
+        if (this.groupId && this.groupId !== "") {
+          this.EditFriendsGroup();
+        } else {
+          this.AddFriendsGroup();
+        }
       }
+    },
+    GroupRemoveFriends(id) {
+      let that = this;
+      //移除某个分组中的好友
+      post(
+        "User/GroupRemoveFriends",
+        {
+          UserId: that.userId,
+          Token: that.token,
+          FriendId: id
+        },
+        that.curPage
+      ).then(res => {
+        if (res.code === 0) {
+          wx.showToast({
+            title: "删除分组成员成功!",
+            icon: "none",
+            duration: 1500,
+            success: function() {
+              setTimeout(()=>{
+                that.initData();
+                that.GetFriendsForGroup();
+              },1500)
+              
+            }
+          });
+        }
+      });
+    },
+    btnDelFriend(id) {
+      //点击删除某分组中的某个好友的时候
+      //子组件点击删除好友的时候
+      let that = this;
+      wx.showModal({
+        title: "是否删除该分组中的成员？",
+        success(res) {
+          if (res.confirm) {
+            that.GroupRemoveFriends(id);
+          } else if (res.cancel) {
+
+          }
+        }
+      });
     }
   },
 
@@ -210,16 +274,6 @@ export default {
 </script>
 <style lang='scss' scoped>
 @import "./index";
-.swipe-cell {
-  // width:100%!important;
-  // height:200rpx!important;
-}
-// .delper{
-//   background:#f00;
-//   color:#fff;
-//   height:100%;
-//   width:65rpx;
-// }
 .van-swipe-cell__left,
 .van-swipe-cell__right {
   display: inline-block;

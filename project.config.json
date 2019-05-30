@@ -3,11 +3,19 @@
 	"setting": {
 		"urlCheck": false,
 		"es6": true,
+		"enhance": false,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
 		"autoAudits": false,
-		"checkInvalidKey": true
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
 	},
 	"miniprogramRoot": "dist/wx/",
 	"compileType": "miniprogram",
@@ -34,7 +42,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 16,
 			"list": [
 				{
 					"id": -1,
@@ -149,17 +157,17 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 16,
 					"name": "通讯录-新建分组",
 					"pathName": "pages/connectLetter/addNewTeam/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 17,
 					"name": "通讯录-添加成员",
 					"pathName": "pages/connectLetter/addMember/main",
-					"query": "",
+					"query": "groupName=\"冬冬2\"",
 					"scene": null
 				},
 				{
