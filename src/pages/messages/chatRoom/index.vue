@@ -26,20 +26,18 @@
                 </div>
             </div>
         </div>
-
-
     </div>
     <!--底部按钮 输入框 下拉按钮-->
     <div class="bottomicon">
         <!--常用语按钮-->
-        <div class="borderTop usedMes" @click="getMessage">
-            <span class="bg_fff">常用语</span>
+        <div class="borderTop usedMes">
+            <span class="bg_fff" @click="getMessage(item.Id)" v-for="(item,tindex) in messageType" :key="tindex">{{item.Name}}</span>
         </div>
         <div class="inputbtn flex flexAlignCenter bg_fff ">
             <input type="text" placeholder="想对他说点什么呢？" class="flex1">
             <div class="flex flexAlignCenter">
                 <img src="/static/images/icons/smile.jpg" alt="" class="logimg">
-                <img src="/static/images/icons/add.jpg" alt="" class="logimg">
+                <img src="/static/images/icons/add.jpg" alt="" class="logimg" @click="showPicBtn">
             </div>
         </div>
         <!--按钮组-->
@@ -60,47 +58,28 @@
             </div>
         </div>
         <!--常用语-->
-        <div class="messagelist" v-if="showMessage">
-            <!-- <p>你好？房子还在吗？</p>
-            <p>你好？房子还在吗？</p>
-            <p>你好？房子还在吗？</p> -->
-            <van-swipe-cell :right-width="65" :on-close="onClose"  class="swipe-cell">
-                <van-cell-group>
-                  <van-cell>
-                     <p>你好？房子还在吗？</p> 
-                  </van-cell>
-                </van-cell-group>
-                <span slot="right" class="van-swipe-cell__right">删除</span>
-            </van-swipe-cell>
-            <!-- <van-swipe-cell :right-width="65" :on-close="onClose"   class="swipe-cell">
-                <van-cell-group>
-                  <van-cell>
-                     <p>你好？房子还在吗？</p> 
-                  </van-cell>
-                </van-cell-group>
-                <span slot="right" class="van-swipe-cell__right">删除</span>
-            </van-swipe-cell>
-            <van-swipe-cell :right-width="65" :on-close="onClose"  class="swipe-cell">
-                <van-cell-group>
-                  <van-cell>
-                     <p>你好？房子还在吗？</p> 
-                  </van-cell>
-                </van-cell-group>
-                <span slot="right" class="van-swipe-cell__right">删除</span>
-            </van-swipe-cell> -->
-            <p class="colorRed">添加常用语</p>
-        </div>
+        <ul class="messagelist" v-if="showMessage && messageList.length>0">
+          <scroll-view scroll-y @scrolltolower="loadMore" class="scroll_height">
+              <van-swipe-cell :right-width="65" :on-close="onClose"  class="swipe-cell" v-for="(item,index) in messageList" :key="index">
+                  <van-cell-group>
+                    <van-cell class="chat">
+                      <li class="index-group-item">{{item.Name}}</li> 
+                    </van-cell>
+                  </van-cell-group>
+                  <span slot="right" class="van-swipe-cell__right" @click.stop="Delete(item.GroupId,item.Id,index)">删除</span>
+              </van-swipe-cell>
+          </scroll-view>
+          <li style="color:red" @click="isShowMask=true">添加常用语</li>
+        </ul>
     </div>
     <!--弹层-->
-    <div class="mask" v-if="isShowMask" catchtouchmove="true"></div>
+    <div class="mask" v-if="isShowMask" catchtouchmove="true" @click="isShowMask=false"></div>
     <div class="centerMask "  v-if="isShowMask">
         <div class="fontBold mestitle">新增常用语</div>
-        <textarea name="" id="" cols="30" rows="10" fixed placeholder="输入您的常用回复">
-            
-        </textarea>
+        <textarea name="" id="" cols="30" rows="10" fixed placeholder="输入您的常用回复" v-model="useText"></textarea>
         <div class="flex mesbtn borderTop">
-            <p>保存</p>
-            <p class="fontColor99">发送</p>
+            <p @click="saveText">保存</p>
+            <p class="fontColor99" @click="sendText">发送</p>
         </div>
     </div>
   </div>
@@ -111,11 +90,26 @@ import { post,getCurrentPageUrlWithArgs} from "@/utils";
 export default {
   data () {
     return {
+      userId:'',
+      token:'',
+      curPage:'',
+      FriendId:'',//好友ID
       isshow:true,
       isShowMask:false,//是否展示遮罩层
       showBtn:false, //展示图片组
-      showMessage:true,//展示常用列表
+      showMessage:false,//展示常用列表
+      messageType:[],//常用语分类
+      messageList:[],//常用语列表
+      addId:'',//添加常用语的标识
+      useText:"",//新增的常用语
     }
+  },
+  onShow(){
+    this.userId = wx.getStorageSync("userId");
+    this.token = wx.getStorageSync("token");
+    this.curPage = getCurrentPageUrlWithArgs();
+    this.FriendId = this.$root.$mp.query.FriendId
+    this.initData()
   },
    onLoad() {
     this.setBarTitle();
@@ -130,12 +124,117 @@ export default {
         title: "对话框"
       });
     },
+    initData(){
+      this.showBtn=false
+      this.showMessage=false
+      this.isShowMask=false
+      this.messageList=[]
+      this.messageType =[]
+      this.getMessageType()
+      this.addId = ''
+      this.useText = ''
+      this.getFriendMessage()
+    },
+    //获取好友消息
+    getFriendMessage(){
+      post('User/Readfriend_new',{
+          UserId: this.userId,
+          Token: this.token,
+          FriendId:this.FriendId,
+          Page:1
+      },this.curPage).then(res=>{
+        console.log(res,"获取好友消息")
+      })
+    },
+    //获取常用语分类
+    getMessageType(){
+        post('User/GetUser_wordtype').then(res=>{
+        if(res.code==0){
+          this.messageType = res.data
+        }
+        // console.log(res,"+++++++++++++++++")
+      })
+    },
     //获取常用语列表
-    getMessage(){
+    getMessage(id){
+      this.initData()
       this.showMessage = true
-      post('User/GetUser_wordtype').then(res=>{
+      this.addId = id
+      post('User/GetUser_word',{
+          GroupId:id,
+          UserId: this.userId,
+          Token: this.token
+      },this.curPage).then(res=>{
+        if(res.code==0){
+          this.messageList = res.data
+        }
         console.log(res,"+++++++++++++++++")
       })
+    },
+    //保存常用语
+    saveText(){
+        // console.log(this.addId,"addId")
+        let that = this
+        post('User/AddUser_word',{
+            UserId: that.userId,
+            Token: that.token,
+            GroupId:that.addId,
+            Info:that.useText
+        },that.curPage).then(res=>{
+           if(res.code===0){
+              wx.showToast({
+                title: '新增成功!',
+                icon: 'none',
+                duration: 1500,
+                success:function(){
+                  that.isShowMask=false
+                  that.getMessage(that.addId)
+                  console.log(that.messageList,"that.messageList")
+                  // that.messageList.reverse()
+                }
+              })
+            }
+        })
+    },
+    //删除常用语
+    Delete(GroupId,Id,index){
+      let that = this;
+      wx.showModal({
+          title: "是否确定删除？",
+          success(res) {
+            if (res.confirm) {
+              that.DelMessageItem(GroupId,Id,index)
+            } else if (res.cancel) {
+            }
+          }
+        });
+    },
+    //确定删除常用语
+    DelMessageItem(GroupId,Id,index){
+      let that = this
+       post('User/DelUser_word',{
+          UserId: this.userId,
+          Token: this.token,
+          GroupId:GroupId,
+          Id:Id
+      },this.curPage).then(res=>{
+        // console.log(res,"/////////////////////////////")
+        if(res.code===0){
+          wx.showToast({
+            title: '删除成功!',
+            icon: 'none',
+            duration: 1500,
+            success:function(){
+              that.messageList.splice(index,1);
+              that.getMessage(GroupId)
+            }
+          })
+        }
+      })
+    },
+    showPicBtn(){
+      this.initData()
+      this.showBtn = true
     }
   },
 
@@ -149,20 +248,24 @@ export default {
       padding:20rpx 30rpx!important;
       span{
         border-radius:20rpx;
-        padding:10rpx 25rpx
+        padding:10rpx 22rpx;
+        font-size:26rpx;
+        margin-left:10rpx
       }
   }
   .messagelist{
-    .swipe-cell{
-      width:100%;
-        border:1rpx solid red;
+    height:350rpx;
+    .scroll_height{
+      height:250rpx;
     }
-    p{
-      padding:20rpx 0;
+    li{
+      height:80rpx;
+      line-height:80rpx;
       text-align: center;
+      color:#1a1a1a;
       border-top:1rpx solid #ececec;
-      border:1rpx solid blue
     }
+   
   }
   .centerMask{
     width:650rpx;
@@ -200,11 +303,14 @@ export default {
   .van-swipe-cell__right {
     display: inline-block;
     width: 130rpx;
-    height: 120rpx;
+    height: 80rpx;
     font-size: 28rpx;
-    line-height: 120rpx;
+    line-height: 80rpx;
     color: #fff;
     text-align: center;
     background-color: #f44;
   }
+  .index-group-item {
+   padding: 0;
+ }
 </style>
