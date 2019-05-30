@@ -66,7 +66,7 @@ export default {
     //   })
     // },
     goDetail(id){
-        wx.navigateTo({url:'/pages/topNewsDetail/main?url='+this.pramas+'&Id='+id})
+        wx.navigateTo({url:'/pages/messages/topNewsDetail/main?url='+this.pramas+'&Id='+id})
     }
   }
 };

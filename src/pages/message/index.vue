@@ -31,7 +31,7 @@
     <div class="slidebg"></div>
     <!--消息列表-->
     <div class="padwid" v-if="messageInfo.friend_new.length>0">
-        <div class="flex avatarhead flexAlignCenter boxSize p2" @click="goChat" v-for="(item,index) in messageInfo.friend_new" :key="index">
+        <div class="flex avatarhead flexAlignCenter boxSize p2" @click="goChat(item.FriendId)" v-for="(item,index) in messageInfo.friend_new" :key="index">
             <div class="circlePosition">
                 <div class="avatarbox">
                   <img :src="item.Headimgurl" alt="" class="avatar">
@@ -94,12 +94,12 @@ export default {
       })
     },
     //进入聊天室
-    goChat(){
-        wx.navigateTo({url: '/pages/messages/chatRoom/main'})
+    goChat(fid){
+        wx.navigateTo({url: '/pages/messages/chatRoom/main?FriendId='+fid})
     },
     //查看系统通知列表
     toNociceList(){
-      wx.navigateTo({url:'/pages/topNewsList/main?url=message'})
+      wx.navigateTo({url:'/pages/messages/topNewsList/main?url=message'})
     },
     //查看好友请求列表
      seePermistion(){

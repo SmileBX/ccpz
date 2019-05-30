@@ -151,6 +151,10 @@ radio .wx-radio-input.wx-radio-input-checked::before {
     font-weight: 600
 }
 
+.colorRed {
+    color: #f00;
+}
+
 .p1 {
     padding: 35rpx 0!important;
 }
@@ -741,4 +745,9 @@ radio .wx-radio-input.wx-radio-input-checked::before {
         padding: 60rpx 30rpx;
         box-sizing: border-box;
     }
+}
+
+.chat .van-cell {
+    padding: 0;
+    background: #f2f2f2;
 }
