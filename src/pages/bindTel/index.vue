@@ -122,9 +122,9 @@ export default {
           },
           success: function(res) {
             wx.hideLoading();
-            if (res.data.meta.code === 0) {
+            if (res.data.meta.code === 1) {
               wx.setStorageSync("openId", "");
-              wx.setStorageSync("unionid", "");
+              wx.setStorageSync("unionid", ""); 
               wx.setStorageSync("userId", res.data.meta.dic.UserId);
               wx.setStorageSync("token", res.data.meta.dic.Token);
               wx.showToast({

@@ -7,8 +7,7 @@
         "pages/publish/main",
         "pages/loginWay/main",
         "pages/codeLogin/main",
-        "pages/bindTel/main",
-        "pages/ggg/main"
+        "pages/bindTel/main"
 
     ],
     "window": {
