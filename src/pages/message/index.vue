@@ -99,7 +99,7 @@ export default {
     },
     //查看系统通知列表
     toNociceList(){
-      wx.navigateTo({url:'/pages/topNewsList/main?url=message'})
+      wx.navigateTo({url:'/pages/messages/topNewsList/main?url=message'})
     },
     //查看好友请求列表
      seePermistion(){

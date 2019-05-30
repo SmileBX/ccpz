@@ -34,19 +34,19 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 61,
+			"current": 56,
 			"list": [
 				{
-					"id": -1,
+					"id": 0,
 					"name": "头条详情",
-					"pathName": "pages/topNewsDetail/main",
+					"pathName": "pages/messages/topNewsDetail/main",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": 1,
 					"name": "头条列表",
-					"pathName": "pages/topNewsList/main",
+					"pathName": "pages/messages/topNewsList/main",
 					"query": "",
 					"scene": null
 				},
@@ -116,14 +116,14 @@
 				{
 					"id": 11,
 					"name": "拼租发布",
-					"pathName": "pages/Issue/rentOffic/main",
+					"pathName": "pages/rent/rentOffic/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": 9,
+					"id": 12,
 					"name": "拼租发布二级",
-					"pathName": "pages/Issue/submenu/main",
+					"pathName": "pages/rent/submenu/main",
 					"query": "",
 					"scene": null
 				},
@@ -219,16 +219,16 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 26,
 					"name": "积分明细",
-					"pathName": "pages/member/integralList/main",
+					"pathName": "pages/member2/integralList/main",
 					"query": "",
 					"scene": null
 				},
 				{
 					"id": 27,
 					"name": "意见反馈、合作加盟、增值服务",
-					"pathName": "pages/member/feedback/main",
+					"pathName": "pages/member2/feedback/main",
 					"query": "type=3",
 					"scene": null
 				},
@@ -289,149 +289,149 @@
 					"scene": null
 				},
 				{
-					"id": 28,
+					"id": 36,
 					"name": "会员管理主页",
-					"pathName": "pages/member/memberManage/main",
+					"pathName": "pages/member2/memberManage/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 37,
 					"name": "置顶功能",
-					"pathName": "pages/member/isTopAbout/main",
+					"pathName": "pages/member2/isTopAbout/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 38,
 					"name": "刷新功能",
-					"pathName": "pages/member/freshenAbout/main",
+					"pathName": "pages/member2/freshenAbout/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 39,
 					"name": "结算",
-					"pathName": "pages/member/buyFunction/main",
+					"pathName": "pages/member2/buyFunction/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 40,
 					"name": "隐藏",
 					"pathName": "pages/member/hide/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 41,
 					"name": "拼租更多",
 					"pathName": "pages/rent/moreIcon/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 42,
 					"name": "我的浏览",
 					"pathName": "pages/member/browse/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 43,
 					"name": "新增发票",
-					"pathName": "pages/member/addInvoice/main",
+					"pathName": "pages/member2/addInvoice/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 44,
 					"name": "发票列表",
-					"pathName": "pages/member/invoiceList/main",
+					"pathName": "pages/member2/invoiceList/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 45,
 					"name": "银行卡列表",
-					"pathName": "pages/member/cardList/main",
+					"pathName": "pages/member2/cardList/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 46,
 					"name": "添加银行卡",
-					"pathName": "pages/member/addCard/main",
+					"pathName": "pages/mine/addCard/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 47,
 					"name": "添加银行卡2",
-					"pathName": "pages/member/addCard2/main",
+					"pathName": "pages/mine/addCard2/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 48,
 					"name": "添加银行卡3",
-					"pathName": "pages/member/addCard3/main",
+					"pathName": "pages/mine/addCard3/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 49,
 					"name": "我的账户",
-					"pathName": "pages/member/account/main",
+					"pathName": "pages/mine2/account/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 50,
 					"name": "提现",
-					"pathName": "pages/member/withdraw/main",
+					"pathName": "pages/mine2/withdraw/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 51,
 					"name": "充值",
-					"pathName": "pages/member/deposit/main",
+					"pathName": "pages/mine2/deposit/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 52,
 					"name": "举报",
-					"pathName": "pages/member/report/main",
+					"pathName": "pages/mine2/report/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 53,
 					"name": "搜索历史",
-					"pathName": "pages/searchHistory/main",
+					"pathName": "pages/rent/searchHistory/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": 37,
+					"id": 54,
 					"name": "我的认证",
-					"pathName": "pages/member/myVertical/main",
+					"pathName": "pages/mine2/myVertical/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 55,
 					"name": "我的收藏",
-					"pathName": "pages/member/myCollect/main",
+					"pathName": "pages/mine2/myCollect/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 56,
 					"name": "我的优惠券",
-					"pathName": "pages/member/myCoupon/main",
+					"pathName": "pages/mine2/myCoupon/main",
 					"query": "",
 					"scene": null
 				},
@@ -450,9 +450,9 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 59,
 					"name": "城市列表",
-					"pathName": "pages/city/main",
+					"pathName": "pages/rent/city/main",
 					"query": "",
 					"scene": null
 				},
@@ -467,6 +467,7 @@
 					"id": -1,
 					"name": "xiaoxi",
 					"pathName": "pages/message/main",
+					"query": "",
 					"scene": null
 				}
 			]
