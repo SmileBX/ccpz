@@ -29,8 +29,7 @@
         "van-switch": "./static/vant/switch/index",
         "van-swipe-cell": "./static/vant/swipe-cell/index"
     },
-    "subpackages": [
-        {
+    "subpackages": [{
             "root": "pages/rent/",
             "pages": [
                 "list/main",
@@ -76,10 +75,10 @@
                 "setPayPassword/main",
                 "modifyTel/main",
                 "integral/main"
-               
+
             ]
         },
-        
+
         {
             "root": "pages/member2/",
             "pages": [
@@ -92,7 +91,7 @@
                 "integralList/main",
                 "feedback/main",
                 "memberManage/main"
-                
+
 
             ]
         },

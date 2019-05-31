@@ -9,7 +9,6 @@
       id="scroll"
       class="sheight"
     >
-      <!-- <ul class="index-list-wrap" ref="indexWrap" @scroll="onListWrapScroll"> -->
       <ul class="index-list-wrap">
         <li
           v-for="(group,nindex) in data"
@@ -21,63 +20,19 @@
         >
           <h3 class="index-group-title">{{group.title}}</h3>
           <ul>
-            <!-- <li @click="clickItem(item)" v-for="(item,sindex) in group.items" :key="sindex" class="index-group-item">
-                <img v-if="useLazyLoad"  :src="item.avatar" class="avatar" alt="">
-                <img v-else :src="item.avatar" class="avatar" alt="">
-                <span class="name">{{item.name}}</span>
-            </li>-->
             <li
-              @click="clickItem(item)"
+              @click="clickItem(item.Id,item.selected,nindex,sindex)"
               v-for="(item,sindex) in group.items"
               :key="sindex"
               class="index-group-item"
             >
               <div>
-                <input type="checkbox" class="checkbox-cart" :checked="item.isSelect">
+                <input type="checkbox" class="checkbox-cart" :checked="item.selected">
               </div>
               <img v-if="useLazyLoad" :src="item.avatar" class="avatar" alt>
               <img v-else :src="item.avatar" class="avatar" alt>
               <span class="name">{{item.name}}</span>
             </li>
-            <!-- <van-swipe-cell
-              :right-width="130"
-              class="swipe-cell"
-              v-for="(item,sindex) in group.items"
-              :key="sindex"
-            >
-              <van-cell-group>
-                <van-cell>
-                  <li class="index-group-item">
-                    <img v-if="useLazyLoad" :src="item.avatar" class="avatar" alt>
-                    <img v-else :src="item.avatar" class="avatar" alt>
-                    <span class="name">{{item.name}}</span>
-                  </li>
-                </van-cell>
-              </van-cell-group>
-              <span
-                slot="right"
-                class="van-swipe-cell__right van-swipe-cell__right1"
-                @click.stop="resetStar(item.Id,item.IsStar,nindex,sindex)"
-              >
-                <img
-                  v-if="item.IsStar===0"
-                  src="/static/images/icons/star.png"
-                  class="icon-star"
-                  alt
-                >
-                <img
-                  v-if="item.IsStar===1"
-                  src="/static/images/icons/star2.png"
-                  class="icon-star"
-                  alt
-                >
-              </span>
-              <span
-                slot="right"
-                class="van-swipe-cell__right"
-                @click.stop="Delete(item.Id,nindex,sindex)"
-              >删除</span>
-            </van-swipe-cell> -->
           </ul>
         </li>
       </ul>
@@ -95,9 +50,6 @@
         >{{item}}</li>
       </ul>
     </div>
-    <transition name="fade">
-      <div class="index-indicator" v-show="moving">{{currentIndicator}}</div>
-    </transition>
   </div>
 </template>
 <script type="text/javascript">
@@ -116,6 +68,12 @@ export default {
     useLazyLoad: {
       type: Boolean,
       default: false
+    },
+    friends:{
+      type: Array,
+      default: function() {
+        return [];
+      }
     }
   },
   // props:["playerList"],
@@ -126,10 +84,10 @@ export default {
       currentIndex: 0,
       moving: false,
       currentIndicator: "",
-      datalist: []
+      selectedList: []   //选中的好友
     };
   },
-  watch: {
+   watch: {
     currentIndex(newVal) {
       clearTimeout(this.timer);
       this.currentIndicator = this.indexList[this.currentIndex];
@@ -141,29 +99,29 @@ export default {
   },
   computed: {
     indexList() {
-      console.log(this.data, "this.data");
-      return this.data.slice(1).map(group => {
+      //console.log(this.data,"this.data")
+      return this.data.map(group => {
         return group.title.substring(0, 1);
       });
     }
   },
   created() {
-    this.datalist = this.data.slice(1);
     this.listHeight = [];
     this.timer = null;
     this.scrollTimer = null;
   },
   mounted() {
-    // console.log(this.playerList,'playerList')
+    //console.log(this.playerList,'playerList')
     setTimeout(() => {
       this._calculateHeight();
-    }, 20);
+    }, 2000);
   },
   methods: {
+    
     _calculateHeight() {
       this.listHeight = [];
-      const list = this.data.slice(1);
-      // console.log(list,"indexGroup++++")
+      const list = this.data;
+      //console.log(list,"indexGroup++++")
       let height = 0;
       this.listHeight.push(height);
       for (let i = 0; i < list.length; i++) {
@@ -189,9 +147,15 @@ export default {
         })
         .exec();
     },
-    clickItem(item) {
-      // console.log(666666666)
-      this.$emit("choose", item);
+    clickItem(id,isSelected,pIndex,index) {
+      if(isSelected){
+        this.$set(this.data[pIndex].items[index],"selected",false);
+        
+      }else{
+        this.$set(this.data[pIndex].items[index],"selected",true);
+        this.selectedList.push(id);
+      }
+      // this.$emit("choose", item);
     },
     onListWrapScroll(e) {
       // console.log(e,"+++++++++++++++++++++++")
@@ -199,7 +163,7 @@ export default {
       this.scrollTimer = setTimeout(() => {
         // let scrollTop = this.$refs.indexWrap.scrollTop
         let scrollTop = e.mp.detail.scrollTop;
-        // console.log(scrollTop,"scrollTop")
+        //console.log(scrollTop,"scrollTop")
         // let scrollTop = this.scrollTopId
         const listHeight = this.listHeight;
         for (let i = 0; i < listHeight.length - 1; i++) {
@@ -215,10 +179,10 @@ export default {
       }, 10);
     }
   },
-  destroyed() {
-    clearTimeout(this.timer);
-    clearTimeout(this.scrollTimer);
-  }
+  // destroyed() {
+  //   clearTimeout(this.timer)
+  //   clearTimeout(this.scrollTimer)
+  // }
 };
 </script>
 
