@@ -38,41 +38,17 @@
     <!-- 导航 -->
     <div class="section">
       <ul class="navList li_25 center navList2">
-        <li @click="goTo(4)">
+        <li @click="goTo()" v-for="(item,index) in publishType" :key="index">
           <div class="outside">
             <div class="icon-img">
-              <img src="/static/images/icons/index_menu1.jpg" alt>
+              <img :src="item.Img" alt>
             </div>
-            <p class="title">拼租</p>
-          </div>
-        </li>
-        <li @click="goTo(5)">
-          <div class="outside">
-            <div class="icon-img">
-              <img src="/static/images/icons/index_menu2.jpg" alt>
-            </div>
-            <p class="title">组建团队</p>
-          </div>
-        </li>
-        <li @click="goTo(6)">
-          <div class="outside">
-            <div class="icon-img">
-              <img src="/static/images/icons/index_menu3.jpg" alt>
-            </div>
-            <p class="title">拼团活动</p>
-          </div>
-        </li>
-        <li @click="goTo(7)">
-          <div class="outside">
-            <div class="icon-img">
-              <img src="/static/images/icons/index_menu4.jpg" alt>
-            </div>
-            <p class="title">房源</p>
+            <p class="title">{{item.Name}}</p>
           </div>
         </li>
       </ul>
     </div>
-    <!-- 头条 -->
+    <!-- 头条1 -->
     <div class="section">
       <div class="toutiao pd15 flex">
         <div class="left flexColumn flex justifyContentCenter center" @click="goTo(1)">
@@ -88,7 +64,7 @@
         </div>
       </div>
     </div>
-    <!-- 优质房源 -->
+    <!-- 优质房源3 -->
     <div class="section">
       <div class="section__hd flex flexAlignCenter"  @click="goTo(3)">
         <div class="flex1">
@@ -110,7 +86,7 @@
         </div>
       </div>
     </div>
-    <!-- 热门商铺 -->
+    <!-- 热门商铺2 -->
     <div class="section">
       <div class="section__hd flex flexAlignCenter" @click="goTo(2)">
         <div class="flex1">
@@ -441,22 +417,36 @@ export default {
     return {
       picList: [],//banner图
       newList:[],//头条消息
+      publishType:[],//发布类型
     };
   },
   onLoad() {
     this.setBarTitle();
   },
   onShow() {
-    this.getBannerList()
-    this.getNews()
+    this.initData()
   },
   components: {},
 
   methods: {
+    initData(){
+        this.getBannerList()
+        this.getpublishType()
+        this.getNews()
+    },
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "首页"
       });
+    },
+    //获取发布类型
+    getpublishType(){
+      post('Goods/GetBrandList').then(res=>{
+        console.log(res,"GetBrandList")
+        if(res.code==0){
+            this.publishType = res.data
+        }
+      })
     },
     //获取轮播图
     getBannerList(){

@@ -34,7 +34,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
+			"current": 60,
 			"list": [
 				{
 					"id": 0,
@@ -453,6 +453,13 @@
 					"id": 59,
 					"name": "城市列表",
 					"pathName": "pages/rent/city/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "111",
+					"pathName": "pages/publish/main",
 					"query": "",
 					"scene": null
 				}
