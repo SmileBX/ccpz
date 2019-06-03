@@ -10,84 +10,12 @@
     </div>
     <div class="navBox">
       <ul class="navList li_25 center navList2">
-        <li>
-          <div class="outside" @click="gotoFrom">
+        <li @click="gotoFrom(item.Id)" v-for="(item,index) in brandList" :key="index">
+          <div class="outside" >
             <div class="icon-img">
-              <img src="/static/images/icons/bangongshi_2.jpg" alt>
+              <img :src="item.Img" alt>
             </div>
-            <p class="title">办公室</p>
-          </div>
-        </li>
-        <li>
-          <div class="outside">
-            <div class="icon-img">
-              <img src="/static/images/icons/kawei.jpg" alt>
-            </div>
-            <p class="title">卡位</p>
-          </div>
-        </li>
-        <li>
-          <div class="outside">
-            <div class="icon-img">
-              <img src="/static/images/icons/huiyishi.jpg" alt>
-            </div>
-            <p class="title">会议室</p>
-          </div>
-        </li>
-        <li>
-          <div class="outside">
-            <div class="icon-img">
-              <img src="/static/images/icons/peixun.jpg" alt>
-            </div>
-            <p class="title">培训机构</p>
-          </div>
-        </li>
-        <li>
-          <div class="outside">
-            <div class="icon-img">
-              <img src="/static/images/icons/duanzu.jpg" alt>
-            </div>
-            <p class="title">短租</p>
-          </div>
-        </li>
-        <li>
-          <div class="outside">
-            <div class="icon-img">
-              <img src="/static/images/icons/shangpu.jpg" alt>
-            </div>
-            <p class="title">商铺</p>
-          </div>
-        </li>
-        <li>
-          <div class="outside">
-            <div class="icon-img">
-              <img src="/static/images/icons/gongchang.jpg" alt>
-            </div>
-            <p class="title">工厂</p>
-          </div>
-        </li>
-        <li>
-          <div class="outside">
-            <div class="icon-img">
-              <img src="/static/images/icons/shebei.jpg" alt>
-            </div>
-            <p class="title">设备</p>
-          </div>
-        </li>
-        <li>
-          <div class="outside">
-            <div class="icon-img">
-              <img src="/static/images/icons/shoumaiji.jpg" alt>
-            </div>
-            <p class="title">自动售卖机</p>
-          </div>
-        </li>
-        <li>
-          <div class="outside">
-            <div class="icon-img">
-              <img src="/static/images/icons/qita.jpg" alt>
-            </div>
-            <p class="title">其他</p>
+            <p class="title">{{item.Name}}</p>
           </div>
         </li>
       </ul>
@@ -96,12 +24,34 @@
 </template>
 
 <script>
+import { post,host,getCurrentPageUrlWithArgs} from "@/utils";
 export default {
   data() {
-    return {};
+    return {
+      BrandId:"",  //品牌Id
+      TypeId:"",//拼租类型Id
+      curPage: "",
+      userId: "",
+      token: "",
+      brandList:[]
+    };
   },
   onLoad() {
     this.setBarTitle();
+  },
+  onShow(){
+    this.userId = wx.getStorageSync("userId");
+    this.token = wx.getStorageSync("token");
+    this.curPage = getCurrentPageUrlWithArgs();
+    this.BrandId = this.$root.$mp.query.BrandId
+    this.TypeId = this.$root.$mp.query.TypeId
+    if(this.BrandId){
+        this.getOnePage()
+    }
+    if(this.TypeId){
+        this.getSecondPage()
+    }
+   
   },
   components: {},
   methods: {
@@ -110,9 +60,32 @@ export default {
         title: "发布"
       });
     },
-    gotoFrom(){
+    //获取分类页面
+    getOnePage(){
+        post('Goods/GetTypeL1',{
+            BrandId:this.BrandId
+        }).then(res=>{
+          console.log(res,"一级页面")
+          if(res.code==0){
+              this.brandList = res.data
+          }
+        })
+    },
+    //获取发布二级页面
+    getSecondPage(){
+      post('Goods/GetTypeL2',{
+            TypeId:this.TypeId
+        }).then(res=>{
+          console.log(res,"er级页面")
+          if(res.code==0){
+              this.brandList = res.data
+          }
+        })
+    },
+    //去往发布页面
+    gotoFrom(id){
       wx.navigateTo({
-        url: '/pages/Issue/rentOffic/main'
+        url: '/pages/Issue/rentOffic/main?TypeId='+id
       })
     }
   },

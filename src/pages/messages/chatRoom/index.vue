@@ -1,7 +1,7 @@
 <template>
   <div class="page borderTop">
     <!--聊天列表-->
-    <div class="padwid">
+    <div class="padwid" @click="isShowMask=false">
         <div class="flex flexAlignCenter boxSize p2 justifyContentEnd">
             <div class="flex flexAlignEnd justifyContentEnd mrr2" style="width:75%;">
                 <span class="fontColor">已读</span>
@@ -11,12 +11,12 @@
                 </div>
             </div>
             <div class="avatarbox mr0">
-                <img src="/static/images/of/ava.png" alt="" class="avatar">
+                <img :src="chatStatu.a.Headimgurl" alt="" class="avatar">
             </div>
         </div>
         <div class="flex flexAlignCenter boxSize p2 justifyContentStart" >
             <div class="avatarbox mr0">
-                <img src="/static/images/of/ava.png" alt="" class="avatar">
+                <img :src="chatStatu.b.Headimgurl" alt="" class="avatar">
             </div>
             <div class="flex flexAlignEnd mrl2" style="width:75%">
                 <!-- <span class="fontColor">已读</span> -->
@@ -102,6 +102,7 @@ export default {
       messageList:[],//常用语列表
       addId:'',//添加常用语的标识
       useText:"",//新增的常用语
+      chatStatu:''//聊天信息
     }
   },
   onShow(){
@@ -140,10 +141,13 @@ export default {
       post('User/Readfriend_new',{
           UserId: this.userId,
           Token: this.token,
-          FriendId:this.FriendId,
+          FriendId:this.FriendId*1,
           Page:1
       },this.curPage).then(res=>{
         console.log(res,"获取好友消息")
+        if(res.code == 0){
+          this.chatStatu = res.data
+        }
       })
     },
     //获取常用语分类
@@ -168,7 +172,7 @@ export default {
         if(res.code==0){
           this.messageList = res.data
         }
-        console.log(res,"+++++++++++++++++")
+        // console.log(res,"+++++++++++++++++")
       })
     },
     //保存常用语

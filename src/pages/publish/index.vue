@@ -4,52 +4,59 @@
     <div class="publishCon">
       <div class="hd-title">快捷发布</div>
       <ul class="navList li_25 center navList2">
-        <li>
-          <div class="outside" @click="gotosubMenu">
+        <li v-for="(item,index) in publishType" :key="index">
+          <div class="outside" @click="gotosubMenu(item.Id)">
             <div class="icon-img">
-              <img src="/static/images/icons/index_menu1.jpg" alt>
+              <img :src="item.Img" alt>
             </div>
-            <p class="title">拼租</p>
-          </div>
-        </li>
-        <li>
-          <div class="outside" @click="gotosubMenu">
-            <div class="icon-img">
-              <img src="/static/images/icons/index_menu2.jpg" alt>
-            </div>
-            <p class="title">组建团队</p>
-          </div>
-        </li>
-        <li>
-          <div class="outside">
-            <div class="icon-img">
-              <img src="/static/images/icons/index_menu3.jpg" alt>
-            </div>
-            <p class="title">拼团活动</p>
-          </div>
-        </li>
-        <li>
-          <div class="outside">
-            <div class="icon-img">
-              <img src="/static/images/icons/index_menu4.jpg" alt>
-            </div>
-            <p class="title">房源</p>
+            <p class="title">{{item.Name}}</p>
           </div>
         </li>
       </ul>
+    </div>
+    <!--弹层-->
+    <div class="mask" v-if="isShowMask" catchtouchmove="true" @click="isShowMask=false"></div>
+    <div class="modal_mask boxSize"  v-if="isShowMask">
+        <div class="flex justifyContentStart flexAlignStart">
+            <div class="icon-img">
+                <img src="/static/images/icons/index_menu1.jpg" alt="" >
+            </div>
+            <div>
+                <p class="font32">拼租表单</p>
+                <p class="font_four">寻找志同道合的团队或个人，资源共享重组</p>
+            </div>
+        </div>
+        <div class="weui-cells  ">
+          <div class="weui-cell" @click="goPinZu(item.Id)" v-for="(item,pindex) in pinzuList" :key="pindex">
+            <div class="icon-img2">
+                <img :src="item.Img" alt="" >
+            </div>
+            <div class="weui-cell__bd">
+              <p class="txt">{{item.Name}}</p>
+            </div>
+            <span class="icon-arrow arrow-right"></span>
+          </div>
+        </div>
     </div>
   </div>
 </template>
 
 <script>
-
+import { post,getCurrentPageUrlWithArgs} from "@/utils";
 export default {
   data () {
     return {
+      publishType:[],//发布类型
+      pinzuList:[],//拼租类型
+      isShowMask:false,//是否显示拼租分类弹层
     }
   },
   onLoad() {
     this.setBarTitle();
+  },
+  onShow(){
+    this.isShowMask = false
+    this.getpublishType()
   },
   components: {},
   methods: {
@@ -58,10 +65,41 @@ export default {
         title: "发布"
       });
     },
-    gotosubMenu(){
-      wx.navigateTo({
-        url: '/pages/Issue/submenu/main'
+    //获取发布类型
+    getpublishType(){
+      post('Goods/GetBrandList').then(res=>{
+        console.log(res,"GetBrandList")
+        if(res.code==0){
+            this.publishType = res.data
+        }
       })
+    },
+    //拼租类型---寻找拼租 发布拼租 发布拼购
+    getPinZuType(id){
+      post('Goods/GetTypeL1',{
+            BrandId:id
+        }).then(res=>{
+          console.log(res,"一级页面")
+          if(res.code==0){
+              this.pinzuList = res.data
+          }
+        })
+    },
+    //去往拼租二级页面
+    goPinZu(id){  
+        wx.navigateTo({
+          url: '/pages/rent/submenu/main?TypeId='+id  
+        })
+    },
+    gotosubMenu(id){
+      if(id==21){
+          this.isShowMask=true
+          this.getPinZuType(id)
+      }else{
+          wx.navigateTo({
+            url: '/pages/rent/submenu/main?BrandId='+id  
+          })
+      }
     }
   },
 
@@ -73,4 +111,28 @@ export default {
 <style lang="scss" scoped>
   .publishCon{margin:30rpx;border-radius:10rpx;background: #fff;overflow: hidden;}
   .hd-title{font-size: 32rpx; padding: 20rpx 30rpx 0;}
+  .modal_mask{
+      border-top-left-radius: 25rpx;
+      border-top-right-radius: 25rpx;
+      padding:40rpx;
+  }
+  .icon-img{
+     width: 90rpx;
+     height: 90rpx;
+     margin-right:30rpx;
+}
+.icon-img img {
+    width: 100%;
+    height: 100%;
+}
+.icon-img2{
+    width: 38rpx;
+    height: 36rpx;
+    vertical-align: middle;
+    margin-right:30rpx;
+}
+.icon-img2 img {
+    width: 100%;
+    height: 100%;
+}
 </style>
