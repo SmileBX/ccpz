@@ -80,6 +80,8 @@ export default {
       this.playerList = []; //重组过后的
       this.isShow = false;
       this.groupName = "";
+      this.groupId =""; //分组id
+      this.groupName =""; //分组名称
     },
     getResetFriends(arr) {
       let that = this;

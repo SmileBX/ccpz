@@ -42,7 +42,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 16,
+			"current": 61,
 			"list": [
 				{
 					"id": 0,
@@ -462,6 +462,19 @@
 					"name": "城市列表",
 					"pathName": "pages/rent/city/main",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "邀请好友页面",
+					"pathName": "pages/inviteFriends/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "邀请记录",
+					"pathName": "pages/inviteRecord/main",
 					"scene": null
 				}
 			]

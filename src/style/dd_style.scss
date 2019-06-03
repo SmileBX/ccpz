@@ -2464,3 +2464,140 @@ page {
         }
     }
 }
+
+
+/************邀请好友页面****************/
+
+.invitePage {
+    .inviteBg {
+        width: 100%;
+        display: block;
+    }
+    position: relative;
+    .inviteContent {
+        position: absolute;
+        left: 40rpx;
+        right: 40rpx;
+        z-index: 3;
+        top: 210rpx;
+    }
+    .box__bd {
+        background: #fff;
+        border-radius: 20rpx;
+        padding: 40rpx;
+        .img_1 {
+            width: 100%;
+            display: block;
+        }
+        .btn {
+            font-size: 32rpx;
+            line-height: 78rpx;
+            height: 78rpx;
+            background: #fc431f;
+            color: #fff;
+            border-radius: 200rpx;
+            text-align: center;
+            border-bottom: 10rpx solid #e00b07;
+            margin-top: 40rpx;
+        }
+    }
+    .box__hd {
+        text-align: center;
+        padding: 28rpx 0;
+    }
+    .box__hd1 {
+        font-size: 32rpx;
+        color: #fffefe;
+        .title {
+            display: inline-block;
+            padding: 0 34rpx;
+        }
+        .icon_l,
+        .icon_r {
+            display: inline-block;
+            width: 53rpx;
+            height: 28rpx;
+            vertical-align: middle;
+        }
+    }
+    .stepBox {
+        text-align: center;
+        .step__hd {
+            position: relative;
+            margin-bottom: 20rpx;
+            span {
+                width: 40rpx;
+                height: 40rpx;
+                border-radius: 50%;
+                color: #fffefe;
+                background: #fe562d;
+                line-height: 40rpx;
+                display: inline-block;
+                font-size: 26rpx;
+                position: relative;
+                z-index: 4;
+            }
+            &::before,
+            &::after {
+                position: absolute;
+                content: "";
+                width: 50%;
+                height: 1px;
+                top: 50%;
+                background: #eee9e5;
+                z-index: 2;
+            }
+            &::before {
+                left: 0;
+            }
+            &::after {
+                right: 0;
+            }
+        }
+        .item:first-child .step__hd::before,
+        .item:last-child .step__hd::after {
+            display: none;
+        }
+        .title {
+            line-height: 1.3;
+            font-size: 26rpx;
+            color: #333333;
+        }
+    }
+    .box__hd2 {
+        font-size: 36rpx;
+        color: #f24d49;
+        padding-top: 0;
+        position: relative;
+        &::before {
+            position: absolute;
+            content: "";
+            height: 1px;
+            width: 100%;
+            border-bottom: 3rpx dotted #f24d49;
+            left: 0;
+            top: 24rpx;
+            z-index: 2;
+        }
+        .title {
+            display: inline-block;
+            padding: 0 46rpx;
+            position: relative;
+            z-index: 3;
+            background: #fff;
+        }
+    }
+    .gains {
+        .item {
+            line-height: 1.4;
+            .title {
+                font-size: 28rpx;
+                color: #999;
+            }
+            .num {
+                font-size: 48rpx;
+                color: #fc431f;
+            }
+        }
+    }
+}
