@@ -174,6 +174,67 @@ export default {
         });
         return false;
       }
+      if (that.groupId && that.groupId !== "") {
+        post(
+          "User/AddFriendsForGroup",
+          {
+            UserId: that.userId,
+            Token: that.token,
+            GroupId: that.groupId,
+            FriendId: selectedFriends.join(",")
+          },
+          that.curPage
+        ).then(res => {
+          if (res.code === 0) {
+            wx.showToast({
+              title: "添加成员成功!",
+              icon: "none",
+              duration: 1500,
+              success: function() {
+                setTimeout(() => {
+                  wx.redirectTo({
+                    url:
+                      "/pages/connectLetter/addNewTeam/main?groupId=" +
+                      that.groupId +
+                      "&groupName=" +
+                      that.groupName
+                  });
+                }, 1500);
+              }
+            });
+          }
+        });
+      } else {
+        post(
+          "User/AddFriendsGroup",
+          {
+            UserId: that.userId,
+            Token: that.token,
+            GroupName: that.groupName,
+            FriendId: selectedFriends.join(",")
+          },
+          that.curPage
+        ).then(res => {
+          if (res.code === 0) {
+            wx.showToast({
+              title: "创建成功!",
+              icon: "none",
+              duration: 1500,
+              success: function() {
+                setTimeout(() => {
+                  wx.redirectTo({
+                    url:
+                      "/pages/connectLetter/addNewTeam/main?groupId=" +
+                      res.data.GroupId +
+                      "&groupName=" +
+                      that.groupName
+                  });
+                });
+              }
+            });
+          }
+        });
+      }
       // that.$store.commit("update", { selectedFriends });
       // let objUrl = '';
       // if(that.groupId !=="" && that.groupId){
@@ -184,33 +245,6 @@ export default {
       // wx.redirectTo({
       //   url: objUrl
       // });
-      post(
-        "User/AddFriendsGroup",
-        {
-          UserId: that.userId,
-          Token: that.token,
-          GroupName: that.groupName,
-          FriendId: selectedFriends.join(",")
-        },
-        that.curPage
-      ).then(res => {
-        if (res.code === 0) {
-          wx.showToast({
-            title: "创建成功!",
-            icon: "none",
-            duration: 1500,
-            success: function() {
-              wx.redirectTo({
-                url:
-                  "/pages/connectLetter/addNewTeam/main?groupId=" +
-                  res.data.GroupId +
-                  "&groupName=" +
-                  that.groupName
-              });
-            }
-          });
-        }
-      });
     },
     GetFriendsForGroup() {
       //获取没有分组的好友
