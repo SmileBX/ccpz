@@ -10,7 +10,7 @@
     </div>
     <div class="navBox">
       <ul class="navList li_25 center navList2">
-        <li @click="gotoFrom(item.Id)" v-for="(item,index) in brandList" :key="index">
+        <li @click="getType(item.Id,item.BrandId)" v-for="(item,index) in brandList" :key="index">
           <div class="outside" >
             <div class="icon-img">
               <img :src="item.Img" alt>
@@ -19,6 +19,18 @@
           </div>
         </li>
       </ul>
+    </div>
+    <!--弹层-->
+    <div class="mask" v-if="isShowMask" catchtouchmove="true" @click="isShowMask=false"></div>
+    <div class="modal_mask boxSize" style="height:250rpx;" v-if="isShowMask">
+        <div class="weui-cells  ">
+          <div class="weui-cell" @click="gotoFrom(item.Id)" v-for="(item,pindex) in typeList" :key="pindex">
+            <div class="weui-cell__bd">
+              <p class="txt">{{item.Name}}</p>
+            </div>
+            <span class="icon-arrow arrow-right"></span>
+          </div>
+        </div>
     </div>
   </div>
 </template>
@@ -33,10 +45,14 @@ export default {
       curPage: "",
       userId: "",
       token: "",
-      brandList:[]
+      brandList:[],
+      typeList:[],//子类型
+      isShowMask:false,//是否显示分类弹层
+     
     };
   },
   onLoad() {
+    this.isShowMask = false
     this.setBarTitle();
   },
   onShow(){
@@ -45,6 +61,9 @@ export default {
     this.curPage = getCurrentPageUrlWithArgs();
     this.BrandId = this.$root.$mp.query.BrandId
     this.TypeId = this.$root.$mp.query.TypeId
+    console.log(this.BrandId,"this.BrandId+++")
+    console.log(this.TypeId,"this.TypeId+++")
+
     if(this.BrandId){
         this.getOnePage()
     }
@@ -71,7 +90,7 @@ export default {
           }
         })
     },
-    //获取发布二级页面
+    //拼租获取发布二级页面
     getSecondPage(){
       post('Goods/GetTypeL2',{
             TypeId:this.TypeId
@@ -82,12 +101,33 @@ export default {
           }
         })
     },
+    //获取分类类型
+    getType(id,BrandId){
+      console.log(id,"id")
+      if(BrandId==24){
+        this.isShowMask=true
+        this.getMoreType(id)
+      }else{
+        this.gotoFrom(id)
+      }
+    },
+    getMoreType(id){
+      post('Goods/GetTypeL2',{
+            TypeId:id
+        }).then(res=>{
+          console.log(res,"this.typeList")
+          if(res.code==0){
+              this.typeList = res.data
+          }
+      })
+    },
     //去往发布页面
     gotoFrom(id){
       wx.navigateTo({
-        url: '/pages/Issue/rentOffic/main?TypeId='+id
+        url: '/pages/rent/rentDevice/main?TypeId='+id
       })
-    }
+    },
+   
   },
 
   created() {}
@@ -125,6 +165,10 @@ export default {
     width: 100rpx;
     height: 100rpx;
   }
+}
+ec-canvas {
+  width: 100%;
+  height: 100%;
 }
 
 </style>

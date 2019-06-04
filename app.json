@@ -28,6 +28,7 @@
         "van-popup": "./static/vant/popup/index",
         "van-switch": "./static/vant/switch/index",
         "van-swipe-cell": "./static/vant/swipe-cell/index"
+    
     },
     "subpackages": [
         {
