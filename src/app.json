@@ -9,7 +9,8 @@
         "pages/codeLogin/main",
         "pages/bindTel/main",
         "pages/inviteFriends/main",
-        "pages/inviteRecord/main"
+        "pages/inviteRecord/main",
+        "pages/VerticalStatus/main"
 
     ],
     "window": {

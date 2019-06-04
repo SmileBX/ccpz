@@ -10,6 +10,9 @@
         <div class="line flex">
           <input type="text" v-model="Code" class="weui-input flex1" placeholder="动态码">
         </div>
+        <div class="line flex" v-if="inviteCode !=='' ">
+          <input type="text" :value="inviteCode" class="weui-input flex1">
+        </div>
         <div class="line flex">
           <input type="password" v-model="Pwd" class="weui-input flex1" placeholder="请输入至少6位密码">
         </div>
@@ -38,6 +41,9 @@ export default {
     this.openId = wx.getStorageSync("openId");
     this.unionid = wx.getStorageSync("unionid");
     this.userInfo = wx.getStorageSync("userInfo");
+    if(this.$root.$mp.query.inviteCode){
+      this.inviteCode = this.$root.$mp.query.inviteCode;
+    }
   },
   data() {
     return {
@@ -52,7 +58,8 @@ export default {
       Code: "",
       openId: "",
       unionid: "",
-      userInfo: {}
+      userInfo: {},
+      inviteCode:""  //邀请码
     };
   },
   methods: {
