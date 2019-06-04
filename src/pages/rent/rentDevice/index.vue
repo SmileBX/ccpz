@@ -258,12 +258,26 @@
 
 <script>
 import "@/style/style_fb.scss";
+import { post,host,getCurrentPageUrlWithArgs} from "@/utils";
 export default {
   data() {
-    return {};
+    return {
+      curPage: "",
+      userId: "",
+      token: "",
+      TypeId:''
+    };
   },
   onLoad() {
     this.setBarTitle();
+  },
+  onShow(){
+    this.userId = wx.getStorageSync("userId");
+    this.token = wx.getStorageSync("token");
+    this.curPage = getCurrentPageUrlWithArgs();
+    this.TypeId = this.$root.$mp.query.TypeId
+    console.log(this.TypeId,"TypeId")
+    this.GetPublishItems()
   },
   components: {},
   methods: {
@@ -271,7 +285,30 @@ export default {
       wx.setNavigationBarTitle({
         title: "发布"
       });
-    }
+    },
+    GetPublishItems(){
+      post('Goods/GetPublishItems',{
+          UserId:this.userId,
+          Token:this.token,
+          TypeId:this.TypeId
+      },this.curPage).then(res=>{
+        console.log(res,"GetPublishItems")
+        //没有认证 先去认证
+        if(res.code==1){
+          wx.showToast({
+            title:res.msg,
+            duration:1500,
+            icon:'none',
+          })
+          setTimeout(() => {
+            wx.navigateTo({
+              url: "/pages/mine2/myVertical/main?url=rentDevice"
+            });
+          }, 1500);
+        
+        }
+      })
+    },
   },
 
   created() {}

@@ -40,7 +40,7 @@
             </div>
             <div class="flex flexColumn flex1">
                 <div class="flex">
-                    <span class="flex1 font32">{{item.NoteName}}</span>
+                    <span class="flex1 font32">{{item.NickName}}</span>
                     <span class="font_four">{{item.AddTime}}</span>
                 </div>
                 <div class="fontColor">{{item.Info}}</div>
