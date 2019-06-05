@@ -7,16 +7,16 @@
       </div>
       <div class="filterMenu" style="padding:0">
         <ul class="menu bbLi__menu bbNo__menu li_33 flex center flex justifyContentAround">
-          <li class="active">
+          <li :class="{'active':verticalType==1}" @click="shiftTab(1)">
             <div class="item">个人认证</div>
           </li>
-          <li>
+          <li :class="{'active':verticalType==2}" @click="shiftTab(2)">
             <div class="item">企业认证</div>
           </li>
         </ul>
       </div>
       <!--个人模块-->
-      <div v-if="verticalType===1">
+      <div v-if="verticalType==1">
         <div class="weui-cells">
           <div class="weui-cell">
             <div class="weui-cell_bd">
@@ -31,97 +31,54 @@
             <input type="number" v-model="idCard" placeholder="请输入您的身份证号">
           </div>
         </div>
-      </div>
-      <!--公司模块-->
-      <div v-if="verticalType===2">
-        <div class="weui-cells">
-          <div class="weui-cell">
-            <div class="weui-cell_bd">
-              <p class="txt">企业名称</p>
-            </div>
-            <input type="text" placeholder="请输入企业名称">
+        <!--上传身份证-->
+        <div class="idendityPic flex justifyContentBetween">
+          <div class="imgBox">
+            <img
+              @click="upLoadImg(1)"
+              v-if="idCardPositive=='' "
+              src="/static/images/icons/iden-top.jpg"
+              alt
+              class="inendity_pic"
+            >
+            <img v-else :src="idCardPositive" alt class="inendity_pic">
+            <img
+              v-if="idCardPositive"
+              src="/static/images/icons/cancle.png"
+              @click="delImg(1)"
+              class="icon-del"
+              alt
+            >
+          </div> 
+          <div class="imgBox">
+            <img
+              @click="upLoadImg(2)"
+              v-if="idCardNegative=='' "
+              src="/static/images/icons/iden-back.jpg"
+              alt
+              class="inendity_pic"
+            >
+            <img v-else :src="idCardNegative" alt class="inendity_pic">
+            <img
+              v-if="idCardNegative"
+              src="/static/images/icons/cancle.png"
+              @click="delImg(2)"
+              class="icon-del"
+              alt
+            >
           </div>
-          <div class="weui-cell">
-            <div class="weui-cell_bd">
-              <p class="txt">企业注册号</p>
-            </div>
-            <input type="text" placeholder="请输入企业注册号">
-          </div>
-          <div class="weui-cell">
-            <div class="weui-cell_bd">
-              <p class="txt">法人姓名</p>
-            </div>
-            <input type="text" placeholder="请输入法人姓名">
-          </div>
-          <div class="weui-cell">
-            <div class="weui-cell_bd">
-              <p class="txt">法人身份证号</p>
-            </div>
-            <input type="text" placeholder="请输入法人身份证号">
-          </div>
+        </div>
+        <div class="flex padwid">
+          <input type="checkbox" :checked="agreen" @click="agreen=!agreen" class="checkbox-cart">
+          <p>
+            <span>已阅读并同意</span>
+            <span class="fontColor99">《成成企业拼租认证服务协议》</span>
+          </p>
         </div>
       </div>
-      <!--上传身份证-->
-      <div class="idendityPic flex justifyContentBetween">
-        <div class="imgBox">
-          <img
-            @click="upLoadImg(1)"
-            v-if="idCardPositive=='' "
-            src="/static/images/icons/iden-top.jpg"
-            alt
-            class="inendity_pic"
-          >
-          <img v-else :src="idCardPositive" alt class="inendity_pic">
-          <img
-            v-if="idCardPositive"
-            src="/static/images/icons/cancle.png"
-            @click="delImg(1)"
-            class="icon-del"
-            alt
-          >
-        </div>
-        <div class="imgBox">
-          <img
-            @click="upLoadImg(2)"
-            v-if="idCardNegative=='' "
-            src="/static/images/icons/iden-back.jpg"
-            alt
-            class="inendity_pic"
-          >
-          <img v-else :src="idCardNegative" alt class="inendity_pic">
-          <img
-            v-if="idCardNegative"
-            src="/static/images/icons/cancle.png"
-            @click="delImg(2)"
-            class="icon-del"
-            alt
-          >
-        </div>
-      </div>
-      <!--企业-->
-      <div style="padding:0 30rpx" v-if="verticalType===2">
-        <!--企业上传营业执照-->
-        <div class="companyPic">
-          <p class="font30 fontBold company_pic_title">营业执照</p>
-          <div>
-            <img src="/static/images/icons/card_com.jpg" alt class="company_pic">
-          </div>
-        </div>
-        <!--企业上传其他照片-->
-        <div class="otherPic">
-          <p class="font30 fontBold company_pic_title">其他资质</p>
-          <div>
-            <img src="/static/images/icons/uppic.jpg" alt class="up_pic">
-          </div>
-        </div>
-      </div>
-      <!--企业end-->
-      <div class="flex padwid">
-        <input type="checkbox" :checked="agreen" @click="agreen=!agreen" class="checkbox-cart">
-        <p>
-          <span>已阅读并同意</span>
-          <span class="fontColor99">《成成企业拼租认证服务协议》</span>
-        </p>
+      <!-- 公司模块 -->
+      <div v-if="verticalType==2">
+
       </div>
       <!--底部按钮-->
       <div class="btn_box bg_fff">
@@ -131,7 +88,7 @@
   </div>
 </template>
 <script>
-import { post, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
+import { post, toLogin, getCurrentPageUrlWithArgs,trim } from "@/utils";
 import { pathToBase64 } from "@/utils/image-tools";
 export default {
   data() {
@@ -144,7 +101,8 @@ export default {
       userRName: "", //真实姓名
       idCard: "", //身份证号码
       idCardPositive: "", //身份证正面
-      idCardNegative: "" //身份证反面
+      idCardNegative: "", //身份证反面
+      list: [] //企业认证列表(有各种状态的)
     };
   },
   onLoad() {
@@ -161,9 +119,17 @@ export default {
         title: "我的认证"
       });
     },
+    shiftTab(index) {
+      //切换个人、公司的认证
+      this.verticalType = index;
+      if (index == 2) {
+        this.list = [];
+        this.UserBusinessAuthInfo();
+      }
+    },
     valOther() {
       //个人认证的校验
-      if (this.userRName == "") {
+      if (trim(this.userRName) == "") {
         wx.showToast({
           title: "请输入您的姓名!",
           icon: "none",
@@ -171,7 +137,7 @@ export default {
         });
         return false;
       }
-      if (this.idCard == "") {
+      if (trim(this.idCard) == "") {
         wx.showToast({
           title: "请输入身份证号!",
           icon: "none",
@@ -187,7 +153,7 @@ export default {
         });
         return false;
       }
-      if (this.idCardPositive == "") {
+      if (trim(this.idCardPositive) == "") {
         wx.showToast({
           title: "请上传身份证正面照!",
           icon: "none",
@@ -195,7 +161,7 @@ export default {
         });
         return false;
       }
-      if (this.idCardNegative == "") {
+      if (trim(this.idCardNegative) == "") {
         wx.showToast({
           title: "请上传身份证反面照!",
           icon: "none",
@@ -255,9 +221,8 @@ export default {
       }
     },
     UserOwnerAuth(idCardPositive, idCardNegative) {
-      let that = this;
       //个人认证
-      console.log("jinglaile");
+      let that = this;
       post(
         "User/UserOwnerAuth",
         {
@@ -277,6 +242,22 @@ export default {
             icon: "none",
             duration: 1500
           });
+        }
+      });
+    },
+    UserBusinessAuthInfo() {
+      //企业认证查询转态
+      let that = this;
+      post(
+        "User/UserBusinessAuthInfo",
+        {
+          UserId: that.userId,
+          Token: that.token
+        },
+        that.curPage
+      ).then(res => {
+        if (res.code === 0 && res.data.length > 0) {
+          that.list = res.data;
         }
       });
     }

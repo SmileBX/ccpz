@@ -42,7 +42,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 54,
+			"current": 65,
 			"list": [
 				{
 					"id": 0,
@@ -482,6 +482,27 @@
 					"id": -1,
 					"name": "邀请记录",
 					"pathName": "pages/inviteRecord/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "审核状态",
+					"pathName": "pages/VerticalStatus/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 64,
+					"name": "公司---认证新企业",
+					"pathName": "pages/mine2/verticalCompany/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "完善公司信息",
+					"pathName": "pages/mine2/continueCompany/main",
 					"query": "",
 					"scene": null
 				}

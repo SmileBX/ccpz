@@ -289,6 +289,10 @@ export function Login() {
     })
 }
 
+export function trim(str) {
+    return str.replace(/(^\s*)|(\s*$)/g, "");
+}
+
 export {
     host,
     filePath,
@@ -302,5 +306,6 @@ export default {
     formatTime,
     getCurrentPageUrlWithArgs,
     valPhone: valPhone,
-    previewImage: previewImage
+    previewImage: previewImage,
+    trim
 }
