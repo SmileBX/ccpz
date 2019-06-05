@@ -126,9 +126,9 @@
                 "myVertical/main",
                 "myCollect/main",
                 "myCoupon/main",
-                "moneyList/main"
-
-
+                "moneyList/main",
+                "verticalCompany/main",
+                "continueCompany/main"
             ]
         }
     ],
