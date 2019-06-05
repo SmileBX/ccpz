@@ -25,36 +25,40 @@
           </div>
           <!--公司名称 -->
           <div class="form-cells-item" v-if="TypeId==36 || TypeId==52">
-            <div class="form-cells-navigate navigate-bottom">
+            <div :class="{showDefaultCompany:'form-cells-navigate navigate-bottom'}">
               <div class="form-cells-hd">公司名称</div>
               <div class="form-cell-bd">
                 <input
                   class="ipt"
                   type="text"
-                  placeholder="请输入公司名称"
+                  disabled
+                  placeholder="请选择公司"
+                  @click="showDefaultCompany && getCompany"
                   placeholder-style="color:#b5b5b5;"
+                  v-model="companyName"
                 >
               </div>
             </div>
           </div>
           <!--公司-->
-          <div class="form-cells-item" style="padding-right:0"  v-if="TypeId==36 || TypeId==52">
+          <!-- <div class="form-cells-item" style="padding-right:0"  v-if="TypeId==36 || TypeId==52">
             <div class="form-cells-item">
               <div class="form-cell-bd">深圳木棉科技有限公司</div>
             </div>
             <div class="form-cells-item">
               <div class="form-cell-bd">深圳大漠时代文化传媒集团有限公司</div>
             </div>
-          </div>
+          </div> -->
           <div v-if="TypeId==36">
               <div class="form-cells-item form-cells-item2">
-                <div class="item2-column">
+                <div class="item2-column" @click="getProperty">
                   <div class="form-cells-hd">物业形式</div>
                   <input
                     class="ipt"
                     type="text"
                     disabled
                     placeholder="请选择"
+                    v-model="PropertySort"
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
@@ -63,8 +67,8 @@
                   <input
                     class="ipt"
                     type="text"
-                    disabled
                     placeholder="请输入"
+                    v-model="PropertyPrice"
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
@@ -77,7 +81,8 @@
                     type="text"
                     disabled
                     placeholder="请选择"
-                    @click="showArea=true"
+                    @click="getArea"
+                    v-model="GladBuyArea"
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
@@ -87,7 +92,9 @@
                     class="ipt"
                     type="text"
                     disabled
-                    placeholder="请输入"
+                    placeholder="请选择"
+                    @click="getTrim(1)"
+                    v-model="IsTrimMsg"
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
@@ -101,6 +108,7 @@
                     disabled
                     placeholder="请选择"
                     @click="showDate=true"
+                    v-model="PlanBuyDate"
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
@@ -109,8 +117,8 @@
                   <input
                     class="ipt"
                     type="text"
-                    disabled
                     placeholder="请输入"
+                    v-model="PlanBuyArea"
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
@@ -123,6 +131,8 @@
                     type="text"
                     disabled
                     placeholder="请选择"
+                    v-model="GladBuyerTrade"
+                    @click="getGladBuyerTrade"
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
@@ -131,8 +141,8 @@
                   <input
                     class="ipt"
                     type="text"
-                    disabled
                     placeholder="请输入"
+                    v-model="BuyBudget"
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
@@ -417,6 +427,8 @@
                   type="text"
                   disabled
                   placeholder="请选择"
+                  @click="getTrim(2)"
+                  v-model="IsSubPackMsg"
                   placeholder-style="color:#b5b5b5;"
                 >
               </div>
@@ -427,6 +439,8 @@
                   type="text"
                   disabled
                   placeholder="请选择"
+                  @click="getTrim(3)"
+                  v-model="IsSeniorMsg"
                   placeholder-style="color:#b5b5b5;"
                 >
               </div>
@@ -439,6 +453,8 @@
                   type="text"
                   disabled
                   placeholder="请选择"
+                  @click="getTrim(4)"
+                  v-model="IsStockCooperationMsg"
                   placeholder-style="color:#b5b5b5;"
                 >
               </div>
@@ -449,6 +465,8 @@
                   type="text"
                   disabled
                   placeholder="请选择"
+                  @click="getTrim(5)"
+                  v-model="IsCompanyListMsg"
                   placeholder-style="color:#b5b5b5;"
                 >
               </div>
@@ -461,6 +479,8 @@
                   type="text"
                   disabled
                   placeholder="请选择"
+                  @click="getTrim(6)"
+                  v-model="IsAllowOtherListMsg"
                   placeholder-style="color:#b5b5b5;"
                 >
               </div>
@@ -512,16 +532,16 @@
       </div>
     </div>
     <!--弹层-->
-    <div class="mask" v-if="isShowMask" catchtouchmove="true" @click="isShowMask=false"></div>
-    <div class="maskType boxSize" v-if="isShowMask">
+    <div class="mask" v-if="isShowMask" catchtouchmove="true" @click="cancle"></div>
+    <div class="maskType boxSize" v-if="isShowMask" :class="showNoChange?'noParActive':''">
         <div class="flex">
               <span class="size" @click="cancle">取消</span>
               <span class="title">{{masktitle}}</span>
               <span class="color size" @click="subConfirm">确定</span>
         </div>
-        <scroll-view :scroll-y="true" style="height:480rpx;" class="showItem" @scrolltolower="loadMore">
+        <scroll-view :scroll-y="true" style="height:480rpx;" :style="showNoChange?'height:200rpx':''" class="showItem" @scrolltolower="loadMore">
           <div v-for="(item,index) in list" :key="index">
-              <p :class="{'itemactive':item.statu}" @click="chose(index)" style="margin-top:3rpx;">{{item.name}}
+              <p :class="{'itemactive':statu == index}" @click="chose(index)" style="margin-top:3rpx;">{{item.Name}}
               </p>
           </div>
         </scroll-view>
@@ -539,9 +559,9 @@
         />
     </van-action-sheet> 
     <!--区域插件--> 
-    <van-popup :show="showArea" position="bottom" :overlay="true" @close="showArea = false">
+    <!-- <van-popup :show="showArea" position="bottom" :overlay="true" @close="showArea = false">
         <van-area :area-list="areaList" title="请选择区域" @cancel="showArea = false" @confirm="confirmArea"/>
-    </van-popup>    
+    </van-popup>     -->
   </div>
 </template>
 
@@ -557,27 +577,44 @@ export default {
     return {
       currentDate: new Date().getTime(),
       minDate: new Date().getTime(),
-      // formatter(type, value) {
-      //   if (type === "year") {
-      //     return `${value}年`;
-      //   } else if (type === "month") {
-      //     return `${value}月`;
-      //   }
-      //   return value;
-      // },
       curPage: "",
       userId: "",
       token: "",
       TypeId:'',
       detailInfo:[],
       isShowMask:false,//是否显示弹层
+      showNoChange:false,//控制是否选择高度
       showArea:false,//显示区域
       areaList,
       showDate:false,//显示时间
       list:[],//弹层列表
       masktitle:"",//弹层标题
-
-
+      statu:0,//控制弹层item选中样式
+      IsCompanyList:'',//本公司是否挂牌       1:是  0:否
+      IsCompanyListMsg:'',
+      IsRegArea:'', //是否可注册
+      IsRegAreaMsg:'',
+      IsAllowOtherList:'',//是否允许对方挂牌    1:是  0:否
+      IsAllowOtherListMsg:'',
+      IsSubPack:'',//业务是否分包        1:是  0:否
+      IsSubPackMsg:'',
+      IsSenior:'',//公司资质是否可使用   1:是  0:否
+      IsSeniorMsg:'',
+      IsStockCooperation:'',//股份合作未来是否考虑  1:是  0:否
+      IsStockCooperationMsg:'',
+      PropertySort:'', //物业/设备形式
+      PropertyPrice:'', //物业单价/设备单价
+      GladBuyAreaId:'', //区域code代码
+      GladBuyArea:'', //意向购买区域\设备使用区域  格式，'1级区域,2级区域'
+      GladBuyerTradeId:'',//意向行业/主营业务Id
+      GladBuyerTrade:'', //意向行业/主营业务   格式，'1级行业,2级行业'
+      BuyBudget:'', //购买预算  
+      IsTrimMsg:'',
+      IsTrim:'',//是否装修  0-否   1-是
+      PlanBuyArea:'', //计划购买面积
+      PlanBuyDate:'', //计划购买日期
+      showDefaultCompany:false,//只有一个公司默认显示
+      companyName:"",//公司名称
       pageTitle:"",//页面标题
       subTitle:"",//副标题
       introduce:"",//简介标题
@@ -644,6 +681,7 @@ export default {
           this.addDetailPlaceholder = "门牌号/楼号等 例：3楼418室"
         }
     },
+    //时间
     onInput(e, i) {
         console.log(e, "时间");
         const date = new Date(e.mp.detail);
@@ -652,9 +690,154 @@ export default {
         let dd = date.getDate();
         month.toString().length < 2 ? (month = "0" + month) : month;
         dd.toString().length < 2 ? (dd = "0" + dd) : dd;
-        let estimateTime = `${year}-${month}-${dd}`;
-        console.log(estimateTime, "交付时间");
-      },
+        this.PlanBuyDate = `${year}-${month}-${dd}`;
+        this.showDate = false
+    },
+    //获取认证的公司
+    getCompany(){
+        console.log(this.detailInfo,"detailInfo+++++++++++")
+    },
+    //获取物业形式
+    getProperty(){
+      console.log(this.detailInfo,"detailInfo+++++++++++")
+      this.isShowMask = true
+      this.list = this.detailInfo.Property
+      this.masktitle = '请选择物业形式'
+    },
+    //获取意向拼购行业
+    getGladBuyerTrade(){
+      this.isShowMask = true
+      this.list = this.detailInfo.tradelist
+      this.masktitle = '请选择意向行业'
+    },
+    //获取区域
+    getArea(){
+      this.isShowMask = true
+      this.list = this.detailInfo.arealist
+    },
+    //选择弹层item
+    chose(e){
+        this.statu = e
+    },
+    //是否装修
+    getTrim(n){
+      //1-是否装修 2-业务分包 3-是否可使用公司资质 4-股份合作 5-公司挂牌 6-对方公司挂牌
+      this.isShowMask = true
+      this.showNoChange = true
+      console.log(this.showNoChange)
+      if(n==1){
+        this.list = [{Id:1,Name:'需要装修'},{Id:0,Name:'不需要装修'}]
+        this.masktitle = '请选择是否装修'
+      }
+      if(n==2){
+        this.list = [{Id:1,Name:'可业务分包'},{Id:0,Name:'无业务分包'}]
+        this.masktitle = '请选择业务分包'
+      }
+      if(n==3){
+        this.list = [{Id:1,Name:'公司资质是可以使用'},{Id:0,Name:'公司资质是不可使用'}]
+        this.masktitle = '请选择公司资质'
+      }
+      if(n==4){
+        this.list = [{Id:1,Name:'考虑未来股份合作'},{Id:0,Name:'不考虑未来股份合作'}]
+        this.masktitle = '请选择股份合作'
+      }
+      if(n==5){
+        this.list = [{Id:1,Name:'本公司已挂牌'},{Id:0,Name:'本公司未挂牌'}]
+        this.masktitle = '请选择公司挂牌'
+      }
+      if(n==6){
+        this.list = [{Id:1,Name:'允许对方挂牌'},{Id:0,Name:'不允许对方挂牌'}]
+        this.masktitle = '请选择对方公司挂牌'
+      }
+
+    },
+    completeInfo(i,title,msgId,msg){
+        if(this.list[i].Id==0){
+          return{
+            msg : '否',
+            msgId :this.list[i].Id
+          }  
+        }else{
+            return{
+            msg :'是',
+            msgId :this.list[i].Id
+          } 
+        }
+        
+    },
+    //确定选择
+    subConfirm(){
+      console.log(this.list,"++++++++++++++++++++++++++++++++++")
+      for(let i in this.list){
+          if(i*1 == this.statu){
+              if(this.masktitle =='请选择物业形式'){
+                  this.PropertySort = this.list[i].Name;
+              }
+              var add=this.completeInfo(i,'请选择是否装修',this.IsTrim,this.IsTrimMsg)
+              console.log(add)
+              // if(this.masktitle =='请选择是否装修'){
+              //   this.IsTrim = this.list[i].Id;
+              //   if(this.list[i].Id==0){
+              //     this.IsTrimMsg = '否';
+              //   }else{
+              //      this.IsTrimMsg = '是';
+              //   }
+              // }
+              // if(this.masktitle =='请选择业务分包'){
+              //   this.IsSubPack = this.list[i].Id;
+              //   if(this.list[i].Id==0){
+              //     this.IsSubPackMsg = '否';
+              //   }else{
+              //      this.IsSubPackMsg = '是';
+              //   }
+              // }
+              // if(this.masktitle =='请选择公司资质'){
+              //   this.IsSenior = this.list[i].Id;
+              //   if(this.list[i].Id==0){
+              //     this.IsSeniorMsg = '否';
+              //   }else{
+              //      this.IsSeniorMsg = '是';
+              //   }
+              // }
+              // if(this.masktitle =='请选择股份合作'){
+              //   this.IsStockCooperation = this.list[i].Id;
+              //   if(this.list[i].Id==0){
+              //     this.IsStockCooperationMsg = '否';
+              //   }else{
+              //      this.IsStockCooperationMsg = '是';
+              //   }
+              // }
+              // if(this.masktitle =='请选择公司挂牌'){
+              //   this.IsCompanyList = this.list[i].Id;
+              //   if(this.list[i].Id==0){
+              //     this.IsCompanyListMsg = '否';
+              //   }else{
+              //      this.IsCompanyListMsg = '是';
+              //   }
+              // }
+              // if(this.masktitle =='请选择对方公司挂牌'){
+              //   this.IsAllowOtherList = this.list[i].Id;
+              //   if(this.list[i].Id==0){
+              //     this.IsAllowOtherListMsg = '否';
+              //   }else{
+              //      this.IsAllowOtherListMsg = '是';
+              //   }
+              // }
+              // if(this.masktitle =='请选择意向行业'){
+                 
+              // }
+          }
+      }
+      this.isShowMask = false
+      this.showNoChange = false
+      this.statu = 0
+    },
+    //取消选择
+    cancle(){
+      this.isShowMask = false
+      this.showNoChange = false
+      this.statu = 0
+    },
     GetPublishItems(){
       post('Goods/GetPublishItems',{
           UserId:this.userId,
@@ -662,22 +845,38 @@ export default {
           TypeId:this.TypeId
       },this.curPage).then(res=>{
         console.log(res,"GetPublishItems")
-        //没有认证 先去认证
-        // if(res.code==1){
-        //   wx.showToast({
-        //     title:res.msg,
-        //     duration:1500,
-        //     icon:'none',
-        //   })
-        //   setTimeout(() => {
-        //     wx.navigateTo({
-        //       url: "/pages/mine2/myVertical/main?url=rentDevice"
-        //     });
-        //   }, 1500);
-        // }else{
-        //   //已经认证了 获取信息 发布信息
-        //   this.detailInfo = res.data
-        // }
+        if(res.code==0){
+            //已经认证了 获取信息 发布信息
+          this.detailInfo = res.data
+          if(res.data.CompanyList.lenght>1){
+              this.showDefaultCompany = true
+          }else{
+              this.showDefaultCompany = false
+              this.companyName = res.data.CompanyList[0].Name
+              console.log(this.companyName,"this.companyName")
+          }
+
+        }else{
+            //没有认证 先去认证  code=5 企业认证  code=6个人认证
+            wx.showToast({
+            title:res.msg,
+            duration:1500,
+            icon:'none',
+          })
+          if(res.code==6){
+              setTimeout(() => {
+                wx.navigateTo({
+                  url: "/pages/mine2/myVertical/main?url=rentDevice"
+                });
+              }, 1500);
+          }else if(res.code==5){
+              setTimeout(() => {
+                wx.navigateTo({
+                  url: "/pages/mine2/verticalCompany/main?url=rentDevice"
+                });
+              }, 1500);
+          }
+        }
       })
     },
   },
@@ -699,10 +898,11 @@ export default {
     z-index: 999;
     p {
         padding: 15rpx 30rpx;
+        text-align:center;
     }
     .flex {
         justify-content: space-between;
-        border-bottom: 1rpx solid #ccc;
+        border-bottom: 1rpx solid #f2f2f2;
         padding: 20rpx;
         font-weight: 400;
         font-size: 30rpx;
@@ -712,9 +912,6 @@ export default {
         .size {
             font-size: 26rpx;
         }
-        span {
-            border: 1p solid blue
-        }
         .title {
             font-weight: bold;
         }
@@ -723,5 +920,11 @@ export default {
         background: #ff6325;
         color: #fff
     }
+}
+.noParActive{
+  height:320rpx!important;
+}
+.noChilActive{
+  height:200rpx!important;
 }
 </style>
