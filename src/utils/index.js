@@ -88,6 +88,7 @@ function request(url, method, data, curPage, header = {}) {
                     icon: 'none',
                     duration: 1500
                 })
+                reject(false);
             },
             complete: function() {
                 wx.hideLoading();

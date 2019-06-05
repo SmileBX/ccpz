@@ -1,5 +1,5 @@
 <template>
-  <div class="bg_fff"style="height:100vh">
+  <div class="bg_fff" style="height:100vh">
     <!-- 标签-->
     <div class="flex flexWrap justifyContentStart taglist">
       <span>美工</span>
