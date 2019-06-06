@@ -13,7 +13,7 @@
           <input type="text" class="weui-input" v-model="job" placeholder="请输入">
         </div>
       </div>
-      <div class="weui-cell">
+      <div class="weui-cell" @tap="showSelect(1)">
         <label class="weui-label">成立日期*</label>
         <div class="weui-cell__bd text_r">
           <input type="text" disabled :value="setUpDate" class="weui-input" placeholder="请选择">
@@ -37,10 +37,11 @@
           <input type="text" class="weui-input" v-model="officeAddr" placeholder="请输入">
         </div>
       </div>
-      <div class="weui-cell">
+      <!-- <div class="weui-cell"  @tap="showSelect(2)"> -->
+      <div class="weui-cell"  @tap="onAreaStatus">
         <label class="weui-label">负责人籍贯</label>
         <div class="weui-cell__bd text_r">
-          <input type="text" disabled class="weui-input" placeholder="请选择">
+          <input type="text" :value="nativePlace" disabled class="weui-input" placeholder="请选择">
         </div>
       </div>
     </div>
@@ -110,7 +111,7 @@
       <div class="weui-btn btn-active fill">提交</div>
     </div>
     <!-- 弹窗 -->
-    
+    <!-- 选择行业 -->
     <div class="shade bottom__shade" v-if="showShade[0]">
       <div class="mask" @tap="cancle(0)"></div>
       <div class="shadeContent">
@@ -118,23 +119,50 @@
           <span class="btn btn-cancle" @tap="cancle(0)">取消</span>
           <p class="title flex1">行业</p>
           <span class="btn btn-sure" @tap="sureSelect(0)">确定</span>
-        </div> -->
+        </div>-->
         <div class="shade__bd">
-          <van-picker  show-toolbar title="行业" @confirm="onConfirm"
-          @cancel="onCancel" :columns="columns" @change="onChange($event)"/>
-          <!-- <picker mode="multiSelector" @change="bindMultiPickerChange" @columnchange="bindMultiPickerColumnChange" value="" :range="citys"></picker> -->
+          <van-picker
+            v-if="hasTrade"
+            show-toolbar
+            title="行业"
+            @confirm="onConfirm"
+            @cancel="onCancel"
+            :columns="columns"
+            @change="onChange($event)"
+          />
         </div>
       </div>
     </div>
+    <!-- 选择行业  end -->
+    <!-- 选择成立日期 -->
+    <div class="shade bottom__shade" v-if="showShade[1]">
+      <div class="mask" @tap="cancle(1)"></div>
+      <div class="shadeContent">
+        <div class="shade__bd">
+          <van-datetime-picker show-toolbar title="成立日期" @cancel="closeDate" @confirm="confirmDate" @change="changeDate($event)"  :value="currentDate" :min-date="minDate" :max-date="maxDate" type="date"/>
+        </div>
+      </div>
+    </div>
+    <!-- 选择成立日期  end -->
+    <!-- 选择籍贯弹窗 -->
+    <div class="shade bottom__shade" v-show="areaStatus">
+      <div class="mask" @tap="cancle(2)"></div>
+      <div class="shadeContent">
+        <div class="shade__bd">
+          <!-- <van-popup :show="areaStatus" position="bottom"> -->
+          <van-area :area-list="areaList" :value="areaValue" @confirm="confirmBirthArr" @change="changeArr($event)" :columns-num="2" title="籍贯" />
+          <!-- </van-popup> -->
+        </div>
+      </div>
+    </div>
+    
+    <!-- 选择籍贯弹窗  end -->
   </div>
 </template>
 <script>
 import { post, toLogin, getCurrentPageUrlWithArgs, trim } from "@/utils";
+import areaList from "@/utils/areaList";
 import { pathToBase64 } from "@/utils/image-tools";
-const citys = {
-  浙江: ["杭州", "宁波", "温州", "嘉兴", "湖州"],
-  福建: ["福州", "厦门", "莆田", "三明", "泉州"]
-};
 export default {
   onLoad() {
     this.setBarTitle();
@@ -144,38 +172,16 @@ export default {
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
     this.GetTradeList();
-    console.log(citys)
-    console.log(this.$refs)
   },
   data() {
     return {
+      areaList,
       userId: "",
       token: "",
       curPage: "",
-      showShade:[false],
+      showShade: [false,false],
       tradeList: {}, //行业数据
-      columns: [
-        // {
-        //   values: Object.keys(citys),
-        //   className: "column1"
-        // },
-        // {
-        //   values: citys["浙江"],
-        //   className: "column2",
-        //   defaultIndex: 2
-        // }
-      ],
-      // columns: [
-      //   {
-      //     values: Object.keys(citys),
-      //     className: 'column1'
-      //   },
-      //   {
-      //     values: citys['浙江'],
-      //     className: 'column2',
-      //     defaultIndex: 2
-      //   }
-      // ],
+      columns: [],  //选择行业弹窗需要传入的数据
       id: "",
       trade: "",
       job: "",
@@ -190,39 +196,88 @@ export default {
       weChatNum: "",
       mailbox: "",
       officialWebsite: "",
-      hasTrade:false
+      hasTrade: false,  //是否已经返回了行业数据
+      currentDate: new Date().getTime(),
+      maxDate: new Date().getTime(),
+      minDate: new Date().setFullYear(1600,0,1),
+      areaValue:"",
+      areaStatus:false,
     };
   },
   methods: {
+    onAreaStatus(){
+      
+      this.areaStatus = !this.areaStatus;
+      console.log("再次打开的时候areaValue:"+this.areaValue);
+      console.log(this.areaStatus,'areaStatus')
+    },
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "认证新企业"
       });
     },
-    showSelect(index){  //弹窗是否显示
-      this.$set(this.showShade,index,true);
+    showSelect(index) {
+      //弹窗是否显示
+      this.$set(this.showShade, index, true);
     },
-    cancle(index){   //弹窗的取消
-      this.$set(this.showShade,index,false);
+    cancle(index) {
+      //弹窗的取消
+      this.$set(this.showShade, index, false);
     },
-    sureSelect(index){
-      if(index==0){  //选择行业
+    sureSelect(index) {
+      if (index == 0) {
+        //选择行业
       }
-      this.$set(this.showShade,index,false);
+      this.$set(this.showShade, index, false);
     },
-    onChange(event){  //选择行业
+    onChange(event) {
+      //选择行业
       const { picker, value, index } = event.mp.detail;
       picker.setColumnValues(1, this.tradeList[value[0]]);
     },
-    onConfirm(event){  //选择行业确定
-    console.log(event);
+    onConfirm(event) {
+      //选择行业确定
+      console.log(event);
       const { index, value } = event.mp.detail;
       this.trade = value.join(",");
-      this.$set(this.showShade,0,false);
-      // console.log(picker.setValues);
-      this.$set(this.columns[1],'values',this.tradeList[value[0]]);
-      this.$set(this.columns[1],'defaultIndex',index[1]);
-      console.log(this.columns)
+      this.$set(this.showShade, 0, false);
+      this.$set(this.columns[0], "defaultIndex", index[0]);
+      this.$set(this.columns[1], "values", this.tradeList[value[0]]);
+      this.$set(this.columns[1], "defaultIndex", index[1]);
+    },
+    onCancel() {
+      this.$set(this.showShade, 0, false);
+    },
+    changeDate(e){  //选择成立日期
+      
+    },
+    confirmDate(e){  //选择成立日期的点击确定
+      let dd = new Date(e.mp.detail);
+      let year = dd.getFullYear();
+      let month = dd.getMonth()+1;
+      let day = dd.getDate();
+       month = month < 10 ? '0'+month : month;
+       day = day < 10 ? '0'+day : day;
+       this.setUpDate = year+"-"+month+"-"+day
+      this.currentDate = dd.getTime();
+      this.$set(this.showShade, 1, false);
+      
+    },
+    changeArr(e){
+
+    },
+    confirmBirthArr(e){  //选择籍贯的点击确定
+      let arr = e.mp.detail.values;
+      // console.log(e);
+      let str = '';
+      arr.forEach(item => {
+        str += item.name;
+        // code.push(item.code);
+      })
+      this.nativePlace = str;
+      this.areaStatus = false;
+      this.areaValue = arr[arr.length-1].code;
+      console.log("code:"+this.areaValue);
     },
     valOther() {
       //认证的校验
@@ -363,17 +418,18 @@ export default {
               arr.push(item2.Name);
             });
             json[item.Name] = arr;
-           that.tradeList =Object.assign(that.tradeList,json);
+            that.tradeList = Object.assign(that.tradeList, json);
           });
           console.log(that.tradeList);
           that.columns.push(
             {
               values: Object.keys(that.tradeList),
+              defaultIndex: 0,
               className: "column1"
             },
             {
               values: that.tradeList[Object.keys(that.tradeList)[0]],
-              className: 'column2',
+              className: "column2",
               defaultIndex: 0
             }
           );
