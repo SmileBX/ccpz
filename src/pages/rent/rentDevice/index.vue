@@ -132,7 +132,7 @@
                     disabled
                     placeholder="请选择"
                     v-model="GladBuyerTrade"
-                    @click="getGladBuyerTrade"
+                    @click="showTrade=true"
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
@@ -558,9 +558,14 @@
         style="z-index:888!important"
         />
     </van-action-sheet> 
-    <!--区域插件--> 
+    <!--行业插件--> 
+    <van-popup :show="showTrade" position="bottom" :overlay="true" @close="showTrade = false">
+        <van-picker  show-toolbar title="请选择行业" @confirm="onConfirm"
+          @cancel="onCancel" :columns="columns" @change="onChange($event)"/>
+    </van-popup>
+    <!--地区插件--> 
     <van-popup :show="showArea" position="bottom" :overlay="true" @close="showArea = false">
-        <van-area :area-list="areaList" title="请选择区域" @cancel="showArea = false" @confirm="confirmArea"/>
+        <van-area :area-list="areaList" @cancel="showArea = false"  title="请选择区域" @confirm="confirmArea"/>
     </van-popup>    
   </div>
 </template>
@@ -585,7 +590,13 @@ export default {
       isShowMask:false,//是否显示弹层
       showNoChange:false,//控制是否选择高度
       showArea:false,//显示区域
-      areaList,
+      showTrade:false,
+      columns:[],//picker列表
+      tradeList:{},//行业列表
+      areaList,//区域列表
+
+
+
       showDate:false,//显示时间
       list:[],//弹层列表
       masktitle:"",//弹层标题
@@ -822,16 +833,63 @@ export default {
       this.showNoChange = false
       this.statu = 0
     },
+    //获取默认数据
     GetPublishItems(){
+      let that = this;
       post('Goods/GetPublishItems',{
-          UserId:this.userId,
-          Token:this.token,
-          TypeId:this.TypeId
-      },this.curPage).then(res=>{
+          UserId:that.userId,
+          Token:that.token,
+          TypeId:that.TypeId
+      },that.curPage).then(res=>{
         console.log(res,"GetPublishItems")
         if(res.code==0){
             //已经认证了 获取信息 发布信息
-          this.detailInfo = res.data
+          that.detailInfo = res.data
+          //地区信息
+          // (
+          //   res.data.arealist.map(item=>{
+          //     console.log(item.Code,"arae+++++++++++++++++")
+          //     let province_list = {};
+          //     let city_list = {};
+          //     province_list[item.Code] = item.Name
+          //     console.log(province_list,"province_listt____________________")
+          //     item.Child.map(itemChild=>{
+          //       city_list[itemChild.Code] = itemChild.Name
+          //       console.log(city_list,"city_list___9999999999999999999")
+          //     })
+          //     this.areaList = {
+          //       province_list,city_list
+          //     }
+          //     console.log(this.areaList,"++++++++++++++++++++++++++++++++++")
+          //   }),
+            
+
+          // )
+          //行业的信息
+          (res.data.tradelist.forEach(item=>{
+            let obj = {}
+            let objArr = []
+            item.Child.forEach(itemchild=>{
+              objArr.push(itemchild.Name)
+            });
+            obj[item.Name] = objArr;
+            that.tradeList = Object.assign(that.tradeList,obj);
+            // console.log(that.tradeList[Object.keys(that.tradeList)[0]] ,"_______++++++++++++_________")
+          }),
+         
+          that.columns.push(
+              {
+              values: Object.keys(that.tradeList),
+              className: "column1"
+              },
+              {
+                values: that.tradeList[Object.keys(that.tradeList)[0]],
+                className: 'column2',
+                defaultIndex: 0
+              }
+            ))
+           // console.log(that.columns,"333333333333333333333");
+          //公司的信息
           if(res.data.CompanyList.lenght>1){
               this.showDefaultCompany = true
           }else{
@@ -839,6 +897,7 @@ export default {
               this.companyName = res.data.CompanyList[0].Name
               console.log(this.companyName,"this.companyName")
           }
+          
 
         }else{
             //没有认证 先去认证  code=5 企业认证  code=6个人认证
@@ -862,6 +921,33 @@ export default {
           }
         }
       })
+    },
+    onChange(event){  //选择行业
+      const { picker, value, index } = event.mp.detail;
+      picker.setColumnValues(1, this.tradeList[value[0]]);
+    },
+    onConfirm(event){  //选择行业确定
+    console.log(event);
+      const { index, value } = event.mp.detail;
+      this.GladBuyerTrade = value.join(",");
+      this.showTrade=false
+      // console.log(picker.setValues);
+      this.$set(this.columns[1],'values',this.tradeList[value[0]]);
+      this.$set(this.columns[1],'defaultIndex',index[1]);
+      console.log(this.columns)
+    },
+    confirmArea(area) {
+      this.showArea = false;
+      let text = '';
+      const areas = area.mp.detail.values;
+      console.log(areas,"areas")
+      // for(let i=0;i<areas.length;i+=1){
+      //   text +=areas[i].name
+      // }
+      // this.provinceCode=areas[0].code||'',
+      // this.cityCode=areas[1].code||'',
+      // this.districtCode=areas[2].code||'',
+      this.GladBuyArea = text;
     },
   },
 

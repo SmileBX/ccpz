@@ -121,7 +121,7 @@
         </div> -->
         <div class="shade__bd">
           <van-picker  show-toolbar title="行业" @confirm="onConfirm"
-                    @cancel="onCancel" :columns="columns" @change="onChange($event)"/>
+          @cancel="onCancel" :columns="columns" @change="onChange($event)"/>
           <!-- <picker mode="multiSelector" @change="bindMultiPickerChange" @columnchange="bindMultiPickerColumnChange" value="" :range="citys"></picker> -->
         </div>
       </div>
