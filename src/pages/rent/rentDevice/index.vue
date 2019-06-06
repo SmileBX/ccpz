@@ -18,6 +18,7 @@
                   class="ipt"
                   type="text"
                   placeholder="请填写适合标题"
+                  v-model="Title"
                   placeholder-style="color:#b5b5b5;"
                 >
               </div>
@@ -35,7 +36,7 @@
                   placeholder="请选择公司"
                   @click="showDefaultCompany && getCompany"
                   placeholder-style="color:#b5b5b5;"
-                  v-model="companyName"
+                  v-model="Company"
                 >
               </div>
             </div>
@@ -506,6 +507,7 @@
                   class="ipt"
                   type="text"
                   :placeholder="addrPlaceholder"
+                  v-model="CompanyAddr"
                   placeholder-style="color:#b5b5b5;"
                 >
               </div>
@@ -519,6 +521,7 @@
                   class="ipt"
                   type="text"
                   :placeholder="addDetailPlaceholder"
+                  v-model="CompanyDoorNum"
                   placeholder-style="color:#b5b5b5;"
                 >
               </div>
@@ -564,9 +567,11 @@
           @cancel="onCancel" :columns="columns" @change="onChange($event)"/>
     </van-popup>
     <!--地区插件--> 
+    <div v-if="areaList.province_list">
     <van-popup :show="showArea" position="bottom" :overlay="true" @close="showArea = false">
-        <van-area :area-list="areaList" @cancel="showArea = false"  title="请选择区域" @confirm="confirmArea"/>
-    </van-popup>    
+        <van-area :area-list="areaList" @cancel="showArea = false"  title="请选择区域" @confirm="confirmArea" columns-num="3"/>
+    </van-popup> 
+     </div>  
   </div>
 </template>
 
@@ -575,7 +580,7 @@
 //拼购--   设备拼购-52   物业拼购-36 
 import "@/style/style_fb.scss";
 import { post,host,getCurrentPageUrlWithArgs} from "@/utils";
-import areaList from "@/utils/areaList";
+// import areaList from "@/utils/areaList";
 import {pathToBase64} from "@/utils/image-tools";
 export default {
   data() {
@@ -593,7 +598,7 @@ export default {
       showTrade:false,
       columns:[],//picker列表
       tradeList:{},//行业列表
-      areaList,//区域列表
+      areaList:{},//区域列表
 
 
 
@@ -624,8 +629,13 @@ export default {
       IsTrim:'',//是否装修  0-否   1-是
       PlanBuyArea:'', //计划购买面积
       PlanBuyDate:'', //计划购买日期
+      Title:"",//标题
       showDefaultCompany:false,//只有一个公司默认显示
-      companyName:"",//公司名称
+      Company:"",//公司名称-
+      CompanyId:"",//公司Id
+      CompanyAddr:'',//对应标题地址
+      CompanyDoorNum:'',//对应标题地址门牌号
+
       pageTitle:"",//页面标题
       subTitle:"",//副标题
       introduce:"",//简介标题
@@ -826,6 +836,7 @@ export default {
       this.isShowMask = false
       this.showNoChange = false
       this.statu = 0
+      this.list = []
     },
     //取消选择
     cancle(){
@@ -846,25 +857,25 @@ export default {
             //已经认证了 获取信息 发布信息
           that.detailInfo = res.data
           //地区信息
-          // (
-          //   res.data.arealist.map(item=>{
-          //     console.log(item.Code,"arae+++++++++++++++++")
-          //     let province_list = {};
-          //     let city_list = {};
-          //     province_list[item.Code] = item.Name
-          //     console.log(province_list,"province_listt____________________")
-          //     item.Child.map(itemChild=>{
-          //       city_list[itemChild.Code] = itemChild.Name
-          //       console.log(city_list,"city_list___9999999999999999999")
-          //     })
-          //     this.areaList = {
-          //       province_list,city_list
-          //     }
-          //     console.log(this.areaList,"++++++++++++++++++++++++++++++++++")
-          //   }),
+          (
+            res.data.arealist.map(item=>{
+              console.log(item.Code,"arae+++++++++++++++++")
+              let province_list = {};
+              let city_list = {};
+              province_list[item.Code] = item.Name
+              console.log(province_list,"province_listt____________________")
+              item.Child.map(itemChild=>{
+                city_list[itemChild.Code] = itemChild.Name
+                console.log(city_list,"city_list___9999999999999999999")
+              })
+              this.areaList = {
+                province_list:province_list,city_list:province_list,county_list:city_list
+              }
+              console.log(this.areaList,"++++++++++++++++++++++++++++++++++")
+            }),
             
 
-          // )
+          )
           //行业的信息
           (res.data.tradelist.forEach(item=>{
             let obj = {}
@@ -894,8 +905,9 @@ export default {
               this.showDefaultCompany = true
           }else{
               this.showDefaultCompany = false
-              this.companyName = res.data.CompanyList[0].Name
-              console.log(this.companyName,"this.companyName")
+              this.Company = res.data.CompanyList[0].Name
+              this.CompanyId = res.data.CompanyList[0].Id
+              console.log(this.Company,"this.Company")
           }
           
 

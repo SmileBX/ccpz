@@ -21,7 +21,7 @@ VantComponent({
         areaList: 'setValues',
         columnsNum(value) {
             this.set({
-                displayColumns: this.data.columns.slice(0, +value)
+                displayColumns: this.data.columns.slice(0, value*1)
             });
         }
     },
