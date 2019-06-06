@@ -18,6 +18,7 @@
                   class="ipt"
                   type="text"
                   placeholder="请填写适合标题"
+                  v-model="Title"
                   placeholder-style="color:#b5b5b5;"
                 >
               </div>
@@ -35,7 +36,7 @@
                   placeholder="请选择公司"
                   @click="showDefaultCompany && getCompany"
                   placeholder-style="color:#b5b5b5;"
-                  v-model="companyName"
+                  v-model="Company"
                 >
               </div>
             </div>
@@ -506,6 +507,7 @@
                   class="ipt"
                   type="text"
                   :placeholder="addrPlaceholder"
+                  v-model="CompanyAddr"
                   placeholder-style="color:#b5b5b5;"
                 >
               </div>
@@ -519,6 +521,7 @@
                   class="ipt"
                   type="text"
                   :placeholder="addDetailPlaceholder"
+                  v-model="CompanyDoorNum"
                   placeholder-style="color:#b5b5b5;"
                 >
               </div>
@@ -637,8 +640,13 @@ export default {
       IsTrim:'',//是否装修  0-否   1-是
       PlanBuyArea:'', //计划购买面积
       PlanBuyDate:'', //计划购买日期
+      Title:"",//标题
       showDefaultCompany:false,//只有一个公司默认显示
-      companyName:"",//公司名称
+      Company:"",//公司名称-
+      CompanyId:"",//公司Id
+      CompanyAddr:'',//对应标题地址
+      CompanyDoorNum:'',//对应标题地址门牌号
+
       pageTitle:"",//页面标题
       subTitle:"",//副标题
       introduce:"",//简介标题
@@ -861,6 +869,7 @@ export default {
       this.isShowMask = false
       this.showNoChange = false
       this.statu = 0
+      this.list = []
     },
     //取消选择
     cancle(){
