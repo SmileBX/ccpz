@@ -81,7 +81,7 @@
                     type="text"
                     disabled
                     placeholder="请选择"
-                    @click="getArea"
+                    @click="showArea=true"
                     v-model="GladBuyArea"
                     placeholder-style="color:#b5b5b5;"
                   >
@@ -132,7 +132,7 @@
                     disabled
                     placeholder="请选择"
                     v-model="GladBuyerTrade"
-                    @click="getGladBuyerTrade"
+                    @click="showTrade=true"
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
@@ -558,10 +558,15 @@
         style="z-index:888!important"
         />
     </van-action-sheet> 
-    <!--区域插件--> 
-    <!-- <van-popup :show="showArea" position="bottom" :overlay="true" @close="showArea = false">
-        <van-area :area-list="areaList" title="请选择区域" @cancel="showArea = false" @confirm="confirmArea"/>
-    </van-popup>     -->
+    <!--行业插件--> 
+    <van-popup :show="showTrade" position="bottom" :overlay="true" @close="showTrade = false">
+        <van-picker  show-toolbar title="请选择行业" @confirm="onConfirm"
+          @cancel="onCancel" :columns="columns" @change="onChange($event)"/>
+    </van-popup>
+    <!--地区插件--> 
+    <van-popup :show="showArea" position="bottom" :overlay="true" @close="showArea = false">
+        <van-area :area-list="areaList" @cancel="showArea = false"  title="请选择区域" @confirm="confirmArea"/>
+    </van-popup>    
   </div>
 </template>
 
@@ -585,7 +590,13 @@ export default {
       isShowMask:false,//是否显示弹层
       showNoChange:false,//控制是否选择高度
       showArea:false,//显示区域
-      areaList,
+      showTrade:false,
+      columns:[],//picker列表
+      tradeList:{},//行业列表
+      areaList,//区域列表
+
+
+
       showDate:false,//显示时间
       list:[],//弹层列表
       masktitle:"",//弹层标题
@@ -751,20 +762,6 @@ export default {
       }
 
     },
-    completeInfo(i,title,msgId,msg){
-        if(this.list[i].Id==0){
-          return{
-            msg : '否',
-            msgId :this.list[i].Id
-          }  
-        }else{
-            return{
-            msg :'是',
-            msgId :this.list[i].Id
-          } 
-        }
-        
-    },
     //确定选择
     subConfirm(){
       console.log(this.list,"++++++++++++++++++++++++++++++++++")
@@ -773,59 +770,57 @@ export default {
               if(this.masktitle =='请选择物业形式'){
                   this.PropertySort = this.list[i].Name;
               }
-              var add=this.completeInfo(i,'请选择是否装修',this.IsTrim,this.IsTrimMsg)
-              console.log(add)
-              // if(this.masktitle =='请选择是否装修'){
-              //   this.IsTrim = this.list[i].Id;
-              //   if(this.list[i].Id==0){
-              //     this.IsTrimMsg = '否';
-              //   }else{
-              //      this.IsTrimMsg = '是';
-              //   }
-              // }
-              // if(this.masktitle =='请选择业务分包'){
-              //   this.IsSubPack = this.list[i].Id;
-              //   if(this.list[i].Id==0){
-              //     this.IsSubPackMsg = '否';
-              //   }else{
-              //      this.IsSubPackMsg = '是';
-              //   }
-              // }
-              // if(this.masktitle =='请选择公司资质'){
-              //   this.IsSenior = this.list[i].Id;
-              //   if(this.list[i].Id==0){
-              //     this.IsSeniorMsg = '否';
-              //   }else{
-              //      this.IsSeniorMsg = '是';
-              //   }
-              // }
-              // if(this.masktitle =='请选择股份合作'){
-              //   this.IsStockCooperation = this.list[i].Id;
-              //   if(this.list[i].Id==0){
-              //     this.IsStockCooperationMsg = '否';
-              //   }else{
-              //      this.IsStockCooperationMsg = '是';
-              //   }
-              // }
-              // if(this.masktitle =='请选择公司挂牌'){
-              //   this.IsCompanyList = this.list[i].Id;
-              //   if(this.list[i].Id==0){
-              //     this.IsCompanyListMsg = '否';
-              //   }else{
-              //      this.IsCompanyListMsg = '是';
-              //   }
-              // }
-              // if(this.masktitle =='请选择对方公司挂牌'){
-              //   this.IsAllowOtherList = this.list[i].Id;
-              //   if(this.list[i].Id==0){
-              //     this.IsAllowOtherListMsg = '否';
-              //   }else{
-              //      this.IsAllowOtherListMsg = '是';
-              //   }
-              // }
-              // if(this.masktitle =='请选择意向行业'){
+              if(this.masktitle =='请选择是否装修'){
+                this.IsTrim = this.list[i].Id;
+                if(this.list[i].Id==0){
+                  this.IsTrimMsg = '否';
+                }else{
+                   this.IsTrimMsg = '是';
+                }
+              }
+              if(this.masktitle =='请选择业务分包'){
+                this.IsSubPack = this.list[i].Id;
+                if(this.list[i].Id==0){
+                  this.IsSubPackMsg = '否';
+                }else{
+                   this.IsSubPackMsg = '是';
+                }
+              }
+              if(this.masktitle =='请选择公司资质'){
+                this.IsSenior = this.list[i].Id;
+                if(this.list[i].Id==0){
+                  this.IsSeniorMsg = '否';
+                }else{
+                   this.IsSeniorMsg = '是';
+                }
+              }
+              if(this.masktitle =='请选择股份合作'){
+                this.IsStockCooperation = this.list[i].Id;
+                if(this.list[i].Id==0){
+                  this.IsStockCooperationMsg = '否';
+                }else{
+                   this.IsStockCooperationMsg = '是';
+                }
+              }
+              if(this.masktitle =='请选择公司挂牌'){
+                this.IsCompanyList = this.list[i].Id;
+                if(this.list[i].Id==0){
+                  this.IsCompanyListMsg = '否';
+                }else{
+                   this.IsCompanyListMsg = '是';
+                }
+              }
+              if(this.masktitle =='请选择对方公司挂牌'){
+                this.IsAllowOtherList = this.list[i].Id;
+                if(this.list[i].Id==0){
+                  this.IsAllowOtherListMsg = '否';
+                }else{
+                   this.IsAllowOtherListMsg = '是';
+                }
+              }
+              if(this.masktitle =='请选择意向行业'){
                  
-              // }
+              }
           }
       }
       this.isShowMask = false
@@ -838,16 +833,63 @@ export default {
       this.showNoChange = false
       this.statu = 0
     },
+    //获取默认数据
     GetPublishItems(){
+      let that = this;
       post('Goods/GetPublishItems',{
-          UserId:this.userId,
-          Token:this.token,
-          TypeId:this.TypeId
-      },this.curPage).then(res=>{
+          UserId:that.userId,
+          Token:that.token,
+          TypeId:that.TypeId
+      },that.curPage).then(res=>{
         console.log(res,"GetPublishItems")
         if(res.code==0){
             //已经认证了 获取信息 发布信息
-          this.detailInfo = res.data
+          that.detailInfo = res.data
+          //地区信息
+          // (
+          //   res.data.arealist.map(item=>{
+          //     console.log(item.Code,"arae+++++++++++++++++")
+          //     let province_list = {};
+          //     let city_list = {};
+          //     province_list[item.Code] = item.Name
+          //     console.log(province_list,"province_listt____________________")
+          //     item.Child.map(itemChild=>{
+          //       city_list[itemChild.Code] = itemChild.Name
+          //       console.log(city_list,"city_list___9999999999999999999")
+          //     })
+          //     this.areaList = {
+          //       province_list,city_list
+          //     }
+          //     console.log(this.areaList,"++++++++++++++++++++++++++++++++++")
+          //   }),
+            
+
+          // )
+          //行业的信息
+          (res.data.tradelist.forEach(item=>{
+            let obj = {}
+            let objArr = []
+            item.Child.forEach(itemchild=>{
+              objArr.push(itemchild.Name)
+            });
+            obj[item.Name] = objArr;
+            that.tradeList = Object.assign(that.tradeList,obj);
+            // console.log(that.tradeList[Object.keys(that.tradeList)[0]] ,"_______++++++++++++_________")
+          }),
+         
+          that.columns.push(
+              {
+              values: Object.keys(that.tradeList),
+              className: "column1"
+              },
+              {
+                values: that.tradeList[Object.keys(that.tradeList)[0]],
+                className: 'column2',
+                defaultIndex: 0
+              }
+            ))
+           // console.log(that.columns,"333333333333333333333");
+          //公司的信息
           if(res.data.CompanyList.lenght>1){
               this.showDefaultCompany = true
           }else{
@@ -855,6 +897,7 @@ export default {
               this.companyName = res.data.CompanyList[0].Name
               console.log(this.companyName,"this.companyName")
           }
+          
 
         }else{
             //没有认证 先去认证  code=5 企业认证  code=6个人认证
@@ -878,6 +921,33 @@ export default {
           }
         }
       })
+    },
+    onChange(event){  //选择行业
+      const { picker, value, index } = event.mp.detail;
+      picker.setColumnValues(1, this.tradeList[value[0]]);
+    },
+    onConfirm(event){  //选择行业确定
+    console.log(event);
+      const { index, value } = event.mp.detail;
+      this.GladBuyerTrade = value.join(",");
+      this.showTrade=false
+      // console.log(picker.setValues);
+      this.$set(this.columns[1],'values',this.tradeList[value[0]]);
+      this.$set(this.columns[1],'defaultIndex',index[1]);
+      console.log(this.columns)
+    },
+    confirmArea(area) {
+      this.showArea = false;
+      let text = '';
+      const areas = area.mp.detail.values;
+      console.log(areas,"areas")
+      // for(let i=0;i<areas.length;i+=1){
+      //   text +=areas[i].name
+      // }
+      // this.provinceCode=areas[0].code||'',
+      // this.cityCode=areas[1].code||'',
+      // this.districtCode=areas[2].code||'',
+      this.GladBuyArea = text;
     },
   },
 
