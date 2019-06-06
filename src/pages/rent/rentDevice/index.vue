@@ -869,7 +869,7 @@ export default {
                 console.log(city_list,"city_list___9999999999999999999")
               })
               this.areaList = {
-                province_list:province_list,city_list:province_list,county_list:city_list
+                province_list:{},city_list:province_list,county_list:city_list
               }
               console.log(this.areaList,"++++++++++++++++++++++++++++++++++")
             }),
