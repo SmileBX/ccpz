@@ -18,7 +18,6 @@
                   class="ipt"
                   type="text"
                   placeholder="请填写适合标题"
-                  v-model="Title"
                   placeholder-style="color:#b5b5b5;"
                 >
               </div>
@@ -36,7 +35,7 @@
                   placeholder="请选择公司"
                   @click="showDefaultCompany && getCompany"
                   placeholder-style="color:#b5b5b5;"
-                  v-model="Company"
+                  v-model="companyName"
                 >
               </div>
             </div>
@@ -75,14 +74,14 @@
                 </div>
               </div>
               <div class="form-cells-item form-cells-item2">
-                <div class="item2-column" @click="aaa">
+                <div class="item2-column">
                   <div class="form-cells-hd">意向购买区域</div>
                   <input
                     class="ipt"
                     type="text"
                     disabled
                     placeholder="请选择"
-                    
+                    @click="showArea=true"
                     v-model="GladBuyArea"
                     placeholder-style="color:#b5b5b5;"
                   >
@@ -507,7 +506,6 @@
                   class="ipt"
                   type="text"
                   :placeholder="addrPlaceholder"
-                  v-model="CompanyAddr"
                   placeholder-style="color:#b5b5b5;"
                 >
               </div>
@@ -521,7 +519,6 @@
                   class="ipt"
                   type="text"
                   :placeholder="addDetailPlaceholder"
-                  v-model="CompanyDoorNum"
                   placeholder-style="color:#b5b5b5;"
                 >
               </div>
@@ -567,25 +564,9 @@
           @cancel="onCancel" :columns="columns" @change="onChange($event)"/>
     </van-popup>
     <!--地区插件--> 
-    <!-- <van-popup :show="showArea" position="bottom" :overlay="true" @close="showArea = false">
+    <van-popup :show="showArea" position="bottom" :overlay="true" @close="showArea = false">
         <van-area :area-list="areaList" @cancel="showArea = false"  title="请选择区域" @confirm="confirmArea"/>
-    </van-popup>     -->
-    <div class="shade bottom__shade" v-if="isShowAddr">
-      <div class="mask"></div>
-      <div class="shadeContent">
-        <div class="shade__bd">
-          <van-picker
-            v-if="hasAddr"
-            show-toolbar
-            title="请选择区域"
-            @confirm="onConfirmAddr"
-            @cancel="onCancel"
-            :columns="columns2"
-            @change="onChangeAddr($event)"
-          />
-        </div>
-      </div>
-    </div>
+    </van-popup>    
   </div>
 </template>
 
@@ -594,7 +575,7 @@
 //拼购--   设备拼购-52   物业拼购-36 
 import "@/style/style_fb.scss";
 import { post,host,getCurrentPageUrlWithArgs} from "@/utils";
-// import areaList from "@/utils/areaList";
+import areaList from "@/utils/areaList";
 import {pathToBase64} from "@/utils/image-tools";
 export default {
   data() {
@@ -612,7 +593,10 @@ export default {
       showTrade:false,
       columns:[],//picker列表
       tradeList:{},//行业列表
-      areaList:{},//区域列表
+      areaList,//区域列表
+
+
+
       showDate:false,//显示时间
       list:[],//弹层列表
       masktitle:"",//弹层标题
@@ -640,13 +624,8 @@ export default {
       IsTrim:'',//是否装修  0-否   1-是
       PlanBuyArea:'', //计划购买面积
       PlanBuyDate:'', //计划购买日期
-      Title:"",//标题
       showDefaultCompany:false,//只有一个公司默认显示
-      Company:"",//公司名称-
-      CompanyId:"",//公司Id
-      CompanyAddr:'',//对应标题地址
-      CompanyDoorNum:'',//对应标题地址门牌号
-
+      companyName:"",//公司名称
       pageTitle:"",//页面标题
       subTitle:"",//副标题
       introduce:"",//简介标题
@@ -656,11 +635,8 @@ export default {
       addrPlaceholder:"",//地址的
       addDetailTitle:"",//补充说明的
       addDetailPlaceholder:"",//补
-     addressList:[],
-     addressList2:{},
-     isShowAddr:false,
-     hasAddr:false,
-     columns2:[]
+
+
 
     };
   },
@@ -682,25 +658,6 @@ export default {
       wx.setNavigationBarTitle({
         title: "发布"
       });
-    },
-    aaa(){
-      this.isShowAddr = true;
-      console.log("______________")
-    },
-    onChangeAddr(event){  //选择的时候
-      const { picker, value, index } = event.mp.detail;
-      picker.setColumnValues(1, this.addressList2[value[0]]);
-    },
-    onConfirmAddr(event){
-       const { index, value } = event.mp.detail;
-       console.log("ppppppppppppppp");
-       console.log(event)
-       let str = '';
-       console.log(this.addressList[index[0]].Child[index[1]].Code);
-       console.log(index);
-       console.log(this.addressList[index[0]].Code);
-      //  str = this.addressList[index[0]].Code + "," + this.addressList[index[0]].Child[index[1]].Code;
-       console.log("code:"+str);
     },
     initData(){
         if(this.TypeId==58){
@@ -869,7 +826,6 @@ export default {
       this.isShowMask = false
       this.showNoChange = false
       this.statu = 0
-      this.list = []
     },
     //取消选择
     cancle(){
@@ -888,70 +844,58 @@ export default {
         console.log(res,"GetPublishItems")
         if(res.code==0){
             //已经认证了 获取信息 发布信息
-          that.detailInfo = res.data;
-          
-          if(res.data.arealist.length>0){
-            console.log("hrthhhhhhhhhhhhhhhhhh");
-            // this.addressList = res.data.arealist;
-            this.addressList =[{
-              Name:"深圳市",
-              Code:"440300",
-              Child:[{
-                Code:"440303",
-                Name:"罗湖区"
-              },{
-                Code:"440302",
-                Name:"龙华区"
-              },
+          that.detailInfo = res.data
+          //地区信息
+          // (
+          //   res.data.arealist.map(item=>{
+          //     console.log(item.Code,"arae+++++++++++++++++")
+          //     let province_list = {};
+          //     let city_list = {};
+          //     province_list[item.Code] = item.Name
+          //     console.log(province_list,"province_listt____________________")
+          //     item.Child.map(itemChild=>{
+          //       city_list[itemChild.Code] = itemChild.Name
+          //       console.log(city_list,"city_list___9999999999999999999")
+          //     })
+          //     this.areaList = {
+          //       province_list,city_list
+          //     }
+          //     console.log(this.areaList,"++++++++++++++++++++++++++++++++++")
+          //   }),
+            
+
+          // )
+          //行业的信息
+          (res.data.tradelist.forEach(item=>{
+            let obj = {}
+            let objArr = []
+            item.Child.forEach(itemchild=>{
+              objArr.push(itemchild.Name)
+            });
+            obj[item.Name] = objArr;
+            that.tradeList = Object.assign(that.tradeList,obj);
+            // console.log(that.tradeList[Object.keys(that.tradeList)[0]] ,"_______++++++++++++_________")
+          }),
+         
+          that.columns.push(
               {
-                Code:"440301",
-                Name:"龙岗区"
-              }
-              ]
-            },
-            {
-              Name:"广州市",
-              Code:"440200",
-              Child:[{
-                Code:"440201",
-                Name:"fav区"
-              },{
-                Code:"440202",
-                Name:"版本区"
-              },
-              {
-                Code:"440203",
-                Name:"两个区"
-              }
-              ]
-            }
-            ]
-            console.log("gggggggggggggg")
-            console.log(this.addressList)
-            this.addressList.forEach(item => {
-              let obj = {};
-              let arr =[];
-              item.Child.forEach(item2=>{
-                arr.push(item2.Name)
-              });
-              obj[item.Name] = arr;
-              this.addressList2 = Object.assign(this.addressList2,obj);
-            })
-            console.log("__________")
-            console.log(this.addressList2)
-            this.columns2.push(
-              {
-              values: Object.keys(this.addressList2),
+              values: Object.keys(that.tradeList),
               className: "column1"
               },
               {
-                values: this.addressList2[Object.keys(this.addressList2)[0]],
+                values: that.tradeList[Object.keys(that.tradeList)[0]],
                 className: 'column2',
                 defaultIndex: 0
               }
-            )
-            this.hasAddr = true;
-            console.log(this.hasAddr)
+            ))
+           // console.log(that.columns,"333333333333333333333");
+          //公司的信息
+          if(res.data.CompanyList.lenght>1){
+              this.showDefaultCompany = true
+          }else{
+              this.showDefaultCompany = false
+              this.companyName = res.data.CompanyList[0].Name
+              console.log(this.companyName,"this.companyName")
           }
           
 
