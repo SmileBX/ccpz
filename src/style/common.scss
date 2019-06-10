@@ -531,8 +531,8 @@ radio .wx-radio-input.wx-radio-input-checked::before {
 /*********************我的**************************/
 
 .icon_card {
-    width: 264rpx;
-    height: 156rpx;
+    width: 220rpx;
+    height: 128rpx;
     position: absolute;
     right: 30rpx;
     top: 30rpx;
@@ -543,7 +543,11 @@ radio .wx-radio-input.wx-radio-input-checked::before {
     margin-left: 10rpx;
     margin-top: 5rpx;
     .name {
-        font-size: 55rpx;
+        font-size: 48rpx;
+        margin-right: 250rpx;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     .certical {
         margin: 20rpx 0;
