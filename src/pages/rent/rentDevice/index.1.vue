@@ -575,7 +575,7 @@
 //拼购--   设备拼购-52   物业拼购-36 
 import "@/style/style_fb.scss";
 import { post,host,getCurrentPageUrlWithArgs} from "@/utils";
-import areaList from "@/utils/areaList";
+// import areaList from "@/utils/areaList";
 import {pathToBase64} from "@/utils/image-tools";
 export default {
   data() {
@@ -846,25 +846,25 @@ export default {
             //已经认证了 获取信息 发布信息
           that.detailInfo = res.data
           //地区信息
-          // (
-          //   res.data.arealist.map(item=>{
-          //     console.log(item.Code,"arae+++++++++++++++++")
-          //     let province_list = {};
-          //     let city_list = {};
-          //     province_list[item.Code] = item.Name
-          //     console.log(province_list,"province_listt____________________")
-          //     item.Child.map(itemChild=>{
-          //       city_list[itemChild.Code] = itemChild.Name
-          //       console.log(city_list,"city_list___9999999999999999999")
-          //     })
-          //     this.areaList = {
-          //       province_list,city_list
-          //     }
-          //     console.log(this.areaList,"++++++++++++++++++++++++++++++++++")
-          //   }),
+          (
+            res.data.arealist.map(item=>{
+              console.log(item.Code,"arae+++++++++++++++++")
+              let province_list = {};
+              let city_list = {};
+              province_list[item.Code] = item.Name
+              console.log(province_list,"province_listt____________________")
+              item.Child.map(itemChild=>{
+                city_list[itemChild.Code] = itemChild.Name
+                console.log(city_list,"city_list___9999999999999999999")
+              })
+              this.areaList = {
+                province_list,city_list
+              }
+              console.log(this.areaList,"++++++++++++++++++++++++++++++++++")
+            }),
             
 
-          // )
+          )
           //行业的信息
           (res.data.tradelist.forEach(item=>{
             let obj = {}

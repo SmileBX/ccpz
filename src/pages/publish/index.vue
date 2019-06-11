@@ -74,16 +74,6 @@ export default {
         }
       })
     },
-    // gotosubMenu(id){
-    //   if(id==21){ 
-    //       this.isShowMask=true
-    //       this.getPinZuType(id)
-    //   }else{
-    //       wx.navigateTo({
-    //         url: '/pages/rent/submenu/main?BrandId='+id  
-    //       })
-    //   }
-    // },
     gotosubMenu(id){
       post('Goods/GetTypeL1',{
             BrandId:id
@@ -101,17 +91,6 @@ export default {
           }
         })
     },
-    //拼租类型---寻找拼租 发布拼租 发布拼购
-    // getPinZuType(id){
-    //   post('Goods/GetTypeL1',{
-    //         BrandId:id
-    //     }).then(res=>{
-    //       console.log(res,"一级页面")
-    //       if(res.code==0){
-    //           this.pinzuList = res.data
-    //       }
-    //     })
-    // },
     //去往拼租二级页面
     goPinZu(id){  
         wx.navigateTo({
