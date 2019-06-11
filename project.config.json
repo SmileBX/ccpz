@@ -507,10 +507,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 66,
 					"name": "拼租发布正式",
 					"pathName": "pages/rent/rentDevice/main",
-					"query": "TypeId=36",
+					"query": "TypeId=65",
 					"scene": null
 				}
 			]
