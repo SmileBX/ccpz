@@ -2,12 +2,12 @@
   <div class="pageContent bg_fff mt10">
     <div class="content__hd">
       <h2 class="title">{{newsInfo.Title}}</h2>
-      <p class="text_r">
-        <span class="readNum"  v-if="param=='message'">
-          <img src="/static/images/icons/time.jpg" alt class="read" style="margin-right:30rpx">{{newsInfo.PubTime}}
+      <p class="text_r flex-center">
+        <span class="readNum flex-center" >
+          <img src="/static/images/icons/time.jpg" alt class="read" style="margin-right:10rpx">{{newsInfo.Addtime}}
         </span>
-        <span class="readNum" v-else>
-          <img src="/static/images/icons/read.png" alt class="read">{{newsInfo.Hits}}
+        <span class="readNum flex-center" >
+          <img src="/static/images/icons/read.png" style="margin-right:10rpx" alt class="read">{{newsInfo.Hits}}
         </span>
       </p>
     </div>
@@ -46,13 +46,12 @@ export default {
     this.curPage = getCurrentPageUrlWithArgs();
     this.newsId = this.$root.$mp.query.Id
     this.param = this.$root.$mp.query.url
-    if(this.param == 'index'){
-         console.log('头条')
-        this.getNewsDetail() //获取头条详情
-    }
     if(this.param == 'message'){ //获取通知详情
       console.log('通知')
         this.getNoticeDetail()
+    }else{
+         console.log('头条')
+        this.getNewsDetail() //获取头条详情
     }
   },
   methods: {
@@ -64,7 +63,9 @@ export default {
     //获取头条消息详情
     getNewsDetail(){
       post('About/GetAbout',{
-        Id:this.newsId
+        Id:this.newsId,
+        UserId:this.userId,
+        Token: this.token
       }).then(res=>{
          if(res.code==0){
            this.newsInfo = res.data
@@ -102,5 +103,11 @@ export default {
   width: 100%;
   color: #333;
   position: relative;
+}
+.readNum{
+  margin-right:15rpx;
+}
+.text_r{
+  justify-content:flex-end;
 }
 </style>
