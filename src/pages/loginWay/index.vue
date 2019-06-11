@@ -27,6 +27,8 @@ export default {
         .replace(/\%3D/g, "=")
         .replace(/\%26/g, "&");
       wx.setStorageSync('askUrl',askUrl);
+    }else{
+      wx.navigateBack()
     }
   },
   data() {

@@ -31,7 +31,7 @@
             <van-swipe-cell :right-width="[hasSetStar ? 130 : 65]"  class="swipe-cell"  v-for="(item,sindex) in group.items" :key="sindex">
                 <van-cell-group>
                   <van-cell>
-                    <li class="index-group-item" >
+                    <li class="index-group-item" @click="onClick(item)">
                       <!-- <img v-if="useLazyLoad"  :src="item.avatar" class="avatar" alt=""> -->
                       <img :src="item.Headimgurl" class="avatar" alt="">
                       <span class="name">{{item.NickName}}</span>
@@ -159,6 +159,10 @@ export default {
       console.log(e);
       //console.log(666666666)
       this.$emit("choose", item);
+    },
+    // 点击列表事件
+    onClick(item){
+      this.$emit("onClick", item);
     },
     resetStar(id, isStar, pIndex, index) {
       this.$emit("setStar", id, isStar, pIndex, index);
