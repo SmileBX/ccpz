@@ -38,7 +38,7 @@ export default {
     }
     if(this.pramas=="index"){  //首页头条
      console.log('头条')
-        //this.getNewsList()
+        this.getNewsList()
     }
     
   },
@@ -60,11 +60,12 @@ export default {
       })
     },
     //获取头条
-    // getNewsList(){
-    //   post().then(res=>{
-    //     console.log(res)
-    //   })
-    // },
+    getNewsList(){
+      post('About/AboutList',{PageSize:10}).then(res=>{
+        console.log(res)
+        this.list = res.data  
+      })
+    },
     goDetail(id){
         wx.navigateTo({url:'/pages/messages/topNewsDetail/main?url='+this.pramas+'&Id='+id})
     }

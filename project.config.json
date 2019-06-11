@@ -42,7 +42,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 66,
+			"current": 65,
 			"list": [
 				{
 					"id": 0,
@@ -500,17 +500,17 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 65,
 					"name": "完善公司信息",
 					"pathName": "pages/mine2/continueCompany/main",
-					"query": "",
+					"query": "id=1",
 					"scene": null
 				},
 				{
-					"id": 66,
+					"id": -1,
 					"name": "拼租发布正式",
 					"pathName": "pages/rent/rentDevice/main",
-					"query": "TypeId=65",
+					"query": "TypeId=36",
 					"scene": null
 				}
 			]

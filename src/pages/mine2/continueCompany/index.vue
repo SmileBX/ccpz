@@ -61,12 +61,14 @@
           <h2 class="uploadTitle">办公照片</h2>
           <div class="uploadImage clear">
             <!-- 上传展示的图片 -->
-            <div class="upload-img img">
-              <img src="/static/images/icons/upload-2.jpg" alt>
-              <img src="/static/images/icons/cancle.png" class="close">
-            </div>
+            <block v-if="companyPic.length>0">
+              <div class="upload-img img" v-for="(item,index) in companyPic" :key="index">
+                <img :src="item" alt>
+                <img src="/static/images/icons/cancle.png" @click="delImg(index)" class="close">
+              </div>
+            </block>
             <!--上传按钮-->
-            <div class="button-upload">
+            <div class="button-upload" @click="upLoadImg" v-if="isUploadBtn">
               <img src="/static/images/icons/upload-2.jpg" alt>
             </div>
           </div>
@@ -108,7 +110,7 @@
     </div>
     <!--底部按钮-->
     <div style="padding:80rpx 30rpx;">
-      <div class="weui-btn btn-active fill">提交</div>
+      <div class="weui-btn btn-active fill" @click="btnSubmit">提交</div>
     </div>
     <!-- 弹窗 -->
     <!-- 选择行业 -->
@@ -171,6 +173,9 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
+    if(this.$root.$mp.query.id !=="undefined" && this.$root.$mp.query.id){
+      this.id = this.$root.$mp.query.id;
+    }
     this.GetTradeList();
   },
   data() {
@@ -191,6 +196,9 @@ export default {
       nativePlace: "",
       companyIntro: "",
       companyCulture: "",
+      companyPic:[],
+      maxPicLen:9,
+      isUploadBtn:true,
       contacts: "",
       contactsTel: "",
       weChatNum: "",
@@ -313,47 +321,53 @@ export default {
         });
         return false;
       }
+      if(trim(this.contactsTel) !==""){
+        if(!((/^0\d{2,3}-\d{7,8}$/).test(this.contactsTel) || (/^[1][3,4,5,6,7,8][0-9]{9}$/).test(this.contactsTel))){
+          wx.showToast({
+            title: "请输入正确的电话格式！",
+            icon: "none",
+            duration: 1500
+          });
+          return false;
+        }
+      }
+      if(trim(this.mailbox) !==""){
+        if(!/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(this.mailbox)){
+          wx.showToast({
+            title: "请输入正确的邮箱格式！",
+            icon: "none",
+            duration: 1500
+          });
+          return false;
+        }
+      }
       return true;
     },
-    upLoadImg(index) {
+    upLoadImg() {
       //上传图片
       let _this = this;
-      wx.chooseImage({
-        //进入这里面的时候this发生了改变
-        count: 1,
-        sizeType: ["compressed"],
-        sourceType: ["album", "camera"],
-        success(res) {
-          // tempFilePath可以作为img标签的src属性显示图片
-          let imgPathArr = res.tempFilePaths[0];
-          if (index == 1) {
-            _this.idCardPositive = imgPathArr;
+      let num = _this.maxPicLen - _this.companyPic.length;
+      if(num>0){
+        wx.chooseImage({
+          //进入这里面的时候this发生了改变
+          count: num,
+          sizeType: ["compressed"],
+          sourceType: ["album", "camera"],
+          success(res) {
+            // tempFilePath可以作为img标签的src属性显示图片
+            _this.companyPic = _this.companyPic.concat(res.tempFilePaths);
+            if(_this.companyPic.length >= _this.maxPicLen){
+              _this.isUploadBtn = false;
+            }
           }
-          if (index == 2) {
-            _this.idCardNegative = imgPathArr;
-          }
-          if (index == 3) {
-            _this.businessLicense = imgPathArr;
-          }
-          if (index == 4) {
-            _this.otherSeniority = imgPathArr;
-          }
-        }
-      });
+        });
+      }else{
+        _this.isUploadBtn = false;
+      }
     },
     delImg(index) {
-      if (index == 1) {
-        this.idCardPositive = "";
-      }
-      if (index == 2) {
-        this.idCardNegative = "";
-      }
-      if (index == 3) {
-        this.businessLicense = "";
-      }
-      if (index == 4) {
-        this.otherSeniority = "";
-      }
+     this.companyPic.splice(index,1);
+     this.isUploadBtn = true;
     },
     async base64Img(path) {
       const base64Arr = await pathToBase64(path);
@@ -362,14 +376,11 @@ export default {
     async btnSubmit() {
       //提交下一步
       if (this.valOther()) {
-        console.log("竟来了");
-        let idcardPositive = await this.base64Img(this.idCardPositive);
-        let idcardNegative = await this.base64Img(this.idCardNegative);
-        let businessLicense = await this.base64Img(this.businessLicense);
-        let otherSeniority = "";
-        if (this.otherSeniority) {
-          otherSeniority = await this.base64Img(this.otherSeniority);
+        let companyPic = "";
+        if(trim(companyPic)){
+           companyPic = await this.base64Img(this.companyPic);
         }
+        this.UserBusinessAuthNext(companyPic);
       }
     },
     UserBusinessAuthNext(companyPic) {
@@ -402,6 +413,11 @@ export default {
         that.curPage
       ).then(res => {
         if (res.code === 0) {
+          wx.showToast({
+            title: "提交成功!",
+            icon: "none",
+            duration: 1500
+          });
         }
       });
     },
