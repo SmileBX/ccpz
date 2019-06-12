@@ -485,7 +485,6 @@ import { post, toLogin, getCurrentPageUrlWithArgs, trim } from "@/utils";
 export default {
   data() {
     return {
-<<<<<<< HEAD
       userId: "",
       token: "",
       curPage: "",
@@ -539,19 +538,6 @@ export default {
       showMoreEquip: false, //设备短租模板
       showMoreShop: false //更多办公室-设备
     };
-=======
-      pramas:"",
-      isShow:true,//蒙版
-      ShowCenter:false,//中间一级遮罩层
-      list:['不限','招商会','发布会','发布会','发布会','发布会','发布会','发布会','发布会','发布会','招商会','发布会',],//中间弹层列表
-      ShowSecond:false,//二级联动
-      ShowSecondRight:false,//二级联动右侧
-      ShowPrice:true,//拼价格
-      showMoreEquip:false,//设备短租模板
-      showMoreShop:false,//更多办公室-设备
-
-    }
->>>>>>> 233a9b16710e66e166adc39a626bf15a0874f10f
   },
   onLoad() {
     this.setBarTitle();
