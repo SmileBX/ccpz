@@ -1,6 +1,9 @@
 <template>
-  <div class="page borderTop charRoom" id="charRoom" 
-    :class="{'showMessage':showMessage,'showBtn':showBtn}">
+  <div
+    class="page borderTop charRoom"
+    id="charRoom"
+    :class="{'showMessage':showMessage,'showBtn':showBtn}"
+  >
     <!--聊天列表-->
     <div class="padwid" @click="isShowMask=false">
       <div v-for="(msg,msgIndex) in chatStatu.info" :key="msgIndex">
@@ -9,9 +12,20 @@
             <span class="fontColor" @click="scrollBottom">已读</span>
             <div class="tagmsg">
               <p v-if="msg.Info" class="boxSize">{{msg.Info}}</p>
-              <img class="sendImg" mode="widthFix"  
-                v-if="msg.Pic" :src="msg.Pic" alt="" 
-                @click="previewImg(msg.Pic)" />
+              <p
+                v-if="msg.Info"
+                class="boxSize"
+                v-html="msg.Info.replace(/\#[\u4E00-\u9FA5]{1,3}\;/gi, emotion)"
+              >{{msg.Info}}</p>
+
+              <img
+                class="sendImg"
+                mode="widthFix"
+                v-if="msg.Pic"
+                :src="msg.Pic"
+                alt
+                @click="previewImg(msg.Pic)"
+              />
               <span class="sj rsj"></span>
             </div>
           </div>
@@ -21,16 +35,21 @@
         </div>
         <div class="flex flexAlignCenter boxSize p2 justifyContentStart" v-if="msg.MsgId=='b'">
           <div class="avatarbox mr0" v-if="chatStatu.b">
-            <img :src="chatStatu.b.Headimgurl" alt class="avatar">
+            <img :src="chatStatu.b.Headimgurl" alt class="avatar"/>
           </div>
           <div class="flex flexAlignEnd mrl2" style="width:75%">
             <!-- <span class="fontColor">已读</span> -->
             <div class="tagmsg bg_fff">
               <span class="sj lsj"></span>
               <p v-if="msg.Info" class="boxSize" style="color:#1a1a1a">{{msg.Info}}</p>
-              <image class="sendImg" mode="widthFix" 
-              v-if="msg.Pic" :src="msg.Pic" alt=""
-              @click="previewImg(msg.Pic)"/>
+              <image
+                class="sendImg"
+                mode="widthFix"
+                v-if="msg.Pic"
+                :src="msg.Pic"
+                alt
+                @click="previewImg(msg.Pic)"
+              />
             </div>
           </div>
         </div>
@@ -59,25 +78,25 @@
           @confirm="sendMessage"
         >
         <div class="flex flexAlignCenter">
-          <img src="/static/images/icons/smile.jpg" alt class="logimg">
-          <img src="/static/images/icons/add.jpg" alt class="logimg" @click="showPicBtn">
+          <img src="/static/images/icons/smile.jpg" alt class="logimg" />
+          <img src="/static/images/icons/add.jpg" alt class="logimg" @click="showPicBtn"/>
         </div>
       </div>
       <!--按钮组-->
       <div v-if="showBtn">
         <div v-if="isshow" class="icon_box flex">
           <div class="flex flexAlignCenter flexColumn" @click="chosseImg('camera')">
-            <img src="/static/images/icons/photo.jpg" alt class="icon_put">
+            <img src="/static/images/icons/photo.jpg" alt class="icon_put" />
             <p class="fontColor">拍照</p>
           </div>
           <div class="flex flexAlignCenter flexColumn" @click="chosseImg('album')">
-            <img src="/static/images/icons/albrem.jpg" alt class="icon_put">
+            <img src="/static/images/icons/albrem.jpg" alt class="icon_put" />
             <p class="fontColor">相册</p>
           </div>
-          <div class="flex flexAlignCenter flexColumn">
+          <!-- <div class="flex flexAlignCenter flexColumn" @click="goLocation">
             <img src="/static/images/icons/location.jpg" alt class="icon_put">
             <p class="fontColor">位置</p>
-          </div>
+          </div>-->
         </div>
       </div>
       <!--常用语-->
@@ -108,6 +127,10 @@
         </scroll-view>
         <li style="color:red" @click="isShowMask=true">添加常用语</li>
       </ul>
+      <!-- 表情 -->
+      <div class="emotion">
+        <emotion @emotion="handleEmotionComment" :height="200" ></emotion>
+      </div>
     </div>
     <!--弹层-->
     <div class="mask" v-if="isShowMask" catchtouchmove="true" @click="isShowMask=false"></div>
@@ -124,7 +147,9 @@
 
 <script>
 import { post, getCurrentPageUrlWithArgs } from "@/utils";
+import Emotion from "@/components/Emotion/index.vue";
 export default {
+  components: { Emotion },
   data() {
     return {
       userId: "",
@@ -144,7 +169,7 @@ export default {
       socketTaskStatus: false,
       // 图片
       imgPathArr: [], //临时路径
-      isTakePhoto:false, //是否开启拍照
+      isTakePhoto: false //是否开启拍照
     };
   },
   onShow() {
@@ -211,17 +236,32 @@ export default {
       });
     },
     // 发送消息
-    async sendMessage(imgBase) {
-      let sendInfo=""
-      if(!imgBase){
-        sendInfo = this.sendInfo
+    async sendMessage(data) {
+      let sendInfo = "";
+      let imgBase = "";
+      let lat = 0;
+      let lng = 0;
+      // 发送图片
+      if (data.type === "img") {
+        imgBase = data.data;
+      }
+      // 发送位置
+      else if (data.type === "map") {
+        lat = data.data.latitude;
+        lng = data.data.longitude;
+      }
+      // 普通消息
+      else {
+        sendInfo = this.sendInfo;
       }
       const res = await post("User/Sendfriend_new", {
         UserId: this.userId,
         Token: this.token,
         FriendId: this.FriendId * 1,
         Info: sendInfo,
-        Pic:imgBase
+        Pic: imgBase,
+        Lat: lat,
+        Lng: lng
       });
       if (res.code * 1 === 0) {
         this.sendInfo = "";
@@ -375,22 +415,155 @@ export default {
     async updateImg() {
       const that = this;
       // 根据临时路径数组imgPathArr获取base64图片
-      for (let i = 0; i < this.imgPathArr.length; i +=1) {
+      for (let i = 0; i < this.imgPathArr.length; i += 1) {
         const item = this.imgPathArr[i];
         //异步方法
         const res = wx.getFileSystemManager().readFileSync(item, "base64");
-            //成功的回调
-            const imgBase = "data:image/png;base64," + res.toString();
-            const ress = await this.sendMessage(imgBase)
+        //成功的回调
+        const imgBase = "data:image/png;base64," + res.toString();
+        await this.sendMessage({ type: "img", data: imgBase });
       }
     },
     // 预览图片
-    previewImg(img){
-        wx.previewImage({
-          urls:[img]
-        })
+    previewImg(img) {
+      wx.previewImage({
+        urls: [img]
+      });
     },
     //**************************拍照，图片End************************** */
+    // 跳转到选择定位
+    // goLocation(){
+    //   const that = this;
+    //   wx.chooseLocation({
+    //     success(res){
+    //       console.log(res)
+    //       that.sendMessage({type:'map',data:res})
+    //     },
+    //     fail(err){
+    //       console.log(err)
+    //     }
+    //   })
+    // },
+    // 回复add表情
+    handleEmotionComment(i) {
+      console.log(i, "iiii");
+      return false;
+      console.log(this.showComment, this.comment[this.showComment], "i");
+      this.comment[this.showComment].commentContent += i;
+    },
+    // 将匹配结果替换表情图片
+    emotion(res) {
+      let word = res.replace(/\#|\;/gi, "");
+      const list = [
+        "微笑",
+        "撇嘴",
+        "色",
+        "发呆",
+        "得意",
+        "流泪",
+        "害羞",
+        "闭嘴",
+        "睡",
+        "大哭",
+        "尴尬",
+        "发怒",
+        "调皮",
+        "呲牙",
+        "惊讶",
+        "难过",
+        "酷",
+        "冷汗",
+        "抓狂",
+        "吐",
+        "偷笑",
+        "可爱",
+        "白眼",
+        "傲慢",
+        "饥饿",
+        "困",
+        "惊恐",
+        "流汗",
+        "憨笑",
+        "大兵",
+        "奋斗",
+        "咒骂",
+        "疑问",
+        "嘘",
+        "晕",
+        "折磨",
+        "衰",
+        "骷髅",
+        "敲打",
+        "再见",
+        "擦汗",
+        "抠鼻",
+        "鼓掌",
+        "糗大了",
+        "坏笑",
+        "左哼哼",
+        "右哼哼",
+        "哈欠",
+        "鄙视",
+        "委屈",
+        "快哭了",
+        "阴险",
+        "亲亲",
+        "吓",
+        "可怜",
+        "菜刀",
+        "西瓜",
+        "啤酒",
+        "篮球",
+        "乒乓",
+        "咖啡",
+        "饭",
+        "猪头",
+        "玫瑰",
+        "凋谢",
+        "示爱",
+        "爱心",
+        "心碎",
+        "蛋糕",
+        "闪电",
+        "炸弹",
+        "刀",
+        "足球",
+        "瓢虫",
+        "便便",
+        "月亮",
+        "太阳",
+        "礼物",
+        "拥抱",
+        "强",
+        "弱",
+        "握手",
+        "胜利",
+        "抱拳",
+        "勾引",
+        "拳头",
+        "差劲",
+        "爱你",
+        "NO",
+        "OK",
+        "爱情",
+        "飞吻",
+        "跳跳",
+        "发抖",
+        "怄火",
+        "转圈",
+        "磕头",
+        "回头",
+        "跳绳",
+        "挥手",
+        "激动",
+        "街舞",
+        "献吻",
+        "左太极",
+        "右太极"
+      ];
+      let index = list.indexOf(word);
+      return `<img src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" align="middle">`;
+    },
     // 滚动到底部
     scrollBottom() {
       wx
@@ -504,36 +677,36 @@ export default {
 .noData {
   color: #999;
 }
-.sendImg{
-  width:200rpx;
-  height:auto;
+.sendImg {
+  width: 200rpx;
+  height: auto;
 }
 // 拍照
-.takePhoto{
-  background:#000;
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  z-index:99999;
-  .photo{
+.takePhoto {
+  background: #000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99999;
+  .photo {
     width: 100%;
-     height: 90vh;
+    height: 90vh;
   }
-  .take{
-    color:#fff;
-    font-size:40rpx;
-    width:100%;
-     height: 10vh;
-     line-height: 10vh;
-     display:flex;
-     align-items:center;
-     justify-content:center;
-     img{
-       border-radius:50%;
-       width:80rpx;
-       height:80rpx;
-     }
+  .take {
+    color: #fff;
+    font-size: 40rpx;
+    width: 100%;
+    height: 10vh;
+    line-height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      border-radius: 50%;
+      width: 80rpx;
+      height: 80rpx;
+    }
   }
 }
 </style>
