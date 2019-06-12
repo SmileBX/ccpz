@@ -755,3 +755,23 @@ radio .wx-radio-input.wx-radio-input-checked::before {
     padding: 0;
     background: #f2f2f2;
 }
+// 没有 数据和到底普通样式
+.noData{
+    margin-top:100rpx;
+    font-size:26rpx;
+    color:#999;
+    text-align:center;
+}
+.dataEnd{
+    font-size:26rpx;
+    color:#999;
+    text-align:center;
+    position:absolute;
+    bottom:0;
+    width:100%;
+    line-height:50rpx;
+}
+.flex-center{
+  display:flex;
+  align-items:center;
+}

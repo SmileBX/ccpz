@@ -42,7 +42,11 @@
 			"list": []
 		},
 		"miniprogram": {
+<<<<<<< HEAD
 			"current": 2,
+=======
+			"current": 67,
+>>>>>>> 233a9b16710e66e166adc39a626bf15a0874f10f
 			"list": [
 				{
 					"id": 0,
@@ -507,10 +511,17 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 66,
 					"name": "拼租发布正式",
 					"pathName": "pages/rent/rentDevice/main",
-					"query": "TypeId=36",
+					"query": "TypeId=64",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "拼租发布正式2",
+					"pathName": "pages/rent/rentOffic/main",
+					"query": "TypeId=37",
 					"scene": null
 				}
 			]

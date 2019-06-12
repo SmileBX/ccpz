@@ -45,14 +45,7 @@ export default {
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
     this.newsId = this.$root.$mp.query.Id
-    this.param = this.$root.$mp.query.url
-    if(this.param == 'message'){ //获取通知详情
-      console.log('通知')
-        this.getNoticeDetail()
-    }else{
-         console.log('头条')
-        this.getNewsDetail() //获取头条详情
-    }
+     this.getNewsDetail() //获取头条详情
   },
   methods: {
     setBarTitle() {
@@ -72,27 +65,13 @@ export default {
          }
       })
     },
-    //通知详情
-    getNoticeDetail(){
-      post('User/ReadSysNotice',{
-          UserId: this.userId,
-          Token: this.token,
-          NoticeId:this.newsId  
-      },this.curPage).then(res=>{
-        console.log(res.data.Memo,"通知详情")
-        if(res.code==0){
-           this.newsInfo = {
-             Title:res.data.Title,
-             PubTime:res.data.PubTime.split(" ")[0].split("-").join("."),
-             Content:res.data.Memo
-           }
-         }
-      })
-    }
   }
 };
 </script>
 <style lang="scss" scoped>
+.title{
+  
+}
   .pageContent{
   background: #fff;
   font-size: 28rpx;

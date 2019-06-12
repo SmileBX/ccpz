@@ -10,7 +10,7 @@
     </div>
     <div class="navBox">
       <ul class="navList li_25 center navList2">
-        <li @click="getType(item.Id,item.BrandId)" v-for="(item,index) in brandList" :key="index">
+        <li @click="getType(item.BrandId,item.Id)" v-for="(item,index) in brandList" :key="index">
           <div class="outside" >
             <div class="icon-img">
               <img :src="item.Img" alt>
@@ -24,7 +24,7 @@
     <div class="mask" v-if="isShowMask" catchtouchmove="true" @click="isShowMask=false"></div>
     <div class="modal_mask boxSize" style="height:250rpx;" v-if="isShowMask">
         <div class="weui-cells  ">
-          <div class="weui-cell" @click="gotoFrom(item.Id)" v-for="(item,pindex) in typeList" :key="pindex">
+          <div class="weui-cell" @click="gotoFrom(item.BrandId,item.Id)" v-for="(item,pindex) in typeList" :key="pindex">
             <div class="weui-cell__bd">
               <p class="txt">{{item.Name}}</p>
             </div>
@@ -84,7 +84,7 @@ export default {
         post('Goods/GetTypeL1',{
             BrandId:this.BrandId
         }).then(res=>{
-          console.log(res,"一级页面")
+          console.log(res,"小图标页面")
           if(res.code==0){
               this.brandList = res.data
           }
@@ -102,30 +102,37 @@ export default {
         })
     },
     //获取分类类型
-    getType(id,BrandId){
-      console.log(id,"id")
-      if(BrandId==24){
-        this.isShowMask=true
-        this.getMoreType(id)
-      }else{
-        this.gotoFrom(id)
-      }
-    },
-    getMoreType(id){
-      post('Goods/GetTypeL2',{
-            TypeId:id
-        }).then(res=>{
-          console.log(res,"this.typeList")
-          if(res.code==0){
-              this.typeList = res.data
-          }
-      })
-    },
+    // getType(id,BrandId){
+    //   console.log(id,"id")
+    //   if(BrandId==24){
+    //     this.isShowMask=true
+    //     this.getMoreType(id)
+    //   }else{
+    //     this.gotoFrom(id)
+    //   }
+    // },
+    // getMoreType(id){
+    //   post('Goods/GetTypeL2',{
+    //         TypeId:id
+    //     }).then(res=>{
+    //       console.log(res,"this.typeList")
+    //       if(res.code==0){
+    //           this.typeList = res.data
+    //       }
+    //   })
+    // },
     //去往发布页面
-    gotoFrom(id){
-      wx.navigateTo({
-        url: '/pages/rent/rentDevice/main?TypeId='+id
-      })
+    getType(bid,id){
+      console.log('bid',bid)
+      if(bid != 21){
+          wx.navigateTo({
+            url: '/pages/rent/rentOffic/main?TypeId='+id
+          })
+      }else{
+          wx.navigateTo({
+            url: '/pages/rent/rentDevice/main?TypeId='+id
+          })
+      }
     },
    
   },

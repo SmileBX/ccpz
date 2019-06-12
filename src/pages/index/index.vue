@@ -412,6 +412,7 @@
 
 <script>
 import { post,getCurrentPageUrlWithArgs} from "@/utils";
+import { mapState, mapMutations } from "vuex"; //vuex辅助函数
 export default {
   data() {
     return {
@@ -419,14 +420,18 @@ export default {
       picList: [],//banner图
       newList:[],//头条消息
       publishType:[],//发布类型
+      CityName:"深圳"
     };
   },
-  onLoad() {
+  onLoad() {     
     this.setBarTitle();
   },
   onShow() {
     this.initData();
     this.getLocal();
+  },
+  computed:{
+    ...mapState(["CityName"])
   },
   components: {},
 
@@ -469,7 +474,8 @@ export default {
     //获取首页头条默认显示三条
     getNews(){
       post('About/AboutList',{
-        PageSize:3
+        PageSize:3,
+        Page:1
       }).then(res=>{
           if(res.code==0){
             this.newList = res.data
@@ -479,10 +485,9 @@ export default {
 
 
     goTo(n){
-        if(n==1){  //头条消息
-            wx.navigateTo({url:'/pages/messages/topNewsList/main?url=index'})
-        }
-        if(n==5){ //5组件团队
+        if(n==1){  //头条消息headLineList
+            wx.navigateTo({url:'/pages/messages/headLineList/main?url=index'})
+        }else if(n==5){ //5组件团队
             wx.navigateTo({url:'/pages/rent/buildTeam/main'})
         }
     },

@@ -55,7 +55,9 @@
                 "newPromise/main",
                 "chatRoom/main",
                 "topNewsDetail/main",
-                "topNewsList/main"
+                "topNewsList/main",
+                "headLineList/main",
+                "headLineDetail/main"
             ]
         },
         {
