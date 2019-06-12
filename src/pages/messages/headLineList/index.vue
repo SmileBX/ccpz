@@ -62,7 +62,7 @@ export default {
       })
     },
     goDetail(id){
-        wx.navigateTo({url:'/pages/messages/headLineDetail/main?Id='+id})
+        wx.navigateTo({url:'/pages/messages/topNewsDetail/main?Id='+id})
     }
   },
   onReachBottom(){

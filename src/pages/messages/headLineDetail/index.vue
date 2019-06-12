@@ -69,6 +69,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.title{
+  
+}
   .pageContent{
   background: #fff;
   font-size: 28rpx;

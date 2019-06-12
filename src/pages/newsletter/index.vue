@@ -25,6 +25,7 @@
         @choose="onChoose"
         @btnDel="btnDelFriend"
         @setStar="btnSetStar"
+        @onClick="onClick"
         v-if="hasplayerList"
       ></IndexList>
     </div>
@@ -213,6 +214,11 @@ export default {
     btnSetStar(id, isStar, pIndex, index) {
       console.log("dsdfsdfsdf");
       this.setStarFriends(id, isStar, pIndex, index);
+    },
+    // 点击了列表
+    onClick(item){
+      console.log("点击了++++++++++++",item);
+        wx.navigateTo({url: '/pages/messages/chatRoom/main?FriendId='+item.Id})
     },
     onChoose() {
       console.log("点击了++++++++++++");

@@ -292,6 +292,10 @@ export function Login() {
 export function trim(str) {
     return str.replace(/(^\s*)|(\s*$)/g, "");
 }
+// 滚动到底部
+export function scrollBottom(){
+
+}
 
 export {
     host,
