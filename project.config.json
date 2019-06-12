@@ -3,12 +3,12 @@
 	"setting": {
 		"urlCheck": false,
 		"es6": true,
-		"enhance": false,
 		"postcss": true,
 		"minified": true,
 		"newFeature": true,
 		"autoAudits": false,
 		"checkInvalidKey": true,
+		"enhance": false,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
 		"babelSetting": {
@@ -42,7 +42,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 65,
+			"current": 2,
 			"list": [
 				{
 					"id": 0,
@@ -59,10 +59,10 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 2,
 					"name": "拼租列表列表",
 					"pathName": "pages/rent/list/main",
-					"query": "",
+					"query": "type=21",
 					"scene": null
 				},
 				{
