@@ -540,9 +540,9 @@ export default {
       isShow:true,//蒙版
       ShowCenter:false,//中间一级遮罩层
       list:['不限','招商会','发布会','发布会','发布会','发布会','发布会','发布会','发布会','发布会','招商会','发布会',],//中间弹层列表
-      ShowSecond:true,//二级联动
-      ShowSecondRight:true,//二级联动右侧
-      ShowPrice:false,//拼价格
+      ShowSecond:false,//二级联动
+      ShowSecondRight:false,//二级联动右侧
+      ShowPrice:true,//拼价格
       showMoreEquip:false,//设备短租模板
       showMoreShop:false,//更多办公室-设备
 

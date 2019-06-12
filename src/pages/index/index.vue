@@ -3,8 +3,8 @@
     <!-- 顶部搜索 -->
     <div class="headerTop">
       <div class="inner flex flexAlignCenter">
-        <div class="local">
-          <span class="name">深圳</span>
+        <div class="local" @click="changeCity">
+          <span class="name">{{CityName}}</span>
           <span class="icon-arrow arrow-down"></span>
         </div>
         <div class="searchBox flex1">
@@ -412,19 +412,24 @@
 
 <script>
 import { post,getCurrentPageUrlWithArgs} from "@/utils";
+import { mapState, mapMutations } from "vuex"; //vuex辅助函数
 export default {
   data() {
     return {
       picList: [],//banner图
       newList:[],//头条消息
       publishType:[],//发布类型
+      CityName:"深圳"
     };
   },
-  onLoad() {
+  onLoad() {     
     this.setBarTitle();
   },
   onShow() {
     this.initData()
+  },
+  computed:{
+    ...mapState(["CityName"])
   },
   components: {},
 
@@ -491,6 +496,9 @@ export default {
     //头条详情
     newsDetail(id){
       wx.navigateTo({url:'/pages/messages/topNewsDetail/main?url=index&Id='+id})
+    },
+    changeCity(){
+     wx.navigateTo({url:'/pages/rent/city/main'})
     }
   },
 

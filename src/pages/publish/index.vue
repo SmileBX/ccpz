@@ -85,7 +85,7 @@ export default {
                     this.isShowMask=true
                     this.pinzuList = res.data
                 }else{
-                    this.goPinZu(id)
+                    this.goOnePin(id) 
                 }
               })
           }
@@ -97,6 +97,12 @@ export default {
           url: '/pages/rent/submenu/main?TypeId='+id  
         })
     },
+    //直接去往发布页面
+    goOnePin(id){
+        wx.navigateTo({
+          url: '/pages/rent/submenu/main?BrandId='+id  
+        })
+    }
     
   },
 
