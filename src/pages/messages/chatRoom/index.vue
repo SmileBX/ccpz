@@ -2,21 +2,21 @@
   <div
     class="page borderTop charRoom"
     id="charRoom"
-    :class="{'showMessage':showMessage,'showBtn':showBtn}"
+    :class="{'showMessage':showMessage,'showBtn':showBtn,'showEmotion':showEmotion}"
   >
     <!--聊天列表-->
     <div class="padwid" @click="isShowMask=false">
       <div v-for="(msg,msgIndex) in chatStatu.info" :key="msgIndex">
         <div class="flex flexAlignCenter boxSize p2 justifyContentEnd plr20" v-if="msg.MsgId=='a'">
           <div class="flex flexAlignEnd justifyContentEnd mrr2" style="width:75%;">
-            <span class="fontColor" @click="scrollBottom">已读</span>
+            <!-- <span class="fontColor" @click="scrollBottom">已读</span> -->
             <div class="tagmsg">
-              <p v-if="msg.Info" class="boxSize">{{msg.Info}}</p>
+              <!-- <p v-if="msg.Info" class="boxSize">{{msg.Info}}</p> -->
               <p
                 v-if="msg.Info"
                 class="boxSize"
-                v-html="msg.Info.replace(/\#[\u4E00-\u9FA5]{1,3}\;/gi, emotion)"
-              >{{msg.Info}}</p>
+                v-html="msg.Info"
+              ></p>
 
               <img
                 class="sendImg"
@@ -25,7 +25,7 @@
                 :src="msg.Pic"
                 alt
                 @click="previewImg(msg.Pic)"
-              />
+              >
               <span class="sj rsj"></span>
             </div>
           </div>
@@ -35,7 +35,7 @@
         </div>
         <div class="flex flexAlignCenter boxSize p2 justifyContentStart" v-if="msg.MsgId=='b'">
           <div class="avatarbox mr0" v-if="chatStatu.b">
-            <img :src="chatStatu.b.Headimgurl" alt class="avatar"/>
+            <img :src="chatStatu.b.Headimgurl" alt class="avatar">
           </div>
           <div class="flex flexAlignEnd mrl2" style="width:75%">
             <!-- <span class="fontColor">已读</span> -->
@@ -78,19 +78,19 @@
           @confirm="sendMessage"
         >
         <div class="flex flexAlignCenter">
-          <img src="/static/images/icons/smile.jpg" alt class="logimg" />
-          <img src="/static/images/icons/add.jpg" alt class="logimg" @click="showPicBtn"/>
+          <img src="/static/images/icons/smile.jpg" alt class="logimg" @click="showEmotions">
+          <img src="/static/images/icons/add.jpg" alt class="logimg" @click="showPicBtn">
         </div>
       </div>
       <!--按钮组-->
       <div v-if="showBtn">
         <div v-if="isshow" class="icon_box flex">
           <div class="flex flexAlignCenter flexColumn" @click="chosseImg('camera')">
-            <img src="/static/images/icons/photo.jpg" alt class="icon_put" />
+            <img src="/static/images/icons/photo.jpg" alt class="icon_put">
             <p class="fontColor">拍照</p>
           </div>
           <div class="flex flexAlignCenter flexColumn" @click="chosseImg('album')">
-            <img src="/static/images/icons/albrem.jpg" alt class="icon_put" />
+            <img src="/static/images/icons/albrem.jpg" alt class="icon_put">
             <p class="fontColor">相册</p>
           </div>
           <!-- <div class="flex flexAlignCenter flexColumn" @click="goLocation">
@@ -128,8 +128,28 @@
         <li style="color:red" @click="isShowMask=true">添加常用语</li>
       </ul>
       <!-- 表情 -->
-      <div class="emotion">
-        <emotion @emotion="handleEmotionComment" :height="200" ></emotion>
+      <div class="emotion" v-if="showEmotion">
+        <!-- <emotion @emotion="handleEmotionComment" :height="300" ></emotion> -->
+
+        <scroll-view scroll-y class="emotion-pack-item">
+          <div class="emotion-box">
+            <!-- <div class="emotion-box-line" v-for="(line, i) in list" :key="i"> -->
+            <div
+              class="emotion-box-line"
+              v-for="(line, i) in emotionArr"
+              :key="i"
+              @click="handEmotion(line)"
+            >
+              <!-- <div
+                v-for="(item, itemI) in line"
+                :key="itemI"
+                @click.native="clickHandler(item)"
+              >
+              {{item}}</div>-->
+              <div v-html="line.url"></div>
+            </div>
+          </div>
+        </scroll-view>
       </div>
     </div>
     <!--弹层-->
@@ -147,9 +167,7 @@
 
 <script>
 import { post, getCurrentPageUrlWithArgs } from "@/utils";
-import Emotion from "@/components/Emotion/index.vue";
 export default {
-  components: { Emotion },
   data() {
     return {
       userId: "",
@@ -169,7 +187,117 @@ export default {
       socketTaskStatus: false,
       // 图片
       imgPathArr: [], //临时路径
-      isTakePhoto: false //是否开启拍照
+      isTakePhoto: false, //是否开启拍照,
+      showEmotion: false, //显示表情
+
+      emotionList: [
+        "微笑",
+        "撇嘴",
+        "色",
+        "发呆",
+        "得意",
+        "流泪",
+        "害羞",
+        "闭嘴",
+        "睡",
+        "大哭",
+        "尴尬",
+        "发怒",
+        "调皮",
+        "呲牙",
+        "惊讶",
+        "难过",
+        "酷",
+        "冷汗",
+        "抓狂",
+        "吐",
+        "偷笑",
+        "可爱",
+        "白眼",
+        "傲慢",
+        "饥饿",
+        "困",
+        "惊恐",
+        "流汗",
+        "憨笑",
+        "大兵",
+        "奋斗",
+        "咒骂",
+        "疑问",
+        "嘘",
+        "晕",
+        "折磨",
+        "衰",
+        "骷髅",
+        "敲打",
+        "再见",
+        "擦汗",
+        "抠鼻",
+        "鼓掌",
+        "糗大了",
+        "坏笑",
+        "左哼哼",
+        "右哼哼",
+        "哈欠",
+        "鄙视",
+        "委屈",
+        "快哭了",
+        "阴险",
+        "亲亲",
+        "吓",
+        "可怜",
+        "菜刀",
+        "西瓜",
+        "啤酒",
+        "篮球",
+        "乒乓",
+        "咖啡",
+        "饭",
+        "猪头",
+        "玫瑰",
+        "凋谢",
+        "示爱",
+        "爱心",
+        "心碎",
+        "蛋糕",
+        "闪电",
+        "炸弹",
+        "刀",
+        "足球",
+        "瓢虫",
+        "便便",
+        "月亮",
+        "太阳",
+        "礼物",
+        "拥抱",
+        "强",
+        "弱",
+        "握手",
+        "胜利",
+        "抱拳",
+        "勾引",
+        "拳头",
+        "差劲",
+        "爱你",
+        "NO",
+        "OK",
+        "爱情",
+        "飞吻",
+        "跳跳",
+        "发抖",
+        "怄火",
+        "转圈",
+        "磕头",
+        "回头",
+        "跳绳",
+        "挥手",
+        "激动",
+        "街舞",
+        "献吻",
+        "左太极",
+        "右太极"
+      ],
+      emotionArr: []
     };
   },
   onShow() {
@@ -188,7 +316,7 @@ export default {
     this.getMessageType();
     this.getFriendMessage();
   },
-
+  onReady() {},
   components: {},
 
   methods: {
@@ -202,6 +330,7 @@ export default {
       this.showMessage = false;
       this.isShowMask = false;
       this.isTakePhoto = false;
+      this.showEmotion = false;
       this.addId = "";
       this.useText = "";
     },
@@ -227,8 +356,10 @@ export default {
         if (res.code == 0) {
           let info = [];
           res.data.info.map(item => {
+            item.Info = item.Info.replace(/\#[\u4E00-\u9FA5]{1,3}\;/gi, this.emotion(item.Info))
             info.unshift(item);
           });
+            console.log(info,'解析完的字符串')
           res.data.info = info;
           this.chatStatu = res.data;
           this.scrollBottom();
@@ -237,18 +368,25 @@ export default {
     },
     // 发送消息
     async sendMessage(data) {
+      console.log(data,'发送消息')
       let sendInfo = "";
       let imgBase = "";
       let lat = 0;
       let lng = 0;
-      // 发送图片
-      if (data.type === "img") {
-        imgBase = data.data;
-      }
-      // 发送位置
-      else if (data.type === "map") {
-        lat = data.data.latitude;
-        lng = data.data.longitude;
+      if(data){
+        // 发送图片
+        if (data.type === "img") {
+          imgBase = data.data;
+        }
+        // 发送位置
+        else if (data.type === "map") {
+          lat = data.data.latitude;
+          lng = data.data.longitude;
+        }
+        // 普通消息
+        else {
+          sendInfo = this.sendInfo;
+        }
       }
       // 普通消息
       else {
@@ -283,6 +421,7 @@ export default {
       // this.initData();
       this.showBtn = false;
       this.isShowMask = false;
+      this.showEmotion = false;
       if (this.addId == id) {
         this.showMessage = !this.showMessage;
         return false;
@@ -393,6 +532,7 @@ export default {
     showPicBtn() {
       this.showMessage = false;
       this.isShowMask = false;
+      this.showEmotion = false;
       this.showBtn = !this.showBtn;
       this.scrollBottom();
     },
@@ -444,6 +584,33 @@ export default {
     //     }
     //   })
     // },
+    showEmotions() {
+      this.showMessage = false;
+      this.isShowMask = false;
+      this.showBtn = false;
+      this.showEmotion = !this.showEmotion;
+
+      // console.log(this,'elelele')
+      // const name = this.$el.innerHTML
+      const list = this.emotionList
+      // let index = list.indexOf(name)
+      let emotionArr = [];
+      list.map((item, index) => {
+        emotionArr.push({
+          name: `#${item};`,
+          url: `<img src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif">`
+        });
+      });
+      this.emotionArr = emotionArr;
+      // let imgHTML = `<img src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif">`
+      // this.$nextTick(() => {
+      // this.$el.innerHTML = imgHTML
+      // })
+    },
+    handEmotion(item) {
+      console.log(item, "item");
+      this.sendInfo+=item.name;
+    },
     // 回复add表情
     handleEmotionComment(i) {
       console.log(i, "iiii");
@@ -453,116 +620,18 @@ export default {
     },
     // 将匹配结果替换表情图片
     emotion(res) {
+      console.log(res,'要替换的数据')
       let word = res.replace(/\#|\;/gi, "");
-      const list = [
-        "微笑",
-        "撇嘴",
-        "色",
-        "发呆",
-        "得意",
-        "流泪",
-        "害羞",
-        "闭嘴",
-        "睡",
-        "大哭",
-        "尴尬",
-        "发怒",
-        "调皮",
-        "呲牙",
-        "惊讶",
-        "难过",
-        "酷",
-        "冷汗",
-        "抓狂",
-        "吐",
-        "偷笑",
-        "可爱",
-        "白眼",
-        "傲慢",
-        "饥饿",
-        "困",
-        "惊恐",
-        "流汗",
-        "憨笑",
-        "大兵",
-        "奋斗",
-        "咒骂",
-        "疑问",
-        "嘘",
-        "晕",
-        "折磨",
-        "衰",
-        "骷髅",
-        "敲打",
-        "再见",
-        "擦汗",
-        "抠鼻",
-        "鼓掌",
-        "糗大了",
-        "坏笑",
-        "左哼哼",
-        "右哼哼",
-        "哈欠",
-        "鄙视",
-        "委屈",
-        "快哭了",
-        "阴险",
-        "亲亲",
-        "吓",
-        "可怜",
-        "菜刀",
-        "西瓜",
-        "啤酒",
-        "篮球",
-        "乒乓",
-        "咖啡",
-        "饭",
-        "猪头",
-        "玫瑰",
-        "凋谢",
-        "示爱",
-        "爱心",
-        "心碎",
-        "蛋糕",
-        "闪电",
-        "炸弹",
-        "刀",
-        "足球",
-        "瓢虫",
-        "便便",
-        "月亮",
-        "太阳",
-        "礼物",
-        "拥抱",
-        "强",
-        "弱",
-        "握手",
-        "胜利",
-        "抱拳",
-        "勾引",
-        "拳头",
-        "差劲",
-        "爱你",
-        "NO",
-        "OK",
-        "爱情",
-        "飞吻",
-        "跳跳",
-        "发抖",
-        "怄火",
-        "转圈",
-        "磕头",
-        "回头",
-        "跳绳",
-        "挥手",
-        "激动",
-        "街舞",
-        "献吻",
-        "左太极",
-        "右太极"
-      ];
-      let index = list.indexOf(word);
-      return `<img src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" align="middle">`;
+      let index = this.emotionList.indexOf(word);
+      if(index!==-1){
+        return `<img src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" align="middle">`;
+      }else{
+        return res;
+      }
+      },
+    clickHandler(i) {
+      let emotion = `#${i};`;
+      this.$emit("emotion", emotion);
     },
     // 滚动到底部
     scrollBottom() {
@@ -586,17 +655,20 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-.padwid {
-  // height:86vh;
-  // width:100%;
-  // box-sizing:border-box;
-  // padding-bottom:180rpx;
-}
+// .padwid {
+// height:86vh;
+// width:100%;
+// box-sizing:border-box;
+// padding-bottom:180rpx;
+// }
 .showMessage {
   padding-bottom: 530rpx !important;
 }
 .showBtn {
   padding-bottom: 400rpx !important;
+}
+.showEmotion {
+  padding-bottom: 480rpx !important;
 }
 .plr20 {
   padding: 30rpx !important;
@@ -708,5 +780,21 @@ export default {
       height: 80rpx;
     }
   }
+}
+// 表情
+.emotion {
+  height: 300rpx;
+  position: relative;
+}
+.emotion-pack-item {
+  height: 300rpx;
+}
+.emotion-box {
+  display: flex;
+  align-items: center;
+  flex-flow: row wrap;
+}
+.emotion-box-line{
+  margin:5rpx;
 }
 </style>
