@@ -10,7 +10,7 @@
     </div>
     <div class="navBox">
       <ul class="navList li_25 center navList2">
-        <li @click="getType(item.BrandId,item.Id)" v-for="(item,index) in brandList" :key="index">
+        <li @click="getType(item.BrandId,item.Id,item.PageId)" v-for="(item,index) in brandList" :key="index">
           <div class="outside" >
             <div class="icon-img">
               <img :src="item.Img" alt>
@@ -21,7 +21,7 @@
       </ul>
     </div>
     <!--弹层-->
-    <div class="mask" v-if="isShowMask" catchtouchmove="true" @click="isShowMask=false"></div>
+    <!-- <div class="mask" v-if="isShowMask" catchtouchmove="true" @click="isShowMask=false"></div>
     <div class="modal_mask boxSize" style="height:250rpx;" v-if="isShowMask">
         <div class="weui-cells  ">
           <div class="weui-cell" @click="gotoFrom(item.BrandId,item.Id)" v-for="(item,pindex) in typeList" :key="pindex">
@@ -31,7 +31,7 @@
             <span class="icon-arrow arrow-right"></span>
           </div>
         </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -122,15 +122,15 @@ export default {
     //   })
     // },
     //去往发布页面
-    getType(bid,id){
-      console.log('bid',bid)
+    getType(bid,id,pid){
+      console.log('pid',pid)
       if(bid != 21){
           wx.navigateTo({
-            url: '/pages/rent/rentOffic/main?TypeId='+id
+            url: '/pages/rent/rentOffic/main?TypeId='+id+'&PageId='+pid
           })
       }else{
           wx.navigateTo({
-            url: '/pages/rent/rentDevice/main?TypeId='+id
+            url: '/pages/rent/rentDevice/main?TypeId='+id+'&PageId='+pid
           })
       }
     },

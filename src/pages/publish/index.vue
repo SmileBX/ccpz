@@ -5,13 +5,14 @@
       <div class="hd-title">快捷发布</div>
       <ul class="navList li_25 center navList2">
         <li v-for="(item,index) in publishType" :key="index">
-          <div class="outside" @click="gotosubMenu(item.Id)">
+          <div class="outside" @click="gotosubMenu(item.Id,index)">
             <div class="icon-img">
               <img :src="item.Img" alt>
             </div>
             <p class="title">{{item.Name}}</p>
           </div>
         </li>
+        
       </ul>
     </div>
     <!--弹层-->
@@ -19,15 +20,15 @@
     <div class="modal_mask boxSize"  v-if="isShowMask">
         <div class="flex justifyContentStart flexAlignStart">
             <div class="icon-img">
-                <img src="/static/images/icons/index_menu1.jpg" alt="" >
+                <img :src="imgurl" alt="" >
             </div>
             <div>
-                <p class="font32">拼租表单</p>
+                <p class="font32">{{title}}表单</p>
                 <p class="font_four">寻找志同道合的团队或个人，资源共享重组</p>
             </div>
         </div>
         <div class="weui-cells  ">
-          <div class="weui-cell" @click="goPinZu(item.Id)" v-for="(item,pindex) in pinzuList" :key="pindex">
+          <div class="weui-cell" @click="goPinZu(item.Id,item.PageId,item.BrandId)" v-for="(item,pindex) in pinzuList" :key="pindex">
             <div class="icon-img2">
                 <img :src="item.Img" alt="" >
             </div>
@@ -46,9 +47,11 @@ import { post,getCurrentPageUrlWithArgs} from "@/utils";
 export default {
   data () {
     return {
+      title:"",
       publishType:[],//发布类型
       pinzuList:[],//拼租类型
       isShowMask:false,//是否显示拼租分类弹层
+      imgurl:''
     }
   },
   onLoad() {
@@ -74,35 +77,34 @@ export default {
         }
       })
     },
-    gotosubMenu(id){
+    gotosubMenu(id,i){
+       this.isShowMask=true
+       this.title = this.publishType[i].Name
+       this.imgurl = this.publishType[i].Img
       post('Goods/GetTypeL1',{
             BrandId:id
         }).then(res=>{
           console.log(res,"一级页面")
           if(res.code==0){
               res.data.map(item=>{
-                if(item.PageId==0){
-                    this.isShowMask=true
-                    this.pinzuList = res.data
-                }else{
-                    this.goOnePin(id) 
-                }
+                  this.pinzuList = res.data
               })
           }
         })
     },
-    //去往拼租二级页面
-    goPinZu(id){  
-        wx.navigateTo({
-          url: '/pages/rent/submenu/main?TypeId='+id  
-        })
+    goPinZu(id,pid,bid){ 
+      //如果pageId=0去二级页面 BrandId  TypeId
+      if(pid==0){
+          wx.navigateTo({ 
+            url: '/pages/rent/submenu/main?TypeId='+id  
+          })
+      }else{  //直接发布
+          wx.navigateTo({
+            url: '/pages/rent/rentOffic/main?TypeId='+id  
+          })
+      }
     },
-    //直接去往发布页面
-    goOnePin(id){
-        wx.navigateTo({
-          url: '/pages/rent/submenu/main?BrandId='+id  
-        })
-    }
+    
     
   },
 
