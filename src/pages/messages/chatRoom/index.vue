@@ -72,6 +72,7 @@
           confirm-type="send"
           confirm-hold
           @confirm="sendMessage"
+          :cursor-spacing="100"
         >
         <div class="flex flexAlignCenter">
           <img src="/static/images/icons/smile.jpg" alt class="logimg" @click="showEmotions">
