@@ -10,7 +10,7 @@
         <div class="flex flexAlignCenter boxSize p2 justifyContentEnd plr20" v-if="msg.MsgId=='a'">
           <div class="flex flexAlignEnd justifyContentEnd mrr2" >
             <!-- <span class="fontColor" @click="scrollBottom">已读</span> -->
-            <div class="tagmsg">
+            <div class="tagmsg cfff">
               <!-- <p v-if="msg.Info" class="boxSize">{{msg.Info}}</p> -->
               <p v-if="msg.Info" class="boxSize" v-html="msg.Info"></p>
 
@@ -29,15 +29,16 @@
             <img :src="chatStatu.a.Headimgurl" alt class="avatar">
           </div>
         </div>
-        <div class="flex flexAlignCenter boxSize p2 justifyContentStart" v-if="msg.MsgId=='b'">
+        <div class="flex flexAlignCenter boxSize plr20 justifyContentStart" v-if="msg.MsgId=='b'">
           <div class="avatarbox mr0" v-if="chatStatu.b">
             <img :src="chatStatu.b.Headimgurl" alt class="avatar">
           </div>
-          <div class="flex flexAlignEnd mrl2" style="width:75%">
+          <div class="flex flexAlignEnd mrl2">
             <!-- <span class="fontColor">已读</span> -->
-            <div class="tagmsg bg_fff">
+            <div class="tagmsg bg_fff black">
               <span class="sj lsj"></span>
-              <p v-if="msg.Info" class="boxSize" style="color:#1a1a1a">{{msg.Info}}</p>
+              <!-- <p v-if="msg.Info" class="boxSize" style="color:#1a1a1a">{{msg.Info}}</p> -->
+              <p v-if="msg.Info" class="boxSize" v-html="msg.Info"></p>
               <img
                 class="sendImg"
                 mode="widthFix"
@@ -360,8 +361,12 @@ export default {
               words => {
                 let word = words.replace(/\#|\;/gi, "");
                 let index = this.emotionList.indexOf(word);
-                return `<img src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" align="middle">`;
-              }
+                if(index!== -1){ 
+                  return `<img src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" align="middle">`;
+                }else{
+                  return words
+                }
+               }
             );
             info.unshift(item);
           });
@@ -665,6 +670,10 @@ export default {
   margin-right:6rpx!important;
   width:80%;
 }
+.mrl2{
+  margin-left:6rpx!important;
+  width:80%;
+}
 .charRoom {
   padding-bottom: 180rpx;
 }
@@ -775,9 +784,9 @@ export default {
 }
 .tagmsg {
   padding: 15rpx;
-  // line-height:20rpx;
+  word-break:break-all;
   p {
-    // margin:10rpx;
+  word-break:break-all;
   }
 }
 // 表情
@@ -796,4 +805,11 @@ export default {
 .emotion-box-line {
   margin: 5rpx;
 }
+.cfff{
+  color:#fff;
+}
+.black{
+  color:#333;
+}
+
 </style>
