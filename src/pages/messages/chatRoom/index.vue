@@ -8,15 +8,11 @@
     <div class="padwid" @click="isShowMask=false">
       <div v-for="(msg,msgIndex) in chatStatu.info" :key="msgIndex">
         <div class="flex flexAlignCenter boxSize p2 justifyContentEnd plr20" v-if="msg.MsgId=='a'">
-          <div class="flex flexAlignEnd justifyContentEnd mrr2" style="width:75%;">
+          <div class="flex flexAlignEnd justifyContentEnd mrr2" >
             <!-- <span class="fontColor" @click="scrollBottom">已读</span> -->
             <div class="tagmsg">
               <!-- <p v-if="msg.Info" class="boxSize">{{msg.Info}}</p> -->
-              <p
-                v-if="msg.Info"
-                class="boxSize"
-                v-html="msg.Info"
-              ></p>
+              <p v-if="msg.Info" class="boxSize" v-html="msg.Info"></p>
 
               <img
                 class="sendImg"
@@ -42,14 +38,14 @@
             <div class="tagmsg bg_fff">
               <span class="sj lsj"></span>
               <p v-if="msg.Info" class="boxSize" style="color:#1a1a1a">{{msg.Info}}</p>
-              <image
+              <img
                 class="sendImg"
                 mode="widthFix"
                 v-if="msg.Pic"
                 :src="msg.Pic"
                 alt
                 @click="previewImg(msg.Pic)"
-              />
+              >
             </div>
           </div>
         </div>
@@ -305,6 +301,7 @@ export default {
   },
   onLoad() {
     this.setBarTitle();
+    this.initEmotion();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.initData();
@@ -343,6 +340,7 @@ export default {
       //   console.log(res)
       // })
       // return false;
+      const that = this;
       post(
         "User/Readfriend_new",
         {
@@ -356,10 +354,18 @@ export default {
         if (res.code == 0) {
           let info = [];
           res.data.info.map(item => {
-            item.Info = item.Info.replace(/\#[\u4E00-\u9FA5]{1,3}\;/gi, this.emotion(item.Info))
+            // 将匹配结果替换表情图片
+            item.Info = item.Info.replace(
+              /\#[\u4E00-\u9FA5]{1,3}\;/gi,
+              words => {
+                let word = words.replace(/\#|\;/gi, "");
+                let index = this.emotionList.indexOf(word);
+                return `<img src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" align="middle">`;
+              }
+            );
             info.unshift(item);
           });
-            console.log(info,'解析完的字符串')
+          console.log(info, "解析完的字符串");
           res.data.info = info;
           this.chatStatu = res.data;
           this.scrollBottom();
@@ -368,12 +374,12 @@ export default {
     },
     // 发送消息
     async sendMessage(data) {
-      console.log(data,'发送消息')
+      console.log(data, "发送消息");
       let sendInfo = "";
       let imgBase = "";
       let lat = 0;
       let lng = 0;
-      if(data){
+      if (data) {
         // 发送图片
         if (data.type === "img") {
           imgBase = data.data;
@@ -428,7 +434,6 @@ export default {
       } else {
         this.showMessage = true;
       }
-      this.scrollBottom();
       this.addId = id;
       post(
         "User/GetUser_word",
@@ -534,7 +539,6 @@ export default {
       this.isShowMask = false;
       this.showEmotion = false;
       this.showBtn = !this.showBtn;
-      this.scrollBottom();
     },
     // 选择图片
     chosseImg(sourceType) {
@@ -584,16 +588,17 @@ export default {
     //     }
     //   })
     // },
+    // 显示表情
     showEmotions() {
       this.showMessage = false;
       this.isShowMask = false;
       this.showBtn = false;
       this.showEmotion = !this.showEmotion;
 
-      // console.log(this,'elelele')
-      // const name = this.$el.innerHTML
-      const list = this.emotionList
-      // let index = list.indexOf(name)
+    },
+    // 初始化表情
+    initEmotion(){
+      const list = this.emotionList;
       let emotionArr = [];
       list.map((item, index) => {
         emotionArr.push({
@@ -602,14 +607,10 @@ export default {
         });
       });
       this.emotionArr = emotionArr;
-      // let imgHTML = `<img src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif">`
-      // this.$nextTick(() => {
-      // this.$el.innerHTML = imgHTML
-      // })
     },
-    handEmotion(item) {
+    handEmotion(item) {~
       console.log(item, "item");
-      this.sendInfo+=item.name;
+      this.sendInfo += item.name;
     },
     // 回复add表情
     handleEmotionComment(i) {
@@ -618,23 +619,9 @@ export default {
       console.log(this.showComment, this.comment[this.showComment], "i");
       this.comment[this.showComment].commentContent += i;
     },
-    // 将匹配结果替换表情图片
-    emotion(res) {
-      console.log(res,'要替换的数据')
-      let word = res.replace(/\#|\;/gi, "");
-      let index = this.emotionList.indexOf(word);
-      if(index!==-1){
-        return `<img src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" align="middle">`;
-      }else{
-        return res;
-      }
-      },
-    clickHandler(i) {
-      let emotion = `#${i};`;
-      this.$emit("emotion", emotion);
-    },
     // 滚动到底部
     scrollBottom() {
+      setTimeout(()=>{
       wx
         .createSelectorQuery()
         .select("#charRoom")
@@ -643,10 +630,11 @@ export default {
           console.log(rect, "滚动到底部");
           wx.pageScrollTo({
             scrollTop: rect.height,
-            duration: 0
+            duration: 100
           });
         })
         .exec();
+      },500)
     }
   },
   created() {
@@ -671,7 +659,11 @@ export default {
   padding-bottom: 480rpx !important;
 }
 .plr20 {
-  padding: 30rpx !important;
+  padding: 20rpx !important;
+}
+.mrr2{
+  margin-right:6rpx!important;
+  width:80%;
 }
 .charRoom {
   padding-bottom: 180rpx;
@@ -781,6 +773,13 @@ export default {
     }
   }
 }
+.tagmsg {
+  padding: 15rpx;
+  // line-height:20rpx;
+  p {
+    // margin:10rpx;
+  }
+}
 // 表情
 .emotion {
   height: 300rpx;
@@ -794,7 +793,7 @@ export default {
   align-items: center;
   flex-flow: row wrap;
 }
-.emotion-box-line{
-  margin:5rpx;
+.emotion-box-line {
+  margin: 5rpx;
 }
 </style>
