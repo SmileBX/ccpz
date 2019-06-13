@@ -195,9 +195,23 @@
               </div>
             </div>
           </div>
-           <!--公司理念-->
+          <!--公司理念-->
+          <div class="form-cells-item">
+            <div class="">
+              <div class="form-cells-hd">公司理念</div>
+              <div class="form-cell-bd">
+                <input
+                  class="ipt"
+                  type="text"
+                  placeholder="请填写公司详细简介"
+                  v-model="CompanyCulture"
+                  placeholder-style="color:#b5b5b5;"
+                >
+              </div>
+            </div>
+          </div>
           <!--办公室描述-->
-          <div class="form-cells-item" v-if="TypeId==58">
+          <div class="form-cells-item" v-if="PageId==58">
             <div class="form-cells-navigate navigate-right">
               <div class="form-cells-hd">办公室描述</div>
               <div class="form-cell-bd">
@@ -255,7 +269,7 @@
             </div>
           </div>
           <!--标签-->
-          <div class="form-cells-item" v-if="TypeId==58">
+          <div class="form-cells-item" v-if="PageId==58">
             <div class="form-cells-hd">拼租设施/设备</div>
             <div class="form-cell-bd">
               <div class="btns-group">
@@ -271,7 +285,7 @@
         </div>
       </div>
       <!-- 以下是组建公司显示 -->
-      <div v-if="TypeId==58">
+      <div v-if="PageId==58">
           <div class="formTitle" >
             <div class="titletxt c_333">想看看什么样的人</div>
             <p class="subtitle">将根据您的要求推荐优质合伙人</p>
@@ -427,7 +441,7 @@
 </template>
 
 <script>
-//TypeId--58厂房发布  
+//PageId--58厂房发布  
 //拼活动 场地-37  活动-69
 import "@/style/style_fb.scss";
 import { post,host,getCurrentPageUrlWithArgs} from "@/utils";
@@ -442,6 +456,7 @@ export default {
       userId: "",
       token: "",
       TypeId:'',
+      PageId:'',
       detailInfo:[],
       picLength:6,//上传图片的长度
       imgArr:[],//上传图片的路径
@@ -498,6 +513,7 @@ export default {
       DeviceRent:"",//价格最小
       DevicePrice:"",//价格最大
       AllArea:"",//总面积
+      CompanyCulture:"",//公司理念
 
       pageTitle:"",//页面标题
       subTitle:"",//副标题
@@ -530,8 +546,10 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
-    this.TypeId = this.$root.$mp.query.TypeId
-    console.log(this.TypeId,"TypeId")
+    this.TypeId= this.$root.$mp.query.TypeId
+    this.PageId = this.$root.$mp.query.PageId
+    console.log("PageId",this.PageId)
+    console.log("PageId",this.PageId)
     this.initData()
     this.GetPublishItems()
   },
@@ -589,7 +607,7 @@ export default {
         this.tradeList = {},//行业列表
         this.tradeListBox = [],//行业列表
         this.deviceTip = ''
-        if(this.TypeId==37){
+        if(this.PageId==37){
           this.pageTitle = '拼场地表单'
           this.subTitle = '(行业交流会/推广会/发布会/其他活动)'
           this.introduce = "公司简介"
@@ -599,33 +617,7 @@ export default {
           this.addrPlaceholder = "场地名称 如：如京基大厦"
           this.addDetailTitle = "门牌号"
           this.addDetailPlaceholder = "门牌号/楼号等 例：3楼418室"
-        }else if(this.TypeId==52 || this.TypeId==36 || this.TypeId==65 || this.TypeId==66 || this.TypeId==63 || this.TypeId==62 || this.TypeId == 64){
-            this.introduce = "公司简介"
-            this.introducePlaceholder = "请填写公司详细简介"
-            if(this.TypeId==52 || this.TypeId==36 ||  this.TypeId==66 || this.TypeId==63 || this.TypeId==62 || this.TypeId == 64){
-                this.addrTitle = "公司地址"
-                this.addrPlaceholder = "办公室大楼 如：如京基大厦"
-                this.addDetailTitle = "门牌号"
-                this.addDetailPlaceholder = "门牌号/楼号等 例：3楼418室"
-            }
-            if(this.TypeId==52){
-              this.pageTitle = '拼购设备表单'
-              this.subTitle = '(设备/售卖机)'
-              this.upImgTitle = "公司/团队照片"
-            }
-            if(this.TypeId==36){
-              this.pageTitle = '拼购物业表单'
-              this.subTitle = '(物业)'
-              this.upImgTitle = "公司/团队照片"
-            }
-            if(this.TypeId==65){
-              this.pageTitle = '办公室寻找拼租表单'
-              this.subTitle = '(办公室/商铺/工厂/培训机构/其他)'
-              this.upImgTitle = "办公室照片"
-            }
-            
         }
-        
     },
     //时间
     onInput(e) {
@@ -668,11 +660,11 @@ export default {
       console.log(this.detailInfo,"detailInfo+++++++++++")
       this.isShowMask = true
       this.list = this.detailInfo.Device
-      if(this.TypeId == 36){
+      if(this.PageId == 36){
         this.masktitle = '请选择物业形式'
-      }else if(this.TypeId == 52){
+      }else if(this.PageId == 52){
         this.masktitle = '请选择设备形式'
-      }else if(this.TypeId == 62){
+      }else if(this.PageId == 62){
           this.masktitle = '请选择办公形式'
       }
       
@@ -966,7 +958,7 @@ export default {
       const that = this
       let PicList = await that.base64Img(that.imgArr);
        let GoodsInfo={}
-      if(that.TypeId == 36){
+      if(that.PageId == 36){
           GoodsInfo = {
           Title:that.Title,
           CompanyId:that.CompanyId,
@@ -990,7 +982,7 @@ export default {
       }
       
       if(that.valOther()){
-          if(that.TypeId == 65 || that.TypeId == 64 || that.TypeId == 62){
+          if(that.PageId == 65 || that.PageId == 64 || that.PageId == 62){
             for(let i in that.Devicelist){
               if(that.Devicelist[i].active){
                 that.ServiceName+=that.Devicelist[i].Name+","

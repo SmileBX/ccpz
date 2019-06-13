@@ -1,7 +1,7 @@
 <template>
   <div class="pageContent">
     <div class="FormBox">
-      <img class="topbgimg" src="/static/images/icons/bg2.jpg" v-if="TypeId==58 || TypeId==62">
+      <img class="topbgimg" src="/static/images/icons/bg2.jpg" v-if=" PageId==28">
       <img class="topbgimg" src="/static/images/icons/bg1.jpg" v-else>
       <div class="FormCon" style="margin-top:-260rpx;">
         <div class="formTitle">
@@ -26,7 +26,7 @@
             </div>
           </div>
           <!--公司名称 -->
-          <div class="form-cells-item" v-if="TypeId==36 || TypeId==52 || TypeId==66 || TypeId==65 || TypeId==63  || TypeId == 64 || TypeId == 62">
+          <div class="form-cells-item" v-if="PageId==25 || PageId==26 || PageId==31 || PageId==30 || PageId==29  || PageId == 27 || PageId == 28">
             <div :class="{showDefaultCompany:'form-cells-navigate navigate-bottom'}">
               <div class="form-cells-hd">公司名称</div>
               <div class="form-cell-bd">
@@ -43,7 +43,7 @@
             </div>
           </div>
           <!--输入选择内容-->
-          <div v-if="TypeId==36">
+          <div v-if="PageId==25">
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column" @click="getProperty">
                   <div class="form-cells-hd">物业形式</div>
@@ -142,7 +142,7 @@
                 </div>
               </div>
           </div>
-          <div v-if="TypeId==52">
+          <div v-if="PageId==26">
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
                   <div class="form-cells-hd">设备类型</div>
@@ -240,7 +240,7 @@
                 </div>
               </div>
           </div>
-          <div v-if="TypeId==65">
+          <div v-if="PageId==30">
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
                   <div class="form-cells-hd">意向拼租行业</div>
@@ -339,7 +339,7 @@
                 </div>
               </div>
           </div>
-          <div v-if="TypeId==66">
+          <div v-if="PageId==31">
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
                   <div class="form-cells-hd">意向拼租行业</div>
@@ -449,7 +449,7 @@
                 </div>
               </div>
           </div>
-          <div v-if="TypeId==63">
+          <div v-if="PageId==29">
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
                   <div class="form-cells-hd">意向拼租行业</div>
@@ -535,7 +535,7 @@
                 </div>
               </div>
           </div>
-          <div v-if="TypeId==62">
+          <div v-if="PageId==28">
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
                   <div class="form-cells-hd">意向拼租行业</div>
@@ -621,7 +621,7 @@
                 </div>
               </div>
           </div>
-          <div v-if="TypeId==64">
+          <div v-if="PageId==27">
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
                   <div class="form-cells-hd">意向拼租行业</div>
@@ -710,8 +710,23 @@
               </div>
             </div>
           </div>
+          <!--公司理念-->
+          <div class="form-cells-item" v-if="PageId==30 || PageId==31 || PageId==28 ||  PageId==29 ||  PageId==27">
+            <div class="">
+              <div class="form-cells-hd">公司理念</div>
+              <div class="form-cell-bd">
+                <input
+                  class="ipt"
+                  type="text"
+                  placeholder="请填写公司详细简介"
+                  v-model="CompanyCulture"
+                  placeholder-style="color:#b5b5b5;"
+                >
+              </div>
+            </div>
+          </div>
           <!--办公室描述-->
-          <div class="form-cells-item" v-if="TypeId == 63 || TypeId == 64 || TypeId == 62">
+          <div class="form-cells-item" v-if="PageId == 29 || TypeId == 27 || PageId == 28">
             <div class="">
             <!-- <div class="form-cells-navigate navigate-right"> -->
               <div class="form-cells-hd">办公室描述</div>
@@ -726,21 +741,6 @@
               </div>
             </div>
           </div>
-          <!--公司理念-->
-          <!-- <div class="form-cells-item">
-            <div class="">
-              <div class="form-cells-hd">公司理念</div>
-              <div class="form-cell-bd">
-                <input
-                  class="ipt"
-                  type="text"
-                  placeholder="请填写公司详细简介"
-                  v-model="Synopsis"
-                  placeholder-style="color:#b5b5b5;"
-                >
-              </div>
-            </div>
-          </div> -->
           <!--厂房出租-->
           <div v-if="TypeId==58">
               <div class="form-cells-item form-cells-item2">
@@ -892,7 +892,7 @@
                 >
               </div>
             </div>
-            <div class="form-cells-item form-cells-item2" v-if="TypeId == 65 || TypeId == 66 || TypeId==63 || TypeId == 64 || TypeId == 62">
+            <div class="form-cells-item form-cells-item2" v-if="PageId == 30 || PageId == 31 || PageId==29 || PageId == 27 || PageId == 28">
               <div class="item2-column">
                 <div class="form-cells-hd">可否注册</div>
                 <input
@@ -906,7 +906,7 @@
                 >
               </div>
             </div>
-            <div class="form-cells-item form-cells-item2" v-if="TypeId==36 || TypeId==52">
+            <div class="form-cells-item form-cells-item2" v-if="PageId==25 || PageId==26">
               <div class="item2-column">
                 <div class="form-cells-hd">对方公司挂牌</div>
                 <input
@@ -933,7 +933,7 @@
           </div>
           <!--选项 end-->
            <!--地址-->
-          <div class="form-cells-item" v-if="TypeId==36 || TypeId==52 || TypeId==66 || TypeId==63 || TypeId == 62 || TypeId == 64">
+          <div class="form-cells-item" v-if="PageId==25 || PageId==26 || PageId==31 || PageId==29 || PageId == 28 || PageId == 27">
             <div class="">
               <div class="form-cells-hd">{{addrTitle}}</div>
               <div class="form-cell-bd">
@@ -947,7 +947,7 @@
               </div>
             </div>
           </div>
-          <div class="form-cells-item" v-if="TypeId==36 || TypeId==52 || TypeId==66 || TypeId==63 || TypeId == 62 || TypeId == 64">
+          <div class="form-cells-item" v-if="PageId==25 || PageId==26 || PageId==31 || PageId==29 || PageId == 28 || PageId == 27">
             <div>
               <div class="form-cells-hd">{{addDetailTitle}}</div>
               <div class="form-cell-bd">
@@ -962,7 +962,7 @@
             </div>
           </div>
           <!--标签-->
-          <div class="form-cells-item" v-if="TypeId == 65 || TypeId == 64 || TypeId == 62 || TypeId == 64">
+          <div class="form-cells-item" v-if="PageId == 30 || PageId == 27 || PageId == 28 || PageId == 27">
               <div class="form-cells-hd">拼租设施/设备</div>
               <div class="form-cell-bd">
                 <div class="btns-group">
@@ -1035,9 +1035,9 @@
 
 <script>
 //TypeId--58厂房发布  
-//拼购--   设备拼购-52   物业拼购-36 
-//寻找拼租  办公室拼租-65  设备寻找-66
-//提供拼租  短租办公-62  提供设备拼租-63 提供拼租64
+//拼购--   设备拼购--pageid=26   物业拼购-pageid=25 else --没有公司理念
+//寻找拼租  办公室拼租-pageid=30  设备寻找-pageid=31  --公司理念
+//提供拼租  短租办公pageid=28  提供设备拼租-pageid=29   提供拼租 --pageid=27  --公司理念 --环境
 import "@/style/style_fb.scss";
 import { post,host,getCurrentPageUrlWithArgs} from "@/utils";
 // import areaList from "@/utils/areaList";
@@ -1051,6 +1051,7 @@ export default {
       userId: "",
       token: "",
       TypeId:'',
+      PageId:'',
       detailInfo:[],
       picLength:6,//上传图片的长度
       imgArr:[],//上传图片的路径
@@ -1075,6 +1076,7 @@ export default {
       GladBuyerTrade:'', //意向行业/主营业务   格式，'1级行业,2级行业'
       RentTimeLimit:"",//租赁期限
       ContentDetail:"",//办公室环境描述
+      CompanyCulture:'', //公司理念
 
       BuyBudget:'', //购买预算 
       PlanBuyArea:'', //计划购买面积
@@ -1129,7 +1131,9 @@ export default {
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
     this.TypeId = this.$root.$mp.query.TypeId
-    console.log(this.TypeId,"TypeId")
+    this.PageId = this.$root.$mp.query.PageId
+    console.log("TypeId",this.TypeId)
+    console.log("PageId",this.PageId)
     this.initData()
     this.GetPublishItems()
   },
@@ -1187,61 +1191,49 @@ export default {
         this.tradeList = {},//行业列表
         this.tradeListBox = [],//行业列表
         this.deviceTip = ''
-        if(this.TypeId==58){
-          this.pageTitle = '厂房出租表单'
-          this.subTitle = '(厂房/车位/土地/仓库等)'
-          this.introduce = "出租要求"
-          this.introducePlaceholder = "请填写出租要求"
-          this.upImgTitle = "厂房照片"
-          this.addrTitle = "详细地址"
-          this.addrPlaceholder = "详细地址 如：如西莫敦199号"
-          this.addDetailTitle = "补充几句"
-          this.addDetailPlaceholder = "详细的描述会大大增加快速出租的机会"
-        }else if(this.TypeId==52 || this.TypeId==36 || this.TypeId==65 || this.TypeId==66 || this.TypeId==63 || this.TypeId==62 || this.TypeId == 64){
-            this.introduce = "公司简介"
-            this.introducePlaceholder = "请填写公司详细简介"
-            if(this.TypeId==52 || this.TypeId==36 ||  this.TypeId==66 || this.TypeId==63 || this.TypeId==62 || this.TypeId == 64){
-                this.addrTitle = "公司地址"
-                this.addrPlaceholder = "办公室大楼 如：如京基大厦"
-                this.addDetailTitle = "门牌号"
-                this.addDetailPlaceholder = "门牌号/楼号等 例：3楼418室"
-            }
-            if(this.TypeId==52){
-              this.pageTitle = '拼购设备表单'
-              this.subTitle = '(设备/售卖机)'
-              this.upImgTitle = "公司/团队照片"
-            }
-            if(this.TypeId==36){
-              this.pageTitle = '拼购物业表单'
-              this.subTitle = '(物业)'
-              this.upImgTitle = "公司/团队照片"
-            }
-            if(this.TypeId==65){
-              this.pageTitle = '办公室寻找拼租表单'
-              this.subTitle = '(办公室/商铺/工厂/培训机构/其他)'
-              this.upImgTitle = "办公室照片"
-            }
-            if(this.TypeId==66){
-              this.pageTitle = '设备寻找拼租表单'
-              this.subTitle = '(设备/售卖机)'
-              this.upImgTitle = "设备照片上传"
-            }
-            if(this.TypeId==63){
-              this.pageTitle = '提供设备拼租表单'
-              this.subTitle = '(设备/售卖机)'
-              this.upImgTitle = "设备照片上传"
-            }
-            if(this.TypeId==62){
-              this.pageTitle = '短租办公表单'
-              this.subTitle = '(办公室/商铺/工厂/培训机构/其他)'
-              this.upImgTitle = "办公室照片上传"
-            }
-            if(this.TypeId==64){
-              this.pageTitle = '提供拼租表单'
-              this.subTitle = '(办公室/商铺/工厂/培训机构/其他)'
-              this.upImgTitle = "办公室照片上传"
-            }
-            
+        this.introduce = "公司简介"
+        this.introducePlaceholder = "请填写公司详细简介"
+        
+        if(this.PageId==26 || this.PageId==25 ||  this.PageId==31 || this.PageId==29 || this.PageId==28 || this.PageId == 27){
+            this.addrTitle = "公司地址"
+            this.addrPlaceholder = "办公室大楼 如：如京基大厦"
+            this.addDetailTitle = "门牌号"
+            this.addDetailPlaceholder = "门牌号/楼号等 例：3楼418室"
+        }
+        if(this.PageId==26){
+          this.pageTitle = '拼购设备表单'
+          this.subTitle = '(设备/售卖机)'
+          this.upImgTitle = "公司/团队照片"
+        }
+        if(this.PageId==25){
+          this.pageTitle = '拼购物业表单'
+          this.subTitle = '(物业)'
+          this.upImgTitle = "公司/团队照片"
+        }
+        if(this.PageId==30){
+          this.pageTitle = '办公室寻找拼租表单'
+          this.subTitle = '(办公室/商铺/工厂/培训机构/其他)'
+          this.upImgTitle = "办公室照片"
+        }
+        if(this.PageId==31){
+          this.pageTitle = '设备寻找拼租表单'
+          this.subTitle = '(设备/售卖机)'
+          this.upImgTitle = "设备照片上传"
+        }
+        if(this.PageId==29){
+          this.pageTitle = '提供设备拼租表单'
+          this.subTitle = '(设备/售卖机)'
+          this.upImgTitle = "设备照片上传"
+        }
+        if(this.PageId==28){
+          this.pageTitle = '短租办公表单'
+          this.subTitle = '(办公室/商铺/工厂/培训机构/其他)'
+          this.upImgTitle = "办公室照片上传"
+        }
+        if(this.PageId==27){
+          this.pageTitle = '提供拼租表单'
+          this.subTitle = '(办公室/商铺/工厂/培训机构/其他)'
+          this.upImgTitle = "办公室照片上传"
         }
         
     },
@@ -1286,11 +1278,11 @@ export default {
       console.log(this.detailInfo,"detailInfo+++++++++++")
       this.isShowMask = true
       this.list = this.detailInfo.Device
-      if(this.TypeId == 36){
+      if(this.PageId == 25){
         this.masktitle = '请选择物业形式'
-      }else if(this.TypeId == 52){
+      }else if(this.PageId == 26){
         this.masktitle = '请选择设备形式'
-      }else if(this.TypeId == 62){
+      }else if(this.PageId == 28){
           this.masktitle = '请选择办公形式'
       }
       
@@ -1578,15 +1570,15 @@ export default {
           });
       }
     },
-    async base64Img(arr){
-      let base64Arr = []
+    async base27Img(arr){
+      let base27Arr = []
       for(let i = 0;i < arr.length;i++){
         const res = await pathToBase64(arr[i]);
-        base64Arr.push({
+        base27Arr.push({
           picUrl:res
         })
       }
-      return base64Arr
+      return base27Arr
     },
     //删除图片
     delImg(index){
@@ -1606,11 +1598,11 @@ export default {
         this.toastTip("请输入标题!")
         return false;
       }
-      if(this.TypeId == 36 ||　this.TypeId ==52){
+      if(this.PageId == 25 ||　this.PageId ==26){
           if (this.PropertySort=='') {
-            if(this.TypeId == 36){
+            if(this.PageId == 25){
                 this.toastTip("请选择物业形式!")
-            }else if(this.TypeId == 52){
+            }else if(this.PageId == 26){
                 this.toastTip("请选择设备形式!")
             }
             return false;
@@ -1625,7 +1617,7 @@ export default {
             return false;
           }
       }
-      if(this.TypeId == 36 ||　this.TypeId ==52 || this.TypeId == 66 || this.TypeId == 63 || this.TypeId == 62 || this.TypeId == 64){
+      if(this.PageId == 25 ||　this.PageId ==26 || this.PageId == 31 || this.PageId == 29 || this.PageId == 28 || this.PageId == 27){
         if (this.PropertyPrice == '') {
           this.toastTip("请输入对应金额!")
           return false;
@@ -1639,13 +1631,13 @@ export default {
           return false;
         }
       }
-      if(this.TypeId == 36 ||　this.TypeId ==52 || this.TypeId == 65 || this.TypeId == 64){
+      if(this.PageId == 25 ||　this.PageId ==26 || this.PageId == 30 || this.PageId == 27){
         if (this.PlanBuyDate =='') {
           this.toastTip("请选择时间!")
           return false;
         }
       }
-      if(this.TypeId == 36 ||　this.TypeId ==52 || this.TypeId == 66 || this.TypeId == 65){
+      if(this.PageId == 25 ||　this.PageId ==26 || this.PageId == 31 || this.PageId == 30){
         if (this.GladBuyAreaId=='') {
           this.toastTip("请选择区域!")
           return false;
@@ -1683,27 +1675,27 @@ export default {
         this.toastTip("请上传图片!")
         return false;
       }
-      if(this.TypeId == 36 ||　this.TypeId == 65 || this.TypeId == 62 || this.TypeId == 64){
+      if(this.PageId == 25 ||　this.PageId == 30 || this.PageId == 28 || this.PageId == 27){
         if (this.PlanBuyArea == '') {
           this.toastTip("请输入面积!")
           return false;
         }
       }
-      if(this.TypeId == 36 ||　this.TypeId == 65){
+      if(this.PageId == 25 ||　this.PageId == 30){
         if (this.IsTrim === '') {
           this.toastTip("请选择是否装修!")
           return false;
         }
       }
 
-      if(this.TypeId == 36 ||　this.TypeId == 65 || this.TypeId == 66 || this.TypeId == 63 || this.TypeId == 62 || this.TypeId == 64){
+      if(this.PageId == 25 ||　this.PageId == 30 || this.PageId == 31 || this.PageId == 29 || this.PageId == 28 || this.PageId == 27){
         if (this.GladBuyerTradeId == '') {
           this.toastTip("请选择行业!")
           return false;
         }
       }
       //办公室寻找拼租独有
-      if(this.TypeId == 65 || this.TypeId == 62 || this.TypeId == 64){
+      if(this.PageId == 30 || this.PageId == 28 || this.PageId == 27){
         if (this.NeedOfficeNum == '') {
           this.toastTip("请输入卡位要求!")
           return false;
@@ -1713,13 +1705,13 @@ export default {
         //     return false;
         // }
       }
-      if(this.TypeId == 65 || this.TypeId == 66 || this.TypeId == 63 || this.TypeId == 62 || this.TypeId == 64){
+      if(this.PageId == 30 || this.PageId == 31 || this.PageId == 29 || this.PageId == 28 || this.PageId == 27){
           if(this.IsRegArea === ''){
             this.toastTip("请选择公司是否注册!")
             return false;
           }
       }
-      if(this.TypeId == 65 || this.TypeId == 66){
+      if(this.PageId == 30 || this.PageId == 31){
           if(this.DeviceRent ==''){
             this.toastTip("请输入最低价格!")
             return false;
@@ -1734,13 +1726,13 @@ export default {
           }
       }
       //拼购设备特有
-      if(this.TypeId == 52 || this.TypeId == 63){
+      if(this.PageId == 26 || this.PageId == 29){
         if (this.PlanBuyNum == '') {
           this.toastTip("请输入数量!")
           return false;
         }
       }
-      if(this.TypeId == 52 || this.TypeId == 66 || this.TypeId == 63){
+      if(this.PageId == 26 || this.PageId == 31 || this.PageId == 29){
         if (this.PropertyType == '') {
           this.toastTip("请选择设备类型!")
           return false;
@@ -1750,31 +1742,31 @@ export default {
           return false;
         }
       }
-      if(this.TypeId == 66 || this.TypeId == 63 || this.TypeId == 62){
+      if(this.PageId == 31 || this.PageId == 29 || this.PageId == 28){
         if (this.RentTimeLimit == '') {
           this.toastTip("请选择期限!")
           return false;
         }
       }
-      if(this.TypeId == 63){
+      if(this.PageId == 29){
           if (this.DeviceRent == '') {
             this.toastTip("请输入租金!")
             return false;
           }
       }
-      if(this.TypeId == 62 ){
+      if(this.TypeId == 28 ){
           if (this.PropertySort == '') {
             this.toastTip("请选择办公形式!")
             return false;
           }
       }
-      if(this.TypeId == 62 || this.TypeId == 64){
+      if(this.PageId == 28 || this.PageId == 27){
           if (this.AllArea == '') {
             this.toastTip("请输入总面积!")
             return false;
           }
       }
-      if(this.TypeId == 63 ||  this.TypeId == 62 || this.TypeId == 64){
+      if(this.PageId == 29 ||  this.PageId == 28 || this.PageId == 27){
           if (this.ContentDetail == '') {
             this.toastTip("请描述办公室环境!")
             return false;
@@ -1787,9 +1779,9 @@ export default {
     async submitApply(){
       console.log("++++++")
       const that = this
-      let PicList = await that.base64Img(that.imgArr);
+      let PicList = await that.base27Img(that.imgArr);
        let GoodsInfo={}
-      if(that.TypeId == 36){
+      if(that.PageId == 25){
           GoodsInfo = {
           Title:that.Title,
           CompanyId:that.CompanyId,
@@ -1810,7 +1802,7 @@ export default {
           IsSubPack:that.IsSubPack,
           IsStockCooperation:that.IsStockCooperation
         }
-      }else if(that.TypeId == 52){
+      }else if(that.PageId == 26){
         GoodsInfo = {
           Title:that.Title,
           CompanyId:that.CompanyId,
@@ -1832,7 +1824,7 @@ export default {
           SpecsType:that.SpecsType,
           PlanBuyNum:that.PlanBuyNum
         }
-      }else if(that.TypeId == 65){
+      }else if(that.PageId == 30){
           GoodsInfo = {
             Title:that.Title,
             CompanyId:that.CompanyId,
@@ -1856,7 +1848,7 @@ export default {
             DeviceRent:that.DeviceRent,
             DevicePrice:that.DevicePrice
         }
-      }else if(that.TypeId == 66){
+      }else if(that.PageId == 31){
           GoodsInfo = {
             Title:that.Title,
             CompanyId:that.CompanyId,
@@ -1876,7 +1868,7 @@ export default {
             DeviceRent:that.DeviceRent,
             DevicePrice:that.DevicePrice
         }
-      }else if(that.TypeId == 63){
+      }else if(that.PageId == 29){
           GoodsInfo = {
             Title:that.Title,
             CompanyId:that.CompanyId,
@@ -1898,7 +1890,7 @@ export default {
             DeviceRent:that.DeviceRent,
             ContentDetail:that.ContentDetail 
         }
-      }else if(that.TypeId == 62){
+      }else if(that.PageId == 28){
           GoodsInfo = {
             Title:that.Title,
             CompanyId:that.CompanyId,
@@ -1920,7 +1912,7 @@ export default {
             ServiceName:that.ServiceName,
             ContentDetail:that.ContentDetail 
         }
-      }else if(that.TypeId == 64){
+      }else if(that.PageId == 27){
           GoodsInfo = {
             Title:that.Title,
             CompanyId:that.CompanyId,
@@ -1944,7 +1936,7 @@ export default {
       }
       
       if(that.valOther()){
-          if(that.TypeId == 65 || that.TypeId == 64 || that.TypeId == 62){
+          if(that.PageId == 30 || that.PageId == 27 || that.PageId == 28){
             for(let i in that.Devicelist){
               if(that.Devicelist[i].active){
                 that.ServiceName+=that.Devicelist[i].Name+","
@@ -2049,7 +2041,7 @@ export default {
         font-weight: 400;
         font-size: 30rpx;
         .color {
-            color: #ff6325
+            color: #ff2925
         }
         .size {
             font-size: 26rpx;
@@ -2059,7 +2051,7 @@ export default {
         }
     }
     .itemactive {
-        background: #ff6325;
+        background: #ff2925;
         color: #fff
     }
 }
