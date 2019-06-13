@@ -20,7 +20,8 @@
         </div>
         <div class="flex flexAlignCenter p1 boxSize" @click="seePermistion">
             <div class="avatarbox">
-                  <img :src="messageInfo.friend_req.Headimgurl" alt="" class="avatar">
+                  <img v-if="messageInfo.friend_req.Headimgurl" :src="messageInfo.friend_req.Headimgurl" alt="" class="avatar">
+                  <img v-else src="/static/images/icons/pinzu.jpg" alt="" class="avatar">
             </div>
             <div class="flex1 flex circlePosition">
                 <span class="flex1 font32">好友请求</span>
