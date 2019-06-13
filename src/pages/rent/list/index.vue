@@ -4,7 +4,7 @@
     <div class="headerTop">
       <div class="inner flex flexAlignCenter">
         <div class="local">
-          <span class="name">深圳</span>
+          <span class="name">{{cityName}}</span>
           <span class="icon-arrow arrow-down"></span>
         </div>
         <div class="searchBox flex1">
@@ -17,42 +17,43 @@
     </div>
     <!-- tab切换 -->
     <div class="filterMenu pt15">
-      <ul class="tabList menu flex justifyContentBetween" v-if="pramas==4">
-        <li>
-          <div class="item">提供拼租</div>
-        </li>
-        <li>
-          <div class="item">寻找拼租</div>
-        </li>
-        <li>
-          <div class="item">拼购物业设备</div>
+      <!-- 一级分类 -->
+      <ul class="tabList menu flex justifyContentBetween" v-if="oneTypeList.length>0">
+        <li
+          v-for="(item,index) in oneTypeList"
+          :key="index"
+          @click="shiftOneType(index,item.Id)"
+          :class="{'active':index===oneTabIndex}"
+        >
+          <div class="item">{{item.Name}}</div>
         </li>
       </ul>
-      <ul class="menu flex justifyContentBetween center">
-        <li>
+      <!-- 一级分类  end -->
+      <ul class="menu flex justifyContentBetween center" v-if="hasFilter">
+        <li v-for="(item,key,index) in filter.one" :key="index" @click="filterShade(key,index)" :class="{'active':item.selected}">
           <div class="item">
-            行业
+            {{item.Text}}
             <span class="icon-sj sj-down"></span>
           </div>
         </li>
-        <li>
+        <!-- <li v-if="filter.arealist && filter.arealist !== '' ">
           <div class="item">
             区域
             <span class="icon-sj sj-down"></span>
           </div>
         </li>
-        <li>
+        <li v-if="filter.PlanBuyArea && filter.PlanBuyArea !== '' ">
           <div class="item">
             面积
             <span class="icon-sj sj-down"></span>
           </div>
         </li>
-        <li>
+        <li v-if="filter.PropertyPrice && filter.PropertyPrice !=='' ">
           <div class="item">
             价格
             <span class="icon-sj sj-down"></span>
           </div>
-        </li>
+        </li>-->
         <li>
           <div class="item">
             更多
@@ -61,93 +62,29 @@
         </li>
       </ul>
     </div>
-    <!--图标-->
-    <div class="navBox" v-if="pramas!=6">
-      <ul class="navList li_20 center navList2">
-        <li>
-          <div class="outside">
-            <div class="icon-img">
-              <img src="/static/images/icons/bangongshi.jpg" alt>
-            </div>
-            <p class="title">办公室</p>
-          </div>
-        </li>
-        <li>
-          <div class="outside">
-            <div class="icon-img">
-              <img src="/static/images/icons/kawei.jpg" alt>
-            </div>
-            <p class="title">卡位</p>
-          </div>
-        </li>
-        <li>
-          <div class="outside">
-            <div class="icon-img">
-              <img src="/static/images/icons/huiyishi.jpg" alt>
-            </div>
-            <p class="title">会议室</p>
-          </div>
-        </li>
-        <li>
-          <div class="outside">
-            <div class="icon-img">
-              <img src="/static/images/icons/peixun.jpg" alt>
-            </div>
-            <p class="title">培训机构</p>
-          </div>
-        </li>
-        <li>
-          <div class="outside">
-            <div class="icon-img">
-              <img src="/static/images/icons/duanzu.jpg" alt>
-            </div>
-            <p class="title">短租</p>
-          </div>
-        </li>
-        <li>
-          <div class="outside">
-            <div class="icon-img">
-              <img src="/static/images/icons/shangpu.jpg" alt>
-            </div>
-            <p class="title">商铺</p>
-          </div>
-        </li>
-        <li>
-          <div class="outside">
-            <div class="icon-img">
-              <img src="/static/images/icons/gongchang.jpg" alt>
-            </div>
-            <p class="title">工厂</p>
-          </div>
-        </li>
-        <li>
-          <div class="outside">
-            <div class="icon-img">
-              <img src="/static/images/icons/shebei.jpg" alt>
-            </div>
-            <p class="title">设备</p>
-          </div>
-        </li>
-        <li>
-          <div class="outside">
-            <div class="icon-img">
-              <img src="/static/images/icons/shoumaiji.jpg" alt>
-            </div>
-            <p class="title">自动售卖机</p>
-          </div>
-        </li>
-        <li>
-          <div class="outside">
-            <div class="icon-img">
-              <img src="/static/images/icons/qita.jpg" alt>
-            </div>
-            <p class="title">其他</p>
-          </div>
-        </li>
-      </ul>
-    </div>
+
     <!--列表-->
-    <div class="filterContent">
+    <scroll-view class="filterContent" scroll-y="true">
+      <!--图标-->
+      <!-- 一级分类对应的二级分类 -->
+      <div class="navBox" v-if="twoTypeList.length>0">
+        <ul class="navList li_20 center navList2">
+          <li
+            v-for="(item,index) in twoTypeList"
+            :key="index"
+            :class="{'active':index==twoTabIndex}"
+            @click="shiftTwoType(index,item.PageId)"
+          >
+            <div class="outside">
+              <div class="icon-img">
+                <img :src="item.Img" alt>
+              </div>
+              <p class="title">{{item.Name}}</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+      <!-- 一级分类对应的二级分类  end -->
       <ul class="column levelPanel storeList">
         <li class="item" @click="toDetail">
           <div class="outside">
@@ -274,283 +211,350 @@
           </div>
         </li>
       </ul>
-    </div>
+    </scroll-view>
     <!--弹层-->
-    <div class="mask mask2" v-if="isShow" catchtouchmove="true"></div>
-    <div class="mask" v-if="isShow" catchtouchmove="true"></div>
-    <!--弹层1：中间一级-->
-            <!--房源弹层高度:modal_mask_house :class="{'modal_mask_house':index==item.index}"-->
-    <div class="modal_mask"  v-if="ShowCenter">
-        <scroll-view scroll-y="true" class="scroll">
-            <div v-for="(item,index) in list " :key="index">
-                <p>{{item}}</p>
-            </div>
-        </scroll-view>
-    </div> 
-    <!--弹层3：中间一级 拼价格-->
-    <div class="modal_mask modal_mask2"  v-if="ShowPrice">
-        <scroll-view scroll-y="true" class="scroll scroll_price" >
-            <div v-for="(item,index) in list " :key="index">
-                <p>{{item}}</p>
-            </div>
-        </scroll-view>
-        <div>
-          <div class="scroll_price_item">
-              <div class="p3">价格区间</div>
-              <div class="flex justifyContentCenter scroll_price_itemCenter flexAlignCenter">
-                <input type="text" value="最低价">
-                <p class="mm1">--</p>
-                <input type="text" value="最高价">
-              </div>
-          </div>
-          <div class="btnSub2 mask_btn_price">确认</div>
+    <div class="mask" v-if="isShade"></div>
+    <!--行业分类-->
+    <div class="modal_mask flex second" v-if="isShadeType == 'GladBuyerTrade'">
+      <div class="scroll flex1">
+        <div @click="getTrade(1,-1)" :class="{'active':tradeOneTab===-1}">
+          <p>不限</p>
         </div>
-    </div> 
-    <!--弹层2：2级联动-->
-    <div class="modal_mask flex second"  v-if="ShowSecond" catchtouchmove="true">
-        <scroll-view scroll-y="true" class="scroll">
-            <div v-for="(item,index) in list " :key="index">
-                <p>{{item}}</p>
+        <div
+          v-for="(item,index) in filter.one.GladBuyerTrade.Value"
+          :key="index"
+          :class="{'active':tradeOneTab===index}"
+          @click="getTrade(1,index,item.Id)"
+        >
+          <p>{{item.Name}}</p>
+        </div>
+      </div>
+      <div class="scroll flex1" v-if="tradelist.length>0" style="border-left:1rpx solid #f2f2f2">
+        <div @click="getTrade(2,-1)" :class="{'active':tradeTwoTab===-1}">
+          <p>不限</p>
+        </div>
+        <div
+          v-for="(item,index) in tradelist "
+          :key="index"
+          :class="{'active':tradeTwoTab===index}"
+          @click="getTrade(2,index,item.Id)"
+        >
+          <p>{{item.Name}}</p>
+        </div>
+      </div>
+    </div>
+    <!--行业分类  end-->
+    <!--弹层1：中间一级-->
+    <!--房源弹层高度:modal_mask_house :class="{'modal_mask_house':index==item.index}"-->
+    <!-- <div class="modal_mask">
+      <div class="scroll">
+        <div v-for="(item,index) in list " :key="index">
+          <p>{{item}}</p>
+        </div>
+      </div>
+    </div>-->
+    <!--弹层3：中间一级 拼价格-->
+    <div class="modal_mask" v-if="isShadeType == 'PropertyPrice'">
+      <div class="scroll scroll_price">
+        <div v-for="(item,index) in  filter.one.PropertyPrice.Value" :key="index" @click="selectOneTab(index,'PropertyPrice',item)" :class="{'active':selectOneTabIndex===index}">
+          <p>{{item.Text}}</p>
+        </div>
+      </div>
+      <div>
+        <div class="scroll_price_item">
+          <div class="p3">价格区间</div>
+          <div class="flex justifyContentCenter scroll_price_itemCenter flexAlignCenter">
+            <input type="number" v-model="inputMinPrice" @focus="priceFocus" placeholder="最低价">
+            <p class="mm1">--</p>
+            <input type="number" v-model="inputMaxPrice" @focus="priceFocus" placeholder="最高价">
+          </div>
+        </div>
+        <div class="ftBtn center">
+          <div class="inner">
+            <div class="btns">
+              <div class="btn bg_ff952e color_fff" @click="btnFilterPrice">确认</div>
             </div>
-        </scroll-view>
-        <scroll-view scroll-y="true" class="scroll" v-if="ShowSecondRight" style="border-left:1rpx solid #f2f2f2">
-            <div v-for="(item,index) in list " :key="index">
-                <p>{{item}}</p>
-            </div>
-        </scroll-view>
-    </div> 
-    <!--更多：弹层  start*******************************************-->
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 物业形式 -->
+    <div class="modal_mask" v-if="isShadeType == 'PropertySort'">
+      <div class="scroll scroll_price">
+        <div v-for="(item,index) in  filter.one.PropertySort.Value" :key="index" @click="selectOneTab(index,'PropertySort',item)" :class="{'active':selectOneTabIndex===index}">
+          <p>{{item.Name}}</p>
+        </div>
+      </div>
+    </div>
+    <!-- 物业形式  end -->
     <!--设备、短租模板******************************-->
     <div class="modal_mask short_rent boxSize" style="height:100%" v-if="showMoreEquip">
-        <div class="short_rent_child">
-            <p class="font30 fontBold" style="text-align:left">租赁期限</p>
-            <ul class="navList li_20 center navList2">
-              
-              <li>
-                <p>一周</p>
-              </li>
-              <li>
-                <p>半个月</p>
-              </li>
-              <li>
-                <p>1个月</p>
-              </li>
-              <li>
-                <p>2个月</p>
-              </li>
-              <li>
-                <p>3个月</p>
-              </li>
-              <li>
-                <p>4个月</p>
-              </li>
-              <li>
-                <p>5个月</p>
-              </li>
-              <li>
-                <p>6个月</p>
-              </li>
-            </ul>
-        </div>
-        <div class="short_rent_child">
-            <p class="font30 fontBold" style="text-align:left">办公开式</p>
-            <ul class="navList li_20 center navList2">
-              <li>
-                <p>写字楼</p>
-              </li>
-              <li>
-                <p>商铺</p>
-              </li>
-              <li>
-                <p>工厂</p>
-              </li>
-              <li>
-                <p>会议室</p>
-              </li>
-              <li>
-                <p>咖啡厅</p>
-              </li>
-              <li>
-                <p>茶楼</p>
-              </li>
-              <li>
-                <p>饮品店</p>
-              </li>
-            </ul>
-        </div>
-        <div class="btnSub2 flex">
-            <div class="mask_btn_cancle">取消</div>
-            <div class="mask_btn_confirm">确定</div>
-        </div>
+      <div class="short_rent_child">
+        <p class="font30 fontBold" style="text-align:left">租赁期限</p>
+        <ul class="navList li_20 center navList2">
+          <li>
+            <p>一周</p>
+          </li>
+          <li>
+            <p>半个月</p>
+          </li>
+          <li>
+            <p>1个月</p>
+          </li>
+          <li>
+            <p>2个月</p>
+          </li>
+          <li>
+            <p>3个月</p>
+          </li>
+          <li>
+            <p>4个月</p>
+          </li>
+          <li>
+            <p>5个月</p>
+          </li>
+          <li>
+            <p>6个月</p>
+          </li>
+        </ul>
+      </div>
+      <div class="short_rent_child">
+        <p class="font30 fontBold" style="text-align:left">办公开式</p>
+        <ul class="navList li_20 center navList2">
+          <li>
+            <p>写字楼</p>
+          </li>
+          <li>
+            <p>商铺</p>
+          </li>
+          <li>
+            <p>工厂</p>
+          </li>
+          <li>
+            <p>会议室</p>
+          </li>
+          <li>
+            <p>咖啡厅</p>
+          </li>
+          <li>
+            <p>茶楼</p>
+          </li>
+          <li>
+            <p>饮品店</p>
+          </li>
+        </ul>
+      </div>
+      <div class="btnSub2 flex">
+        <div class="mask_btn_cancle">取消</div>
+        <div class="mask_btn_confirm">确定</div>
+      </div>
     </div>
     <!--办公室、商铺筛选更多******************************-->
     <div class="modal_mask boxSize" style="height:100%" v-if="showMoreShop">
-        <scroll-view scroll-y="true" class="scroll modal_shop_scroll">
-            <ul class="modal_mask_shop">
-                <li>
-                    <div class="modal_shop_title">业务是否外包</div>
-                    <div class="mask_shop_bd">
-                        <radio-group class="radio-group" @change="changeStatu">
-                            <label class="radio">
-                                <radio value="1" :checked="value==1" color='#fff'/>
-                                是
-                            </label>
-                            <label class="radio">
-                                <radio value="0" :checked="value==0" color='#fff'/>
-                                否
-                            </label>
-                        </radio-group>
-                    </div>
-                </li>
-                <li>
-                    <div class="modal_shop_title">业务是否外包</div>
-                    <div class="mask_shop_bd">
-                        <radio-group class="radio-group" @change="changeStatu">
-                            <label class="radio">
-                                <radio value="1" :checked="value==1" color='#fff'/>
-                                是
-                            </label>
-                            <label class="radio">
-                                <radio value="0" :checked="value==0" color='#fff'/>
-                                否
-                            </label>
-                        </radio-group>
-                    </div>
-                </li>
-                <li>
-                    <div class="modal_shop_title">业务是否外包</div>
-                    <div class="mask_shop_bd">
-                        <radio-group class="radio-group" @change="changeStatu">
-                            <label class="radio">
-                                <radio value="1" :checked="value==1" />
-                                是
-                            </label>
-                            <label class="radio">
-                                <radio value="0" :checked="value==0" />
-                                否
-                            </label>
-                        </radio-group>
-                    </div>
-                </li>
-                <li>
-                    <div class="modal_shop_title">业务是否外包</div>
-                    <div class="mask_shop_bd">
-                        <radio-group class="radio-group" @change="changeStatu">
-                            <label class="radio">
-                                <radio value="1" :checked="value==1" />
-                                是
-                            </label>
-                            <label class="radio">
-                                <radio value="0" :checked="value==0" />
-                                否
-                            </label>
-                        </radio-group>
-                    </div>
-                </li>
-                <li>
-                    <div class="modal_shop_title">业务是否外包</div>
-                    <div class="mask_shop_bd">
-                        <radio-group class="radio-group" @change="changeStatu">
-                            <label class="radio">
-                                <radio value="1" :checked="value==1" />
-                                是
-                            </label>
-                            <label class="radio">
-                                <radio value="0" :checked="value==0" />
-                                否
-                            </label>
-                        </radio-group>
-                    </div>
-                </li>
-                <li>
-                    <div class="modal_shop_title">业务是否外包</div>
-                    <div class="mask_shop_bd">
-                        <radio-group class="radio-group" @change="changeStatu">
-                            <label class="radio">
-                                <radio value="1" :checked="value==1" />
-                                是
-                            </label>
-                            <label class="radio">
-                                <radio value="0" :checked="value==0" />
-                                否
-                            </label>
-                        </radio-group>
-                    </div>
-                </li>
-                <li>
-                    <div class="modal_shop_title">业务是否外包</div>
-                    <div class="mask_shop_bd">
-                        <radio-group class="radio-group" @change="changeStatu">
-                            <label class="radio">
-                                <radio value="1" :checked="value==1" />
-                                是
-                            </label>
-                            <label class="radio">
-                                <radio value="0" :checked="value==0" />
-                                否
-                            </label>
-                        </radio-group>
-                    </div>
-                </li>
-                <li>
-                    <div class="modal_shop_title">业务是否外包</div>
-                    <div class="mask_shop_bd">
-                        <radio-group class="radio-group" @change="changeStatu">
-                            <label class="radio">
-                                <radio value="1" :checked="value==1" />
-                                是
-                            </label>
-                            <label class="radio">
-                                <radio value="0" :checked="value==0" />
-                                否
-                            </label>
-                        </radio-group>
-                    </div>
-                </li>
-                <li>
-                    <div class="modal_shop_title">业务是否外包</div>
-                    <div class="mask_shop_bd">
-                        <radio-group class="radio-group" @change="changeStatu">
-                            <label class="radio">
-                                <radio value="1" :checked="value==1" />
-                                是
-                            </label>
-                            <label class="radio">
-                                <radio value="0" :checked="value==0" />
-                                否
-                            </label>
-                        </radio-group>
-                    </div>
-                </li>
-            </ul>
-        </scroll-view>
-        <div class="btnSub2 flex">
-            <div class="mask_btn_cancle">取消</div>
-            <div class="mask_btn_confirm">确定</div>
-        </div>
+      <scroll-view scroll-y="true" class="scroll modal_shop_scroll">
+        <ul class="modal_mask_shop">
+          <li>
+            <div class="modal_shop_title">业务是否外包</div>
+            <div class="mask_shop_bd">
+              <radio-group class="radio-group" @change="changeStatu">
+                <label class="radio">
+                  <radio value="1" :checked="value==1" color="#fff"/>是
+                </label>
+                <label class="radio">
+                  <radio value="0" :checked="value==0" color="#fff"/>否
+                </label>
+              </radio-group>
+            </div>
+          </li>
+          <li>
+            <div class="modal_shop_title">业务是否外包</div>
+            <div class="mask_shop_bd">
+              <radio-group class="radio-group" @change="changeStatu">
+                <label class="radio">
+                  <radio value="1" :checked="value==1" color="#fff"/>是
+                </label>
+                <label class="radio">
+                  <radio value="0" :checked="value==0" color="#fff"/>否
+                </label>
+              </radio-group>
+            </div>
+          </li>
+          <li>
+            <div class="modal_shop_title">业务是否外包</div>
+            <div class="mask_shop_bd">
+              <radio-group class="radio-group" @change="changeStatu">
+                <label class="radio">
+                  <radio value="1" :checked="value==1"/>是
+                </label>
+                <label class="radio">
+                  <radio value="0" :checked="value==0"/>否
+                </label>
+              </radio-group>
+            </div>
+          </li>
+          <li>
+            <div class="modal_shop_title">业务是否外包</div>
+            <div class="mask_shop_bd">
+              <radio-group class="radio-group" @change="changeStatu">
+                <label class="radio">
+                  <radio value="1" :checked="value==1"/>是
+                </label>
+                <label class="radio">
+                  <radio value="0" :checked="value==0"/>否
+                </label>
+              </radio-group>
+            </div>
+          </li>
+          <li>
+            <div class="modal_shop_title">业务是否外包</div>
+            <div class="mask_shop_bd">
+              <radio-group class="radio-group" @change="changeStatu">
+                <label class="radio">
+                  <radio value="1" :checked="value==1"/>是
+                </label>
+                <label class="radio">
+                  <radio value="0" :checked="value==0"/>否
+                </label>
+              </radio-group>
+            </div>
+          </li>
+          <li>
+            <div class="modal_shop_title">业务是否外包</div>
+            <div class="mask_shop_bd">
+              <radio-group class="radio-group" @change="changeStatu">
+                <label class="radio">
+                  <radio value="1" :checked="value==1"/>是
+                </label>
+                <label class="radio">
+                  <radio value="0" :checked="value==0"/>否
+                </label>
+              </radio-group>
+            </div>
+          </li>
+          <li>
+            <div class="modal_shop_title">业务是否外包</div>
+            <div class="mask_shop_bd">
+              <radio-group class="radio-group" @change="changeStatu">
+                <label class="radio">
+                  <radio value="1" :checked="value==1"/>是
+                </label>
+                <label class="radio">
+                  <radio value="0" :checked="value==0"/>否
+                </label>
+              </radio-group>
+            </div>
+          </li>
+          <li>
+            <div class="modal_shop_title">业务是否外包</div>
+            <div class="mask_shop_bd">
+              <radio-group class="radio-group" @change="changeStatu">
+                <label class="radio">
+                  <radio value="1" :checked="value==1"/>是
+                </label>
+                <label class="radio">
+                  <radio value="0" :checked="value==0"/>否
+                </label>
+              </radio-group>
+            </div>
+          </li>
+          <li>
+            <div class="modal_shop_title">业务是否外包</div>
+            <div class="mask_shop_bd">
+              <radio-group class="radio-group" @change="changeStatu">
+                <label class="radio">
+                  <radio value="1" :checked="value==1"/>是
+                </label>
+                <label class="radio">
+                  <radio value="0" :checked="value==0"/>否
+                </label>
+              </radio-group>
+            </div>
+          </li>
+        </ul>
+      </scroll-view>
+      <div class="btnSub2 flex">
+        <div class="mask_btn_cancle">取消</div>
+        <div class="mask_btn_confirm">确定</div>
+      </div>
     </div>
     <!--更多：弹层  end-->
   </div>
 </template>
 <script>
+import { post, toLogin, getCurrentPageUrlWithArgs, trim } from "@/utils";
 export default {
-  data(){
+  data() {
     return {
-      pramas:"",
-      isShow:true,//蒙版
-      ShowCenter:false,//中间一级遮罩层
-      list:['不限','招商会','发布会','发布会','发布会','发布会','发布会','发布会','发布会','发布会','招商会','发布会',],//中间弹层列表
-      ShowSecond:false,//二级联动
-      ShowSecondRight:false,//二级联动右侧
-      ShowPrice:false,//拼价格
-      showMoreEquip:false,//设备短租模板
-      showMoreShop:true,//更多办公室-设备
-
-    }
+      userId: "",
+      token: "",
+      curPage: "",
+      type: "", //一级类型id
+      filter: {}, //获取的对应的筛选的选项
+      hasFilter: false,
+      oneTypeList: [], //根据对应类型搜出对应的一级类
+      oneTabIndex: 0, //一级类的tab
+      oneId: "", //一级类id
+      twoTypeList: [], //根据对应的一级类搜出对应的二级类
+      twoTabIndex: 0, //二级类的tab
+      twoId: "", //二级类id
+      pageId: "", //获取对应发布筛选查询接口中的pageId
+      tradelist: [], //根据一级行业搜查对应的行业
+      tradeOneTab: "", //选择行业中的一级tab
+      tradeTwoTab: "", //选择行业中的二级tab
+      isShadeType: "", //类型弹窗
+      isShade: false, //遮罩
+      filterMenuIsShow: [], //记录行业等每个点击时候的弹窗转态
+      PriceShade: false, //价格弹窗
+      tabFilterIndex:"",   //筛选行业等menu的active
+      selectOneTabIndex:"",  //行业筛选中弹窗只有一个选择的时候
+      MinPrice:"",   //最低价，价格弹窗的时候
+      MaxPrice:"",  //最高价，价格弹窗的时候
+      inputMinPrice:"",  //价格弹窗中输入的最低价
+      inputMaxPrice:"", //价格弹窗中输入的最高价
+      minNum:"",  //最小面积
+      maxNum:"",  //最大面积
+      page:1,
+      pageSize:10,
+      cityCode:"",  //城市code
+      cityName:"",  //城市名称
+      pramas: "",
+      ShowCenter: false, //中间一级遮罩层
+      list: [
+        "不限",
+        "招商会",
+        "发布会",
+        "发布会",
+        "发布会",
+        "发布会",
+        "发布会",
+        "发布会",
+        "发布会",
+        "发布会",
+        "招商会",
+        "发布会"
+      ], //中间弹层列表
+      ShowSecond: false, //二级联动
+      ShowSecondRight: false, //二级联动右侧
+      showMoreEquip: false, //设备短租模板
+      showMoreShop: false //更多办公室-设备
+    };
   },
   onLoad() {
     this.setBarTitle();
-    this.pramas = this.$root.$mp.query.tip
+  },
+  onShow() {
+    this.userId = wx.getStorageSync("userId");
+    this.token = wx.getStorageSync("token");
+    this.curPage = getCurrentPageUrlWithArgs();
+    this.cityName = wx.getStorageSync("cityName");
+    this.cityCode = wx.getStorageSync("cityCode");
+    if (
+      this.$root.$mp.query.type !== "undefined" &&
+      this.$root.$mp.query.type
+    ) {
+      this.type = this.$root.$mp.query.type;
+      this.getSubMenu();
+    }
   },
   methods: {
     setBarTitle() {
@@ -558,12 +562,268 @@ export default {
         title: "拼租"
       });
     },
-    toDetail(){
-      wx.navigateTo({url:'/pages/rent/storeDetail/main'})
+    toDetail() {
+      wx.navigateTo({ url: "/pages/rent/storeDetail/main" });
+    },
+    valPriceShade(){  //如果有价格弹窗的时候，要在点击确认的时候，先判断输入的最高价有没有高于最低价，并且大于0
+       let maxPrice = trim(this.inputMaxPrice);
+       let minPrice = trim(this.inputMinPrice);
+       console.log("进来了整个函数")
+       if(maxPrice !=="" &&  minPrice !==""){
+         if(maxPrice <= minPrice){
+            wx.showToast({
+              title: '输入的最高价需高于最低价',
+              icon: 'none',
+              duration: 1500
+            })
+            return false;
+         }else{
+           this.MinPrice = minPrice;   //最低价，价格弹窗的时候
+           this.MaxPrice = maxPrice;  //最高价，价格弹窗的时候
+         }
+       }
+      return true;
+    },
+    getSubMenu() {
+      //获取一级类型
+      let that = this;
+      post("Goods/GetTypeL1", {
+        BrandId: that.type
+      }).then(res => {
+        if (res.code === 0 && res.data.length > 0) {
+          that.oneTypeList = res.data;
+          if (res.data[0].PageId === 0) {
+            //有下级类的时候
+            that.oneId = res.data[0].Id;
+            that.getSubTwoMenu();
+          }
+        }
+      });
+    },
+    getSubTwoMenu() {
+      //获取二级类型
+      let that = this;
+      post("Goods/GetTypeL2", {
+        TypeId: that.oneId
+      }).then(res => {
+        if (res.code === 0 && res.data.length > 0) {
+          that.twoTypeList = res.data;
+          that.pageId = res.data[0].PageId;
+          that.getQueryRentList();
+          that.GetFilterQuery();
+        }
+      });
+    },
+    GetFilterQuery() {
+      //获取对应发布筛选
+      let that = this;
+      post(
+        "Goods/GetFilterQuery",
+        {
+          UserId: that.userId,
+          Token: that.token,
+          PageId: that.pageId
+        },
+        that.curPage
+      ).then(res => {
+        if (res.code === 0 && Object.keys(res.data).length > 0) {
+          let json = {
+            one: {},
+            more: {}
+          };
+          for (let key in res.data) {
+            if (
+              key == "GladBuyArea" ||
+              key == "GladBuyerTrade" ||
+              key == "PropertySort" ||
+              key == "PropertyPrice"
+            ) {
+               res.data[key] = Object.assign(res.data[key],{'selected':false });
+              json.one = Object.assign(json.one, { [key]: res.data[key]});
+            } else {
+              json.more = Object.assign(json.more, { [key]: res.data[key] });
+            }
+          }
+          that.filter = json;
+          console.log(that.filter);
+          // that.filterMenuIsShow = [];
+          // for (let i = 0; i < Object.keys(that.filter.one).length; i++) {
+          //   that.filterMenuIsShow.push(false);
+          // }
+          that.hasFilter = true;
+        }
+      });
+    },
+    getQueryRentList(keyWords){  //获取发布列表
+      let that = this;
+      post("Goods/QueryRentList",{
+        UserId:that.userId,
+        Token:that.token,
+        BrandId:that.type,
+        Code:that.cityCode,
+        TypeId:that.pageId,
+        Page:that.page,
+        PageSize:that.pageSize,
+        MinNum:that.minNum,
+        MinPrice:that.MinPrice,
+        MaxPrice:that.MaxPrice,
+        KeyWords:keyWords
+
+      },that.curPage).then(res => {
+       
+      })
+
+    },
+    getTrade(typeIndex, index, id) {
+      //点击一级行业查出对应的二级行业
+      if (typeIndex == 1) {
+        this.tradelist = [];
+        this.tradeTwoTab = "";
+        this.tradeOneTab = index;
+        this.filter.one.GladBuyerTrade.Value.forEach(item => {
+          if (item.Id == id) {
+            this.tradelist = item.Child;
+          }
+        });
+      }
+      if (typeIndex == 2) {
+        this.tradeTwoTab = index;
+        this.getQueryRentList();
+      }
+    },
+    shiftOneType(index,id){  //切换一级类
+      this.oneTabIndex = index;
+      this.oneId = id;
+      this.filter = {}; //获取的对应的筛选的选项
+      this.hasFilter =false;
+      this.twoTypeList = [];
+      this.tradelist= []; //根据一级行业搜查对应的行业
+      this.tradeOneTab = ""; //选择行业中的一级tab
+      this.tradeTwoTab = ""; //选择行业中的二级tab
+      this.isShadeType = ""; //类型弹窗
+      this.isShade = false; //遮罩
+      this.filterMenuIsShow = []; //记录行业等每个点击时候的弹窗转态
+      this.PriceShade = false; //价格弹窗
+      this.tabFilterIndex ="";   
+      this.getSubTwoMenu();
+    },
+    shiftTwoType(index, pageId) {
+      //切换二级类
+      this.pageId = pageId;
+      this.filter = {};
+      this.hasFilter = false;
+      this.twoTabIndex = index;
+      this.GetFilterQuery();
+    },
+    filterShade(key, index) {
+      //点击筛选menu（行业、地区等）
+      //清除对应弹窗
+      console.log("键值：" + key + "  index:" + index);
+      console.log("index:" + index);
+      this.$set(this.filter.one[key], "selected", !this.filter.one[key].selected);
+       this.filter = Object.assign({},this.filter,{
+         [key]:this.filter.one[key]
+       });
+       
+      // this.$set(this.filter.one[key], "selected", !this.filter.one[key].selected);
+      // this.$forceUpdate();
+      // this.filter.one = Object.assign(this.filter.one);
+      console.log(this.filter.one[key]);
+      for(let key2 in this.filter.one){
+        if(key !== key2){
+          // this.$set(this.filter.one[key2], "selected", false);
+         // this.filter.one[key2] = Object.assign(this.filter.one[key2],"selected",false);
+          this.$set(this.filter.one[key2], "selected", false);
+          this.filter = Object.assign({},this.filter,{
+            [key2]:this.filter.one[key2]
+          });
+        }
+      }
+      console.log(this.filter.one);
+      // console.log(this.filter.one[key].selected);
+      // for (let i = 0; i < this.filterMenuIsShow.length; i++) {
+      //   if (i === index && !this.filterMenuIsShow[i]) {
+      //     this.$set(this.filterMenuIsShow, i, true);
+      //   } else {
+      //     this.$set(this.filterMenuIsShow, i, false);
+      //   }
+      // }
+      if (this.filter.one[key].selected) {
+        this.isShade = true;
+        this.isShadeType = key;
+      } else {
+        this.isShade = false;
+        this.isShadeType = "";
+      }
+      // if (key == "GladBuyerTrade" && this.filterMenuIsShow[index]) {
+      //   //显示行业弹窗
+      //   console.log("dfsfsdfsdfsdfsdf");
+      //   this.tradeShade = true;
+      // } else {
+      //   this.tradeShade = false;
+      // }
+      // if (key == "PropertyPrice" && this.filterMenuIsShow[index]) {  //显示价格的
+      //   this.PriceShade = true;
+      // } else {
+      //   this.PriceShade = false;
+      // }
+    },
+    selectOneTab(index,key,item){  //下拉只有一个选项的时候的操作
+      this.selectOneTabIndex = index;
+      if(this.isShadeType =='PropertyPrice'){
+        this.MinPrice = item.MinPrice;
+        this.MaxPrice = item.MinPrice;
+      }
+    },
+    priceFocus(){  //价格弹窗中最低价格或者最高价格获取到聚焦之后，价格选项去掉
+      if(this.isShadeType =='PropertyPrice'){
+        this.selectOneTabIndex = "";
+      }
+    },
+    btnFilterPrice(){  //点击了价格弹窗中的确定的时候，才开始搜出来
+      if(this.valPriceShade()){  //开始筛选
+        
+      }
     }
   }
 };
 </script>
 <style lang="scss" scoped>
-@import "./style.scss"
+@import "./style.scss";
+.navList2 .active .title,
+.active {
+  color: #ff952e;
+}
+.filterContent {
+  height: calc(100vh - 228rpx);
+}
+.scroll {
+  overflow: hidden;
+  overflow-y: auto;
+  // max-height: calc(100vh - 400rpx);
+  max-height: 600rpx;
+  height: auto;
+  &.scroll_price{
+    
+  }
+}
+.modal_mask {
+  bottom: inherit !important;
+  height: inherit !important;
+}
+.scroll_price_item{
+  margin-top:0;
+  position: relative;
+  padding-top:20rpx;
+  padding-bottom: 40rpx;
+  &::before{
+    position: absolute;
+    content: "";
+    left:30rpx;
+    right:30rpx;
+    top:0;
+    height: 1px;
+    background:#f2f2f2;
+  }
+}
 </style>

@@ -3,8 +3,8 @@
     <!-- 顶部搜索 -->
     <div class="headerTop">
       <div class="inner flex flexAlignCenter">
-        <div class="local" @click="changeCity">
-          <span class="name">{{CityName}}</span>
+        <div class="local">
+          <span class="name">{{cityName}}</span>
           <span class="icon-arrow arrow-down"></span>
         </div>
         <div class="searchBox flex1">
@@ -38,7 +38,7 @@
     <!-- 导航 -->
     <div class="section">
       <ul class="navList li_25 center navList2">
-        <li @click="goTo()" v-for="(item,index) in publishType" :key="index">
+        <li @click="goToList(item.Id)" v-for="(item,index) in publishType" :key="index">
           <div class="outside">
             <div class="icon-img">
               <img :src="item.Img" alt>
@@ -416,6 +416,7 @@ import { mapState, mapMutations } from "vuex"; //vuex辅助函数
 export default {
   data() {
     return {
+      cityName:"",
       picList: [],//banner图
       newList:[],//头条消息
       publishType:[],//发布类型
@@ -426,7 +427,8 @@ export default {
     this.setBarTitle();
   },
   onShow() {
-    this.initData()
+    this.initData();
+    this.getLocal();
   },
   computed:{
     ...mapState(["CityName"])
@@ -487,18 +489,50 @@ export default {
             wx.navigateTo({url:'/pages/messages/headLineList/main?url=index'})
         }else if(n==5){ //5组件团队
             wx.navigateTo({url:'/pages/rent/buildTeam/main'})
-        }else{
-          //2：热门商铺 3：优质房源 4:拼租  6：拼团活动 7：房源
-          console.log(n)
-          wx.navigateTo({url:'/pages/rent/list/main?tip='+n})
         }
+    },
+    goToList(id){
+       wx.navigateTo({url:'/pages/rent/list/main?type='+id})
     },
     //头条详情
     newsDetail(id){
       wx.navigateTo({url:'/pages/messages/topNewsDetail/main?url=index&Id='+id})
     },
-    changeCity(){
-     wx.navigateTo({url:'/pages/rent/city/main'})
+    getLocal(){
+      let that = this;
+      wx.getLocation({
+      type: 'wgs84',
+        success (res) {
+          const latitude = res.latitude;
+          const longitude = res.longitude;
+          wx.request({
+            url: 'https://api.map.baidu.com/geocoder/v2/?ak=KpdqD9A6OzIRDWUV1Au2jcPgy9BZxDGG&location=' + latitude + ',' + longitude + '&output=json&pois=1',
+            data: {},
+            header: {
+              'Content-Type': 'application/json'
+            },
+            success: function (res2) {
+              that.GetCityCode(res2.data.result.addressComponent.city);
+              // that.cityName=res2.data.result.addressComponent.city;
+            },
+            fail: function () {
+              // that.cityName="深圳市"
+              that.GetCityCode("深圳市");
+            },
+            complete: function () {
+            }
+          })
+        }
+      })
+    },
+    GetCityCode(localName){  //根据定位城市名获取对应的城市代码code
+     post("Area/GetCityCode",{
+       Name:localName
+     }).then(res => {
+       this.cityName = res.data.Name;
+        wx.setStorageSync("cityName",res.data.Name);
+        wx.setStorageSync("cityCode",res.data.Code);
+     })
     }
   },
 

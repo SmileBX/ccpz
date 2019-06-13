@@ -1,5 +1,6 @@
 <template>
-  <div class="page borderTop charRoom" id="charRoom" :class="{'p60':showMessage}">
+  <div class="page borderTop charRoom" id="charRoom" 
+    :class="{'showMessage':showMessage,'showBtn':showBtn}">
     <!--聊天列表-->
     <div class="padwid" @click="isShowMask=false">
       <div v-for="(msg,msgIndex) in chatStatu.info" :key="msgIndex">
@@ -7,7 +8,10 @@
           <div class="flex flexAlignEnd justifyContentEnd mrr2" style="width:75%;">
             <span class="fontColor" @click="scrollBottom">已读</span>
             <div class="tagmsg">
-              <p class="boxSize">{{msg.Info}}</p>
+              <p v-if="msg.Info" class="boxSize">{{msg.Info}}</p>
+              <img class="sendImg" mode="widthFix"  
+                v-if="msg.Pic" :src="msg.Pic" alt="" 
+                @click="previewImg(msg.Pic)" />
               <span class="sj rsj"></span>
             </div>
           </div>
@@ -23,14 +27,17 @@
             <!-- <span class="fontColor">已读</span> -->
             <div class="tagmsg bg_fff">
               <span class="sj lsj"></span>
-              <p class="boxSize" style="color:#1a1a1a">{{msg.Info}}</p>
+              <p v-if="msg.Info" class="boxSize" style="color:#1a1a1a">{{msg.Info}}</p>
+              <image class="sendImg" mode="widthFix" 
+              v-if="msg.Pic" :src="msg.Pic" alt=""
+              @click="previewImg(msg.Pic)"/>
             </div>
           </div>
         </div>
       </div>
     </div>
     <!--底部按钮 输入框 下拉按钮-->
-    <div class="bottomicon">
+    <div class="bottomicon" v-if="!isTakePhoto">
       <!--常用语按钮-->
       <div class="borderTop usedMes">
         <span
@@ -59,11 +66,11 @@
       <!--按钮组-->
       <div v-if="showBtn">
         <div v-if="isshow" class="icon_box flex">
-          <div class="flex flexAlignCenter flexColumn">
+          <div class="flex flexAlignCenter flexColumn" @click="chosseImg('camera')">
             <img src="/static/images/icons/photo.jpg" alt class="icon_put">
             <p class="fontColor">拍照</p>
           </div>
-          <div class="flex flexAlignCenter flexColumn">
+          <div class="flex flexAlignCenter flexColumn" @click="chosseImg('album')">
             <img src="/static/images/icons/albrem.jpg" alt class="icon_put">
             <p class="fontColor">相册</p>
           </div>
@@ -75,17 +82,16 @@
       </div>
       <!--常用语-->
       <ul class="messagelist" v-if="showMessage">
-        <scroll-view scroll-y @scrolltolower="loadMore" class="scroll_height" >
+        <scroll-view scroll-y @scrolltolower="loadMore" class="scroll_height">
           <van-swipe-cell
             :right-width="65"
             class="swipe-cell"
             async-close
             v-for="(item,index) in messageList"
             :key="index"
-           >
+          >
             <van-cell-group>
-              <van-cell class="chat" 
-               @click="onClick(item.Name)">
+              <van-cell class="chat" @click="onClick(item.Name)">
                 <li class="index-group-item">{{item.Name}}</li>
               </van-cell>
             </van-cell-group>
@@ -95,11 +101,9 @@
               @click.stop="Delete(item.GroupId,item.Id,index)"
             >删除</span>
           </van-swipe-cell>
-          
-          <van-swipe-cell
-            class="swipe-cell" v-if="messageList.length<1"
-           >
-                <div class="noData">还没有常用语呢!</div>
+
+          <van-swipe-cell class="swipe-cell" v-if="messageList.length<1">
+            <div class="noData">还没有常用语呢!</div>
           </van-swipe-cell>
         </scroll-view>
         <li style="color:red" @click="isShowMask=true">添加常用语</li>
@@ -137,19 +141,27 @@ export default {
       useText: "", //新增的常用语
       chatStatu: {}, //聊天信息
       sendInfo: "", //发送消息的内容
-      socketTaskStatus: false
+      socketTaskStatus: false,
+      // 图片
+      imgPathArr: [], //临时路径
+      isTakePhoto:false, //是否开启拍照
     };
   },
   onShow() {
-    this.userId = wx.getStorageSync("userId");
-    this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
-    this.FriendId = this.$root.$mp.query.FriendId;
-    console.log(this.FriendId);
-    this.initData();
   },
   onLoad() {
     this.setBarTitle();
+    this.userId = wx.getStorageSync("userId");
+    this.token = wx.getStorageSync("token");
+    this.initData();
+    this.sendInfo = "";
+    this.messageList = [];
+    this.messageType = [];
+    this.FriendId = this.$root.$mp.query.FriendId;
+    console.log(this.FriendId);
+    this.getMessageType();
+    this.getFriendMessage();
   },
 
   components: {},
@@ -164,13 +176,9 @@ export default {
       this.showBtn = false;
       this.showMessage = false;
       this.isShowMask = false;
-      this.messageList = [];
-      this.messageType = [];
-      this.sendInfo = "";
-      this.getMessageType();
+      this.isTakePhoto = false;
       this.addId = "";
       this.useText = "";
-      this.getFriendMessage();
     },
     //获取好友消息
     getFriendMessage() {
@@ -198,10 +206,29 @@ export default {
           });
           res.data.info = info;
           this.chatStatu = res.data;
-          this.scrollBottom()
+          this.scrollBottom();
         }
       });
     },
+    // 发送消息
+    async sendMessage(imgBase) {
+      let sendInfo=""
+      if(!imgBase){
+        sendInfo = this.sendInfo
+      }
+      const res = await post("User/Sendfriend_new", {
+        UserId: this.userId,
+        Token: this.token,
+        FriendId: this.FriendId * 1,
+        Info: sendInfo,
+        Pic:imgBase
+      });
+      if (res.code * 1 === 0) {
+        this.sendInfo = "";
+        this.getFriendMessage();
+      }
+    },
+    // **************************常用语************************
     //获取常用语分类
     getMessageType() {
       post("User/GetUser_wordtype").then(res => {
@@ -211,15 +238,18 @@ export default {
         // console.log(res,"+++++++++++++++++")
       });
     },
-    //获取常用语列表
+    //点击常用语，获取常用语列表
     getMessage(id) {
       // this.initData();
-      if(this.addId==id){
+      this.showBtn = false;
+      this.isShowMask = false;
+      if (this.addId == id) {
         this.showMessage = !this.showMessage;
         return false;
-      }else{
-      this.showMessage = true;
+      } else {
+        this.showMessage = true;
       }
+      this.scrollBottom();
       this.addId = id;
       post(
         "User/GetUser_word",
@@ -237,9 +267,9 @@ export default {
       });
     },
     // 常用语点击
-    onClick(name){
-      this.sendInfo = name
-      this.sendMessage()
+    onClick(name) {
+      this.sendInfo = name;
+      this.sendMessage();
     },
     //保存常用语
     saveText() {
@@ -270,16 +300,12 @@ export default {
         }
       });
     },
-    
     // 保存并发送常用语
     sendText() {
-      this.saveText()
-      this.sendInfo = this.useText
-      this.sendMessage()
-      this.isShowMask= false;
-    },
-    showPicBtn() {
-      this.showBtn = !this.showBtn ;
+      this.saveText();
+      this.sendInfo = this.useText;
+      this.sendMessage();
+      this.isShowMask = false;
     },
     //删除常用语
     Delete(GroupId, Id, index) {
@@ -321,30 +347,61 @@ export default {
         }
       });
     },
-    // 发送消息
-    async sendMessage() {
-      console.log(this.sendInfo);
-      const res = await post("User/Sendfriend_new", {
-        UserId: this.userId,
-        Token: this.token,
-        FriendId: this.FriendId * 1,
-        Info: this.sendInfo
+    // **************************常用语End************************
+    //**************************拍照，图片************************** */
+    // 显示拍照
+    showPicBtn() {
+      this.showMessage = false;
+      this.isShowMask = false;
+      this.showBtn = !this.showBtn;
+      this.scrollBottom();
+    },
+    // 选择图片
+    chosseImg(sourceType) {
+      const that = this;
+      let num = 8; //上传的图片最大数量
+      wx.chooseImage({
+        count: num, //最大图片数量=最大数量-临时路径的数量
+        sizeType: ["compressed"], //图片尺寸 original--原图；compressed--压缩图
+        sourceType: [sourceType], //选择图片的位置 album--相册选择, 'camera--使用相机
+        success: res => {
+          this.imgPathArr = res.tempFilePaths;
+          console.log(res.tempFilePaths, "base");
+          that.updateImg();
+        }
       });
-      if (res.code * 1 === 0) {
-        this.sendInfo = "";
-        this.getFriendMessage();
+    },
+    //根据临时路径，获取图片base64码。
+    async updateImg() {
+      const that = this;
+      // 根据临时路径数组imgPathArr获取base64图片
+      for (let i = 0; i < this.imgPathArr.length; i +=1) {
+        const item = this.imgPathArr[i];
+        //异步方法
+        const res = wx.getFileSystemManager().readFileSync(item, "base64");
+            //成功的回调
+            const imgBase = "data:image/png;base64," + res.toString();
+            const ress = await this.sendMessage(imgBase)
       }
     },
+    // 预览图片
+    previewImg(img){
+        wx.previewImage({
+          urls:[img]
+        })
+    },
+    //**************************拍照，图片End************************** */
     // 滚动到底部
     scrollBottom() {
-      wx.createSelectorQuery()
+      wx
+        .createSelectorQuery()
         .select("#charRoom")
         .boundingClientRect(function(rect) {
           // 使页面滚动到底部
-          console.log(rect,'滚动到底部')
+          console.log(rect, "滚动到底部");
           wx.pageScrollTo({
             scrollTop: rect.height,
-            duration:0
+            duration: 0
           });
         })
         .exec();
@@ -362,8 +419,11 @@ export default {
   // box-sizing:border-box;
   // padding-bottom:180rpx;
 }
-.p60 {
+.showMessage {
   padding-bottom: 530rpx !important;
+}
+.showBtn {
+  padding-bottom: 400rpx !important;
 }
 .plr20 {
   padding: 30rpx !important;
@@ -441,7 +501,39 @@ export default {
 .index-group-item {
   padding: 0;
 }
-.noData{
-  color:#999;
+.noData {
+  color: #999;
+}
+.sendImg{
+  width:200rpx;
+  height:auto;
+}
+// 拍照
+.takePhoto{
+  background:#000;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:99999;
+  .photo{
+    width: 100%;
+     height: 90vh;
+  }
+  .take{
+    color:#fff;
+    font-size:40rpx;
+    width:100%;
+     height: 10vh;
+     line-height: 10vh;
+     display:flex;
+     align-items:center;
+     justify-content:center;
+     img{
+       border-radius:50%;
+       width:80rpx;
+       height:80rpx;
+     }
+  }
 }
 </style>
