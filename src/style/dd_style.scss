@@ -285,6 +285,7 @@ page {
 .weui-input {
     font-size: 30rpx;
     line-height: 1.8;
+    height: auto;
 }
 
 .weui-area {
@@ -1101,6 +1102,7 @@ page {
         border-radius: 4rpx;
         display: inline-block;
         vertical-align: middle;
+        margin-bottom: 12rpx;
     }
     span:last-child {
         margin-right: 0;

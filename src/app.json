@@ -45,7 +45,8 @@
                 "rentDevice/main",
                 "searchHistory/main",
                 "submenu/main",
-                "city/main"
+                "city/main",
+                "pinzuDetail/main"
             ]
         },
         {
