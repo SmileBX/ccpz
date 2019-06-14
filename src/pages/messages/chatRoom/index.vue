@@ -1,17 +1,27 @@
 <template>
-  <div class="page borderTop charRoom" id="charRoom" 
-    :class="{'showMessage':showMessage,'showBtn':showBtn}">
+  <div
+    class="page borderTop charRoom"
+    id="charRoom"
+    :class="{'showMessage':showMessage,'showBtn':showBtn,'showEmotion':showEmotion}"
+  >
     <!--聊天列表-->
     <div class="padwid" @click="isShowMask=false">
       <div v-for="(msg,msgIndex) in chatStatu.info" :key="msgIndex">
         <div class="flex flexAlignCenter boxSize p2 justifyContentEnd plr20" v-if="msg.MsgId=='a'">
-          <div class="flex flexAlignEnd justifyContentEnd mrr2" style="width:75%;">
-            <span class="fontColor" @click="scrollBottom">已读</span>
-            <div class="tagmsg">
-              <p v-if="msg.Info" class="boxSize">{{msg.Info}}</p>
-              <img class="sendImg" mode="widthFix"  
-                v-if="msg.Pic" :src="msg.Pic" alt="" 
-                @click="previewImg(msg.Pic)" />
+          <div class="flex flexAlignEnd justifyContentEnd mrr2" >
+            <!-- <span class="fontColor" @click="scrollBottom">已读</span> -->
+            <div class="tagmsg cfff">
+              <!-- <p v-if="msg.Info" class="boxSize">{{msg.Info}}</p> -->
+              <p v-if="msg.Info" class="boxSize" v-html="msg.Info"></p>
+
+              <img
+                class="sendImg"
+                mode="widthFix"
+                v-if="msg.Pic"
+                :src="msg.Pic"
+                alt
+                @click="previewImg(msg.Pic)"
+              >
               <span class="sj rsj"></span>
             </div>
           </div>
@@ -19,18 +29,24 @@
             <img :src="chatStatu.a.Headimgurl" alt class="avatar">
           </div>
         </div>
-        <div class="flex flexAlignCenter boxSize p2 justifyContentStart" v-if="msg.MsgId=='b'">
+        <div class="flex flexAlignCenter boxSize plr20 justifyContentStart" v-if="msg.MsgId=='b'">
           <div class="avatarbox mr0" v-if="chatStatu.b">
             <img :src="chatStatu.b.Headimgurl" alt class="avatar">
           </div>
-          <div class="flex flexAlignEnd mrl2" style="width:75%">
+          <div class="flex flexAlignEnd mrl2">
             <!-- <span class="fontColor">已读</span> -->
-            <div class="tagmsg bg_fff">
+            <div class="tagmsg bg_fff black">
               <span class="sj lsj"></span>
-              <p v-if="msg.Info" class="boxSize" style="color:#1a1a1a">{{msg.Info}}</p>
-              <image class="sendImg" mode="widthFix" 
-              v-if="msg.Pic" :src="msg.Pic" alt=""
-              @click="previewImg(msg.Pic)"/>
+              <!-- <p v-if="msg.Info" class="boxSize" style="color:#1a1a1a">{{msg.Info}}</p> -->
+              <p v-if="msg.Info" class="boxSize" v-html="msg.Info"></p>
+              <img
+                class="sendImg"
+                mode="widthFix"
+                v-if="msg.Pic"
+                :src="msg.Pic"
+                alt
+                @click="previewImg(msg.Pic)"
+              >
             </div>
           </div>
         </div>
@@ -55,11 +71,11 @@
           v-model="sendInfo"
           confirm-type="send"
           confirm-hold
-          :focus="true"
           @confirm="sendMessage"
+          :cursor-spacing="100"
         >
         <div class="flex flexAlignCenter">
-          <img src="/static/images/icons/smile.jpg" alt class="logimg">
+          <img src="/static/images/icons/smile.jpg" alt class="logimg" @click="showEmotions">
           <img src="/static/images/icons/add.jpg" alt class="logimg" @click="showPicBtn">
         </div>
       </div>
@@ -74,10 +90,10 @@
             <img src="/static/images/icons/albrem.jpg" alt class="icon_put">
             <p class="fontColor">相册</p>
           </div>
-          <div class="flex flexAlignCenter flexColumn">
+          <!-- <div class="flex flexAlignCenter flexColumn" @click="goLocation">
             <img src="/static/images/icons/location.jpg" alt class="icon_put">
             <p class="fontColor">位置</p>
-          </div>
+          </div>-->
         </div>
       </div>
       <!--常用语-->
@@ -108,6 +124,30 @@
         </scroll-view>
         <li style="color:red" @click="isShowMask=true">添加常用语</li>
       </ul>
+      <!-- 表情 -->
+      <div class="emotion" v-if="showEmotion">
+        <!-- <emotion @emotion="handleEmotionComment" :height="300" ></emotion> -->
+
+        <scroll-view scroll-y class="emotion-pack-item">
+          <div class="emotion-box">
+            <!-- <div class="emotion-box-line" v-for="(line, i) in list" :key="i"> -->
+            <div
+              class="emotion-box-line"
+              v-for="(line, i) in emotionArr"
+              :key="i"
+              @click="handEmotion(line)"
+            >
+              <!-- <div
+                v-for="(item, itemI) in line"
+                :key="itemI"
+                @click.native="clickHandler(item)"
+              >
+              {{item}}</div>-->
+              <div v-html="line.url"></div>
+            </div>
+          </div>
+        </scroll-view>
+      </div>
     </div>
     <!--弹层-->
     <div class="mask" v-if="isShowMask" catchtouchmove="true" @click="isShowMask=false"></div>
@@ -124,6 +164,7 @@
 
 <script>
 import { post, getCurrentPageUrlWithArgs } from "@/utils";
+import emotionList from "@/utils/emotionList";
 export default {
   data() {
     return {
@@ -144,14 +185,20 @@ export default {
       socketTaskStatus: false,
       // 图片
       imgPathArr: [], //临时路径
-      isTakePhoto:false, //是否开启拍照
+      isTakePhoto: false, //是否开启拍照,
+      showEmotion: false, //显示表情
+
+      emotionList:emotionList.emotionList,
+      emotionArr: []
     };
   },
   onShow() {
     this.curPage = getCurrentPageUrlWithArgs();
   },
   onLoad() {
+    console.log(this.emotionList,'emotionList');
     this.setBarTitle();
+    this.initEmotion();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.initData();
@@ -159,11 +206,10 @@ export default {
     this.messageList = [];
     this.messageType = [];
     this.FriendId = this.$root.$mp.query.FriendId;
-    console.log(this.FriendId);
     this.getMessageType();
     this.getFriendMessage();
   },
-
+  onReady() {},
   components: {},
 
   methods: {
@@ -177,6 +223,7 @@ export default {
       this.showMessage = false;
       this.isShowMask = false;
       this.isTakePhoto = false;
+      this.showEmotion = false;
       this.addId = "";
       this.useText = "";
     },
@@ -189,6 +236,7 @@ export default {
       //   console.log(res)
       // })
       // return false;
+      const that = this;
       post(
         "User/Readfriend_new",
         {
@@ -202,8 +250,22 @@ export default {
         if (res.code == 0) {
           let info = [];
           res.data.info.map(item => {
+            // 将匹配结果替换表情图片
+            item.Info = item.Info.replace(
+              /\[[\u4E00-\u9FA5]{1,3}\]/gi,
+              words => {
+                let word = words.replace(/\[|\]/gi, "");
+                let index = this.emotionList.indexOf(word);
+                if(index!== -1){ 
+                  return `<img style="width:25px;height:25px;" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" align="middle">`;
+                }else{
+                  return words
+                }
+               }
+            );
             info.unshift(item);
           });
+          console.log(info, "解析完的字符串");
           res.data.info = info;
           this.chatStatu = res.data;
           this.scrollBottom();
@@ -211,17 +273,39 @@ export default {
       });
     },
     // 发送消息
-    async sendMessage(imgBase) {
-      let sendInfo=""
-      if(!imgBase){
-        sendInfo = this.sendInfo
+    async sendMessage(data) {
+      console.log(data, "发送消息");
+      let sendInfo = "";
+      let imgBase = "";
+      let lat = 0;
+      let lng = 0;
+      if (data) {
+        // 发送图片
+        if (data.type === "img") {
+          imgBase = data.data;
+        }
+        // 发送位置
+        else if (data.type === "map") {
+          lat = data.data.latitude;
+          lng = data.data.longitude;
+        }
+        // 普通消息
+        else {
+          sendInfo = this.sendInfo;
+        }
+      }
+      // 普通消息
+      else {
+        sendInfo = this.sendInfo;
       }
       const res = await post("User/Sendfriend_new", {
         UserId: this.userId,
         Token: this.token,
         FriendId: this.FriendId * 1,
         Info: sendInfo,
-        Pic:imgBase
+        Pic: imgBase,
+        Lat: lat,
+        Lng: lng
       });
       if (res.code * 1 === 0) {
         this.sendInfo = "";
@@ -243,13 +327,13 @@ export default {
       // this.initData();
       this.showBtn = false;
       this.isShowMask = false;
+      this.showEmotion = false;
       if (this.addId == id) {
         this.showMessage = !this.showMessage;
         return false;
       } else {
         this.showMessage = true;
       }
-      this.scrollBottom();
       this.addId = id;
       post(
         "User/GetUser_word",
@@ -353,8 +437,8 @@ export default {
     showPicBtn() {
       this.showMessage = false;
       this.isShowMask = false;
+      this.showEmotion = false;
       this.showBtn = !this.showBtn;
-      this.scrollBottom();
     },
     // 选择图片
     chosseImg(sourceType) {
@@ -375,24 +459,69 @@ export default {
     async updateImg() {
       const that = this;
       // 根据临时路径数组imgPathArr获取base64图片
-      for (let i = 0; i < this.imgPathArr.length; i +=1) {
+      for (let i = 0; i < this.imgPathArr.length; i += 1) {
         const item = this.imgPathArr[i];
         //异步方法
         const res = wx.getFileSystemManager().readFileSync(item, "base64");
-            //成功的回调
-            const imgBase = "data:image/png;base64," + res.toString();
-            const ress = await this.sendMessage(imgBase)
+        //成功的回调
+        const imgBase = "data:image/png;base64," + res.toString();
+        await this.sendMessage({ type: "img", data: imgBase });
       }
     },
     // 预览图片
-    previewImg(img){
-        wx.previewImage({
-          urls:[img]
-        })
+    previewImg(img) {
+      wx.previewImage({
+        urls: [img]
+      });
     },
     //**************************拍照，图片End************************** */
+    // 跳转到选择定位
+    // goLocation(){
+    //   const that = this;
+    //   wx.chooseLocation({
+    //     success(res){
+    //       console.log(res)
+    //       that.sendMessage({type:'map',data:res})
+    //     },
+    //     fail(err){
+    //       console.log(err)
+    //     }
+    //   })
+    // },
+    // 显示表情
+    showEmotions() {
+      this.showMessage = false;
+      this.isShowMask = false;
+      this.showBtn = false;
+      this.showEmotion = !this.showEmotion;
+
+    },
+    // 初始化表情
+    initEmotion(){
+      const list = this.emotionList;
+      let emotionArr = [];
+      list.map((item, index) => {
+        emotionArr.push({
+          name: `[${item}]`,
+          url: `<img style="width:30px;height:30px;" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif">`
+        });
+      });
+      this.emotionArr = emotionArr;
+    },
+    handEmotion(item) {
+      console.log(item, "item");
+      this.sendInfo += item.name;
+    },
+    // 回复add表情
+    handleEmotionComment(i) {
+      console.log(i, "iiii");
+      return false;
+      console.log(this.showComment, this.comment[this.showComment], "i");
+      this.comment[this.showComment].commentContent += i;
+    },
     // 滚动到底部
     scrollBottom() {
+      setTimeout(()=>{
       wx
         .createSelectorQuery()
         .select("#charRoom")
@@ -401,10 +530,11 @@ export default {
           console.log(rect, "滚动到底部");
           wx.pageScrollTo({
             scrollTop: rect.height,
-            duration: 0
+            duration: 100
           });
         })
         .exec();
+      },500)
     }
   },
   created() {
@@ -413,20 +543,31 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-.padwid {
-  // height:86vh;
-  // width:100%;
-  // box-sizing:border-box;
-  // padding-bottom:180rpx;
-}
+// .padwid {
+// height:86vh;
+// width:100%;
+// box-sizing:border-box;
+// padding-bottom:180rpx;
+// }
 .showMessage {
   padding-bottom: 530rpx !important;
 }
 .showBtn {
   padding-bottom: 400rpx !important;
 }
+.showEmotion {
+  padding-bottom: 480rpx !important;
+}
 .plr20 {
-  padding: 30rpx !important;
+  padding: 20rpx !important;
+}
+.mrr2{
+  margin-right:6rpx!important;
+  width:80%;
+}
+.mrl2{
+  margin-left:6rpx!important;
+  width:80%;
 }
 .charRoom {
   padding-bottom: 180rpx;
@@ -504,36 +645,71 @@ export default {
 .noData {
   color: #999;
 }
-.sendImg{
-  width:200rpx;
-  height:auto;
+.sendImg {
+  width: 200rpx;
+  height: auto;
 }
 // 拍照
-.takePhoto{
-  background:#000;
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  z-index:99999;
-  .photo{
+.takePhoto {
+  background: #000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99999;
+  .photo {
     width: 100%;
-     height: 90vh;
+    height: 90vh;
   }
-  .take{
-    color:#fff;
-    font-size:40rpx;
-    width:100%;
-     height: 10vh;
-     line-height: 10vh;
-     display:flex;
-     align-items:center;
-     justify-content:center;
-     img{
-       border-radius:50%;
-       width:80rpx;
-       height:80rpx;
-     }
+  .take {
+    color: #fff;
+    font-size: 40rpx;
+    width: 100%;
+    height: 10vh;
+    line-height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      border-radius: 50%;
+      width: 80rpx;
+      height: 80rpx;
+    }
   }
 }
+.tagmsg {
+  padding: 15rpx;
+  font-size:30rpx;
+  word-break:break-all;
+  p {
+  word-break:break-all;
+  }
+}
+// 表情
+.emotion {
+  height: 300rpx;
+  position: relative;
+}
+.emotion-pack-item {
+  height: 300rpx;
+}
+.emotion-box {
+  display: flex;
+  align-items: center;
+  flex-flow: row wrap;
+}
+.emotion-box-line {
+  margin:10rpx;
+  img{
+    width:40rpx;
+    height:40rpx;
+  }
+}
+.cfff{
+  color:#fff;
+}
+.black{
+  color:#333;
+}
+
 </style>
