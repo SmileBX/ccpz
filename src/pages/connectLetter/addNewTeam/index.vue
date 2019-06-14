@@ -79,7 +79,7 @@ export default {
     initData() {
       this.playerList = []; //重组过后的
       this.isShow = false;
-      this.groupName = "";
+      // this.groupName = "";
       this.groupId =""; //分组id
       this.groupName =""; //分组名称
     },
@@ -188,8 +188,8 @@ export default {
         }
       });
     },
-    AddFriendsGroup() {
       //没有选择组员的时候，创建分组
+    AddFriendsGroup() {
       let that = this;
       post(
         "User/AddFriendsGroup",
@@ -222,6 +222,9 @@ export default {
         } else {
           this.AddFriendsGroup();
         }
+        setTimeout(()=>{
+          wx.navigateBack()
+        },1500)
       }
     },
     GroupRemoveFriends(id) {
@@ -243,7 +246,9 @@ export default {
             duration: 1500,
             success: function() {
               setTimeout(()=>{
-                that.initData();
+                // that.initData();
+                that.playerList = []; //重组过后的
+                that.isShow = false;
                 that.GetFriendsForGroup();
               },1500)
               

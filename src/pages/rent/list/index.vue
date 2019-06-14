@@ -29,38 +29,16 @@
         </li>
       </ul>
       <!-- 一级分类  end -->
-      <ul class="menu flex justifyContentBetween center" v-if="hasFilter">
-        <li v-for="(item,key,index) in filter.one" :key="index" @click="filterShade(key,index)" :class="{'active':item.selected}">
-          <div class="item">
-            {{item.Text}}
-            <span class="icon-sj sj-down"></span>
-          </div>
-        </li>
-        <!-- <li v-if="filter.arealist && filter.arealist !== '' ">
-          <div class="item">
-            区域
-            <span class="icon-sj sj-down"></span>
-          </div>
-        </li>
-        <li v-if="filter.PlanBuyArea && filter.PlanBuyArea !== '' ">
-          <div class="item">
-            面积
-            <span class="icon-sj sj-down"></span>
-          </div>
-        </li>
-        <li v-if="filter.PropertyPrice && filter.PropertyPrice !=='' ">
-          <div class="item">
-            价格
-            <span class="icon-sj sj-down"></span>
-          </div>
-        </li>-->
-        <li>
-          <div class="item">
-            更多
+      <!-- 筛选出来的分类 -->
+      <ul class="menu flex center" v-if="hasFilter">
+        <li class="flex1" v-for="(item,index) in filterMenu" :key="index"  :class="{'active':item.str===isShadeType}">
+          <div class="item" @click="filterShade(index)">
+            {{item.title}}
             <span class="icon-sj sj-down"></span>
           </div>
         </li>
       </ul>
+      <!-- 筛选出来的分类  end -->
     </div>
 
     <!--列表-->
@@ -85,127 +63,26 @@
         </ul>
       </div>
       <!-- 一级分类对应的二级分类  end -->
-      <ul class="column levelPanel storeList">
-        <li class="item" @click="toDetail">
+      <ul class="column levelPanel storeList" v-if="hasDataList">
+        <li class="item" @click="toDetail(item.Id)" v-for="(item,index) in dataList" :key="index">
           <div class="outside">
             <div class="pictrueAll">
               <div class="pictrue img">
-                <img src="/static/images/of/index_a1.jpg" alt>
+                <img :src="item.PicNo" alt>
               </div>
             </div>
             <div class="txtBox">
               <p class="title ellipsis">
-                <span class="typeName">拼办公室</span>深圳连锁办公室拼租
+                <span class="typeName" v-if="item.GladBuyerTrade !==''">{{item.GladBuyerTrade}}</span>{{item.Title}}
               </p>
               <p class="priceArea">
-                <span class="price">3000</span>元/月
+                <span class="price">￥{{item.PropertyPrice}}</span>
               </p>
-              <p class="msgList">
-                <span class="msgItem">工程设计</span>
-                <span class="msgItem">
-                  100m
-                  <span class="sup">2</span>
-                </span>
-                <span class="msgItem">3卡2独</span>
-                <span class="msgItem">罗湖</span>
+              <p class="msgList" v-if="item.FirstTags.length>0">
+                <span class="msgItem" v-for="(item2,index2) in item.FirstTags" :key="index2">{{item2}}</span>
               </p>
-              <p class="tipsList">
-                <span>股份合作</span>
-                <span>可使用公司资质</span>
-                <span>可挂牌</span>
-              </p>
-            </div>
-          </div>
-        </li>
-        <li class="item">
-          <div class="outside">
-            <div class="pictrueAll">
-              <div class="pictrue img">
-                <img src="/static/images/of/index_a1.jpg" alt>
-              </div>
-            </div>
-            <div class="txtBox">
-              <p class="title ellipsis">
-                <span class="typeName">拼办公室</span>深圳连锁办公室拼租
-              </p>
-              <p class="priceArea">
-                <span class="price">3000</span>元/月
-              </p>
-              <p class="msgList">
-                <span class="msgItem">工程设计</span>
-                <span class="msgItem">
-                  100m
-                  <span class="sup">2</span>
-                </span>
-                <span class="msgItem">3卡2独</span>
-                <span class="msgItem">罗湖</span>
-              </p>
-              <p class="tipsList">
-                <span>股份合作</span>
-                <span>可使用公司资质</span>
-                <span>可挂牌</span>
-              </p>
-            </div>
-          </div>
-        </li>
-        <li class="item">
-          <div class="outside">
-            <div class="pictrueAll">
-              <div class="pictrue img">
-                <img src="/static/images/of/index_a1.jpg" alt>
-              </div>
-            </div>
-            <div class="txtBox">
-              <p class="title ellipsis">
-                <span class="typeName">拼办公室</span>深圳连锁办公室拼租
-              </p>
-              <p class="priceArea">
-                <span class="price">3000</span>元/月
-              </p>
-              <p class="msgList">
-                <span class="msgItem">工程设计</span>
-                <span class="msgItem">
-                  100m
-                  <span class="sup">2</span>
-                </span>
-                <span class="msgItem">3卡2独</span>
-                <span class="msgItem">罗湖</span>
-              </p>
-              <p class="tipsList">
-                <span>股份合作</span>
-                <span>可使用公司资质</span>
-                <span>可挂牌</span>
-              </p>
-            </div>
-          </div>
-        </li>
-        <li class="item">
-          <div class="outside">
-            <div class="pictrueAll">
-              <div class="pictrue img">
-                <img src="/static/images/of/index_a1.jpg" alt>
-              </div>
-            </div>
-            <div class="txtBox">
-              <p class="title ellipsis">
-                <span class="typeName">拼办公室</span>深圳连锁办公室拼租
-              </p>
-              <p class="priceArea">
-                <span class="price">3000</span>元/月
-              </p>
-              <p class="msgList">
-                <span class="msgItem">工程设计</span>
-                <span class="msgItem">
-                  100m
-                  <span class="sup">2</span>
-                </span>
-                <span class="msgItem">3卡2独</span>
-                <span class="msgItem">罗湖</span>
-              </p>
-              <p class="tipsList">
-                <span>股份合作</span>
-                <span>可使用公司资质</span>
-                <span>可挂牌</span>
+              <p class="tipsList" v-if="item.SecondTags.length>0">
+                <span  v-for="(item3,index3) in item.SecondTags" :key="index3" v-if="index3<3">{{item3}}</span>
               </p>
             </div>
           </div>
@@ -215,13 +92,13 @@
     <!--弹层-->
     <div class="mask" v-if="isShade"></div>
     <!--行业分类-->
-    <div class="modal_mask flex second" v-if="isShadeType == 'GladBuyerTrade'">
+    <div class="modal_mask flex second" v-if="isShadeType == 'GladBuyerTrade' && filterMenu[0].selected">
       <div class="scroll flex1">
         <div @click="getTrade(1,-1)" :class="{'active':tradeOneTab===-1}">
           <p>不限</p>
         </div>
         <div
-          v-for="(item,index) in filter.one.GladBuyerTrade.Value"
+          v-for="(item,index) in oneFilter.GladBuyerTrade.Value"
           :key="index"
           :class="{'active':tradeOneTab===index}"
           @click="getTrade(1,index,item.Id)"
@@ -244,19 +121,19 @@
       </div>
     </div>
     <!--行业分类  end-->
-    <!--弹层1：中间一级-->
-    <!--房源弹层高度:modal_mask_house :class="{'modal_mask_house':index==item.index}"-->
-    <!-- <div class="modal_mask">
-      <div class="scroll">
-        <div v-for="(item,index) in list " :key="index">
-          <p>{{item}}</p>
+    <!-- 地区 -->
+    <div class="modal_mask" v-if="isShadeType == 'GladBuyArea' && filterMenu[1].selected">
+      <div class="scroll scroll_price">
+        <div v-for="(item,index) in  oneFilter.GladBuyArea.Value[0].Child" :key="index" @click="selectAreaTab(index,'GladBuyArea')" :class="{'active':areaTabIndex===index}">
+          <p>{{item.Name}}</p>
         </div>
       </div>
-    </div>-->
-    <!--弹层3：中间一级 拼价格-->
+    </div>
+    <!-- 地区  end -->
+    <!-- 价格弹窗 -->
     <div class="modal_mask" v-if="isShadeType == 'PropertyPrice'">
       <div class="scroll scroll_price">
-        <div v-for="(item,index) in  filter.one.PropertyPrice.Value" :key="index" @click="selectOneTab(index,'PropertyPrice',item)" :class="{'active':selectOneTabIndex===index}">
+        <div v-for="(item,index) in  oneFilter.PropertyPrice.Value" :key="index" @click="selectPriceTab(index,'PropertyPrice',item)" :class="{'active':priceTabIndex===index}">
           <p>{{item.Text}}</p>
         </div>
       </div>
@@ -278,206 +155,63 @@
         </div>
       </div>
     </div>
-    <!-- 物业形式 -->
-    <div class="modal_mask" v-if="isShadeType == 'PropertySort'">
-      <div class="scroll scroll_price">
-        <div v-for="(item,index) in  filter.one.PropertySort.Value" :key="index" @click="selectOneTab(index,'PropertySort',item)" :class="{'active':selectOneTabIndex===index}">
-          <p>{{item.Name}}</p>
+    <!-- 价格弹窗  end -->
+    <!-- 更多的弹窗 -->
+    <div class="modal_mask more__modal_mask" v-if="isShadeType == 'More'">
+      <div class="modal__bd">
+        <ul class="modal_mask_shop">
+          <li v-for="(item,key,index) in moreFilter" :key="index">
+            <block v-if="key !== 'PlanBuyDate' ">
+              <div class="modal_shop_title">{{item.Text}}</div>
+              <div class="mask_shop_bd">
+                <block v-if="item.No || item.Yes">
+                  <radio-group class="radio-group" >
+                    <label class="radio" @tap="changeStatu(key,true)">
+                      <radio :value="item.Yes" :checked="item.Yes===1" color="#fff" />是
+                    </label>
+                    <label class="radio" @tap="changeStatu(key,false)">
+                      <radio :value="item.No" :checked="item.No===1" color="#fff" />否
+                    </label>
+                  </radio-group>
+                </block>
+                <block v-if="item.Value">
+                  <div class="tipsList border__tipsList">
+                    <!-- <block v-if="item2.Name">{{item2.Name}}</block> -->
+                    <span class="item" :class="{'active':item.selected===index2}" @click="moreSelectItem(item2,index2,key)" v-for="(item2,index2) in item.Value" :key="index2"><block v-if="item.Text">{{item2.Text}}</block><block v-else>{{item2.Name}}</block></span>
+                  </div>
+                </block>
+              </div>
+            </block>
+            <block v-else>
+              <div class="modal_shop_title">{{item}}</div>
+              <div class="ipt__selectDate flex flexAlignCenter mt10" @click="isShowDate = !isShowDate">
+                <input type="text" disabled class="weui-input flex1" :value="setUpDate" style="padding:0 20rpx;" placeholder="请选择日期">
+                <span class="icon-arrow arrow-down"></span>
+              </div>
+            </block>
+          </li>
+        </ul>
+      </div>
+      <div class="ftBtn center">
+        <div class="inner bm0 fixed">
+          <div class="btns flex">
+            <div class="btn flex1" style="background:#F2F2F2;" @tap="cancleMoreFilter">取消</div>
+            <div class="btn flex1 bg_ff952e color_fff" @tap="sureMoreFilter">确定</div>
+          </div>
         </div>
       </div>
     </div>
-    <!-- 物业形式  end -->
-    <!--设备、短租模板******************************-->
-    <div class="modal_mask short_rent boxSize" style="height:100%" v-if="showMoreEquip">
-      <div class="short_rent_child">
-        <p class="font30 fontBold" style="text-align:left">租赁期限</p>
-        <ul class="navList li_20 center navList2">
-          <li>
-            <p>一周</p>
-          </li>
-          <li>
-            <p>半个月</p>
-          </li>
-          <li>
-            <p>1个月</p>
-          </li>
-          <li>
-            <p>2个月</p>
-          </li>
-          <li>
-            <p>3个月</p>
-          </li>
-          <li>
-            <p>4个月</p>
-          </li>
-          <li>
-            <p>5个月</p>
-          </li>
-          <li>
-            <p>6个月</p>
-          </li>
-        </ul>
-      </div>
-      <div class="short_rent_child">
-        <p class="font30 fontBold" style="text-align:left">办公开式</p>
-        <ul class="navList li_20 center navList2">
-          <li>
-            <p>写字楼</p>
-          </li>
-          <li>
-            <p>商铺</p>
-          </li>
-          <li>
-            <p>工厂</p>
-          </li>
-          <li>
-            <p>会议室</p>
-          </li>
-          <li>
-            <p>咖啡厅</p>
-          </li>
-          <li>
-            <p>茶楼</p>
-          </li>
-          <li>
-            <p>饮品店</p>
-          </li>
-        </ul>
-      </div>
-      <div class="btnSub2 flex">
-        <div class="mask_btn_cancle">取消</div>
-        <div class="mask_btn_confirm">确定</div>
+    <!-- 更多的弹窗  end -->
+    <!-- 日期选择 -->
+    <div class="shade bottom__shade" style="z-index:300" v-if="isShowDate">
+      <div class="mask" style="z-index:200;background:rgba(0,0,0,1);top:0;"></div>
+      <div class="shadeContent" style="z-index:230">
+        <div class="shade__bd">
+          <van-datetime-picker show-toolbar title="计划购买日期"  @confirm="confirmDate" @cancel="closeDate"  :value="currentDate" :min-date="minDate"  type="date"/>
+        </div>
       </div>
     </div>
-    <!--办公室、商铺筛选更多******************************-->
-    <div class="modal_mask boxSize" style="height:100%" v-if="showMoreShop">
-      <scroll-view scroll-y="true" class="scroll modal_shop_scroll">
-        <ul class="modal_mask_shop">
-          <li>
-            <div class="modal_shop_title">业务是否外包</div>
-            <div class="mask_shop_bd">
-              <radio-group class="radio-group" @change="changeStatu">
-                <label class="radio">
-                  <radio value="1" :checked="value==1" color="#fff"/>是
-                </label>
-                <label class="radio">
-                  <radio value="0" :checked="value==0" color="#fff"/>否
-                </label>
-              </radio-group>
-            </div>
-          </li>
-          <li>
-            <div class="modal_shop_title">业务是否外包</div>
-            <div class="mask_shop_bd">
-              <radio-group class="radio-group" @change="changeStatu">
-                <label class="radio">
-                  <radio value="1" :checked="value==1" color="#fff"/>是
-                </label>
-                <label class="radio">
-                  <radio value="0" :checked="value==0" color="#fff"/>否
-                </label>
-              </radio-group>
-            </div>
-          </li>
-          <li>
-            <div class="modal_shop_title">业务是否外包</div>
-            <div class="mask_shop_bd">
-              <radio-group class="radio-group" @change="changeStatu">
-                <label class="radio">
-                  <radio value="1" :checked="value==1"/>是
-                </label>
-                <label class="radio">
-                  <radio value="0" :checked="value==0"/>否
-                </label>
-              </radio-group>
-            </div>
-          </li>
-          <li>
-            <div class="modal_shop_title">业务是否外包</div>
-            <div class="mask_shop_bd">
-              <radio-group class="radio-group" @change="changeStatu">
-                <label class="radio">
-                  <radio value="1" :checked="value==1"/>是
-                </label>
-                <label class="radio">
-                  <radio value="0" :checked="value==0"/>否
-                </label>
-              </radio-group>
-            </div>
-          </li>
-          <li>
-            <div class="modal_shop_title">业务是否外包</div>
-            <div class="mask_shop_bd">
-              <radio-group class="radio-group" @change="changeStatu">
-                <label class="radio">
-                  <radio value="1" :checked="value==1"/>是
-                </label>
-                <label class="radio">
-                  <radio value="0" :checked="value==0"/>否
-                </label>
-              </radio-group>
-            </div>
-          </li>
-          <li>
-            <div class="modal_shop_title">业务是否外包</div>
-            <div class="mask_shop_bd">
-              <radio-group class="radio-group" @change="changeStatu">
-                <label class="radio">
-                  <radio value="1" :checked="value==1"/>是
-                </label>
-                <label class="radio">
-                  <radio value="0" :checked="value==0"/>否
-                </label>
-              </radio-group>
-            </div>
-          </li>
-          <li>
-            <div class="modal_shop_title">业务是否外包</div>
-            <div class="mask_shop_bd">
-              <radio-group class="radio-group" @change="changeStatu">
-                <label class="radio">
-                  <radio value="1" :checked="value==1"/>是
-                </label>
-                <label class="radio">
-                  <radio value="0" :checked="value==0"/>否
-                </label>
-              </radio-group>
-            </div>
-          </li>
-          <li>
-            <div class="modal_shop_title">业务是否外包</div>
-            <div class="mask_shop_bd">
-              <radio-group class="radio-group" @change="changeStatu">
-                <label class="radio">
-                  <radio value="1" :checked="value==1"/>是
-                </label>
-                <label class="radio">
-                  <radio value="0" :checked="value==0"/>否
-                </label>
-              </radio-group>
-            </div>
-          </li>
-          <li>
-            <div class="modal_shop_title">业务是否外包</div>
-            <div class="mask_shop_bd">
-              <radio-group class="radio-group" @change="changeStatu">
-                <label class="radio">
-                  <radio value="1" :checked="value==1"/>是
-                </label>
-                <label class="radio">
-                  <radio value="0" :checked="value==0"/>否
-                </label>
-              </radio-group>
-            </div>
-          </li>
-        </ul>
-      </scroll-view>
-      <div class="btnSub2 flex">
-        <div class="mask_btn_cancle">取消</div>
-        <div class="mask_btn_confirm">确定</div>
-      </div>
-    </div>
-    <!--更多：弹层  end-->
+    <!-- 日期选择  end -->
   </div>
 </template>
 <script>
@@ -489,55 +223,68 @@ export default {
       token: "",
       curPage: "",
       type: "", //一级类型id
-      filter: {}, //获取的对应的筛选的选项
-      hasFilter: false,
+      typeId:"",  //筛选发布列表需要传入的二级类的id
+      hasFilter: false,  //是否搜出了对应的查询条件
       oneTypeList: [], //根据对应类型搜出对应的一级类
       oneTabIndex: 0, //一级类的tab
       oneId: "", //一级类id
       twoTypeList: [], //根据对应的一级类搜出对应的二级类
       twoTabIndex: 0, //二级类的tab
-      twoId: "", //二级类id
       pageId: "", //获取对应发布筛选查询接口中的pageId
       tradelist: [], //根据一级行业搜查对应的行业
       tradeOneTab: "", //选择行业中的一级tab
       tradeTwoTab: "", //选择行业中的二级tab
       isShadeType: "", //类型弹窗
       isShade: false, //遮罩
-      filterMenuIsShow: [], //记录行业等每个点击时候的弹窗转态
-      PriceShade: false, //价格弹窗
-      tabFilterIndex:"",   //筛选行业等menu的active
-      selectOneTabIndex:"",  //行业筛选中弹窗只有一个选择的时候
-      MinPrice:"",   //最低价，价格弹窗的时候
-      MaxPrice:"",  //最高价，价格弹窗的时候
+      areaTabIndex:"",  //地区的选中的active
+      filterMenu: [{
+        index:0,
+        title:"行业",
+        str:"GladBuyerTrade",
+        selected:false
+      },
+      {
+        index:1,
+        title:"地区",
+        str:"GladBuyArea",
+        selected:false
+      },
+      {
+        index:2,
+        title:"价格",
+        str:"PropertyPrice",
+        selected:false
+      },
+      {
+        index:3,
+        title:"更多",
+        str:"More",
+        selected:false
+      }
+      ], 
+      priceTabIndex:"",  //价格弹窗的价格选择项active
+      minPrice:0,   //最低价，价格弹窗的时候
+      maxPrice:0,  //最高价，价格弹窗的时候
       inputMinPrice:"",  //价格弹窗中输入的最低价
       inputMaxPrice:"", //价格弹窗中输入的最高价
-      minNum:"",  //最小面积
-      maxNum:"",  //最大面积
+      minNum:0,  //最小面积
+      maxNum:0,  //最大面积
       page:1,
       pageSize:10,
       cityCode:"",  //城市code
       cityName:"",  //城市名称
-      pramas: "",
-      ShowCenter: false, //中间一级遮罩层
-      list: [
-        "不限",
-        "招商会",
-        "发布会",
-        "发布会",
-        "发布会",
-        "发布会",
-        "发布会",
-        "发布会",
-        "发布会",
-        "发布会",
-        "招商会",
-        "发布会"
-      ], //中间弹层列表
-      ShowSecond: false, //二级联动
-      ShowSecondRight: false, //二级联动右侧
-      showMoreEquip: false, //设备短租模板
-      showMoreShop: false //更多办公室-设备
+      dataMoreFilter:{},  //不会变的更多的筛选数据
+      moreFilter:{},  //更多的筛选数据
+      oneFilter:{},  //单个的在menu中排列的数据（行业、地区等）
+      currentDate: new Date().getTime(),
+      minDate: new Date().getTime(),
+      isShowDate:false,   //弹出选择计划日期
+      setUpDate:"",  //选择的计划日期
+      dataList:[],   //筛选出来的数据的列表
+      hasDataList:false,   //是否有数据
     };
+  },
+  components:{
   },
   onLoad() {
     this.setBarTitle();
@@ -562,8 +309,46 @@ export default {
         title: "拼租"
       });
     },
-    toDetail() {
-      wx.navigateTo({ url: "/pages/rent/storeDetail/main" });
+    toDetail(id) {
+      wx.navigateTo({ url: "/pages/rent/pinzuDetail/main?id"+id });
+    },
+    initTrade(){  //重置行业选择(选择了其他地区等的时候)
+     this.tradeOneTab = "";
+     this.tradeTwoTab = "";
+     this.tradelist = [];
+    },
+    initArea(){  //重置地区选择
+       this.areaTabIndex = "";
+    },
+    initPrice(){  //重置价格选择
+      this.priceTabIndex = "";
+      this.minPrice = 0;   //最低价，价格弹窗的时候
+      this.maxPrice =0;  //最高价，价格弹窗的时候
+      this.inputMinPrice ="";  //价格弹窗中输入的最低价
+      this.inputMaxPrice =""; //价格弹窗中输入的最高价
+    },
+    initMore(){  //重置更多的选择
+      this.minNum = 0;  //最小面积
+      this.maxNum = 0;  //最大面积
+      this.setUpDate = "";
+      this.isShowDate = false;
+      this.moreFilter = Object.assign({},this.dataMoreFilter);
+    },
+    initAll(){ //点击上面的一级类，及拼购拼租的时候，要清除所有行业等选择，跟筛选出来的筛选条件
+      //恢复行业等选择
+      this.$set(this.filterMenu[0],"selected",false);
+      this.$set(this.filterMenu[1],"selected",false);
+      this.$set(this.filterMenu[2],"selected",false);
+      this.$set(this.filterMenu[3],"selected",false);
+      //清除行业
+      this.initTrade();
+      //清除地区
+      this.initArea();
+      //清除价格
+      this.initPrice();
+      //清除更多
+      this.initMore();
+
     },
     valPriceShade(){  //如果有价格弹窗的时候，要在点击确认的时候，先判断输入的最高价有没有高于最低价，并且大于0
        let maxPrice = trim(this.inputMaxPrice);
@@ -578,8 +363,8 @@ export default {
             })
             return false;
          }else{
-           this.MinPrice = minPrice;   //最低价，价格弹窗的时候
-           this.MaxPrice = maxPrice;  //最高价，价格弹窗的时候
+           this.minPrice = minPrice;   //最低价，价格弹窗的时候
+           this.maxPrice = maxPrice;  //最高价，价格弹窗的时候
          }
        }
       return true;
@@ -609,6 +394,7 @@ export default {
         if (res.code === 0 && res.data.length > 0) {
           that.twoTypeList = res.data;
           that.pageId = res.data[0].PageId;
+          that.typeId = res.data[0].Id;
           that.getQueryRentList();
           that.GetFilterQuery();
         }
@@ -622,7 +408,8 @@ export default {
         {
           UserId: that.userId,
           Token: that.token,
-          PageId: that.pageId
+          PageId: that.pageId,
+          Code:that.cityCode
         },
         that.curPage
       ).then(res => {
@@ -635,66 +422,70 @@ export default {
             if (
               key == "GladBuyArea" ||
               key == "GladBuyerTrade" ||
-              key == "PropertySort" ||
-              key == "PropertyPrice"
+              key == "PropertyPrice" 
             ) {
-               res.data[key] = Object.assign(res.data[key],{'selected':false });
-              json.one = Object.assign(json.one, { [key]: res.data[key]});
+              this.oneFilter = Object.assign(this.oneFilter, { [key]: res.data[key]});
             } else {
-              json.more = Object.assign(json.more, { [key]: res.data[key] });
+              if(res.data[key].Value){
+                for(let key2 in res.data[key].Value){
+                  res.data[key] = Object.assign({},res.data[key],{'selected':"-1" }); 
+                }
+              }
+              this.moreFilter = Object.assign(this.moreFilter, { [key]: res.data[key]});
             }
+            this.dataMoreFilter = Object.assign({},this.moreFilter);
           }
-          that.filter = json;
-          console.log(that.filter);
-          // that.filterMenuIsShow = [];
-          // for (let i = 0; i < Object.keys(that.filter.one).length; i++) {
-          //   that.filterMenuIsShow.push(false);
-          // }
+          console.log("fdsfsdfs");
+          console.log(this.moreFilter);
+          console.log("menuone");
+          console.log(this.oneFilter);
           that.hasFilter = true;
         }
       });
     },
-    getQueryRentList(keyWords){  //获取发布列表
+    getQueryRentList(keyWords,goodsInfo){  //获取发布列表
       let that = this;
       post("Goods/QueryRentList",{
         UserId:that.userId,
         Token:that.token,
         BrandId:that.type,
         Code:that.cityCode,
-        TypeId:that.pageId,
+        TypeId:that.typeId,
         Page:that.page,
         PageSize:that.pageSize,
         MinNum:that.minNum,
+        MaxNum:that.maxNum,
         MinPrice:that.MinPrice,
         MaxPrice:that.MaxPrice,
-        KeyWords:keyWords
+        KeyWords:keyWords,
+        GoodsInfo:goodsInfo
 
       },that.curPage).then(res => {
-       
+       if(res.code===0 && res.data.length>0){
+         console.log("++++++++++++++++++++++")
+         res.data.forEach(item => {
+           if(item.FirstTags !==""){
+             that.$set(item,"FirstTags",item.FirstTags.split("|"));
+           }else{
+             that.$set(item,"FirstTags",[]);
+           }
+           if(item.SecondTags !==""){
+            that.$set(item,"SecondTags",item.SecondTags.split("|"));
+           }else{
+             that.$set(item,"SecondTags",[]);
+           }
+         })
+         that.dataList = that.dataList.concat(res.data);
+         console.log(that.dataList);
+         that.hasDataList = true;
+       }
       })
 
     },
-    getTrade(typeIndex, index, id) {
-      //点击一级行业查出对应的二级行业
-      if (typeIndex == 1) {
-        this.tradelist = [];
-        this.tradeTwoTab = "";
-        this.tradeOneTab = index;
-        this.filter.one.GladBuyerTrade.Value.forEach(item => {
-          if (item.Id == id) {
-            this.tradelist = item.Child;
-          }
-        });
-      }
-      if (typeIndex == 2) {
-        this.tradeTwoTab = index;
-        this.getQueryRentList();
-      }
-    },
+    
     shiftOneType(index,id){  //切换一级类
       this.oneTabIndex = index;
       this.oneId = id;
-      this.filter = {}; //获取的对应的筛选的选项
       this.hasFilter =false;
       this.twoTypeList = [];
       this.tradelist= []; //根据一级行业搜查对应的行业
@@ -702,9 +493,7 @@ export default {
       this.tradeTwoTab = ""; //选择行业中的二级tab
       this.isShadeType = ""; //类型弹窗
       this.isShade = false; //遮罩
-      this.filterMenuIsShow = []; //记录行业等每个点击时候的弹窗转态
-      this.PriceShade = false; //价格弹窗
-      this.tabFilterIndex ="";   
+      this.initAll();
       this.getSubTwoMenu();
     },
     shiftTwoType(index, pageId) {
@@ -715,75 +504,134 @@ export default {
       this.twoTabIndex = index;
       this.GetFilterQuery();
     },
-    filterShade(key, index) {
-      //点击筛选menu（行业、地区等）
-      //清除对应弹窗
-      console.log("键值：" + key + "  index:" + index);
-      console.log("index:" + index);
-      this.$set(this.filter.one[key], "selected", !this.filter.one[key].selected);
-       this.filter = Object.assign({},this.filter,{
-         [key]:this.filter.one[key]
-       });
-       
-      // this.$set(this.filter.one[key], "selected", !this.filter.one[key].selected);
-      // this.$forceUpdate();
-      // this.filter.one = Object.assign(this.filter.one);
-      console.log(this.filter.one[key]);
-      for(let key2 in this.filter.one){
-        if(key !== key2){
-          // this.$set(this.filter.one[key2], "selected", false);
-         // this.filter.one[key2] = Object.assign(this.filter.one[key2],"selected",false);
-          this.$set(this.filter.one[key2], "selected", false);
-          this.filter = Object.assign({},this.filter,{
-            [key2]:this.filter.one[key2]
-          });
+    changefilterMenu(tabIndex){
+      this.filterMenu.forEach((item,index) => {
+        if(tabIndex===index){
+          this.$set(item,'selected',true);
+        }else{
+          this.$set(item,'selected',false);
+        }
+      })
+    },
+    filterShade(index){
+      console.log("index:"+index)
+      this.$set(this.filterMenu[index], "selected", !this.filterMenu[index].selected);
+      
+      console.log("tttttttttttttttttt");
+      console.log(this.filterMenu[index]);
+      for( let key in this.filterMenu){
+        if(this.filterMenu[key].index !== index){
+          this.$set(this.filterMenu[key], "selected", false);
         }
       }
-      console.log(this.filter.one);
-      // console.log(this.filter.one[key].selected);
-      // for (let i = 0; i < this.filterMenuIsShow.length; i++) {
-      //   if (i === index && !this.filterMenuIsShow[i]) {
-      //     this.$set(this.filterMenuIsShow, i, true);
-      //   } else {
-      //     this.$set(this.filterMenuIsShow, i, false);
-      //   }
-      // }
-      if (this.filter.one[key].selected) {
+      if (this.filterMenu[index].selected) {
         this.isShade = true;
-        this.isShadeType = key;
+        this.isShadeType = this.filterMenu[index].str;
       } else {
         this.isShade = false;
         this.isShadeType = "";
       }
-      // if (key == "GladBuyerTrade" && this.filterMenuIsShow[index]) {
-      //   //显示行业弹窗
-      //   console.log("dfsfsdfsdfsdfsdf");
-      //   this.tradeShade = true;
-      // } else {
-      //   this.tradeShade = false;
-      // }
-      // if (key == "PropertyPrice" && this.filterMenuIsShow[index]) {  //显示价格的
-      //   this.PriceShade = true;
-      // } else {
-      //   this.PriceShade = false;
-      // }
     },
-    selectOneTab(index,key,item){  //下拉只有一个选项的时候的操作
-      this.selectOneTabIndex = index;
-      if(this.isShadeType =='PropertyPrice'){
-        this.MinPrice = item.MinPrice;
-        this.MaxPrice = item.MinPrice;
+    getTrade(typeIndex, index, id) {
+      //点击一级行业查出对应的二级行业
+      if (typeIndex === 1) {
+        this.tradelist = [];
+        this.tradeTwoTab = "";
+        this.tradeOneTab = index;
+        if(index !== -1){
+          this.oneFilter.GladBuyerTrade.Value.forEach(item => {
+            if (item.Id == id) {
+              this.tradelist = item.Child;
+            }
+          });
+        }else{   //行业不限的时候，搜索
+          this.isShade = false;
+          this.$set(this.filterMenu[0],"selected",false);
+        }
+       
       }
+      if (typeIndex === 2) {
+        this.tradeTwoTab = index;
+        if(index !== -1){  
+         
+        }else{ //二级不限的时候
+          this.isShade = false;
+          this.$set(this.filterMenu[0],"selected",false);
+        }
+        // this.getQueryRentList();
+      }
+    },
+    selectAreaTab(index,key){  //选择地区
+      this.areaTabIndex = index;
+      this.isShade = false;
+      // this.isShadeType = "";
+      this.$set(this.filterMenu[1],"selected",false)
+    },
+    selectPriceTab(index,key,item){  //选择价格
+      this.priceTabIndex = index;
+      this.minPrice = item.MinPrice;
+      this.maxPrice = item.MinPrice;
     },
     priceFocus(){  //价格弹窗中最低价格或者最高价格获取到聚焦之后，价格选项去掉
-      if(this.isShadeType =='PropertyPrice'){
-        this.selectOneTabIndex = "";
-      }
+      this.priceTabIndex = "";
     },
     btnFilterPrice(){  //点击了价格弹窗中的确定的时候，才开始搜出来
       if(this.valPriceShade()){  //开始筛选
         
       }
+    },
+    moreSelectItem(item,index,key){  //点击更多筛选的时候的可选项
+      // this.$set(this.moreSelect,key,index);
+      this.$set(this.moreFilter[key], "selected", index);
+    },
+    confirmDate(e){  //选择计划购买日期
+     let dd = new Date(e.mp.detail);
+      let year = dd.getFullYear();
+      let month = dd.getMonth()+1;
+      let day = dd.getDate();
+       month = month < 10 ? '0'+month : month;
+       day = day < 10 ? '0'+day : day;
+       this.setUpDate = year+"-"+month+"-"+day
+      this.currentDate = dd.getTime();
+      this.isShowDate = false;
+    },
+    closeDate(){  //取消日期选择  
+      this.isShowDate = false;
+    },
+    changeStatu(key,bol){  //选择是或者否的时候
+      //修改对应的选项
+      if(bol){
+        this.$set(this.moreFilter[key],"Yes",1);
+        this.$set(this.moreFilter[key],"No",0);
+        
+      }else{
+        this.$set(this.moreFilter[key],"Yes",0);
+        this.$set(this.moreFilter[key],"No",1)
+      }
+    },
+    sureMoreFilter(){  //点击更多弹窗中的确定按钮
+      let json = {};
+      for(let key in this.moreFilter){
+        if(this.moreFilter[key].Value && this.moreFilter[key].selected !=="-1"){
+          if(key ==="RentTimeLimit"){  //短租的期限，取值Value
+            json = Object.assign(json,{[key]:this.moreFilter[key].Value[this.moreFilter[key].selected].Value})
+          }else{
+            json = Object.assign(json,{[key]:this.moreFilter[key].Value[this.moreFilter[key].selected].Text})
+          }
+        }else{
+          if(key==="PlanBuyDate" && trim(this.setUpDate)){
+            json = Object.assign(json,{[key]:this.setUpDate});
+          }
+          if(this.moreFilter[key].Yes || this.moreFilter[key].No){
+            this.moreFilter[key].Yes === 1 ? json = Object.assign(json,{[key]:this.moreFilter[key].Yes}) : json = Object.assign(json,{[key]:this.moreFilter[key].No});
+          }
+        }
+      }
+      console.log("已经选择的整合");
+      console.log(json);
+    },
+    cancleMoreFilter(){  //点击更多弹窗中的取消按钮
+
     }
   }
 };
@@ -825,5 +673,37 @@ export default {
     height: 1px;
     background:#f2f2f2;
   }
+}
+.modal_shop_title{
+  font-weight: normal !important;
+}
+.border__tipsList span{
+  border-color:#e5e5e5;
+  color:#666;
+  padding:4rpx 20rpx;
+  font-size: 28rpx;
+  border-radius: 6rpx;
+  margin-right: 40rpx;
+  &.active{
+    border-color:#ff952e;
+    color:#ff952e;
+  }
+}
+.ipt__selectDate{
+  border:1px solid #e5e5e5;
+  border-radius: 10rpx;
+  .weui-input{
+    line-height: 70rpx;
+    height: 70rpx;
+  }
+}
+.modal_mask_shop li{
+  margin-bottom: 40rpx;
+  margin-top:0;
+}
+.more__modal_mask{
+  height: calc( 100vh - 230rpx ) !important;
+  overflow: hidden;
+  overflow-y: auto;
 }
 </style>

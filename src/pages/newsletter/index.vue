@@ -7,8 +7,8 @@
         type="text"
         placeholder="搜索"
         class="flex1 bg_fff"
-        :value="inputName"
-        @input="bindKeyInput"
+        v-model="inputName"
+        @input="changeSearch"
       >
     </div>
     <div class="slidebg"></div>
@@ -39,9 +39,11 @@ export default {
   data() {
     return {
       playerList: [],
+      friendArr: [],
       curPage: "",
       userId: "",
       token: "",
+      inputName:'',
       hasplayerList: false
     };
   },
@@ -71,6 +73,8 @@ export default {
     initData() {
       this.playerList = [];
       this.hasplayerList = false;
+      this.friendArr = [];
+      this.inputName = "";
     },
     goTo() {
       wx.navigateTo({ url: "/pages/connectLetter/addTeam/main" });
@@ -128,6 +132,7 @@ export default {
               }
             });
           });
+          that.friendArr = that.playerList
           console.log("_________________");
           console.log(that.playerList);
           that.hasplayerList = true;
@@ -222,6 +227,28 @@ export default {
     },
     onChoose() {
       console.log("点击了++++++++++++");
+    },
+    // 改变搜索内容
+    changeSearch(){
+      const value = this.inputName
+      console.log("更改了++++++++++++",value);
+      this.playerList =[]
+      // debugger;
+      this.friendArr.map(list=>{
+        const listArr=[]
+        list.items.map(item=>{
+         const index =  item.NickName.indexOf(this.inputName)
+         if(index!==-1){
+           listArr.push(item)
+         }
+        })
+        if(listArr.length>0){
+          this.playerList.push({
+            items:listArr,
+            title:list.title
+          })
+        }
+      })
     }
   },
 

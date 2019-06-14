@@ -42,7 +42,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 67,
+			"current": 2,
 			"list": [
 				{
 					"id": 0,
@@ -510,14 +510,14 @@
 					"id": 66,
 					"name": "拼租发布正式",
 					"pathName": "pages/rent/rentDevice/main",
-					"query": "TypeId=64&PageId=26",
+					"query": "TypeId=64",
 					"scene": null
 				},
 				{
-					"id": 67,
+					"id": -1,
 					"name": "拼租发布正式2",
 					"pathName": "pages/rent/rentOffic/main",
-					"query": "TypeId=79&PageId=36",
+					"query": "TypeId=37",
 					"scene": null
 				}
 			]

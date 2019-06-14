@@ -36,8 +36,10 @@
 /*外面的边框可以这样*/
 
 radio .wx-radio-input {
-    height: 44rpx;
-    width: 44rpx;
+    // height: 44rpx;
+    // width: 44rpx;
+    height: 32rpx;
+    width: 32rpx;
     border-radius: 50%;
     border: 1rpx solid #ececec; //替换边框 隐藏原有边框
 }
@@ -52,12 +54,15 @@ radio .wx-radio-input.wx-radio-input-checked {
 radio .wx-radio-input.wx-radio-input-checked::before {
     border-radius: 50%;
     /* 圆角 */
-    width: 20rpx;
+    // width: 20rpx;
+    width: 16rpx;
     /* 选中后对勾大小，不要超过背景的尺寸 */
-    height: 20rpx;
+    // height: 20rpx;
+    height: 16rpx;
     /* 选中后对勾大小，不要超过背景的尺寸 */
     text-align: center;
-    line-height: 20rpx!important;
+    // line-height: 20rpx!important;
+    line-height: 16rpx !important;
     font-size: 0;
     /* 对勾大小 30rpx */
     color: #fff;
@@ -116,7 +121,7 @@ radio .wx-radio-input.wx-radio-input-checked::before {
     position: fixed;
     background: #fff;
     width: 100%;
-    z-index: 500;
+    z-index: 120;
     left: 0;
     height: 528rpx;
     bottom: 0!important;
@@ -754,23 +759,26 @@ radio .wx-radio-input.wx-radio-input-checked::before {
     padding: 0;
     background: #f2f2f2;
 }
+
 // 没有 数据和到底普通样式
-.noData{
-    margin-top:100rpx;
-    font-size:26rpx;
-    color:#999;
-    text-align:center;
+.noData {
+    margin-top: 100rpx;
+    font-size: 26rpx;
+    color: #999;
+    text-align: center;
 }
-.dataEnd{
-    font-size:26rpx;
-    color:#999;
-    text-align:center;
-    position:absolute;
-    bottom:0;
-    width:100%;
-    line-height:50rpx;
+
+.dataEnd {
+    font-size: 26rpx;
+    color: #999;
+    text-align: center;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    line-height: 50rpx;
 }
-.flex-center{
-  display:flex;
-  align-items:center;
+
+.flex-center {
+    display: flex;
+    align-items: center;
 }

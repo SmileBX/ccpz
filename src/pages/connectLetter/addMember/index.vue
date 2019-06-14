@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isShow">
+  <div >
     <!--顶部输入框-->
     <div class="bg_fff flex flexAlignCenter pall">
       <img src="/static/images/icons/search.png" alt class="icon_search">
@@ -7,11 +7,11 @@
         type="text"
         placeholder="搜索"
         class="flex1 bg_fff"
-        :value="inputName"
-        @input="bindKeyInput"
+        v-model="inputName"
+        @input="changeSearch"
       >
     </div>
-    <div class="wrap">
+    <div class="wrap" v-if="isShow">
       <!-- <IndexList :data="playerList" @choose="onChoose" v-if="isShow" :friends="friendsList"></IndexList> -->
       <div class="index-list">
         <scroll-view
@@ -64,6 +64,7 @@
         </div>
       </div>
     </div>
+    <div class="noData">没有更多的好友了哦！</div>
     <div class="btnSub2" @click="AddFriendsGroup">完成</div>
   </div>
 </template>
@@ -87,7 +88,9 @@ export default {
       scrollTop: "",
       currentIndex: 0,
       moving: false,
-      currentIndicator: ""
+      currentIndicator: "",
+      inputName:'',
+      friendArr:[]
     };
   },
   onLoad() {
@@ -149,6 +152,8 @@ export default {
     },
     initData() {
       this.playerList = [];
+      this.friendArr = [];
+      this.inputName = "";
       this.isShow = false;
       this.scrollTop = "";
       this.currentIndex = 0;
@@ -192,13 +197,14 @@ export default {
               duration: 1500,
               success: function() {
                 setTimeout(() => {
-                  wx.redirectTo({
-                    url:
-                      "/pages/connectLetter/addNewTeam/main?groupId=" +
-                      that.groupId +
-                      "&groupName=" +
-                      that.groupName
-                  });
+                  wx.navigateBack()
+                  // wx.redirectTo({
+                  //   url:
+                  //     "/pages/connectLetter/addNewTeam/main?groupId=" +
+                  //     that.groupId +
+                  //     "&groupName=" +
+                  //     that.groupName
+                  // });
                 }, 1500);
               }
             });
@@ -222,13 +228,14 @@ export default {
               duration: 1500,
               success: function() {
                 setTimeout(() => {
-                  wx.redirectTo({
-                    url:
-                      "/pages/connectLetter/addNewTeam/main?groupId=" +
-                      res.data.GroupId +
-                      "&groupName=" +
-                      that.groupName
-                  });
+                  wx.navigateBack()
+                  // wx.redirectTo({
+                  //   url:
+                  //     "/pages/connectLetter/addNewTeam/main?groupId=" +
+                  //     res.data.GroupId +
+                  //     "&groupName=" +
+                  //     that.groupName
+                  // });
                 });
               }
             });
@@ -286,7 +293,7 @@ export default {
           }
         });
       });
-
+      this.friendArr = this.playerList
       that.isShow = true;
     },
     _calculateHeight() {
@@ -339,6 +346,28 @@ export default {
           }
         }
       }, 10);
+    },
+    // 改变搜索内容
+    changeSearch(){
+      const value = this.inputName
+      console.log("更改了++++++++++++",value);
+      this.playerList =[]
+      // debugger;
+      this.friendArr.map(list=>{
+        const listArr=[]
+        list.items.map(item=>{
+         const index =  item.NickName.indexOf(this.inputName)
+         if(index!==-1){
+           listArr.push(item)
+         }
+        })
+        if(listArr.length>0){
+          this.playerList.push({
+            items:listArr,
+            title:list.title
+          })
+        }
+      })
     }
   }
 };

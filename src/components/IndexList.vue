@@ -129,7 +129,6 @@ export default {
     _calculateHeight() {
       this.listHeight = [];
       const list = this.data;
-      //console.log(list,"indexGroup++++")
       let height = 0;
       this.listHeight.push(height);
       for (let i = 0; i < list.length; i++) {
@@ -138,6 +137,7 @@ export default {
         query
           .select(".itemClient" + i * 1)
           .boundingClientRect(rect => {
+      console.log("++++++++++++++++++++2",rect,i)
             height += rect.height;
             this.listHeight.push(height);
           })

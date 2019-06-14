@@ -10,7 +10,7 @@
         <div class="flex flexAlignCenter boxSize p2 justifyContentEnd plr20" v-if="msg.MsgId=='a'">
           <div class="flex flexAlignEnd justifyContentEnd mrr2" >
             <!-- <span class="fontColor" @click="scrollBottom">已读</span> -->
-            <div class="tagmsg">
+            <div class="tagmsg cfff">
               <!-- <p v-if="msg.Info" class="boxSize">{{msg.Info}}</p> -->
               <p v-if="msg.Info" class="boxSize" v-html="msg.Info"></p>
 
@@ -29,15 +29,16 @@
             <img :src="chatStatu.a.Headimgurl" alt class="avatar">
           </div>
         </div>
-        <div class="flex flexAlignCenter boxSize p2 justifyContentStart" v-if="msg.MsgId=='b'">
+        <div class="flex flexAlignCenter boxSize plr20 justifyContentStart" v-if="msg.MsgId=='b'">
           <div class="avatarbox mr0" v-if="chatStatu.b">
             <img :src="chatStatu.b.Headimgurl" alt class="avatar">
           </div>
-          <div class="flex flexAlignEnd mrl2" style="width:75%">
+          <div class="flex flexAlignEnd mrl2">
             <!-- <span class="fontColor">已读</span> -->
-            <div class="tagmsg bg_fff">
+            <div class="tagmsg bg_fff black">
               <span class="sj lsj"></span>
-              <p v-if="msg.Info" class="boxSize" style="color:#1a1a1a">{{msg.Info}}</p>
+              <!-- <p v-if="msg.Info" class="boxSize" style="color:#1a1a1a">{{msg.Info}}</p> -->
+              <p v-if="msg.Info" class="boxSize" v-html="msg.Info"></p>
               <img
                 class="sendImg"
                 mode="widthFix"
@@ -70,8 +71,8 @@
           v-model="sendInfo"
           confirm-type="send"
           confirm-hold
-          :focus="true"
           @confirm="sendMessage"
+          :cursor-spacing="100"
         >
         <div class="flex flexAlignCenter">
           <img src="/static/images/icons/smile.jpg" alt class="logimg" @click="showEmotions">
@@ -163,6 +164,7 @@
 
 <script>
 import { post, getCurrentPageUrlWithArgs } from "@/utils";
+import emotionList from "@/utils/emotionList";
 export default {
   data() {
     return {
@@ -186,113 +188,7 @@ export default {
       isTakePhoto: false, //是否开启拍照,
       showEmotion: false, //显示表情
 
-      emotionList: [
-        "微笑",
-        "撇嘴",
-        "色",
-        "发呆",
-        "得意",
-        "流泪",
-        "害羞",
-        "闭嘴",
-        "睡",
-        "大哭",
-        "尴尬",
-        "发怒",
-        "调皮",
-        "呲牙",
-        "惊讶",
-        "难过",
-        "酷",
-        "冷汗",
-        "抓狂",
-        "吐",
-        "偷笑",
-        "可爱",
-        "白眼",
-        "傲慢",
-        "饥饿",
-        "困",
-        "惊恐",
-        "流汗",
-        "憨笑",
-        "大兵",
-        "奋斗",
-        "咒骂",
-        "疑问",
-        "嘘",
-        "晕",
-        "折磨",
-        "衰",
-        "骷髅",
-        "敲打",
-        "再见",
-        "擦汗",
-        "抠鼻",
-        "鼓掌",
-        "糗大了",
-        "坏笑",
-        "左哼哼",
-        "右哼哼",
-        "哈欠",
-        "鄙视",
-        "委屈",
-        "快哭了",
-        "阴险",
-        "亲亲",
-        "吓",
-        "可怜",
-        "菜刀",
-        "西瓜",
-        "啤酒",
-        "篮球",
-        "乒乓",
-        "咖啡",
-        "饭",
-        "猪头",
-        "玫瑰",
-        "凋谢",
-        "示爱",
-        "爱心",
-        "心碎",
-        "蛋糕",
-        "闪电",
-        "炸弹",
-        "刀",
-        "足球",
-        "瓢虫",
-        "便便",
-        "月亮",
-        "太阳",
-        "礼物",
-        "拥抱",
-        "强",
-        "弱",
-        "握手",
-        "胜利",
-        "抱拳",
-        "勾引",
-        "拳头",
-        "差劲",
-        "爱你",
-        "NO",
-        "OK",
-        "爱情",
-        "飞吻",
-        "跳跳",
-        "发抖",
-        "怄火",
-        "转圈",
-        "磕头",
-        "回头",
-        "跳绳",
-        "挥手",
-        "激动",
-        "街舞",
-        "献吻",
-        "左太极",
-        "右太极"
-      ],
+      emotionList:emotionList.emotionList,
       emotionArr: []
     };
   },
@@ -300,6 +196,7 @@ export default {
     this.curPage = getCurrentPageUrlWithArgs();
   },
   onLoad() {
+    console.log(this.emotionList,'emotionList');
     this.setBarTitle();
     this.initEmotion();
     this.userId = wx.getStorageSync("userId");
@@ -309,7 +206,6 @@ export default {
     this.messageList = [];
     this.messageType = [];
     this.FriendId = this.$root.$mp.query.FriendId;
-    console.log(this.FriendId);
     this.getMessageType();
     this.getFriendMessage();
   },
@@ -356,12 +252,16 @@ export default {
           res.data.info.map(item => {
             // 将匹配结果替换表情图片
             item.Info = item.Info.replace(
-              /\#[\u4E00-\u9FA5]{1,3}\;/gi,
+              /\[[\u4E00-\u9FA5]{1,3}\]/gi,
               words => {
-                let word = words.replace(/\#|\;/gi, "");
+                let word = words.replace(/\[|\]/gi, "");
                 let index = this.emotionList.indexOf(word);
-                return `<img src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" align="middle">`;
-              }
+                if(index!== -1){ 
+                  return `<img style="width:25px;height:25px;" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" align="middle">`;
+                }else{
+                  return words
+                }
+               }
             );
             info.unshift(item);
           });
@@ -602,13 +502,13 @@ export default {
       let emotionArr = [];
       list.map((item, index) => {
         emotionArr.push({
-          name: `#${item};`,
-          url: `<img src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif">`
+          name: `[${item}]`,
+          url: `<img style="width:30px;height:30px;" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif">`
         });
       });
       this.emotionArr = emotionArr;
     },
-    handEmotion(item) {~
+    handEmotion(item) {
       console.log(item, "item");
       this.sendInfo += item.name;
     },
@@ -663,6 +563,10 @@ export default {
 }
 .mrr2{
   margin-right:6rpx!important;
+  width:80%;
+}
+.mrl2{
+  margin-left:6rpx!important;
   width:80%;
 }
 .charRoom {
@@ -775,9 +679,10 @@ export default {
 }
 .tagmsg {
   padding: 15rpx;
-  // line-height:20rpx;
+  font-size:30rpx;
+  word-break:break-all;
   p {
-    // margin:10rpx;
+  word-break:break-all;
   }
 }
 // 表情
@@ -794,6 +699,17 @@ export default {
   flex-flow: row wrap;
 }
 .emotion-box-line {
-  margin: 5rpx;
+  margin:10rpx;
+  img{
+    width:40rpx;
+    height:40rpx;
+  }
 }
+.cfff{
+  color:#fff;
+}
+.black{
+  color:#333;
+}
+
 </style>
