@@ -33,6 +33,7 @@
 
 /*样式1：选中后中间为圆点*/
 
+
 /*外面的边框可以这样*/
 
 radio .wx-radio-input {
@@ -763,7 +764,7 @@ radio .wx-radio-input.wx-radio-input-checked::before {
 // 没有 数据和到底普通样式
 .noData {
     margin-top: 100rpx;
-    font-size: 26rpx;
+    font-size: 30rpx;
     color: #999;
     text-align: center;
 }

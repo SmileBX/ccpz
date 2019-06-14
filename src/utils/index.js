@@ -56,7 +56,10 @@ function request(url, method, data, curPage, header = {}) {
                 'content-type': 'application/json' // 默认值
             },
             success: function(res) {
-                wx.hideLoading();
+                setTimeout(function() {
+                    wx.hideLoading()
+                }, 800);
+                // wx.hideLoading();
                 if (res.data.code === 0) {
                     resolve(res.data);
                 } else if (res.data.code === 2) {
@@ -91,7 +94,9 @@ function request(url, method, data, curPage, header = {}) {
                 reject(false);
             },
             complete: function() {
-                wx.hideLoading();
+                setTimeout(function() {
+                    wx.hideLoading()
+                }, 1500)
             }
         })
     })
@@ -293,7 +298,7 @@ export function trim(str) {
     return str.replace(/(^\s*)|(\s*$)/g, "");
 }
 // 滚动到底部
-export function scrollBottom(){
+export function scrollBottom() {
 
 }
 
