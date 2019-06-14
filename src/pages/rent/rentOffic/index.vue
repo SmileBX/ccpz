@@ -1,7 +1,8 @@
 <template>
   <div class="pageContent">
     <div class="FormBox">
-      <img class="topbgimg" src="/static/images/icons/bg1.jpg">
+      <img class="topbgimg" src="/static/images/icons/bg2.jpg" v-if="BrandId==24">
+      <img class="topbgimg" src="/static/images/icons/bg1.jpg" v-else>
       <!-- 短租房使用背景bg2.jpg -->
       <div class="FormCon" style="margin-top:-260rpx;">
         <div class="formTitle">
@@ -10,7 +11,7 @@
         </div>
         <div class="form-cells">
           <div class="form-cells-item">
-            <div class="form-cells-navigate navigate-right">
+            <div class="">
               <div class="form-cells-hd">标题</div>
               <div class="form-cell-bd">
                 <input
@@ -23,7 +24,7 @@
               </div>
             </div>
           </div>
-          <div class="form-cells-item">
+          <div class="form-cells-item" v-if="BrandId!=24">
             <div :class="{showDefaultCompany:'form-cells-navigate navigate-bottom'}">
               <div class="form-cells-hd">公司名称</div>
               <div class="form-cell-bd">
@@ -39,31 +40,7 @@
             </div>
           </div>
           <!--输入选择内容-->
-          <div>
-              <div class="form-cells-item form-cells-item2">
-                <div class="item2-column">
-                  <div class="form-cells-hd">活动类型</div>
-                  <input
-                    class="ipt"
-                    type="text"
-                    disabled
-                    placeholder="请选择"
-                    placeholder-style="color:#b5b5b5;"
-                  >
-                </div>
-                <div class="item2-column">
-                  <div class="form-cells-hd">活动区域</div>
-                  <input
-                    class="ipt"
-                    type="text"
-                    disabled
-                    placeholder="请选择"
-                    @click="isShowAddr=true"
-                    v-model="GladBuyArea"
-                    placeholder-style="color:#b5b5b5;"
-                  >
-                </div>
-              </div>
+          <div v-if="PageId==36">
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
                   <div class="form-cells-hd">活动价格</div>
@@ -94,6 +71,8 @@
                     type="text"
                     disabled
                     placeholder="请选择"
+                    v-model="CompanyTrade"
+                    @click="getCompanyTrade"
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
@@ -175,6 +154,259 @@
                     disabled
                     placeholder="请选择"
                     v-model="EducationLvl"
+                    @click="showEducation"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+               <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">活动区域</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    disabled
+                    placeholder="请选择"
+                    @click="isShowAddr=true"
+                    v-model="GladBuyArea"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+          </div>
+          <div v-if="PageId==35">
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">活动价格</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="PropertyPrice"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">活动人数</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="PlanBuyNum"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">活动时间</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    disabled
+                    placeholder="请选择"
+                    @click="showDate=true"
+                    v-model="PlanBuyDate"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">年龄层次</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="AgeLevel"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">男女比例</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="SexRatio"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">学历结构</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    disabled
+                    placeholder="请选择"
+                    v-model="EducationLvl"
+                    @click="showEducation"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+               <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">活动区域</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    disabled
+                    placeholder="请选择"
+                    @click="isShowAddr=true"
+                    v-model="GladBuyArea"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">创始人</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="Founder"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">意向行业</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    disabled
+                    placeholder="请选择"
+                    v-model="GladBuyerTrade"
+                    @click="showTrade=true"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+          </div>
+          <div v-if="PageId==42">
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">面积</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="PropertyPrice"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">厅室</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="PlanBuyNum"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">朝向</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    @click="showDate=true"
+                    v-model="PlanBuyDate"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">楼层</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="AgeLevel"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">车位</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="SexRatio"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">电梯</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="EducationLvl"
+                    @click="showEducation"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">宜住人数</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="GladBuyArea"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">租金包含费用</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="Founder"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">月租金</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    disabled
+                    placeholder="请选择"
+                    @click="isShowAddr=true"
+                    v-model="GladBuyArea"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">付款方式</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="Founder"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">小区</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="GladBuyArea"
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
@@ -182,13 +414,13 @@
           </div>
           <!--公司简介-->
           <div class="form-cells-item">
-            <div class="form-cells-navigate navigate-right">
-              <div class="form-cells-hd">公司简介</div>
+            <div class="">
+              <div class="form-cells-hd">{{introduce}}</div>
               <div class="form-cell-bd">
                 <input
                   class="ipt"
                   type="text"
-                  placeholder="请填写公司详细简介"
+                  :placeholder="introducePlaceholder"
                   v-model="Synopsis"
                   placeholder-style="color:#b5b5b5;"
                 >
@@ -196,30 +428,32 @@
             </div>
           </div>
           <!--公司理念-->
-          <div class="form-cells-item">
+          <div class="form-cells-item" v-if="PageId==42">
             <div class="">
-              <div class="form-cells-hd">公司理念</div>
+              <div class="form-cells-hd">{{infoMore}}</div>
               <div class="form-cell-bd">
                 <input
                   class="ipt"
                   type="text"
-                  placeholder="请填写公司详细简介"
-                  v-model="CompanyCulture"
+                  :placeholder="infoMorePlaceHolder"
+                  v-model="AbilityTags"
                   placeholder-style="color:#b5b5b5;"
                 >
               </div>
             </div>
           </div>
           <!--办公室描述-->
-          <div class="form-cells-item" v-if="PageId==58">
+          <div class="form-cells-item" v-if="PageId==42">
             <div class="form-cells-navigate navigate-right">
-              <div class="form-cells-hd">办公室描述</div>
+              <div class="form-cells-hd">{{TimeLimit}}</div>
               <div class="form-cell-bd">
                 <input
                   class="ipt"
                   type="text"
-                  placeholder="描述一下办公室环境能够更加吸引优质候选人哦"
-                  v-model="ContentDetail"
+                  disabled
+                  :placeholder="TimeLimitPlaceHolder"
+                  v-model="RentTime"
+                  @click="choseTimeLimit"
                   placeholder-style="color:#b5b5b5;"
                 >
               </div>
@@ -241,7 +475,7 @@
           <!--选项-->
           <!--地址-->
           <div class="form-cells-item">
-            <div class="form-cells-navigate navigate-right">
+            <div class="">
               <div class="form-cells-hd">{{addrTitle}}</div>
               <div class="form-cell-bd">
                 <input
@@ -269,21 +503,17 @@
             </div>
           </div>
           <!--标签-->
-          <div class="form-cells-item" v-if="PageId==58">
-            <div class="form-cells-hd">拼租设施/设备</div>
+          <div class="form-cells-item" v-if="PageId==42">
+            <div class="form-cells-hd">房屋配置</div>
             <div class="form-cell-bd">
               <div class="btns-group">
-                <div class="btn cur">网络/无线</div>
-                <div class="btn cur">打印机</div>
-                <div class="btn cur">会议室</div>
-                <div class="btn">前台</div>
-                <div class="btn">独立卡座</div>
-                <div class="btn">自定义+</div>
+                <div class="btn" :class="{'cur':item.active}" v-for="(item,dindex) in Devicelist" :key="dindex" @click="addDeviceNum(dindex)">{{item.Name}}</div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      
       <!-- 以下是组建公司显示 -->
       <div v-if="PageId==58">
           <div class="formTitle" >
@@ -393,10 +623,29 @@
               <span class="title">{{masktitle}}</span>
               <span class="color size" @click="subConfirm">确定</span>
         </div>
-        <div v-if="showInput">
-            <input type="text" placeholder="请输入设备要求" v-model="deviceTip" style="padding:0 30rpx;">
+        <!--滑动选择时间-->
+        <div class="freeRoom" v-if="ShowTime">
+            <div>
+                <picker-view class="pickerView" :value="value" @change="bindDateChangeStart">
+                    <picker-view-column class="pickerColumn">
+                        <div class="pickerItem" v-for="(item,key) in hourses" :key='key'>{{item}}点</div>
+                    </picker-view-column>
+                    <picker-view-column class="pickerColumn">
+                        <div class="pickerItem" v-for="(item,key) in minutes" :key='key'>{{item}}分</div>
+                    </picker-view-column>
+                    <picker-view-column class="pickerColumn">
+                        <div class="pickerItem" v-for="(item,key) in hourses" :key='key'>{{item}}点</div>
+                    </picker-view-column>
+                    <picker-view-column class="pickerColumn">
+                        <div class="pickerItem" v-for="(item,key) in minutes" :key='key'>{{item}}分</div>
+                    </picker-view-column>
+                </picker-view>
+            </div>
+        </div> 
+        <div v-if="showInput" style="border:1px solid blue">
+            <input type="text" placeholder="请输入设备要求" v-model="deviceTip" style="padding:0 30rpx;border:1px solid red">
         </div>
-        <scroll-view :scroll-y="true" style="height:480rpx;" :style="showNoChange?'height:200rpx':''" class="showItem" @scrolltolower="loadMore">
+        <scroll-view :scroll-y="true" style="height:480rpx;" :style="showNoChange?'height:200rpx':''" class="showItem" @scrolltolower="loadMore" v-else>
           <div v-for="(item,index) in list" :key="index">
               <p :class="{'itemactive':statu == index}" @click="chose(index)" style="margin-top:3rpx;">{{item.Name}}
               </p>
@@ -442,7 +691,9 @@
 
 <script>
 //PageId--58厂房发布  
-//拼活动 场地-37  活动-69
+//拼活动 场地-pageid==36  活动-pageid=35
+//住房   写字楼-pageid=41  住房-pageid=42 厂房出租-pageid=37 厂房转让pageid=38
+        //商铺出租 pageid=39  商铺转让PAgeid=40
 import "@/style/style_fb.scss";
 import { post,host,getCurrentPageUrlWithArgs} from "@/utils";
 // import areaList from "@/utils/areaList";
@@ -452,11 +703,14 @@ export default {
     return {
       currentDate: new Date().getTime(),
       minDate: new Date().getTime(),
+      hourses:[],
+      minutes:[],
       curPage: "",
-      userId: "",
+      userId: "",    
       token: "",
       TypeId:'',
       PageId:'',
+      BrandId:"",
       detailInfo:[],
       picLength:6,//上传图片的长度
       imgArr:[],//上传图片的路径
@@ -472,18 +726,7 @@ export default {
       list:[],//弹层列表
       masktitle:"",//弹层标题
       statu:0,//控制弹层item选中样式
-      IsCompanyList:'',//本公司是否挂牌       1:是  0:否
-      IsCompanyListMsg:'',
-      IsRegArea:'', //是否可注册
-      IsRegAreaMsg:'',
-      IsAllowOtherList:'',//是否允许对方挂牌    1:是  0:否
-      IsAllowOtherListMsg:'',
-      IsSubPack:'',//业务是否分包        1:是  0:否
-      IsSubPackMsg:'',
-      IsSenior:'',//公司资质是否可使用   1:是  0:否
-      IsSeniorMsg:'',
-      IsStockCooperation:'',//股份合作未来是否考虑  1:是  0:否
-      IsStockCooperationMsg:'',
+      
       PropertyType:'', //物业/设备类型
       PropertySort:"", //物业/设备形式
       PropertyPrice:'', //物业单价/设备单价
@@ -493,10 +736,14 @@ export default {
       GladBuyerTrade:'', //意向行业/主营业务   格式，'1级行业,2级行业'
       RentTimeLimit:"",//租赁期限
       ContentDetail:"",//办公室环境描述
+      CompanyTrade:"",//公司行业
+      companyTipFlag:false,//公司行业标识
+      EducationLvl:"",//学历结构
+      SexRatio:'', //男女比例
+      AgeLevel:'', //年龄层次 
+      EducationLvl:"",//学历结构
 
-      BuyBudget:'', //购买预算  
-      IsTrimMsg:'',
-      IsTrim:'',//是否装修  0-否   1-是
+      BuyBudget:'', //购买预算 
       PlanBuyArea:'', //计划购买面积
       PlanBuyDate:'', //计划购买日期--可租时间
       Title:"",//标题
@@ -514,11 +761,21 @@ export default {
       DevicePrice:"",//价格最大
       AllArea:"",//总面积
       CompanyCulture:"",//公司理念
+      Founder:"",//创始人
 
       pageTitle:"",//页面标题
       subTitle:"",//副标题
       introduce:"",//简介标题
       introducePlaceholder:"",//简介的placeholder
+      infoMore:"",//房屋两点
+      infoMorePlaceHolder:"",
+      TimeLimit:"",//接听时间段
+      TimeLimitPlaceHolder:"",//
+      AbilityTags:"",//亮点数据
+      RentTime:"",//接听时间
+      RentTimeBox:"",//临时接时间的
+
+
       upImgTitle:"",//上传图片标题
       addrTitle:"",//地址标题
       addrPlaceholder:"",//地址的
@@ -531,10 +788,13 @@ export default {
       columns2:[],
       //拼租设施/设备写死的数据
       Devicelist:[
-        {Id:1,Name:"网络/无线",active:true},{Id:2,Name:"打印机"},{Id:3,Name:"会议室"},{Id:4,Name:"前台"},{Id:5,Name:"独立卡座"},{Id:6,Name:"自定义+"},
+        {Id:1,Name:"宽带",active:false},{Id:2,Name:"床"},{Id:3,Name:"衣柜"},{Id:4,Name:"沙发"},{Id:5,Name:"停车位"},{Id:6,Name:"自定义+"},
       ],
       deviceTip:"",//添加自定义
-     
+      educationList:[ 
+        {Id:1,Name:"小学",active:true},{Id:2,Name:"中学"},{Id:3,Name:"高中"},{Id:4,Name:"中专"},{Id:5,Name:"大专"},{Id:6,Name:"本科"},{Id:7,Name:"硕士"},{Id:8,Name:"MBA"},
+      ],
+      ShowTime:false,//
 
     };
     
@@ -569,6 +829,7 @@ export default {
         this.isShowMask = true
         this.showNoChange = true
         this.showInput=true
+        console.log(this.showInput,"showInput")
         this.masktitle = '请输入自定义的内容'
       }else{
         if(this.Devicelist[e].active){
@@ -607,7 +868,7 @@ export default {
         this.tradeList = {},//行业列表
         this.tradeListBox = [],//行业列表
         this.deviceTip = ''
-        if(this.PageId==37){
+        if(this.PageId==36){
           this.pageTitle = '拼场地表单'
           this.subTitle = '(行业交流会/推广会/发布会/其他活动)'
           this.introduce = "公司简介"
@@ -618,6 +879,59 @@ export default {
           this.addDetailTitle = "门牌号"
           this.addDetailPlaceholder = "门牌号/楼号等 例：3楼418室"
         }
+        if(this.PageId==35){
+          this.pageTitle = '拼活动表单'
+          this.subTitle = '(旅游/拓展/生日会/联谊会/其他活动)'
+          this.introduce = "活动简介"
+          this.introducePlaceholder = "请填写活动详细简介"
+          this.upImgTitle = "活动照片"
+          this.addrTitle = "活动地址"
+          this.addrPlaceholder = "活动名称 如：如京基大厦"
+          this.addDetailTitle = "门牌号"
+          this.addDetailPlaceholder = "门牌号/楼号等 例：3楼418室"
+        }
+        if(this.PageId==42){
+            this.pageTitle = '住房出租表单'
+            this.subTitle = '(公寓/自建房)'
+            this.introduce = "出租要求"
+            this.introducePlaceholder = "请填写房屋出租要求"
+            this.upImgTitle = "房屋照片"
+            this.addrTitle = "房屋地址"
+            this.addrPlaceholder = "详细地址如：如希尔顿小区"
+            this.addDetailTitle = "补充几句"
+            this.addDetailPlaceholder = "详细的描述会大大增加快速出租几率"
+            this.infoMore = "房屋亮点"
+            this.infoMorePlaceHolder = "请填写房屋亮点"
+            this.TimeLimit = "接听时间段"
+            this.TimeLimitPlaceHolder = "选择只在所选时间内接听"
+        }
+    },
+    gethous(){
+      for (let i =0; i <= 24; i++) {
+          if(i.toString().length<2){
+            i="0"+i
+          }
+          this.hourses.push(i)
+      }
+    },
+    getMinutes(){
+      for (let i =0; i < 60; i++) {
+          if(i.toString().length<2){
+            i="0"+i
+          }
+          this.minutes.push(i)
+      }
+    },
+    bindDateChangeStart (e) {
+        this.RentTimeBox = e.mp.detail.value
+    },
+    //选择接听时间
+    choseTimeLimit(){
+        this.gethous()
+        this.getMinutes()
+        this.isShowMask = true
+        this.ShowTime = true
+        this.masktitle = '请选择接听时间'
     },
     //时间
     onInput(e) {
@@ -631,56 +945,67 @@ export default {
         this.PlanBuyDate = `${year}-${month}-${dd}`;
         this.showDate = false
     },
+    //获取公司行业
+    getCompanyTrade(){
+      this.companyTipFlag = true
+      this.showTrade = true
+    },
     //获取认证的公司
     getCompany(){
         console.log(this.detailInfo,"detailInfo+++++++++++")
     },
+    //学历结构
+    showEducation(){
+      this.isShowMask = true
+      this.list = this.educationList
+      this.masktitle = '请选择学历结构'
+    },
     //获取短租办公形式
-    getShortRent(){
-      this.isShowMask = true
-      this.list = this.detailInfo.ShortRent
-      this.masktitle = '请选择办公形式'
-    },
+    // getShortRent(){
+    //   this.isShowMask = true
+    //   this.list = this.detailInfo.ShortRent
+    //   this.masktitle = '请选择办公形式'
+    // },
     //租赁期限
-    getRentTimeLimit(){
-      this.isShowMask = true
-      let info = {}
-      this.detailInfo.RentTimeLimit.Value.map(item=>{
-          info={
-            Name:item.Text
-          }
-          this.list.push(info)
-      })
+    // getRentTimeLimit(){
+    //   this.isShowMask = true
+    //   let info = {}
+    //   this.detailInfo.RentTimeLimit.Value.map(item=>{
+    //       info={
+    //         Name:item.Text
+    //       }
+    //       this.list.push(info)
+    //   })
       
-      this.masktitle = '请选择期限'
-    },
+    //   this.masktitle = '请选择期限'
+    // },
 
     //获取物业形式-设备形式-办公形式
-    getProperty(){
-      console.log(this.detailInfo,"detailInfo+++++++++++")
-      this.isShowMask = true
-      this.list = this.detailInfo.Device
-      if(this.PageId == 36){
-        this.masktitle = '请选择物业形式'
-      }else if(this.PageId == 52){
-        this.masktitle = '请选择设备形式'
-      }else if(this.PageId == 62){
-          this.masktitle = '请选择办公形式'
-      }
+    // getProperty(){
+    //   console.log(this.detailInfo,"detailInfo+++++++++++")
+    //   this.isShowMask = true
+    //   this.list = this.detailInfo.Device
+    //   if(this.PageId == 35){
+    //     this.masktitle = '请选择物业形式'
+    //   }else if(this.PageId == 52){
+    //     this.masktitle = '请选择设备形式'
+    //   }else if(this.PageId == 62){
+    //       this.masktitle = '请选择办公形式'
+    //   }
       
-    },
-    //获取设备类型
-    getPropertyType(){
-      this.isShowMask = true  
-      let info = {}
-      this.detailInfo.DeviceType.Value.map(item=>{
-          info={
-            Name:item
-          }
-          this.list.push(info)
-      })
-      this.masktitle = '请选择设备类型'
-    },
+    // },
+    // //获取设备类型
+    // getPropertyType(){
+    //   this.isShowMask = true  
+    //   let info = {}
+    //   this.detailInfo.DeviceType.Value.map(item=>{
+    //       info={
+    //         Name:item
+    //       }
+    //       this.list.push(info)
+    //   })
+    //   this.masktitle = '请选择设备类型'
+    // },
     //选择弹层item
     chose(e){
         this.statu = e
@@ -689,24 +1014,35 @@ export default {
     subConfirm(){
       for(let i in this.list){
           if(i*1 == this.statu){
-              if(this.masktitle =='请选择物业形式' || this.masktitle =='请选择设备形式'){
-                  this.PropertySort = this.list[i].Name;
-              }
-              if(this.masktitle =='请选择办公形式' ){
-                  this.PropertySort = this.list[i].Name;
-              }
-              
-              if(this.masktitle =='请选择设备类型' ){
-                  this.PropertyType = this.list[i].Name;
-              }
-              if(this.masktitle =='请选择期限' ){
+              if(this.masktitle =='请选择学历结构' ){
                 console.log("this.list:",this.list)
-                  this.RentTimeLimit = this.list[i].Name
+                  this.EducationLvl = this.list[i].Name
               }
-              
-              
           }
       }
+      //选择时间
+      if(this.masktitle = '请选择接听时间'){
+        if(this.RentTime[0]>this.RentTime[2]){
+          wx.showToast({
+              title: '选择时间有误！',
+              icon: 'none',
+              duration: 2000
+          });
+          return false
+        }else{
+            let time = []
+            for(let item of this.RentTimeBox){
+              if(item.toString().length<2){
+                item = "0"+item
+              }
+              time.push(item)
+            }
+            
+            this.RentTime=time[0]+":"+time[1]+"-"+time[2]+":"+time[3] //时间
+        }
+    
+      }
+      //自定义设备
       if(this.masktitle =='请输入自定义的内容'){
         console.log("______________________")
         let tips={
@@ -718,6 +1054,7 @@ export default {
       }
       this.isShowMask = false
       this.showNoChange = false
+      this.ShowTime = false
       this.showInput = false
       this.statu = 0
       this.list = []
@@ -726,6 +1063,9 @@ export default {
     cancle(){
       this.isShowMask = false
       this.showNoChange = false
+      this.ShowTime = false
+      this.showInput = false
+      this.list = []
       this.statu = 0
     },
     //获取默认数据
@@ -739,6 +1079,7 @@ export default {
         console.log(res,"GetPublishItems")
         if(res.code==0){
             //已经认证了 获取信息 发布信息
+          this.BrandId = res.data.BrandId
           that.detailInfo = res.data;
           if(res.data.arealist.length>0){
             {
@@ -831,11 +1172,17 @@ export default {
       picker.setColumnValues(1, this.tradeList[value[0]]);
     },
     onConfirm(event){  //选择行业确定
-    console.log(event);
+      console.log(event);
       const { index, value } = event.mp.detail;
-      this.GladBuyerTrade = value.join(",");
-      this.GladBuyerTradeId = this.tradelistBox[index[0]].Child[index[1]].Id
+      if(this.companyTipFlag){
+        this.CompanyTrade = value.join(",");
+        this.CompanyTradeId = this.tradelistBox[index[0]].Child[index[1]].Idd 
+      }else{
+        this.GladBuyerTrade = value.join(",");
+        this.GladBuyerTradeId = this.tradelistBox[index[0]].Child[index[1]].Id
+      }
       this.showTrade=false
+      this.companyTipFlag = false
       // console.log(picker.setValues);
       this.$set(this.columns[1],'values',this.tradeList[value[0]]);
       this.$set(this.columns[1],'defaultIndex',index[1]);
@@ -911,20 +1258,9 @@ export default {
         this.toastTip("请输入简介!")
         return false;
       }
-      if (this.PlanBuyArea == '') {
-        this.toastTip("请输入面积!")
-        return false;
-      }
-      if (this.GladBuyerTradeId == '') {
-        this.toastTip("请选择行业!")
-        return false;
-      }
+      
       if (this.PlanBuyNum == '') {
         this.toastTip("请输入数量!")
-        return false;
-      }
-      if (this.AllArea == '') {
-        this.toastTip("请输入总面积!")
         return false;
       }
       if (this.SexRatio == '') {
@@ -947,7 +1283,31 @@ export default {
         this.toastTip("请选择学历结构!")
         return false;
       }
-      
+      if (this.GladBuyerTradeId == '') {
+        this.toastTip("请选择行业!")
+        return false;
+      }
+      if(this.PageId == 36){
+          if (this.CompanyTradeId =='') {
+            this.toastTip("请选择公司行业!")
+            return false;
+          }
+          if (this.PlanBuyArea == '') {
+            this.toastTip("请输入面积!")
+            return false;
+          }
+          
+          if (this.AllArea == '') {
+            this.toastTip("请输入总面积!")
+            return false;
+          }
+      }
+      if(this.PageId == 35){
+          if (this.Founder == '') {
+            this.toastTip("请输入创始人!")
+            return false;
+          }
+      }
       
       
       return true;
@@ -962,27 +1322,49 @@ export default {
           GoodsInfo = {
           Title:that.Title,
           CompanyId:that.CompanyId,
+          Company:that.Company,
           CompanyAddr:that.CompanyAddr,
           CompanyDoorNum:that.CompanyDoorNum,
           Synopsis:that.Synopsis,
           GladBuyerTradeId:that.GladBuyerTradeId,
-          PropertySort:that.PropertySort,
+          GladBuyerTrade:that.GladBuyerTrade,
+          PlanBuyNum:that.PlanBuyNum,
           PropertyPrice:that.PropertyPrice,
+          AllArea:that.AllArea,
           PlanBuyArea:that.PlanBuyArea,
           PlanBuyDate:that.PlanBuyDate,
+          GladBuyArea:that.GladBuyArea,
           GladBuyAreaId:that.GladBuyAreaId,
-          BuyBudget:that.BuyBudget,
-          IsTrim:that.IsTrim,
-          IsCompanyList:that.IsCompanyList,
-          IsAllowOtherList:that.IsAllowOtherList,
-          IsSenior:that.IsSenior,
-          IsSubPack:that.IsSubPack,
-          IsStockCooperation:that.IsStockCooperation
+          AgeLevel:that.AgeLevel,
+          SexRatio:that.SexRatio,
+          CompanyTradeId:that.CompanyTradeId,
+          CompanyTrade:that.CompanyTrade,
+          EducationLvl:that.EducationLvl
+        }
+      }else  if(that.PageId == 35){
+          GoodsInfo = {
+          Title:that.Title,
+          CompanyId:that.CompanyId,
+          Company:that.Company,
+          CompanyAddr:that.CompanyAddr,
+          CompanyDoorNum:that.CompanyDoorNum,
+          Synopsis:that.Synopsis,
+          PlanBuyNum:that.PlanBuyNum,
+          PropertyPrice:that.PropertyPrice,
+          PlanBuyDate:that.PlanBuyDate,
+          GladBuyerTradeId:that.GladBuyerTradeId,
+          GladBuyerTrade:that.GladBuyerTrade,
+          AgeLevel:that.AgeLevel,
+          SexRatio:that.SexRatio,
+          EducationLvl:that.EducationLvl,
+          Founder:that.Founder,
+          CompanyAddr:that.CompanyAddr,
+          CompanyDoorNum:that.CompanyDoorNum,
         }
       }
       
       if(that.valOther()){
-          if(that.PageId == 65 || that.PageId == 64 || that.PageId == 62){
+          if(that.PageId == 65){
             for(let i in that.Devicelist){
               if(that.Devicelist[i].active){
                 that.ServiceName+=that.Devicelist[i].Name+","
@@ -990,7 +1372,7 @@ export default {
             }
           console.log("that.ServiceName:",that.ServiceName)
           }
-        //that.submitAll(JSON.stringify(PicList),GoodsInfo)
+        that.submitAll(JSON.stringify(PicList),GoodsInfo)
       }
     },
     submitAll(PicList,GoodsInfo){
@@ -1021,9 +1403,10 @@ export default {
     trimData(){
       this.imgArr=[]
       this.Title = ''
-      this.CompanyId = ''
+      this.Company = ''
       this.CompanyAddr = ''
       this.CompanyDoorNum = ''
+      this.CompanyCulture = ''
       this.Synopsis = ''
       this.GladBuyerTrade = ''
       this.PropertyType = ''
@@ -1056,6 +1439,12 @@ export default {
       this.NeedOfficeNum = ''
       this.RentTimeLimit = ''
       this.ContentDetail = ''
+      this.AllArea = ''
+      this.EducationLvl = ''
+      this.SexRatio = ''
+      this.AgeLevel = ''
+      this.CompanyTrade = ''
+      this.Founder = ''
     }
     
   },
@@ -1110,4 +1499,21 @@ export default {
   width:190rpx;
   height:190rpx
 }
+.freeRoom{
+        .timeText{
+            text-align: center;
+        }
+        .pickerView{
+            width:100%;
+            height: 400rpx;
+            .pickerColumn{
+                .pickerItem{
+                    line-height:68rpx;
+                    height:34rpx;
+                    overflow:hidden;
+                    text-align: center;
+                }
+            }
+        }
+    }
 </style>
