@@ -2,14 +2,14 @@
   <div class="pageContent">
     <div class="memberTop">
       <img src="/static/images/icons/set.png" @click="gotoSet" class="icon_set" alt>
-      <span class="btnModifyInfo">修改资料</span>
+      <span class="btnModifyInfo" @click="editInfo">修改资料</span>
       <div class="perInfo level__perInfo flex">
-        <img @click="gotoPerson" src="/static/images/of/tx.jpg" class="tx" alt>
+        <img @click="gotoPerson" :src="personInfo.Avatar" class="tx" alt>
         <div class="info flex1">
           <p class="mt10">
-            <span class="name">罗曼蒂克的爱情</span>
+            <span class="name">{{personInfo.Name}}</span>
             <img src="/static/images/icons/v2.png" class="icon_attestation" alt="">
-            <img src="/static/images/icons/attestationTag2.png" class="icon_attestationTag" alt="">
+            <img src="/static/images/icons/attestationTag2.png" class="icon_attestationTag" alt="" v-if="personIsAUT">
           </p>
         </div>
       </div>
@@ -161,21 +161,53 @@
 </template>
 
 <script>
+import { post, valPhone, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
 export default {
   onLoad() {
     this.setBarTitle();
   },
   data() {
     return {
-      menuArr:["/pages/member/memberManage/main","/pages/member/serviceCardChange/main","/pages/member/integral/main","/pages/member/myVertical/main","/pages/member/myCoupon/main","/pages/member/invoiceList/main","/pages/member/feedback/main?type=3","/pages/member/feedback/main?type=2","/pages/member/feedback/main?type=1","/pages/member/help/main","/pages/member/contact/main"],
-      menuArr2:["/pages/member/account/main","/pages/member/myCollect/main","/pages/mine/publish/main","/pages/member/browse/main"]
+      menuArr:["/pages/member2/memberManage/main","/pages/member/serviceCardChange/main","/pages/member/integral/main","/pages/mine2/myVertical/main","/pages/mine2/myCoupon/main","/pages/member2/invoiceList/main","/pages/member2/feedback/main?type=3","/pages/member2/feedback/main?type=2","/pages/member2/feedback/main?type=1","/pages/member/help/main","/pages/member/contact/main"],
+      menuArr2:["/pages/mine2/account/main","/pages/mine2/myCollect/main","/pages/mine/publish/main","/pages/member/browse/main"],
+      curPage: "",
+      userId: "",
+      token: "",
+      personInfo:{},
+      personIsAUT:false,//是否认证
     }
+  },
+  onShow(){
+    this.bankId = this.$store.state.cardInfo.id;
+    this.bankName = this.$store.state.cardInfo.bankName;
+    this.curPage = getCurrentPageUrlWithArgs();
+    this.userId = wx.getStorageSync("userId");
+    this.token = wx.getStorageSync("token");
+    this.curPage = getCurrentPageUrlWithArgs();
+    this.getPerson()
   },
   methods: {
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "我的"
       });
+    },
+    //获取个人信息
+    getPerson(){
+      post('User/GetMemberInfo',{
+        UserId: this.userId,
+        Token: this.token,
+      },this.curPage).then(res=>{
+        if(res.code==0){
+           if(res.data.IsAUT=='已认证'){
+             this.personIsAUT = true
+          }else{
+              this.personIsAUT = false
+          } 
+          this.personInfo = res.data
+          console.log(res)
+        }
+      })
     },
     gotoPage(index){
       //type:1:意见反馈；2：合作加盟；3：增值服务
@@ -188,16 +220,24 @@ export default {
         url:this.menuArr2[index]
       })
     },
+    //获取个人资料
     gotoPerson(){
       wx.navigateTo({
         url:"/pages/mine/person/main"
       })
     },
+    //去往设置
     gotoSet(){
       wx.navigateTo({
         url:"/pages/member/set/main"
       })
-    }
+    },
+    //编辑个人资料
+    editInfo(){
+      wx.navigateTo({
+        url:"/pages/mine/editInfo/main"
+      })
+    },
     
   }
 };

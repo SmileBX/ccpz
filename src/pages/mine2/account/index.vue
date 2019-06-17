@@ -1,7 +1,7 @@
 <template>
   <div class="pageContent">
     <div class="memberTop center">
-      <p class="num">0</p>
+      <p class="num">{{Wallet}}</p>
       <p class="title">余额</p>
     </div>
     <ul class="tabList li_50 flex center">
@@ -31,15 +31,25 @@
   </div>
 </template>
 <script>
+import { post,getCurrentPageUrlWithArgs} from "@/utils";
 export default {
   onLoad() {
-    this.setBarTitle();
+    
   },
   onShow() {
+    this.userId = wx.getStorageSync("userId");
+    this.token = wx.getStorageSync("token");
+    this.curPage = getCurrentPageUrlWithArgs();
+    this.setBarTitle();
+    this.getCharge()
   },
   data() {
     return {
-      menuArr:["/pages/member/deposit/main","/pages/member/withdraw/main","/pages/member/moneyList/main","/pages/member/cardList/main"]
+      curPage: "",
+      userId: "",    
+      token: "",
+      Wallet:0,
+      menuArr:["/pages/mine2/deposit/main","/pages/mine2/withdraw/main","/pages/mine2/moneyList/main","/pages/member2/cardList/main"],
     };
   },
   methods: {
@@ -52,7 +62,19 @@ export default {
       wx.navigateTo({
         url:this.menuArr[index]
       })
-    }
+     
+    },
+    getCharge(){
+      post('/User/GetMemberWallet',{
+        UserId:this.userId,
+        Token:this.token
+      },this.curPage).then(res=>{
+        if(res.code==0){
+            this.Wallet = res.data.Wallet
+            this.$store.commit("update", { Wallet:this.Wallet });
+        }
+      })
+    },
   }
 };
 </script>

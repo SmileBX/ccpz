@@ -16,10 +16,8 @@ export function formatTime(date) {
     const hour = date.getHours()
     const minute = date.getMinutes()
     const second = date.getSeconds()
-
     const t1 = [year, month, day].map(formatNumber).join('/')
     const t2 = [hour, minute, second].map(formatNumber).join(':')
-
     return `${t1} ${t2}`
 }
 
@@ -301,6 +299,21 @@ export function trim(str) {
 export function scrollBottom() {
 
 }
+// 获取自身定位
+export function getLocation(){
+    return new Promise ((resolve,reject)=>{
+        wx.getLocation({
+            type:'gcj02',
+            success(res){
+                resolve(res)
+            },
+            fail(err){
+                console.log(err)
+                reject(err)
+            }
+        })
+    })
+}
 
 export {
     host,
@@ -316,5 +329,6 @@ export default {
     getCurrentPageUrlWithArgs,
     valPhone: valPhone,
     previewImage: previewImage,
-    trim
+    trim,
+    getLocation
 }

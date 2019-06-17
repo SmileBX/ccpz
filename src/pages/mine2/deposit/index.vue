@@ -9,8 +9,8 @@
         </p>
       </div>
     </div>
-    <div class="tips" style="padding:20rpx 30rpx;">账户余额：{{wallet}}</div>
-    <div class="ftBtn" style="padding:60rpx 30rpx;">
+    <div class="tips" style="padding:20rpx 30rpx;">账户余额：{{Wallet}}</div>
+    <div class="ftBtn" style="padding:60rpx 30rpx;" @click="showPay=true">
       <div class="inner">
         <div class="btns">
           <div class="btn bg_ff952e color_fff center">下一步</div>
@@ -18,7 +18,7 @@
       </div>
     </div>
     <!-- 选择付款、提现弹窗 -->
-    <div class="shade bottom__shade" style="display:none;">
+    <!-- <div class="shade bottom__shade" v-if="showPayWay">
       <div class="mask"></div>
       <div class="shadeContent" style="min-height:700rpx;">
         <div class="shade__hd">
@@ -31,21 +31,21 @@
           <div class="content weui-cells selectCard__weui-cells">
             <radio-group>
               <label class="weui-cell">
-                <img src class="icon-card" alt>
+                <img src="/static/images/icons/wx.jpg" class="icon-card" alt>
                 <div class="weui-cell__bd">
-                  <p class="txt">中国建行储蓄卡(3578)</p>
+                  <p class="txt">微信支付</p>
                 </div>
-                <radio color="#ff952e" checked="true"/>
+                <radio color="#fff" checked="true"/>
               </label>
-              <label class="weui-cell">
-                <img src class="icon-card" alt>
+              <label class="weui-cell" v-for="(item,index) in cardlist" :key="index">
+                <img :src="item.BankLogo" class="icon-card" alt>
                 <div class="weui-cell__bd">
-                  <p class="txt">深圳农商银行储蓄卡(3578)</p>
+                  <p class="txt">{{item.BankName}}({{item.BankCardNo}})</p>
                 </div>
-                <radio color="#ff952e"/>
+                <radio color="#fff"/>
               </label>
             </radio-group>
-            <div class="weui-cell">
+            <div class="weui-cell" @click="gotoPage">
               <img src="/static/images/icons/add4.jpg" class="icon-card" alt>
               <div class="weui-cell__bd">
                 <p class="txt">添加新卡提现</p>
@@ -55,20 +55,20 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <!-- 确认支付弹窗 -->
-    <div class="shade bottom__shade">
+    <div class="shade bottom__shade" v-if="showPay">
       <div class="mask"></div>
       <div class="shadeContent" style="min-height:700rpx;">
         <div class="shade__hd">
-          <span class="icon-back">
+          <span class="icon-back" @click="showPay=false">
             <img src="/static/images/icons/close.jpg" alt>
           </span>
           <p class="title">确认付款</p>
         </div>
         <div class="shade__bd">
           <div class="payInfo">
-              <p class="priceArea center">￥<span class="num">10.00</span></p>
+              <p class="priceArea center">￥<span class="num">{{amount}}</span></p>
           </div>
           <div class="weui-cells mt0">
             <div class="weui-cell">
@@ -77,15 +77,15 @@
                 <p class="txt">充值</p>
               </div>
             </div>
-            <div class="weui-cell">
+            <div class="weui-cell" @click="getPayWay">
               <label class="label" style="color:#999;">付款方式</label>
               <div class="weui-cell__bd text_r">
-                <p class="txt">工商银行（2154）</p>
+                <p class="txt">微信支付</p>
               </div>
-              <span class="icon-arrow arrow-right"></span>
+              <!-- <span class="icon-arrow arrow-right"></span> -->
             </div>
           </div>
-          <div class="ftBtn" style="padding:60rpx 30rpx 0;margin-top:50rpx;">
+          <div class="ftBtn" style="padding:60rpx 30rpx 0;margin-top:50rpx;" @click="payCharge">
             <div class="inner">
               <div class="btns">
                 <div class="btn  bg_ff952e color_fff center">立即付款</div>
@@ -98,15 +98,25 @@
   </div>
 </template>
 <script>
+import { post,getCurrentPageUrlWithArgs} from "@/utils";
 export default {
   onLoad() {
     this.setBarTitle();
   },
-  onShow() {},
+  onShow() {
+    this.userId = wx.getStorageSync("userId");
+    this.token = wx.getStorageSync("token");
+    this.curPage = getCurrentPageUrlWithArgs();
+    this.Wallet = this.$store.state.Wallet
+    // this.getCharge()
+  },
   data() {
     return {
       amount: "",
-      wallet: 0
+      Wallet:0,
+      showPay:false,
+      // showPayWay:false,
+      cardlist:[]
     };
   },
   methods: {
@@ -114,8 +124,66 @@ export default {
       wx.setNavigationBarTitle({
         title: "充值"
       });
+    },
+    // getCharge(){
+    //   post('/User/GetMemberWallet',{
+    //     UserId:this.userId,
+    //     Token:this.token
+    //   },this.curPage).then(res=>{
+    //     if(res.code==0){
+    //         this.Wallet = res.data.Wallet
+    //     }
+    //   })
+    // },
+    getCardList(){
+      post('Bank/BankList',{
+          UserId:this.userId,
+          Token:this.token
+      },this.curPage).then(res=>{
+          console.log("res:",res)
+          this.cardlist = res.data
+      })
+    },
+    payCharge(){
+      post('Recharge/WechatApplet_AddRecharge',{
+          UserId:this.userId,
+          Token:this.token,
+          RechargeAmount:this.amount
+      },this.curPage).then(res=>{
+        console.log("Res",res)
+        if(res.code==0){
+            const JsParam = JSON.parse(res.data.JsParam)
+            this.payMoney(JsParam)
+        }
+      })
+    },
+    payMoney(JsParam){
+      wx.requestPayment({
+        timeStamp:JsParam.timeStamp,
+        nonceStr:JsParam.nonceStr,
+        package:JsParam.package,
+        signType: 'MD5',
+        paySign:JsParam.paySign,
+        success: (res)=>{ 
+          this.showPay = false
+          this.getCharge()
+        }
+      })
     }
-  }
+    // getPayWay(){
+    //   this.showPayWay = true
+    //   this.showPay = false
+    //   this.getCardList()
+    // },
+    // gotoPage(){
+    //    wx.navigateTo({
+    //       url:"/pages/mine/addCard/main"
+    //     })
+    // }
+
+
+  },
+  
 };
 </script>
 <style lang='scss' scoped>
