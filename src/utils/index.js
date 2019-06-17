@@ -301,6 +301,21 @@ export function trim(str) {
 export function scrollBottom() {
 
 }
+// 获取自身定位
+export function getLocation(){
+    return new Promise ((resolve,reject)=>{
+        wx.getLocation({
+            type:'gcj02',
+            success(res){
+                resolve(res)
+            },
+            fail(err){
+                console.log(err)
+                reject(err)
+            }
+        })
+    })
+}
 
 export {
     host,
@@ -316,5 +331,6 @@ export default {
     getCurrentPageUrlWithArgs,
     valPhone: valPhone,
     previewImage: previewImage,
-    trim
+    trim,
+    getLocation
 }

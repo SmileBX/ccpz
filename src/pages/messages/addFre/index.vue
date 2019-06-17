@@ -14,7 +14,7 @@
           <!--填写验证信息-->
           <div class="vertical flex flexColumn">
               <p class="font_four">填写验证信息</p>
-              <input type="text" v-model="verMsg" class="flex1 yanz">
+              <input type="text" v-model="verMsg" placeholder="我是..." class="flex1 yanz">
           </div>
       </div>
       <div class="setclass">设置备注与分组</div>
@@ -32,22 +32,39 @@
           </div>
       </div>
       <!--加好友-->
-      <div class="btnSub addtop">加好友</div>
+      <div class="btnSub addtop" @click="addFriend">加好友</div>
   </div>
 </template>
 
 <script>
-
+import {post,getLocation} from '@/utils'
 export default {
   data () {
     return {
-      verMsg:'我是',
+      userId:'',
+      token:'',
+      FriendId:'16',
+      lat:0,
+      lng:0,
+      verMsg:'',
       specName:'傻不傻',
       specPlace:'我的好友',
     }
   },
-   onLoad() {
+  onLoad() {
     this.setBarTitle();
+    if(this.$root.$mp.query.FriendId){
+      this.FriendId = this.$root.$mp.query.FriendId
+    }
+    const res =getLocation()
+      console.log(res)
+      this.lat = res.latitude;
+      this.lng=res.longitude;
+  },
+  onShow(){
+    this.userId = wx.getStorageSync('userId')
+    this.token = wx.getStorageSync('token')
+
   },
 
   components: {
@@ -58,6 +75,25 @@ export default {
       wx.setNavigationBarTitle({
         title: "添加好友"
       });
+    },
+    initData(){
+      this.verMsg ='';
+    },
+    // 添加好友
+    async addFriend(){
+      const res = await post('User/Addfriend_req',{
+        UserId:this.userId,
+        Token:this.token,
+        FriendId:this.FriendId,
+        AuthInfo:this.verMsg,
+        Lat:this.lat,
+        Lng:this.lng
+      })
+      if(res.code==0){
+      wx.showToast({
+        title:'发送成功!'
+      })
+      }
     }
   },
 
