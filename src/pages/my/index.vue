@@ -168,7 +168,7 @@ export default {
   },
   data() {
     return {
-      menuArr:["/pages/member/memberManage/main","/pages/member/serviceCardChange/main","/pages/member/integral/main","/pages/member/myVertical/main","/pages/member/myCoupon/main","/pages/member/invoiceList/main","/pages/member/feedback/main?type=3","/pages/member/feedback/main?type=2","/pages/member/feedback/main?type=1","/pages/member/help/main","/pages/member/contact/main"],
+      menuArr:["/pages/member/memberManage/main","/pages/member/serviceCardChange/main","/pages/member/integral/main","/pages/member/myVertical/main","/pages/mine2/myCoupon/main","/pages/member/invoiceList/main","/pages/member/feedback/main?type=3","/pages/member/feedback/main?type=2","/pages/member/feedback/main?type=1","/pages/member/help/main","/pages/member/contact/main"],
       menuArr2:["/pages/mine2/account/main","/pages/mine2/myCollect/main","/pages/mine/publish/main","/pages/member/browse/main"],
       curPage: "",
       userId: "",
