@@ -7,7 +7,28 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     state: {
         // selectedFriends: []
-        CityName:''
+        CityName:'',
+        Wallet:0,
+        cardId: "",
+        selectCard: {
+            url: '',
+            status: false
+        },
+        cardInfo: { //选择的银行名称id
+            id: "",
+            bankLogo: "",
+            bankName: ""
+        },
+        selectMyCard: {
+            url: '',
+            status: false
+        },
+        myCardInfo: { //选择我的银行卡
+            id: "",
+            bankLogo: "",
+            bankCardName: "",
+            bankCardNo: ""
+        }
     },
     mutations: {
         /**
@@ -31,6 +52,14 @@ const store = new Vuex.Store({
             Object.keys(config).map((item, key) => {
                 state[item] = config[item]
             })
+        },
+        // 设置选择银行名称
+        setSelectCard(state, params) {
+            state.selectCard = params;
+        },
+        // 设置选择我的银行卡
+        setSelectMyCard(state, params) {
+            state.selectMyCard = params;
         }
 
     }

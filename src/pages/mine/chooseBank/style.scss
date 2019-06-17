@@ -1,0 +1,52 @@
+.chooseList {
+    margin-top: 20rpx;
+}
+
+.cardpic {
+    width: 48rpx;
+    max-height: 48rpx;
+    margin-right: 20rpx;
+}
+
+.pull {
+    font-size: 30rpx;
+    padding: 18rpx 30rpx;
+}
+
+.pull,
+.payitem {
+    position: relative;
+}
+
+.pull::before,
+.payitem::before {
+    position: absolute;
+    content: "";
+    left: 30rpx;
+    height: 1px;
+    background: #e5e5e5;
+    right: 0;
+    bottom: 0;
+}
+
+.payitem {
+    padding: 20rpx 30rpx;
+}
+
+.icon-chose{
+    position: relative;
+    width: 40rpx;
+    height: 40rpx;
+}
+
+.payitem.active .icon-chose::after {
+    position: absolute;
+    content: "";
+    width: 28rpx;
+    height: 14rpx;
+    border-left: 2px solid #ff9325;
+    border-bottom: 2px solid #ff9325;
+    transform: rotate(-45deg);
+    top: 4rpx;
+    left: 0;
+}

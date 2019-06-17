@@ -18,7 +18,7 @@
           <input v-model="amount" type="number" class="inputPrice flex1">
         </p>
       </div>
-      <div class="tips" style="padding:20rpx 0;border-top:1px solid #f2f2f2;">账户余额：{{wallet}}</div>
+      <div class="tips" style="padding:20rpx 0;border-top:1px solid #f2f2f2;">账户余额：{{Wallet}}</div>
     </div>
     <div class="ftBtn" style="padding:60rpx 30rpx;">
       <div class="inner">
@@ -36,28 +36,31 @@ export default {
     this.setBarTitle();
   },
   onShow() {
-    // console.log("___________");
-    // console.log(this.$store.state.myCardInfo);
-    // this.bankCardId = this.$store.state.myCardInfo.id;
-    // this.bankLogo = this.$store.state.myCardInfo.bankLogo;
-    // this.bankCardName = this.$store.state.myCardInfo.bankCardName;
-    // this.bankCardNo = this.$store.state.myCardInfo.bankCardNo.substring(
-    //   this.$store.state.myCardInfo.bankCardNo.length - 4,
-    //   this.$store.state.myCardInfo.bankCardNo.length
-    // );
-    // this.curPage = getCurrentPageUrlWithArgs();
-    // this.userId = wx.getStorageSync("userId");
-    // this.token = wx.getStorageSync("token");
-    // if (toLogin(this.curPage)) {
-    //   if (this.hasDefaultCard) {
-    //     this.getBankList();
-    //   }
-    //   this.GetInstalMasterInfo();
-    // }
+    this.Wallet = this.$store.state.Wallet
+    //获取提现的限制条件
+    this.getLimitationOfWithdrawal()
+    console.log("___________");
+    console.log(this.$store.state.myCardInfo);
+    this.bankCardId = this.$store.state.myCardInfo.id;
+    this.bankLogo = this.$store.state.myCardInfo.bankLogo;
+    this.bankCardName = this.$store.state.myCardInfo.bankCardName;
+    this.bankCardNo = this.$store.state.myCardInfo.bankCardNo.substring(
+      this.$store.state.myCardInfo.bankCardNo.length - 4,
+      this.$store.state.myCardInfo.bankCardNo.length
+    );
+    this.curPage = getCurrentPageUrlWithArgs();
+    this.userId = wx.getStorageSync("userId");
+    this.token = wx.getStorageSync("token");
+    if (toLogin(this.curPage)) {
+      if (this.hasDefaultCard) {
+        this.getBankList();
+      }
+      this.GetInstalMasterInfo();
+    }
   },
   data() {
     return {
-      wallet: 0,
+      Wallet:0,
       curPage: "",
       userId: "",
       token: "",
@@ -76,13 +79,17 @@ export default {
         title: "提现选择"
       });
     },
+    //获取提现限制条件
+    getLimitationOfWithdrawal(){
+      
+    },
     shiftCardList() {
       this.hasDefaultCard = false;
       this.$store.commit("setSelectMyCard", {
-        url: "/pages/master/depositmoney/main",
+        url: "/pages/mine2/withdraw/main",
         status: true
       });
-      wx.navigateTo({ url: "/pages/master/cardList/main" });
+      wx.navigateTo({ url: "/pages/member2/cardList/main" });
     },
     valOther() {
       let price = Number(this.amount);
@@ -115,15 +122,13 @@ export default {
     submitWithdraw() {
       //提现
       if (this.valOther()) {
-        this.MasterDrawMoneyApply();
+        this.DrawMoneyApply();
       }
     },
-    //获取师傅的个人信息
     GetInstalMasterInfo() {
-      //师傅的信息
       let that = this;
       post(
-        "InstalMaster/GetInstalMasterInfo",
+        "DrawMoney/memberDrawMoneyApply",
         {
           MasterId: that.userId,
           Token: that.token
@@ -142,9 +147,7 @@ export default {
         "Bank/BankList",
         {
           UserId: that.userId,
-          Token: that.token,
-          page: 1,
-          pagesize: 1
+          Token: that.token
         },
         that.curPage
       ).then(result => {
@@ -157,12 +160,11 @@ export default {
               result.data[0].BankCardNo.length - 4,
               result.data[0].BankCardNo.length
             );
-            that.hasData = true;
           }
         }
       });
     },
-    MasterDrawMoneyApply() {
+    DrawMoneyApply() {
       //提现
       let that = this;
       post(
