@@ -42,7 +42,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 2,
+			"current": 23,
 			"list": [
 				{
 					"id": 0,
@@ -199,14 +199,14 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 22,
 					"name": "设置",
 					"pathName": "pages/member/set/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 23,
 					"name": "设置支付密码",
 					"pathName": "pages/member/setPayPassword/main",
 					"query": "",

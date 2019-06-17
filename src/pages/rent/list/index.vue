@@ -47,7 +47,7 @@
     </div>
 
     <!--列表-->
-    <scroll-view class="filterContent" scroll-y="true">
+    <scroll-view class="filterContent" @scrolltolower="moreLoad" scroll-y="true">
       <!--图标-->
       <!-- 一级分类对应的二级分类 -->
       <div class="navBox" v-if="twoTypeList.length>0">
@@ -340,7 +340,8 @@ export default {
       isShowDate: false, //弹出选择计划日期
       setUpDate: "", //选择的计划日期
       dataList: [], //筛选出来的数据的列表
-      hasDataList: "" //是否有数据
+      hasDataList: "", //是否有数据
+      isOved:false   //是否加载完,没有数据了
     };
   },
   components: {},
@@ -562,6 +563,9 @@ export default {
             if(that.page===1){
               that.dataList = [];
               that.hasDataList = false;
+            }
+            if(res.data.length < that.pageSize){
+              that.isOved = true;
             }
             res.data.forEach(item => {
               if (item.FirstTags !== "") {
@@ -849,6 +853,12 @@ export default {
       console.log(this.dataMoreFilter);
       this.isShade = false;
       this.$set(this.filterMenu[3], "selected", false);
+    },
+    moreLoad(){  //加载更多
+      if(!this.isOved){  //可以加载
+        this.page++;
+        this.getQueryRentList();
+      }
     }
   }
 };

@@ -2,7 +2,7 @@
   <div class="pageContent bg_fff">
     <div class="memberTop center">
       <span class="btnModifyInfo">明细</span>
-      <p class="num">0</p>
+      <p class="num">{{score}}</p>
       <p class="title">积分</p>
     </div>
     <div class="integralMain">
@@ -77,15 +77,41 @@
   </div>
 </template>
 <script>
+import { post, toLogin, getCurrentPageUrlWithArgs, trim } from "@/utils";
 export default {
   onLoad() {
     this.setBarTitle();
+  },
+  onShow(){
+    this.userId = wx.getStorageSync("userId");
+    this.token = wx.getStorageSync("token");
+    this.curPage = getCurrentPageUrlWithArgs();
+    this.GetMemberScore();
+  },
+  data() {
+    return {
+      userId:"",
+      token:"",
+      curPage:"",
+      score:0
+    }
   },
   methods: {
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "我的积分"
       });
+    },
+    GetMemberScore(){  //获取会员积分列表
+      let that = this;
+      post("User/GetMemberScore",{
+        UserId:that.userId,
+        Token:that.token
+      },that.curPage).then(res => {
+        if(res.code===0){
+          that.score = res.data.Score;
+        }
+      })
     }
   }
 };

@@ -76,35 +76,38 @@ radio .wx-radio-input.wx-radio-input-checked::before {
 
 /*样式2：选中后重点为对勾*/
 
-// radio .wx-radio-input {
-//     /* 自定义样式.... */
-//     height: 40rpx;
-//     width: 40rpx;
-//     border-radius: 50%;
-//     border: 2rpx solid #999;
-//     background: transparent;
-// }
-// radio .wx-radio-input.wx-radio-input-checked {
-//     border: none;
-//     background: #ff9325;
-// }
-// radio .wx-radio-input.wx-radio-input-checked::before {
-//     border-radius: 50%;
-//     /* 圆角 */
-//     width: 45rpx;
-//     /* 选中后对勾大小，不要超过背景的尺寸 */
-//     height: 45rpx;
-//     /* 选中后对勾大小，不要超过背景的尺寸 */
-//     line-height: 45rpx;
-//     text-align: center;
-//     font-size: 28rpx;
-//     /* 对勾大小 30rpx *
-//     color: #fff;
-//     /* 对勾颜色 白色 */
-//     background: #ff9325;
-//     transform: translate(-50%, -50%) scale(1);
-//     -webkit-transform: translate(-50%, -50%) scale(1);
-// }
+.gou radio .wx-radio-input {
+    /* 自定义样式.... */
+    height: 40rpx !important;
+    width: 40rpx !important;
+    border-radius: 50%;
+    border: 2rpx solid #999;
+    background: transparent;
+}
+
+.gou radio .wx-radio-input.wx-radio-input-checked {
+    border: none;
+    background: #ff9325;
+}
+
+.gou radio .wx-radio-input.wx-radio-input-checked::before {
+    border-radius: 50%;
+    /* 圆角 */
+    width: 45rpx !important;
+    /* 选中后对勾大小，不要超过背景的尺寸 */
+    height: 45rpx !important;
+    /* 选中后对勾大小，不要超过背景的尺寸 */
+    line-height: 45rpx !important;
+    text-align: center;
+    font-size: 28rpx !important;
+    /* 对勾大小 30rpx *
+    color: #fff;
+    /* 对勾颜色 白色 */
+    background: #ff9325;
+    transform: translate(-50%, -50%) scale(1);
+    -webkit-transform: translate(-50%, -50%) scale(1);
+}
+
 
 /*遮罩层*/
 
