@@ -42,7 +42,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 2,
+			"current": 50,
 			"list": [
 				{
 					"id": 0,
@@ -405,7 +405,7 @@
 					"id": 51,
 					"name": "充值",
 					"pathName": "pages/mine2/deposit/main",
-					"query": "",
+					"query": "Wallet=3000",
 					"scene": null
 				},
 				{
@@ -518,6 +518,20 @@
 					"name": "拼租发布正式2",
 					"pathName": "pages/rent/rentOffic/main",
 					"query": "TypeId=37",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "收支明细",
+					"pathName": "pages/mine2/moneyList/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "银行卡列表",
+					"pathName": "pages/mine/chooseBank/main",
+					"query": "",
 					"scene": null
 				}
 			]

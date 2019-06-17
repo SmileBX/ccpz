@@ -161,6 +161,7 @@
 </template>
 
 <script>
+import { post, valPhone, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
 export default {
   onLoad() {
     this.setBarTitle();
@@ -168,14 +169,39 @@ export default {
   data() {
     return {
       menuArr:["/pages/member/memberManage/main","/pages/member/serviceCardChange/main","/pages/member/integral/main","/pages/member/myVertical/main","/pages/member/myCoupon/main","/pages/member/invoiceList/main","/pages/member/feedback/main?type=3","/pages/member/feedback/main?type=2","/pages/member/feedback/main?type=1","/pages/member/help/main","/pages/member/contact/main"],
-      menuArr2:["/pages/member/account/main","/pages/member/myCollect/main","/pages/mine/publish/main","/pages/member/browse/main"]
+      menuArr2:["/pages/mine2/account/main","/pages/mine2/myCollect/main","/pages/mine/publish/main","/pages/member/browse/main"],
+      curPage: "",
+      userId: "",
+      token: "",
+      personInfo:{}
     }
+  },
+  onShow(){
+    this.bankId = this.$store.state.cardInfo.id;
+    this.bankName = this.$store.state.cardInfo.bankName;
+    this.curPage = getCurrentPageUrlWithArgs();
+    this.userId = wx.getStorageSync("userId");
+    this.token = wx.getStorageSync("token");
+    this.curPage = getCurrentPageUrlWithArgs();
+    this.getPerson()
   },
   methods: {
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "我的"
       });
+    },
+    //获取个人信息
+    getPerson(){
+      post('User/GetMemberInfo',{
+        UserId: this.userId,
+        Token: this.token,
+      },this.curPage).then(res=>{
+        if(res.code==0){
+          this.personInfo = res.data
+          console.log(res)
+        }
+      })
     },
     gotoPage(index){
       //type:1:意见反馈；2：合作加盟；3：增值服务
