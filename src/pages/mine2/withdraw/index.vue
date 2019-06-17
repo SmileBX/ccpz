@@ -30,15 +30,13 @@
   </div>
 </template>
 <script>
-// import { post, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
+import { post, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
 export default {
   onLoad() {
     this.setBarTitle();
   },
   onShow() {
     this.Wallet = this.$store.state.Wallet
-    //获取提现的限制条件
-    this.getLimitationOfWithdrawal()
     console.log("___________");
     console.log(this.$store.state.myCardInfo);
     this.bankCardId = this.$store.state.myCardInfo.id;
@@ -51,12 +49,14 @@ export default {
     this.curPage = getCurrentPageUrlWithArgs();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
-    if (toLogin(this.curPage)) {
-      if (this.hasDefaultCard) {
-        this.getBankList();
-      }
-      this.GetInstalMasterInfo();
+    //获取提现的限制条件
+    this.getLimitationOfWithdrawal()
+    if (this.hasDefaultCard) {
+      this.getBankList();
     }
+    
+      
+   
   },
   data() {
     return {
@@ -70,7 +70,13 @@ export default {
       bankCardName: "中国银行",
       bankCardNo: "3790",
       hasDefaultCard: true,
-      amount: "" //提现的金额
+      amount: "",//提现的金额
+      MinWithdrawal:'',	//每次提现最小额度
+      MaxWithdrawal:'',	//每次提现最大额度
+      WithdrawalFee:'',	//提现手续费百分比（100为顶）
+      CashWithdrawalTime:'',	//提现审核时间（单位：小时）
+      DayWithdrawalMaxNum:'',	//会员每日提现最大次数
+      DaySurplusNum:'',//当天已经提现的次数
     };
   },
   methods: {
@@ -81,7 +87,18 @@ export default {
     },
     //获取提现限制条件
     getLimitationOfWithdrawal(){
-      
+      post('DrawMoney/LimitationOfWithdrawal',{
+          UserId: this.userId,
+          Token: this.token,
+      },this.curPage).then(res=>{
+        console.log(res)
+        this.MinWithdrawal = res.data.MinWithdrawal;	
+        this.MaxWithdrawal =  res.data.MaxWithdrawal;	
+        this.WithdrawalFee =  res.data.WithdrawalFee;
+        this.CashWithdrawalTime =  res.data.CashWithdrawalTime;	
+        this.DayWithdrawalMaxNum =  res.data.DayWithdrawalMaxNum;
+        this.DaySurplusNum =  res.data.DaySurplusNum;
+      })
     },
     shiftCardList() {
       this.hasDefaultCard = false;
@@ -93,17 +110,18 @@ export default {
     },
     valOther() {
       let price = Number(this.amount);
-      if (price < 1) {
+      console.log(price)
+      if (price < this.MinWithdrawal) {
         wx.showToast({
-          title: "最低提现金额为1元!",
+          title: `最低提现额度为${this.MinWithdrawal}!`,
           icon: "none",
           duration: 1500
         });
         return false;
       }
-      if (price > this.wallet) {
+      if (price > this.MaxWithdrawal) {
         wx.showToast({
-          title: "输入的提现金额大于可提现金额!",
+          title:`最高提现额度为${this.MaxWithdrawal}!`,
           icon: "none",
           duration: 1500
         });
@@ -117,28 +135,32 @@ export default {
         });
         return false;
       }
+      if (this.DaySurplusNum > this.DayWithdrawalMaxNum) {
+        wx.showToast({
+          title:`每日提现最大次数为${this.DayWithdrawalMaxNum}!`,
+          icon: "none",
+          duration: 1500
+        });
+        return false;
+      }
       return true;
     },
     submitWithdraw() {
       //提现
       if (this.valOther()) {
-        this.DrawMoneyApply();
+        wx.showModal({
+          title: '提现申请',
+          content: `提现手续百分比为${this.WithdrawalFee}(例：100)`,
+          success:(res)=>{
+            if (res.confirm) {
+              this.DrawMoneyApply();
+            } else if (res.cancel) {
+              console.log('用户点击取消')
+            }
+          }
+        })
+        
       }
-    },
-    GetInstalMasterInfo() {
-      let that = this;
-      post(
-        "DrawMoney/memberDrawMoneyApply",
-        {
-          MasterId: that.userId,
-          Token: that.token
-        },
-        that.curPage
-      ).then(result => {
-        if (result.code === 0) {
-          that.wallet = result.data.Wallet;
-        }
-      });
     },
     getBankList() {
       //获取银行卡
@@ -168,9 +190,9 @@ export default {
       //提现
       let that = this;
       post(
-        "InstalMaster/MasterDrawMoneyApply",
+        "DrawMoney/memberDrawMoneyApply",
         {
-          MasterId: that.userId,
+          UserId: that.userId,
           Token: that.token,
           Amount: that.amount,
           BankId: that.bankCardId
@@ -184,9 +206,10 @@ export default {
             icon: "none",
             duration: 1500,
             success: function() {
+              this.amount = ''
               setTimeout(function() {
                 wx.redirectTo({
-                  url: "/pages/master/sum/main"
+                  url: "/pages/mine2/moneyList/main"
                 });
               }, 1500);
             }

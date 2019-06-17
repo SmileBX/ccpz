@@ -42,7 +42,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 50,
+			"current": 70,
 			"list": [
 				{
 					"id": 0,
@@ -531,6 +531,13 @@
 					"id": -1,
 					"name": "银行卡列表",
 					"pathName": "pages/mine/chooseBank/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "会员中心",
+					"pathName": "pages/my/main",
 					"query": "",
 					"scene": null
 				}

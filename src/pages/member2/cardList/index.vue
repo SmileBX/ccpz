@@ -70,30 +70,7 @@ export default {
       isLoad: false,
       isOved: false,
       noDataIsShow: false,
-      cardList: [
-        {
-          BankCardName: "冬冬6",
-          BankCardNo: "451254875421565485",
-          BankLogo:
-            "http://hh.wtvxin.com/upload/admin/2018-11-21/201811211521551423.png",
-          BankName: "招商银行",
-          CreateTime: "2019/5/6 16:47:04",
-          Id: 23,
-          IsBankAUT: 0,
-          IsBankAUTstr: "未认证"
-        },
-        {
-          BankCardName: "冬冬6",
-          BankCardNo: "451254875421565485",
-          BankLogo:
-            "http://hh.wtvxin.com/upload/admin/2018-11-21/201811211521551423.png",
-          BankName: "招商银行",
-          CreateTime: "2019/5/6 16:47:04",
-          Id: 23,
-          IsBankAUT: 0,
-          IsBankAUTstr: "未认证"
-        }
-      ]
+      cardList: [ ]
     };
   },
   methods: {
