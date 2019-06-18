@@ -46,6 +46,7 @@
   </div>
 </template>
 <script>
+import { post, toLogin, getCurrentPageUrlWithArgs, trim } from "@/utils";
 export default {
   onLoad() {
     this.setBarTitle();
