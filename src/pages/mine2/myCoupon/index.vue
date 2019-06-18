@@ -42,7 +42,7 @@
           <div class="txtBox flex1">
             <p class="title">{{item.Title}}</p>
             <p class="time">有效期至{{item.EndTime}}</p>
-            <p class="msg">仅限用户购买会员和购买刷新置顶功能使用</p>
+            <p class="msg">{{item.ScopeOfUse}}</p>
           </div>
         </div>
         <!-- <div class="item flex">
