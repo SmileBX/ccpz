@@ -2,7 +2,7 @@
   <div class="pageContent">
     <div class="invoiceList" v-if="list.length>0" style="margin-top:20rpx">
       <div class="item" v-for="(item,index) in list" :key="index">
-        <div class="item__bd" @click="selectInv(item.Id)">
+        <div class="item__bd">
           <div class="remarks">
             <text class="name">抬头名称：{{item.HeaderName}}</text>
           </div>
@@ -45,7 +45,7 @@
 import { post, toLogin, getCurrentPageUrlWithArgs, trim } from "@/utils";
 export default {
   onLoad() {
-    wx.hideShareMenu();
+    this.setBarTitle();
   },
   onShow() {
     this.userId = wx.getStorageSync("userId");
@@ -66,6 +66,11 @@ export default {
     };
   },
   methods: {
+    setBarTitle() {
+      wx.setNavigationBarTitle({
+        title: "我的发票"
+      });
+    },
     getInvoiceList() {  //获取发票列表
       let that = this;
       post(

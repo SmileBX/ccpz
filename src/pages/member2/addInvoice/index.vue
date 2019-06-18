@@ -53,7 +53,7 @@
           <div class="msg">请先与公司财务确认需要开具的是专用发票</div>
         </div>
         <div class="weui-cell__ft">
-          <switch :checked="isOpen" @change="switchStatus" color="#89674c"/>
+          <switch :checked="isOpen" @change="switchStatus" color="#ff952e"/>
         </div>
       </div>
       <!-- 以下是公司的开具增值税专用发票的时候 -->
@@ -115,6 +115,7 @@ export default {
     this.curPage = getCurrentPageUrlWithArgs();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
+    this.initData();
     if (this.$root.$mp.query.id !== "undefined" && this.$root.$mp.query.id) {
       this.invoiceId = this.$root.$mp.query.id;
       this.getInvoiceInfo();
@@ -148,6 +149,12 @@ export default {
       });
     },
     initData(){
+      this.invoiceId = "";
+      this.isDefault = 1;
+      this.checked = true;
+      this.invoiceType =1;
+      this.isVATExclusive = 0;
+      this.isOpen = false;
       this.headerName = ""; //抬头名称
       this.phone=""; //电话
       this.email=""; //邮箱
@@ -272,7 +279,7 @@ export default {
           //少了一个当银行卡号填写的时候，没有判断银行的卡号，需要拿到最新的h5代码
           if (
             trim(this.bankAccount) !== "" &&
-            !/^([1-9]{1})(\d{15}|\d{16}|\d{18})$/.test(this.bankAccount)
+            !/^([1-9]{1})(\d{15}|\d{16}|\d{17}|\d{18}|\d{19}|\d{20})$/.test(this.bankAccount)
           ) {
             wx.showToast({
               title: "银行卡号格式错误！",
