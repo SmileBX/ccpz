@@ -20,7 +20,7 @@
         <div class="weui-cell__bd">
            <p class="txt">实名认证</p>
         </div>
-        <span class="fontColor">未认证</span>
+        <input type="text" placeholder="未认证" disabled v-model="IsAUT">
       </div>
       <div class="weui-cell" @click="showArea = true">
         <div class="weui-cell__bd">
@@ -162,6 +162,7 @@ export default {
       Contacts:"",
       ContactsTel:"",
       Email:"",
+      IsAUT:"",//是否认证
 
     }
   },
@@ -226,6 +227,7 @@ export default {
            this.WorkIdea = res.data.WorkIdea
            this.Trade = res.data.Trade
            this.Area = res.data.Area
+           this.IsAUT = res.data.IsAUT
         }
       })
     },
