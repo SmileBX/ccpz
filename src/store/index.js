@@ -28,19 +28,6 @@ const store = new Vuex.Store({
             bankLogo: "",
             bankCardName: "",
             bankCardNo: ""
-        },
-        personInfo: { //保存修改的个人信息
-            Avatar: "",
-            AvatarwBase:"",
-            Name: "",
-            Area: "",
-            WorkLife: "",
-            WorkIdea: "",
-            WeChatNum: "",
-            Contacts: "",
-            ContactsTel: "",
-            Email: "",
-            Trade:""
         }
     },
     mutations: {
