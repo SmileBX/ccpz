@@ -2,12 +2,12 @@
   <div class="pageContent">
     <div class="memberTop">
       <img src="/static/images/icons/set.png" @click="gotoSet" class="icon_set" alt>
-      <span class="btnModifyInfo">修改资料</span>
+      <span class="btnModifyInfo" @tap="editInfo">修改资料</span>
       <div class="perInfo level__perInfo flex">
-        <img @click="gotoPerson" src="/static/images/of/tx.jpg" class="tx" alt>
+        <img @click="gotoPerson" :src="personInfo.Avatar" class="tx" alt>
         <div class="info flex1">
           <p class="mt10">
-            <span class="name">罗曼蒂克的爱情</span>
+            <span class="name">{{personInfo.Name}}</span>
             <img src="/static/images/icons/v2.png" class="icon_attestation" alt="">
             <img src="/static/images/icons/attestationTag2.png" class="icon_attestationTag" alt="">
           </p>
@@ -168,7 +168,7 @@ export default {
   },
   data() {
     return {
-      menuArr:["/pages/member/memberManage/main","/pages/member/serviceCardChange/main","/pages/member/integral/main","/pages/member/myVertical/main","/pages/mine2/myCoupon/main","/pages/member/invoiceList/main","/pages/member/feedback/main?type=3","/pages/member/feedback/main?type=2","/pages/member/feedback/main?type=1","/pages/member/help/main","/pages/member/contact/main"],
+      menuArr:["/pages/member2/memberManage/main","/pages/member/serviceCardChange/main","/pages/member/integral/main","/pages/mine2/myVertical/main","/pages/mine2/myCoupon/main","/pages/member/invoiceList/main","/pages/member/feedback/main?type=3","/pages/member/feedback/main?type=2","/pages/member/feedback/main?type=1","/pages/member/help/main","/pages/member/contact/main"],
       menuArr2:["/pages/mine2/account/main","/pages/mine2/myCollect/main","/pages/mine/publish/main","/pages/member/browse/main"],
       curPage: "",
       userId: "",
@@ -222,6 +222,11 @@ export default {
     gotoSet(){
       wx.navigateTo({
         url:"/pages/member/set/main"
+      })
+    },
+    editInfo(){
+      wx.navigateTo({
+        url:"/pages/mine/editInfo/main"
       })
     }
     
