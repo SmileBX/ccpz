@@ -28,6 +28,19 @@ const store = new Vuex.Store({
             bankLogo: "",
             bankCardName: "",
             bankCardNo: ""
+        },
+        personInfo:{
+            Avatar:"",
+            Name:  "",
+            Area:  "",
+            WorkLife: "",
+            WorkIdea:  "",
+            WeChatNum: "",
+            Contacts: "",
+            ContactsTel: "",
+            Email: "",
+            Trade:"",
+            AvatarwBase:"",
         }
     },
     mutations: {
