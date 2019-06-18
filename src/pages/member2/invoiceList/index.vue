@@ -51,6 +51,8 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
+    this.list =[];
+    this.hasDataList ="";
     this.getInvoiceList();
   },
   data() {
@@ -139,7 +141,12 @@ export default {
             icon: "none",
             duration: 1500,
             success: function() {
-              that.list.splice(index, 1);
+              setTimeout(()=>{
+                that.list.splice(index, 1);
+                if(that.list.length===0){
+                  that.hasDataList = false;
+                }
+              },1500)
             }
           });
         }

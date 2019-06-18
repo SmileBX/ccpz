@@ -354,6 +354,9 @@ export default {
     this.curPage = getCurrentPageUrlWithArgs();
     this.cityName = wx.getStorageSync("cityName");
     this.cityCode = wx.getStorageSync("cityCode");
+    this.twoTypeList = [];
+    this.initAll();
+    this.initDataList();
     if (
       this.$root.$mp.query.type !== "undefined" &&
       this.$root.$mp.query.type
@@ -361,6 +364,7 @@ export default {
       this.type = this.$root.$mp.query.type;
       this.getSubMenu();
     }
+    console.log("")
   },
   methods: {
     setBarTitle() {
@@ -469,6 +473,11 @@ export default {
             //有下级类的时候
             that.oneId = res.data[0].Id;
             that.getSubTwoMenu();
+          }else{  //没有下级类的时候
+            that.typeId = res.data[0].Id;
+            that.pageId = res.data[0].PageId;
+            that.getQueryRentList();
+            that.GetFilterQuery();
           }
         }
       });
@@ -601,7 +610,16 @@ export default {
       this.isShadeType = ""; //类型弹窗
       this.isShade = false; //遮罩
       this.initAll();
-      this.getSubTwoMenu();
+      if(this.oneTypeList[index].PageId !==0){  //没有二级
+       console.log("这里点击切换一级的时候，pageid不是0");
+        this.pageId = this.oneTypeList[index].PageId;
+        this.typeId = id;
+        this.getQueryRentList();
+        this.GetFilterQuery();
+      }else{
+        this.getSubTwoMenu();
+      }
+      
     },
     shiftTwoType(index, pageId,id) {
       //切换二级类

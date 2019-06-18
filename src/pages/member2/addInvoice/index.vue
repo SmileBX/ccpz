@@ -119,7 +119,10 @@ export default {
     this.curPage = getCurrentPageUrlWithArgs();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
+    this.initData();
+    console.log("___________")
     console.log(this.$root.$mp.query.id);
+    console.log("___________")
     if (this.$root.$mp.query.id !== "undefined" && this.$root.$mp.query.id) {
       this.invoiceId = this.$root.$mp.query.id;
       this.getInvoiceInfo();
@@ -151,6 +154,16 @@ export default {
       wx.setNavigationBarTitle({
         title: "新增常用发票"
       });
+    },
+    initData(){
+      this.headerName = ""; //抬头名称
+      this.phone=""; //电话
+      this.email=""; //邮箱
+      this.taxNumber=""; //税号
+      this.bankName=""; //开户银行
+      this.regCall=""; //注册电话
+      this.bankAccount=""; //银行账号
+      this.regAddress="";//注册地址
     },
     shiftInvoiceType(index) {
       this.invoiceType = index;
@@ -267,7 +280,7 @@ export default {
           //少了一个当银行卡号填写的时候，没有判断银行的卡号，需要拿到最新的h5代码
           if (
             trim(this.bankAccount) !== "" &&
-            !/^([1-9]{1})(\d{15}|\d{16}|\d{18})$/.test(this.bankAccount)
+            !/^([1-9]{1})(\d{15}|\d{16}|\d{17}|\d{18}|\d{19}|\d{20})$/.test(this.bankAccount)
           ) {
             wx.showToast({
               title: "银行卡号格式错误！",

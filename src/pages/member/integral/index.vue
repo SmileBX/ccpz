@@ -1,7 +1,7 @@
 <template>
   <div class="pageContent bg_fff">
     <div class="memberTop center">
-      <span class="btnModifyInfo">明细</span>
+      <span class="btnModifyInfo" @tap="gotoIntegralList">明细</span>
       <p class="num">{{score}}</p>
       <p class="title">积分</p>
     </div>
@@ -9,63 +9,18 @@
       <h3 class="integralTitle center">
         <span class="bg_title"><span class="title">积分兑会员</span></span>
       </h3>
-      <div class="integral__bd">
+      <div class="integral__bd"  v-if="list.length>0">
         <swiper class="integralSwiper" previous-margin="60rpx" next-margin="30rpx" circular="true">
-          <swiper-item class="item one__item">
+          <swiper-item class="item" v-for="(item,index) in list" :key="index" :class="{'one__item':item.ExpireDays===1,'month__item':item.ExpireDays===30,'season__item':item.ExpireDays===90,'year__item':item.ExpireDays===360}">
             <div class="outside">
-              <div class="typePic one__gradient">
-                <p class="type">会员次卡</p>
+              <div class="typePic" :class="{'one__gradient':item.ExpireDays===1,'month__gradient':item.ExpireDays===30,'season__gradient':item.ExpireDays===90,'year__gradient':item.ExpireDays===360}">
+                <p class="type">会员{{item.Name}}</p>
                 <img src="/static/images/icons/v3.png" class="icons-vip gradient-vip" alt>
               </div>
               <div class="txtBox flex flexAlignCenter">
                 <div class="flex1">
-                  <p class="type">会员次卡</p>
-                  <p class="num">2000分</p>
-                </div>
-                <span class="weui-btn">立即兑换</span>
-              </div>
-            </div>
-          </swiper-item>
-          <swiper-item class="item month__item">
-            <div class="outside">
-              <div class="typePic month__gradient">
-                <p class="type">会员月卡</p>
-                <img src="/static/images/icons/v3.png" class="icons-vip gradient-vip" alt>
-              </div>
-              <div class="txtBox flex flexAlignCenter">
-                <div class="flex1">
-                  <p class="type">会员月卡</p>
-                  <p class="num">2000分</p>
-                </div>
-                <span class="weui-btn">立即兑换</span>
-              </div>
-            </div>
-          </swiper-item>
-          <swiper-item class="item season__item">
-            <div class="outside">
-              <div class="typePic season__gradient">
-                <p class="type">会员季卡</p>
-                <img src="/static/images/icons/v3.png" class="icons-vip gradient-vip" alt>
-              </div>
-              <div class="txtBox flex flexAlignCenter">
-                <div class="flex1">
-                  <p class="type">会员季卡</p>
-                  <p class="num">2000分</p>
-                </div>
-                <span class="weui-btn">立即兑换</span>
-              </div>
-            </div>
-          </swiper-item>
-          <swiper-item class="item year__item">
-            <div class="outside">
-              <div class="typePic year__gradient">
-                <p class="type">会员年卡</p>
-                <img src="/static/images/icons/v3.png" class="icons-vip gradient-vip" alt>
-              </div>
-              <div class="txtBox flex flexAlignCenter">
-                <div class="flex1">
-                  <p class="type">会员年卡</p>
-                  <p class="num">2000分</p>
+                  <p class="type">会员{{item.Name}}</p>
+                  <p class="num">{{item.NeedScore}}分</p>
                 </div>
                 <span class="weui-btn">立即兑换</span>
               </div>
@@ -86,14 +41,20 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
-    this.GetMemberScore();
+    if(toLogin(this.curPage)){
+      this.GetMemberScore();
+      this.getdhScoreList();
+    }
+    
   },
   data() {
     return {
       userId:"",
       token:"",
       curPage:"",
-      score:0
+      score:0,
+      list:[]  //积分兑换卡的列表数据
+
     }
   },
   methods: {
@@ -102,7 +63,7 @@ export default {
         title: "我的积分"
       });
     },
-    GetMemberScore(){  //获取会员积分列表
+    GetMemberScore(){  //获取会员积分
       let that = this;
       post("User/GetMemberScore",{
         UserId:that.userId,
@@ -111,6 +72,23 @@ export default {
         if(res.code===0){
           that.score = res.data.Score;
         }
+      })
+    },
+    getdhScoreList(){  //积分兑换商品列表
+    let that = this;
+      post("User/dhScoreList",{
+        UserId:that.userId,
+        Token:that.token
+      },that.curPage).then(res => {
+        if(res.code===0){  //获取成功
+           that.list = res.data;
+        }
+      })
+
+    },
+    gotoIntegralList(){
+      wx.navigateTo({
+        url: '/pages/member2/integralList/main'
       })
     }
   }

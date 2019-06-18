@@ -13,15 +13,15 @@
         </li>
       </ul>
     </div>
-    <scroll-view class="filterContent" scroll-y="true">
+    <scroll-view class="filterContent" scroll-y="true" @scrolltolower="moreLoad">
       <ul class="detailList" v-if="list.length>0">
         <li v-for="(item,index) in list" :key="index">
           <div class="flex">
             <div class="flex1">
-              <p class="title">完善资料</p>
+              <p class="title">{{item.Statusstr}}</p>
             </div>
             <p class="change right text_r">
-              <span class="changeNum add">+20</span>
+              <span class="changeNum" :class="[item.changeType===1 ? 'add':'reduce']">{{item.Change}}</span>
             </p>
           </div>
           <div class="flex">
@@ -31,188 +31,17 @@
             <p class="num right text_r">积分：{{item.After}}</p>
           </div>
         </li>
-        <li>
-          <div class="flex">
-            <div class="flex1">
-              <p class="title">兑换会员次卡</p>
-            </div>
-            <p class="change right text_r">
-              <span class="changeNum reduce">-200</span>
-            </p>
-          </div>
-          <div class="flex">
-            <div class="flex1">
-              <p class="time">2018-08-12 11:06</p>
-            </div>
-            <p class="num right text_r">积分：20</p>
-          </div>
-        </li>
-        <li>
-          <div class="flex">
-            <div class="flex1">
-              <p class="title">完善资料</p>
-            </div>
-            <p class="change right text_r">
-              <span class="changeNum add">+20</span>
-            </p>
-          </div>
-          <div class="flex">
-            <div class="flex1">
-              <p class="time">2018-08-12 11:06</p>
-            </div>
-            <p class="num right text_r">积分：120</p>
-          </div>
-        </li>
-        <li>
-          <div class="flex">
-            <div class="flex1">
-              <p class="title">兑换会员次卡</p>
-            </div>
-            <p class="change right text_r">
-              <span class="changeNum reduce">-200</span>
-            </p>
-          </div>
-          <div class="flex">
-            <div class="flex1">
-              <p class="time">2018-08-12 11:06</p>
-            </div>
-            <p class="num right text_r">积分：20</p>
-          </div>
-        </li>
-        <li>
-          <div class="flex">
-            <div class="flex1">
-              <p class="title">完善资料</p>
-            </div>
-            <p class="change right text_r">
-              <span class="changeNum add">+20</span>
-            </p>
-          </div>
-          <div class="flex">
-            <div class="flex1">
-              <p class="time">2018-08-12 11:06</p>
-            </div>
-            <p class="num right text_r">积分：120</p>
-          </div>
-        </li>
-        <li>
-          <div class="flex">
-            <div class="flex1">
-              <p class="title">兑换会员次卡</p>
-            </div>
-            <p class="change right text_r">
-              <span class="changeNum reduce">-200</span>
-            </p>
-          </div>
-          <div class="flex">
-            <div class="flex1">
-              <p class="time">2018-08-12 11:06</p>
-            </div>
-            <p class="num right text_r">积分：20</p>
-          </div>
-        </li>
-        <li>
-          <div class="flex">
-            <div class="flex1">
-              <p class="title">完善资料</p>
-            </div>
-            <p class="change right text_r">
-              <span class="changeNum add">+20</span>
-            </p>
-          </div>
-          <div class="flex">
-            <div class="flex1">
-              <p class="time">2018-08-12 11:06</p>
-            </div>
-            <p class="num right text_r">积分：120</p>
-          </div>
-        </li>
-        <li>
-          <div class="flex">
-            <div class="flex1">
-              <p class="title">兑换会员次卡</p>
-            </div>
-            <p class="change right text_r">
-              <span class="changeNum reduce">-200</span>
-            </p>
-          </div>
-          <div class="flex">
-            <div class="flex1">
-              <p class="time">2018-08-12 11:06</p>
-            </div>
-            <p class="num right text_r">积分：20</p>
-          </div>
-        </li>
-        <li>
-          <div class="flex">
-            <div class="flex1">
-              <p class="title">完善资料</p>
-            </div>
-            <p class="change right text_r">
-              <span class="changeNum add">+20</span>
-            </p>
-          </div>
-          <div class="flex">
-            <div class="flex1">
-              <p class="time">2018-08-12 11:06</p>
-            </div>
-            <p class="num right text_r">积分：120</p>
-          </div>
-        </li>
-        <li>
-          <div class="flex">
-            <div class="flex1">
-              <p class="title">兑换会员次卡</p>
-            </div>
-            <p class="change right text_r">
-              <span class="changeNum reduce">-200</span>
-            </p>
-          </div>
-          <div class="flex">
-            <div class="flex1">
-              <p class="time">2018-08-12 11:06</p>
-            </div>
-            <p class="num right text_r">积分：20</p>
-          </div>
-        </li>
-        <li>
-          <div class="flex">
-            <div class="flex1">
-              <p class="title">完善资料</p>
-            </div>
-            <p class="change right text_r">
-              <span class="changeNum add">+20</span>
-            </p>
-          </div>
-          <div class="flex">
-            <div class="flex1">
-              <p class="time">2018-08-12 11:06</p>
-            </div>
-            <p class="num right text_r">积分：120</p>
-          </div>
-        </li>
-        <li>
-          <div class="flex">
-            <div class="flex1">
-              <p class="title">兑换会员次卡</p>
-            </div>
-            <p class="change right text_r">
-              <span class="changeNum reduce">-200</span>
-            </p>
-          </div>
-          <div class="flex">
-            <div class="flex1">
-              <p class="time">2018-08-12 11:06</p>
-            </div>
-            <p class="num right text_r">积分：20</p>
-          </div>
-        </li>
       </ul>
       <div
         class="noData center"
         style="padding:60rpx 30rpx;"
         v-if="hasDataList===false && hasDataList !=='' && page===1"
       >暂无数据</div>
+      <div
+        class="noData center"
+        style="padding:20rpx 30rpx;"
+        v-if="isOved && page>1"
+      >我也是有底线的</div>
     </scroll-view>
   </div>
 </template>
@@ -226,6 +55,7 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
+    this.initData();
     this.getScoreList();
   },
   data() {
@@ -246,6 +76,12 @@ export default {
       wx.setNavigationBarTitle({
         title: "积分明细"
       });
+    },
+    initData(){
+      this.list =[];
+      this.isOved =false;
+      this.hasDataList ="";
+      this.page =1;
     },
     shiftMenu(index) {
       //切换tab
@@ -278,9 +114,15 @@ export default {
             if(res.data.length < that.pageSize){
               that.isOved = true;
             }
-            if (res.data.length < that.pageSize) {
-              that.isOved = true;
-            }
+            res.data.forEach(item => {
+              if(item.Change[0]==="+"){
+                that.$set(item,"changeType",1);
+              }
+              else{
+                that.$set(item,"changeType",0);
+              }
+            });
+            console.log(res.data);
             that.list = that.list.concat(res.data);
           } else {
             that.hasDataList = false;

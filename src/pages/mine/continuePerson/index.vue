@@ -139,7 +139,7 @@ export default {
       return base64Arr;
     },
     //提交资料
-    submitPatic(){
+    async submitPatic(){
       this.Avatar = await this.base64Img(this.Avatar)
       console.log(this.Avatar,"**************")
       if(this.valOther()){
