@@ -31,6 +31,7 @@ const store = new Vuex.Store({
         },
         personInfo: { //保存修改的个人信息
             Avatar: "",
+            AvatarwBase:"",
             Name: "",
             Area: "",
             WorkLife: "",
