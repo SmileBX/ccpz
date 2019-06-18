@@ -42,7 +42,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 23,
+			"current": 24,
 			"list": [
 				{
 					"id": 0,
@@ -213,7 +213,7 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 24,
 					"name": "修改手机号",
 					"pathName": "pages/member/modifyTel/main",
 					"query": "",
