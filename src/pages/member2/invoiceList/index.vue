@@ -7,16 +7,12 @@
             <text class="name">抬头名称：{{item.HeaderName}}</text>
           </div>
           <div class="type">类型：{{item.InvoiceTitlestr}}</div>
-          <div class="type" v-if="item.InvoiceTitle===2">税号：{{item.TaxNumber}}</div>
+          <div class="type" v-if="item.InvoiceTitle===1">税号：{{item.TaxNumber}}</div>
         </div>
         <div class="item__ft flex">
-          <label
-            class="flexItem checkedLabel flex gou flexAlignCneter"
-            @tap="SetDefaultinvoice(index,item.Id)"
-          >
+          <label class="flexItem checkedLabel flex flexAlignCneter">
             <radio value :checked="item.IsDefault===1" color="#ff952e"/>
-            <span v-if="item.IsDefault===1" style="color:#ff952e">已设为默认</span>
-            <span v-else>设为默认</span>
+            <span>已设为默认</span>
           </label>
           <div class="flexItem flex1 text_r">
             <div class="iconText inline-block" @click="gotoAddInvoice(item.Id)">
@@ -29,11 +25,10 @@
         </div>
       </div>
     </div>
-    <div class="noData center" style="padding:60rpx 30rpx;" v-if="hasDataList===false && hasDataList !=='' && page===1">暂无数据</div>
     <div class="ftBtn" style="height:100rpx">
       <div class="inner fixed bm0">
         <div class="btns">
-          <div class="btn center bg_ff952e color_fff" @click="gotoAddInvoice(-1)">
+          <div class="btn center bg_ff952e color_fff">
             <img src="/static/images/icons/add3.png" class="icon-add" alt> 新增发票信息
           </div>
         </div>
@@ -42,7 +37,6 @@
   </div>
 </template>
 <script>
-import { post, toLogin, getCurrentPageUrlWithArgs, trim } from "@/utils";
 export default {
   onLoad() {
     wx.hideShareMenu();
@@ -51,8 +45,8 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
-    this.list =[];
-    this.hasDataList ="";
+    this.list = [];
+    this.hasDataList = "";
     this.getInvoiceList();
   },
   data() {
@@ -61,12 +55,12 @@ export default {
       token: "",
       curPage: "",
       list: [],
-      hasDataList:"",
-      page:1
+      hasDataList: "",
+      page: 1
     };
   },
   methods: {
-    getInvoiceList() {
+    getInvoiceList() {  //获取发票列表
       let that = this;
       post(
         "About/invoiceList",
@@ -80,7 +74,7 @@ export default {
           if (res.data.length > 0) {
             that.hasDataList = true;
             that.list = res.data;
-          }else{
+          } else {
             that.hasDataList = false;
           }
         }
@@ -109,7 +103,6 @@ export default {
               that.$set(item, "IsDefault", 1);
             }
           });
-
           wx.showToast({
             title: "设置默认发票成功！",
             icon: "none",
@@ -124,29 +117,20 @@ export default {
         }
       });
     },
-    deleteBtn(index, id) {
+    deleteBtn(index, id){
       let that = this;
-      post(
-        "About/Deleteinvoice",
-        {
-          UserId: that.userId,
+      post("About/Deleteinvoice",{
+        UserId: that.userId,
           Token: that.token,
           Id: id
-        },
-        that.curPage
-      ).then(res => {
-        if (res.code === 0) {
+      },that.curPage).then(res => {
+         if (res.code === 0) {
           wx.showToast({
             title: "删除成功",
             icon: "none",
             duration: 1500,
             success: function() {
-              setTimeout(()=>{
-                that.list.splice(index, 1);
-                if(that.list.length===0){
-                  that.hasDataList = false;
-                }
-              },1500)
+              that.list.splice(index, 1);
             }
           });
         }

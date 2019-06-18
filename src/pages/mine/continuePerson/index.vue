@@ -48,6 +48,7 @@ export default {
       userId: "",
       token: "",
       Avatar:"",//头像
+      AvatarBase:"",
       Name:"", //昵称
       Area:"",//地区 格式：'1级,2级'
       Trade:"", //行业 格式：'1级,2级'
@@ -63,7 +64,7 @@ export default {
     this.setBarTitle();
   },
   onShow(){
-    console.log(this.$store.state.personInfo,"__________")
+    // console.log(this.$store.state.personInfo,"__________")
     this.curPage = getCurrentPageUrlWithArgs();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
@@ -77,7 +78,7 @@ export default {
     this.WeChatNum = this.$store.state.personInfo.WeChatNum
     this.Email = this.$store.state.personInfo.Email
     this.ContactsTel = this.$store.state.personInfo.ContactsTel
-    console.log(this.Trade)
+    this.AvatarwBase = this.$store.state.personInfo.AvatarwBase
   },
   methods: {
     setBarTitle() {
@@ -96,6 +97,7 @@ export default {
       this.Contacts = ""
       this.ContactsTel = ""
       this.Email = ""
+      this.AvatarwBase = ""
       const personInfo = {
           Avatar: this.Avatar,
           Name:  this.Name,
@@ -106,7 +108,8 @@ export default {
           Contacts:  this.Contacts,
           ContactsTel: this.ContactsTel,
           Email: this.Email,
-           Trade:this.Trade
+          Trade:this.Trade,
+          AvatarwBase:this.AvatarwBase
       }
       this.$store.commit('update',{personInfo})
     },
@@ -134,19 +137,20 @@ export default {
       }
       return true;
     },
-     async base64Img(path) {
-      const base64Arr = await pathToBase64(path);
-      return base64Arr;
-    },
+    // async base64Img(path) {
+    //   const base64Arr = await pathToBase64(path);
+    //   return base64Arr;
+    // },
     //提交资料
     async submitPatic(){
-      this.Avatar = await this.base64Img(this.Avatar)
-      console.log(this.Avatar,"**************")
+      // console.log(this.Avatar,"///////////////")
+      // let _Avatar = await this.base64Img(this.Avatar)
+      console.log(this.AvatarwBase,"**************")
       if(this.valOther()){
         post('User/UpdateMemberInfo',{
           UserId: this.userId,
           Token: this.token,
-          Avatar: this.Avatar,
+          Avatar: this.AvatarwBase,
           Name: this.Name,
           Area: this.Area,
           WorkLife: this.WorkLife,

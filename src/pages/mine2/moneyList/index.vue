@@ -38,7 +38,7 @@ export default {
   data(){
     return {
       menulist:[
-        {Id:0,Name:'全部'},{Id:1,Name:'充值记录'},{Id:2,Name:'提现记录'}
+        {Id:0,Name:'全部'},{Id:1,Name:'充值记录'},{Id:2,Name:'提现记录'},{Id:3,Name:'购买记录'}
       ],
       curPage: "",
       userId: "",    
@@ -73,18 +73,14 @@ export default {
         Token:this.token,
         Type:this.aa
       },this.curPage).then(res=>{
-        console.log("res:",res)
+        // console.log("res:",res)
         if(res.code==0){
           this.moneylist = res.data
           res.data.map(item=>{
             let date= new Date(item.AddTime)
             let time = formatTime(date)
-            // // let _time=time.split(' ')[0].split('/').join('-')+" "+time.split(' ')[1].split(':').splice(0,2).join(':')
-            // // console.log(_time)
-            // console.log(time.split(' ')[1].split(':').splice(0,2).join(':'))
-            // console.log(time.split(' ')[0].split('/').join('-'))
             item=Object.assign(item,{AddTime:time})
-            console.log(item.AddTime)
+            // console.log(item.AddTime)
             this.$set(item,"AddTime",time.split(' ')[0].split('/').join('-')+" "+time.split(' ')[1].split(':').splice(0,2).join(':'))
             
           })
