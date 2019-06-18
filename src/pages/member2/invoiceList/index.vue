@@ -143,7 +143,7 @@ export default {
             success: function() {
               that.list.splice(index, 1);
               if(that.list.length===0){
-                that.hasDataList = "";
+                that.hasDataList = false;
               }
             }
           });
