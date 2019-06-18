@@ -6,8 +6,8 @@
           <label class="weui-label">发票类型</label>
         </div>
         <div class="weui-cell__bd">
-          <div class="tag" :class="{'active':invoiceType===0}" @click="shiftInvoiceType(0)">个人</div>
-          <div class="tag" :class="{'active':invoiceType===1}" @click="shiftInvoiceType(1)">公司</div>
+          <div class="tag" :class="{'active':invoiceType===1}" @click="shiftInvoiceType(1)">个人</div>
+          <div class="tag" :class="{'active':invoiceType===2}" @click="shiftInvoiceType(2)">公司</div>
         </div>
       </div>
       <div class="weui-cell">
@@ -19,7 +19,7 @@
         </div>
       </div>
       <!-- 这个是公司的 -->
-      <div class="weui-cell" v-if="invoiceType===1">
+      <div class="weui-cell" v-if="invoiceType===2">
         <div class="weui-cell__hd">
           <label class="weui-label">公司税号</label>
         </div>
@@ -30,24 +30,24 @@
     </div>
     <div class="weui-cells addInvoice__weui-cells">
       <!-- 这个是个人的 -->
-      <div class="weui-cell" v-if="invoiceType===0">
+      <div class="weui-cell" v-if="invoiceType===1">
         <div class="weui-cell__hd">
           <label class="weui-label">电话号码</label>
         </div>
         <div class="weui-cell__bd">
-          <input type="text" class="weui-input" v-model="regCall" placeholder="选填">
+          <input type="text" class="weui-input" v-model="phone" placeholder="选填">
         </div>
       </div>
-      <div class="weui-cell" v-if="invoiceType===0">
+      <div class="weui-cell" v-if="invoiceType===1">
         <div class="weui-cell__hd">
           <label class="weui-label">邮箱</label>
         </div>
         <div class="weui-cell__bd">
-          <input type="text" class="weui-input"  placeholder="选填">
+          <input type="text" class="weui-input" v-model="email"  placeholder="选填">
         </div>
       </div>
       <!-- 以下是公司的 -->
-      <div class="weui-cell" v-if="invoiceType===1">
+      <div class="weui-cell" v-if="invoiceType===2">
         <div class="weui-cell__bd">
           <div class="title">需要增值税专用发票</div>
           <div class="msg">请先与公司财务确认需要开具的是专用发票</div>
@@ -57,7 +57,7 @@
         </div>
       </div>
       <!-- 以下是公司的开具增值税专用发票的时候 -->
-      <div class="weui-cell" v-if="isOpen && invoiceType===1">
+      <div class="weui-cell" v-if="isOpen && invoiceType===2">
         <div class="weui-cell__hd">
           <label class="weui-label">注册地址</label>
         </div>
@@ -65,7 +65,7 @@
           <input type="text" class="weui-input" v-model="regAddress" placeholder="请输入公司注册地址" >
         </div>
       </div>
-      <div class="weui-cell" v-if="isOpen && invoiceType===1">
+      <div class="weui-cell" v-if="isOpen && invoiceType===2">
         <div class="weui-cell__hd">
           <label class="weui-label">公司电话</label>
         </div>
@@ -73,7 +73,7 @@
           <input type="text" class="weui-input" v-model="regCall" placeholder="请输入公司电话" >
         </div>
       </div>
-      <div class="weui-cell" v-if="isOpen && invoiceType===1">
+      <div class="weui-cell" v-if="isOpen && invoiceType===2">
         <div class="weui-cell__hd">
           <label class="weui-label">开户银行</label>
         </div>
@@ -81,7 +81,7 @@
           <input type="text" class="weui-input" v-model="bankName" placeholder="请输入公司开户行名称">
         </div>
       </div>
-      <div class="weui-cell" v-if="isOpen && invoiceType===1">
+      <div class="weui-cell" v-if="isOpen && invoiceType===2">
         <div class="weui-cell__hd">
           <label class="weui-label">银行账号</label>
         </div>
@@ -106,6 +106,7 @@
   </div>
 </template>
 <script>
+import { post, toLogin, getCurrentPageUrlWithArgs, trim } from "@/utils";
 export default {
   onLoad() {
     this.setBarTitle();
@@ -114,10 +115,6 @@ export default {
     this.curPage = getCurrentPageUrlWithArgs();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
-    this.initData();
-    console.log("___________")
-    console.log(this.$root.$mp.query.id);
-    console.log("___________")
     if (this.$root.$mp.query.id !== "undefined" && this.$root.$mp.query.id) {
       this.invoiceId = this.$root.$mp.query.id;
       this.getInvoiceInfo();
@@ -129,12 +126,14 @@ export default {
       curPage: "",
       checked: true,
       isDefault: 1,
-      invoiceType: 0, //0:个人；1：公司
+      invoiceType: 1, //1:个人；2：公司
       isOpen: false, //是否打开需要增值税专用发票
       isVATExclusive: 0, //0:不需要专用发票；1：需要
       userId: "",
       token: "",
       headerName: "", //抬头名称
+      phone: "", //电话
+      email: "", //邮箱
       taxNumber: "", //税号
       bankName: "", //开户银行
       regCall: "", //注册电话
@@ -181,23 +180,18 @@ export default {
       }
     },
     Authentication() {
-      if (this.headerName == "") {
-        uni.showToast({
+      if (trim(this.headerName) == "") {
+        wx.showToast({
           title: "请输入抬头名称！",
           icon: "none",
           duration: 1500
         });
         return false;
       }
-      if (this.invoiceType === 0) {
-        if (this.regCall != "") {
-          if (
-            !(
-              /^0\d{2,3}-\d{7,8}$/.test(this.regCall) ||
-              /^[1][3,4,5,6,7,8][0-9]{9}$/.test(this.regCall)
-            )
-          ) {
-            uni.showToast({
+      if (this.invoiceType === 1) {
+        if (trim(this.phone) !== "") {
+          if (!/^[1][3,4,5,6,7,8][0-9]{9}$/.test(this.phone)) {
+            wx.showToast({
               title: "请输入正确的电话格式！",
               icon: "none",
               duration: 1500
@@ -205,10 +199,22 @@ export default {
             return false;
           }
         }
+        if (trim(this.email) !== "") {
+          if (
+            !/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(this.email)
+          ) {
+            wx.showToast({
+              title: "请输入正确的邮箱地址！",
+              icon: "none",
+              duration: 1500
+            });
+            return false;
+          }
+        }
       }
-      if (this.invoiceType === 1) {
-        if (this.taxNumber == "") {
-          uni.showToast({
+      if (this.invoiceType === 2) {
+        if (trim(this.taxNumber) == "") {
+          wx.showToast({
             title: "请输入税号！",
             icon: "none",
             duration: 1500
@@ -216,30 +222,30 @@ export default {
           return false;
         }
         if (this.isOpen) {
-          if (this.regAddress == "") {
-            uni.showToast({
+          if (trim(this.regAddress) == "") {
+            wx.showToast({
               title: "请输入注册地址！",
               icon: "none",
               duration: 1500
             });
             return false;
           }
-          if (this.regCall == "") {
-            uni.showToast({
+          if (trim(this.regCall) == "") {
+            wx.showToast({
               title: "请输入公司电话！",
               icon: "none",
               duration: 1500
             });
             return false;
           }
-          if (this.regCall != "") {
+          if (trim(this.regCall) !== "") {
             if (
               !(
                 /^0\d{2,3}-\d{7,8}$/.test(this.regCall) ||
                 /^[1][3,4,5,6,7,8][0-9]{9}$/.test(this.regCall)
               )
             ) {
-              uni.showToast({
+              wx.showToast({
                 title: "请输入正确的电话格式！",
                 icon: "none",
                 duration: 1500
@@ -247,16 +253,16 @@ export default {
               return false;
             }
           }
-          if (this.bankName == "") {
-            uni.showToast({
+          if (trim(this.bankName) == "") {
+            wx.showToast({
               title: "请输入开户银行！",
               icon: "none",
               duration: 1500
             });
             return false;
           }
-          if (this.bankAccount == "") {
-            uni.showToast({
+          if (trim(this.bankAccount) == "") {
+            wx.showToast({
               title: "请输入银行账号！",
               icon: "none",
               duration: 1500
@@ -266,9 +272,9 @@ export default {
           //少了一个当银行卡号填写的时候，没有判断银行的卡号，需要拿到最新的h5代码
           if (
             trim(this.bankAccount) !== "" &&
-            !/^([1-9]{1})(\d{15}|\d{16}|\d{17}|\d{18}|\d{19}|\d{20})$/.test(this.bankAccount)
+            !/^([1-9]{1})(\d{15}|\d{16}|\d{18})$/.test(this.bankAccount)
           ) {
-            uni.showToast({
+            wx.showToast({
               title: "银行卡号格式错误！",
               icon: "none",
               duration: 1500
@@ -281,7 +287,7 @@ export default {
     },
     btnSure() {
       //点击保存按钮
-      if (this.invoiceId == "") {
+      if (trim(this.invoiceId) == "") {
         if (this.Authentication()) {
           this.addInvoice();
         }
@@ -291,128 +297,117 @@ export default {
         }
       }
     },
-    async getInvoiceInfo() {
+    getInvoiceInfo() {
       //获取发票信息
-      let result = await post("Invoice/GetInvoiceInfo", {
-        Id: this.invoiceId,
-        UserId: this.userId,
-        Token: this.token
+      post(
+        "About/GetInfo",
+        {
+          Id: this.invoiceId,
+          UserId: this.userId,
+          Token: this.token
+        },
+        this.curPage
+      ).then(res => {
+        if (res.code === 0) {
+          this.headerName = res.data.HeaderName;
+          if(res.data.InvoiceTitle===2){  //公司的时候
+            this.taxNumber = res.data.TaxNumber;
+            this.bankName = res.data.BankName;
+            this.regCall = res.data.RegCall;
+            this.bankAccount = res.data.BankAccount;
+            this.bankName = res.data.BankName;
+            this.regAddress = res.data.RegAddress;
+            this.isVATExclusive = res.data.IsVATExclusive;
+          }
+          if(res.data.InvoiceTitle===1){  //个人的时候
+            this.phone = res.data.Phone;
+            this.email = res.data.Email;
+          }
+          if (this.isVATExclusive === 1) {
+            this.isOpen = true;
+          }
+          this.invoiceType = res.data.InvoiceTitle;
+          this.isDefault = res.data.IsDefault;
+          if (this.isDefault === 1) {
+            this.checked = true;
+          }
+        }
       });
-      if (result.code === 0) {
-        this.headerName = result.data.HeaderName;
-        this.taxNumber = result.data.TaxNumber;
-        this.bankName = result.data.BankName;
-        this.regCall = result.data.RegCall;
-        this.bankAccount = result.data.BankAccount;
-        this.bankName = result.data.BankName;
-        this.regAddress = result.data.RegAddress;
-        this.isVATExclusive = result.data.IsVATExclusive;
-        if (this.isVATExclusive === 1) {
-          this.isOpen = true;
-        }
-        this.invoiceType = result.data.InvoiceTitle;
-        this.isDefault = result.data.IsDefault;
-
-        if (this.isDefault === 1) {
-          this.checked = true;
-        }
-      }
     },
-    async addInvoice() {
+    addInvoice() {
+      let that = this;
       //新增发票信息
-      let result = await post("Invoice/Addinvoice", {
-        UserId: this.userId,
-        Token: this.token,
-        InvoiceTitle: this.invoiceType,
-        HeaderName: this.headerName,
-        RegCall: this.regCall,
-        IsDefault: this.isDefault,
-        TaxNumber: this.taxNumber,
-        BankName: this.bankName,
-        BankAccount: this.bankAccount,
-        RegAddress: this.regAddress,
-        IsVATExclusive: this.isVATExclusive
+      post(
+        "About/Addinvoice",
+        {
+          UserId: that.userId,
+          Token: that.token,
+          InvoiceTitle: that.invoiceType, //1:个人；2：单位公司
+          HeaderName: that.headerName, //发票抬头
+          Phone: that.phone, //个人的电话  选填
+          Email: that.email, //个人的邮箱  选填
+          RegCall: that.regCall, //公司电话
+          IsDefault: that.isDefault, //是否默认；0：否，1：是
+          TaxNumber: that.taxNumber, //发票税号
+          BankName: that.bankName, //开户银行
+          BankAccount: that.bankAccount, //银行账号
+          RegAddress: that.regAddress, //注册地址
+          IsVATExclusive: that.isVATExclusive
+        },
+        that.curPage
+      ).then(res => {
+        if (res.code === 0) {
+          wx.showToast({
+            title: "新增成功！",
+            icon: "none",
+            duration: 1500,
+            success: function() {
+              setTimeout(function() {
+                wx.redirectTo({
+                  url: "/pages/member2/invoiceList/main"
+                });
+              }, 1500);
+            }
+          });
+        }
       });
-      let _this = this;
-      if (result.code === 0) {
-        uni.showToast({
-          title: "新增成功！",
-          icon: "none",
-          duration: 1500,
-          success: function() {
-            setTimeout(function() {
-              uni.redirectTo({
-                url: "/pages/member/invoiceList/invoiceList"
-              });
-            }, 1500);
-          }
-        });
-      } else if (result.code === 2) {
-        uni.showToast({
-          title: "登录超时！",
-          icon: "none",
-          duration: 1500,
-          success: function() {
-            uni.navigateTo({
-              url: "/pages/login/login?askUrl=" + _this.curPage
-            });
-          }
-        });
-      } else {
-        uni.showToast({
-          title: result.msg,
-          icon: "none",
-          duration: 1500
-        });
-      }
     },
-    async updateInvoice() {
+    updateInvoice() {
       //编辑
-      let result = await post("Invoice/UpdateInvoice", {
-        Id: this.invoiceId,
-        UserId: this.userId,
-        Token: this.token,
-        InvoiceTitle: this.invoiceType,
-        HeaderName: this.headerName,
-        RegCall: this.regCall,
-        IsDefault: this.isDefault,
-        TaxNumber: this.taxNumber,
-        BankName: this.bankName,
-        BankAccount: this.bankAccount,
-        RegAddress: this.regAddress
+      post(
+        "About/Updateinvoice",
+        {
+          Id: this.invoiceId,
+          UserId: this.userId,
+          Token: this.token,
+          InvoiceTitle: this.invoiceType,
+          HeaderName: this.headerName,
+          Phone: this.phone, //个人的电话  选填
+          Email: this.email, //个人的邮箱  选填
+          RegCall: this.regCall,
+          IsDefault: this.isDefault,
+          TaxNumber: this.taxNumber,
+          BankName: this.bankName,
+          BankAccount: this.bankAccount,
+          RegAddress: this.regAddress
+        },
+        this.curPage
+      ).then(res => {
+        if (res.code === 0) {
+          wx.showToast({
+            title: "保存成功！",
+            icon: "none",
+            duration: 1500,
+            success: function() {
+              setTimeout(function() {
+                wx.redirectTo({
+                  url: "/pages/member2/invoiceList/main"
+                });
+              }, 1500);
+            }
+          });
+        }
       });
-      let _this = this;
-      if (result.code === 0) {
-        uni.showToast({
-          title: "保存成功！",
-          icon: "none",
-          duration: 1500,
-          success: function() {
-            setTimeout(function() {
-              uni.redirectTo({
-                url: "/pages/member/invoiceList/invoiceList"
-              });
-            }, 1500);
-          }
-        });
-      } else if (result.code === 2) {
-        uni.showToast({
-          title: "登录超时！",
-          icon: "none",
-          duration: 1500,
-          success: function() {
-            uni.navigateTo({
-              url: "/pages/login/login?askUrl=" + _this.curPage
-            });
-          }
-        });
-      } else {
-        uni.showToast({
-          title: result.msg,
-          icon: "none",
-          duration: 1500
-        });
-      }
     }
   }
 };

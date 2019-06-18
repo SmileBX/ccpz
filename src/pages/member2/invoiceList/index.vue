@@ -7,12 +7,16 @@
             <text class="name">抬头名称：{{item.HeaderName}}</text>
           </div>
           <div class="type">类型：{{item.InvoiceTitlestr}}</div>
-          <div class="type" v-if="item.InvoiceTitle===1">税号：{{item.TaxNumber}}</div>
+          <div class="type" v-if="item.InvoiceTitle===2">税号：{{item.TaxNumber}}</div>
         </div>
         <div class="item__ft flex">
-          <label class="flexItem checkedLabel flex flexAlignCneter">
+          <label
+            class="flexItem checkedLabel flex gou flexAlignCneter"
+            @tap="SetDefaultinvoice(index,item.Id)"
+          >
             <radio value :checked="item.IsDefault===1" color="#ff952e"/>
-            <span>已设为默认</span>
+            <span v-if="item.IsDefault===1" style="color:#ff952e">已设为默认</span>
+            <span v-else>设为默认</span>
           </label>
           <div class="flexItem flex1 text_r">
             <div class="iconText inline-block" @click="gotoAddInvoice(item.Id)">
@@ -25,10 +29,11 @@
         </div>
       </div>
     </div>
+    <div class="noData center" style="padding:60rpx 30rpx;" v-if="hasDataList===false && hasDataList !=='' && page===1">暂无数据</div>
     <div class="ftBtn" style="height:100rpx">
       <div class="inner fixed bm0">
         <div class="btns">
-          <div class="btn center bg_ff952e color_fff">
+          <div class="btn center bg_ff952e color_fff" @click="gotoAddInvoice(-1)">
             <img src="/static/images/icons/add3.png" class="icon-add" alt> 新增发票信息
           </div>
         </div>
@@ -37,6 +42,7 @@
   </div>
 </template>
 <script>
+import { post, toLogin, getCurrentPageUrlWithArgs, trim } from "@/utils";
 export default {
   onLoad() {
     wx.hideShareMenu();
@@ -131,6 +137,9 @@ export default {
             duration: 1500,
             success: function() {
               that.list.splice(index, 1);
+              if(that.list.length===0){
+                that.hasDataList = "";
+              }
             }
           });
         }
