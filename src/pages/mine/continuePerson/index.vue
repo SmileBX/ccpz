@@ -78,7 +78,7 @@ export default {
     this.WeChatNum = this.$store.state.personInfo.WeChatNum
     this.Email = this.$store.state.personInfo.Email
     this.ContactsTel = this.$store.state.personInfo.ContactsTel
-    this.AvatarwBase = this.$store.state.personInfo.WorkIdea
+    this.AvatarwBase = this.$store.state.personInfo.AvatarwBase
   },
   methods: {
     setBarTitle() {

@@ -151,7 +151,7 @@ export default {
       userId: "",
       token: "",
       AvatarwBase:"",//头像
-      showBase:false,
+      Avatar:"",
       ShowBase:false,//上传头像不从默认获取
       Name:"", //昵称
       Area:"",//地区 格式：'1级,2级'
@@ -167,6 +167,7 @@ export default {
   },
   onLoad() {
     this.setBarTitle();
+   
   },
   onShow(){
     this.curPage = getCurrentPageUrlWithArgs();
@@ -174,6 +175,7 @@ export default {
     this.token = wx.getStorageSync("token");
     this.initData()
     this.getPerson()
+    console.log(this.AvatarwBase.length,"_______")
     
   },
   methods: {
@@ -183,8 +185,13 @@ export default {
       });
     },
     initData(){
+      console.log(this.ShowBase,"333333333")
       // console.log(this.$store.state.personInfo,"this.$store.state.personInfo")
-      this.Avatar = this.$store.state.personInfo.Avatar
+      if(this.AvatarwBase.length==0){
+        this.Avatar = this.$store.state.personInfo.Avatar
+        // console.log(this.Avatar,"11111111111")
+      }
+      
       this.Name = this.$store.state.personInfo.Name
       this.Area = this.$store.state.personInfo.Area
       this.Trade = this.$store.state.personInfo.Trade
@@ -196,7 +203,6 @@ export default {
       this.WorkIdea = this.$store.state.personInfo.WorkIdea
       this.AvatarwBase = this.$store.state.personInfo.WorkIdea
       this.columns = []
-      this.showBase = false
      
     },
     //获取个人信息
@@ -207,9 +213,10 @@ export default {
       },this.curPage).then(res=>{
         if(res.code==0){
           console.log(res)
-          // if(!this.showBase){
-          //   this.Avatar = res.data.Avatar
-          // }
+          if(this.AvatarwBase.length==0){
+            this.Avatar = res.data.Avatar
+            // console.log(this.ShowBase,"2222")
+          }
            this.Name = res.data.Name
            this.Email = res.data.Email
            this.WeChatNum = res.data.WeChatNum
@@ -235,14 +242,14 @@ export default {
         success: (res) =>{
           // tempFilePath可以作为img标签的src属性显示图片
           this.Avatar = res.tempFilePaths[0]
-          this.showBase = true
+          // console.log(this.Avatar,"选择头像")
           wx.getFileSystemManager().readFile({
               filePath: this.Avatar, //选择图片返回的相对路径
               encoding: "base64", //编码格式
               success: res => {
                 //成功的回调
                 this.AvatarwBase = "data:image/png;base64," + res.data.toString();
-               console.log(this.AvatarwBase, "选择图像的路径");
+              //  console.log(this.AvatarwBase, "选择图像的路径");
               }
             });
         }
@@ -358,10 +365,8 @@ export default {
       this.isShow = false
       this.showWorkTime = false
     },
-    
-    //下一步
-    nextStep(){
-      console.log(this.Avatar)
+    //保存数据
+    saveData(){
       const personInfo = {
           Avatar: this.Avatar,
           Name:  this.Name,
@@ -376,6 +381,11 @@ export default {
           AvatarwBase:this.AvatarwBase
       }
       this.$store.commit('update',{personInfo})
+    },
+    //下一步
+    nextStep(){
+      console.log(this.Avatar)
+      this.saveData()
       //个人
       if(this.Company){
         wx.navigateTo({url:'/pages/mine/continueCompany/main'})
