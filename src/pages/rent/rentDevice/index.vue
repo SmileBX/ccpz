@@ -1683,7 +1683,7 @@ export default {
       picker.setColumnValues(1, this.tradeList[value[0]]);
     },
     onConfirm(event){  //选择行业确定
-       console.log(event);
+    console.log(event);
       const { index, value } = event.mp.detail;
       if(this.companyTipFlag){
         this.CompanyTrade = value.join(",");

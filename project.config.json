@@ -199,14 +199,14 @@
 					"scene": null
 				},
 				{
-					"id": 22,
+					"id": -1,
 					"name": "设置",
 					"pathName": "pages/member/set/main",
 					"query": "",
 					"scene": null
 				},
 				{
-					"id": 23,
+					"id": -1,
 					"name": "设置支付密码",
 					"pathName": "pages/member/setPayPassword/main",
 					"query": "",
@@ -536,9 +536,8 @@
 				},
 				{
 					"id": -1,
-					"name": "会员中心",
+					"name": "我的",
 					"pathName": "pages/my/main",
-					"query": "",
 					"scene": null
 				}
 			]
