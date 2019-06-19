@@ -33,18 +33,18 @@
           </div>
         </div> -->
         <div class="uploadImage clear" style="padding-left:0;">
-            <!-- 上传展示的图片 -->
-            <block v-if="picList.length>0">
-              <div class="upload-img img" v-for="(item,index) in picList" :key="index">
-                <img :src="item" alt>
-                <img src="/static/images/icons/cancle.png" @click="delImg(index)" class="close">
-              </div>
-            </block>
-            <!--上传按钮-->
-            <div class="button-upload" @click="upLoadImg" v-if="isUploadBtn">
-              <img src="/static/images/icons/upload-2.jpg" alt>
+          <!-- 上传展示的图片 -->
+          <block v-if="picList.length>0">
+            <div class="upload-img img" v-for="(item,index) in picList" :key="index">
+              <img :src="item" alt>
+              <img src="/static/images/icons/cancle.png" @click="delImg(index)" class="close">
             </div>
+          </block>
+          <!--上传按钮-->
+          <div class="button-upload" @click="upLoadImg" v-if="isUploadBtn">
+            <img src="/static/images/icons/upload-2.jpg" alt>
           </div>
+        </div>
       </div>
     </div>
     <div class="weui-cells">
@@ -114,6 +114,15 @@ export default {
       wx.setNavigationBarTitle({
         title: name
       });
+    },
+    initData(){
+      this.content ="";
+      this.memberName ="";
+      this.mobile ="";
+      this.isCultivate =1;
+      this.isEvaluate =0;
+      this.isGuide =0;
+      this.picList =[];
     },
     shiftCheckbox(index){  //checkbox切换的时候
       if(index===1){  //股权培训
@@ -255,6 +264,7 @@ export default {
             duration: 1500,
             success:function(){
               setTimeout(() => {
+                that.initData();
                 wx.switchTab({
                   url: '/pages/my/main'
                 })
