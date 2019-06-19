@@ -134,7 +134,7 @@ export function toLogin(objUrl) { //identity: 1:客服；2：客户；3：师傅
 export function valPhone(tel) {
     var r_phone = /^[1][3,4,5,6,7,8][0-9]{9}$/;
     // var phoneNumber = $.trim($('#phoneNumber').val());
-    if (tel == "") {
+    if (trim(tel) == "") {
         wx.showToast({
             title: "手机号不能为空!",
             icon: "none",
@@ -300,14 +300,14 @@ export function scrollBottom() {
 
 }
 // 获取自身定位
-export function getLocation(){
-    return new Promise ((resolve,reject)=>{
+export function getLocation() {
+    return new Promise((resolve, reject) => {
         wx.getLocation({
-            type:'gcj02',
-            success(res){
+            type: 'gcj02',
+            success(res) {
                 resolve(res)
             },
-            fail(err){
+            fail(err) {
                 console.log(err)
                 reject(err)
             }

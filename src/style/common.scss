@@ -27,6 +27,33 @@
     -webkit-transform: translate(-50%, -50%) scale(1);
 }
 
+.check__label .wx-checkbox-input {
+    border-radius: 8rpx !important;
+    width: 38rpx;
+    height: 38rpx;
+}
+
+.check__label .wx-checkbox-input.wx-checkbox-input-checked {
+    background: #fff;
+    border-radius: 8rpx !important;
+    border: 1px solid #ff9325 !important;
+    width: 38rpx;
+    height: 38rpx;
+}
+
+.check__label .wx-checkbox-input.wx-checkbox-input-checked::before {
+    width: 38rpx;
+    height: 38rpx;
+    border-radius: 8rpx !important;
+    line-height: 38rpx;
+    text-align: center;
+    font-size: 28rpx;
+    color: #ff9325;
+    background: #ffffff !important;
+    transform: translate(-50%, -50%) scale(1);
+    -webkit-transform: translate(-50%, -50%) scale(1);
+}
+
 
 /****************修改radio样式*********************/
 
