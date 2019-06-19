@@ -2,7 +2,7 @@
   <div class="pageContent">
     <div class="manageTop">
       <!-- 未开通的时候 -->
-      <div class="noGredge gradge" style="display:none;">
+      <div class="noGredge gradge">
         <span class="status">未开通</span>
         <h2 class="title">精英会员</h2>
         <div class="con">
@@ -10,7 +10,7 @@
             开通会员可以查看对方详细
             <br>信息，极速联系对方
           </p>
-          <p class="text_r" @tap="gotoPage(3)">
+          <p class="text_r" @tap="gotoPage(2)">
             <span class="weui-btn">立即开通</span>
           </p>
         </div>
@@ -61,7 +61,7 @@
         </div>
       </div>
       <!-- 年卡 -->
-      <div class="gradge year__gradient">
+      <div class="gradge year__gradient" style="display:none">
         <span class="status">年卡</span>
         <img src="/static/images/icons/v3.png" class="icons-vip.gradient-vip" alt="">
         <div class="perInfo">
@@ -112,6 +112,7 @@
   </div>
 </template>
 <script>
+import { post, valPhone, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
 export default {
   onLoad() {
     this.setBarTitle();
@@ -122,6 +123,9 @@ export default {
        "/pages/member2/isTopAbout/main", "/pages/member2/freshenAbout/main","/pages/member2/buyFunction/main",
       ]
     };
+  },
+  onShow(){
+    
   },
   methods: {
     setBarTitle() {
@@ -134,6 +138,7 @@ export default {
           url:this.menuArr[index]
         })
     },
+    
   }
 };
 </script>
