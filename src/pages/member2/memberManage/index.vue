@@ -10,7 +10,7 @@
             开通会员可以查看对方详细
             <br>信息，极速联系对方
           </p>
-          <p class="text_r">
+          <p class="text_r" @tap="gotoPage(3)">
             <span class="weui-btn">立即开通</span>
           </p>
         </div>
@@ -82,15 +82,15 @@
       </div>
       <ul class="navList li_25 center navList2">
         <li>
-          <div class="outside" @click="gotoPage(1)">
+          <div class="outside" @tap="gotoPage(0)">
             <div class="icon-img">
               <img src="/static/images/icons/zhiding.jpg" alt>
             </div>
-            <p class="title">制定功能</p>
+            <p class="title">置顶功能</p>
           </div>
         </li>
         <li>
-          <div class="outside" @click="gotoPage(2)">
+          <div class="outside" @tap="gotoPage(1)">
             <div class="icon-img">
               <img src="/static/images/icons/shuaxin.jpg" alt>
             </div>
@@ -99,6 +99,16 @@
         </li>
       </ul>
     </div>
+    <!--按钮-->
+    <div class="ftBtn" style="height:100rpx" @click="addBankCard">
+        <div class="inner fixed bm0">
+          <div class="btns">
+            <div class="btn center bg_ff952e color_fff">
+              立即开通<span class="font_four color_fff">￥</span>698<span class="font_four color_fff">/年</span>
+            </div>
+          </div>
+        </div>
+      </div>
   </div>
 </template>
 <script>
@@ -108,7 +118,9 @@ export default {
   },
   data() {
     return {
-      
+      menuArr:[
+       "/pages/member2/isTopAbout/main", "/pages/member2/freshenAbout/main","/pages/member2/buyFunction/main",
+      ]
     };
   },
   methods: {
@@ -116,7 +128,12 @@ export default {
       wx.setNavigationBarTitle({
         title: "会员管理"
       });
-    }
+    },
+    gotoPage(index){
+        wx.navigateTo({
+          url:this.menuArr[index]
+        })
+    },
   }
 };
 </script>
