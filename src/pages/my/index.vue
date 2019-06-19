@@ -162,13 +162,14 @@
 
 <script>
 import { post, valPhone, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
+//type:1:合作加盟；2：增值服务；3：意见反馈;这个是跳转到feedback需要传的
 export default {
   onLoad() {
     this.setBarTitle();
   },
   data() {
     return {
-      menuArr:["/pages/member2/memberManage/main","/pages/member/serviceCardChange/main","/pages/member/integral/main","/pages/mine2/myVertical/main","/pages/mine2/myCoupon/main","/pages/member2/invoiceList/main","/pages/member2/feedback/main?type=3","/pages/member2/feedback/main?type=2","/pages/member2/feedback/main?type=1","/pages/member/help/main","/pages/member/contact/main"],
+      menuArr:["/pages/member2/memberManage/main","/pages/member/serviceCardChange/main","/pages/member/integral/main","/pages/mine2/myVertical/main","/pages/mine2/myCoupon/main","/pages/member2/invoiceList/main","/pages/member2/feedback/main?type=2","/pages/member2/feedback/main?type=1","/pages/member2/feedback/main?type=3","/pages/member/help/main","/pages/member/contact/main"],
       menuArr2:["/pages/mine2/account/main","/pages/mine2/myCollect/main","/pages/mine/publish/main","/pages/member/browse/main"],
       curPage: "",
       userId: "",
@@ -204,7 +205,7 @@ export default {
       })
     },
     gotoPage(index){
-      //type:1:意见反馈；2：合作加盟；3：增值服务
+      //type:1:合作加盟；2：增值服务；3：意见反馈;
       wx.navigateTo({
         url:this.menuArr[index]
       })
