@@ -22,18 +22,32 @@
                   <p class="type">会员{{item.Name}}</p>
                   <p class="num">{{item.NeedScore}}分</p>
                 </div>
-                <span class="weui-btn">立即兑换</span>
+                <span class="weui-btn" @click="exchange(item)">立即兑换</span>
               </div>
             </div>
           </swiper-item>
         </swiper>
       </div>
     </div>
+    <payPassword :showStatus.sync="showPayPawStatus" @success="submit"></payPassword>
   </div>
 </template>
 <script>
 import { post, toLogin, getCurrentPageUrlWithArgs, trim } from "@/utils";
+import payPassword from '@/components/payPassword.vue'
 export default {
+  components:{payPassword},
+  data() {
+    return {
+      userId:"",
+      token:"",
+      curPage:"",
+      score:0,
+      list:[],  //积分兑换卡的列表数据
+      showPayPawStatus:false,
+      exchangeId:'',//要兑换的id
+    }
+  },
   onLoad() {
     this.setBarTitle();
   },
@@ -41,21 +55,12 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
+    this.exchangeId =''
     if(toLogin(this.curPage)){
       this.GetMemberScore();
       this.getdhScoreList();
     }
     
-  },
-  data() {
-    return {
-      userId:"",
-      token:"",
-      curPage:"",
-      score:0,
-      list:[]  //积分兑换卡的列表数据
-
-    }
   },
   methods: {
     setBarTitle() {
@@ -75,7 +80,7 @@ export default {
       })
     },
     getdhScoreList(){  //积分兑换商品列表
-    let that = this;
+     let that = this;
       post("User/dhScoreList",{
         UserId:that.userId,
         Token:that.token
@@ -89,6 +94,27 @@ export default {
     gotoIntegralList(){
       wx.navigateTo({
         url: '/pages/member2/integralList/main'
+      })
+    },
+    // 立即兑换，弹出密码框
+    exchange(item){
+      if(this.score<item.NeedScore){
+        wx.showToast({
+          title:'积分不足！',
+          icon:'none'
+        })
+        return false;
+      }
+      this.exchangeId = item.Id;
+      this.showPayPawStatus = true;
+    },
+    // 输入密码后进行兑换
+    async submit(password){
+      const res = await post('User/GodhScore',{
+        UserId:this.userId,
+        Token:this.token,
+        Id:this.exchangeId,
+        Password:password,
       })
     }
   }
