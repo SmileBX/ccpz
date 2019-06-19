@@ -22,7 +22,7 @@
                   <p class="type">会员{{item.Name}}</p>
                   <p class="num">{{item.NeedScore}}分</p>
                 </div>
-                <span class="weui-btn" @click="exchange(item.Id)">立即兑换</span>
+                <span class="weui-btn" @click="exchange(item)">立即兑换</span>
               </div>
             </div>
           </swiper-item>
@@ -97,8 +97,15 @@ export default {
       })
     },
     // 立即兑换，弹出密码框
-    exchange(id){
-      this.exchangeId = id;
+    exchange(item){
+      if(this.score<item.NeedScore){
+        wx.showToast({
+          title:'积分不足！',
+          icon:'none'
+        })
+        return false;
+      }
+      this.exchangeId = item.Id;
       this.showPayPawStatus = true;
     },
     // 输入密码后进行兑换
