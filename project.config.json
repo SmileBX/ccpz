@@ -517,7 +517,7 @@
 					"id": 67,
 					"name": "拼租发布正式2",
 					"pathName": "pages/rent/rentOffic/main",
-					"query": "TypeId=71&PageId=36",
+					"query": "TypeId=47&PageId=33",
 					"scene": null
 				},
 				{

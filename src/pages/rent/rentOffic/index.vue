@@ -263,6 +263,90 @@
                 </div>
               </div>
           </div>
+          <div v-if="PageId==34">
+               <div class="form-cells-item form-cells-item2">
+                  <div class="item2-column">
+                  <div class="form-cells-hd">圈子名称</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="Founder"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">成立日期</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    disabled
+                    @tap="showDate=true"
+                    v-model="PlanBuyDate"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">圈子属性</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="RingType"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">计划人数</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="RingNum"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">计划投资</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="BuyBudget"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">意向区域</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    disabled
+                    placeholder="请选择"
+                    @tap="isShowAddr=true"
+                    v-model="GladBuyArea"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">活动频率</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="RingRate"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+          </div>
           <div v-if="PageId==42">
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
@@ -499,20 +583,29 @@
             <div class="titletxt c_333">想看看什么样的人</div>
             <p class="subtitle">将根据您的要求推荐优质合伙人</p>
           </div>
-          <div class="FormCon mb10">
+          <div class="FormCon mb10 boxSize" v-for="(item,pindex) in PartnerList" :key="pindex">
             <div class="form-cells">
-              <div class="form-cells-item">
-                <div class="">
+               <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
                   <div class="form-cells-hd">职位名称</div>
-                  <div class="form-cell-bd">
-                    <input
-                      class="ipt"
-                      type="text"
-                      placeholder="请输入职位名称"
-                      v-model="JobTitle"
-                      placeholder-style="color:#b5b5b5;"
-                    >
-                  </div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="item.JobTitle"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">工作时间</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    style="font-size:25rpx"
+                    placeholder="请输入(例:2天/周 8小时/天)"
+                     v-model="item.WorkTime"
+                    placeholder-style="color:#b5b5b5;"
+                  >
                 </div>
               </div>
               <div class="form-cells-item form-cells-item2">
@@ -522,7 +615,7 @@
                     class="ipt"
                     type="text"
                     placeholder="请输入工作年限"
-                    v-model="Experience"
+                    v-model="item.Experience"
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
@@ -533,46 +626,13 @@
                     type="text"
                     disabled
                     placeholder="请选择"
-                    v-model="Degree"
-                    @tap="showEducation"
+                    v-model="item.Degree"
+                    @tap="touchEducation(pindex)"
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
               </div>
               <div class="form-cells-item form-cells-item2">
-                <div class="item2-column">
-                  <div class="form-cells-hd">合伙待遇</div>
-                  <input
-                    class="ipt"
-                    type="text"
-                    placeholder="请输入"
-                     v-model="Treatment"
-                    placeholder-style="color:#b5b5b5;"
-                  >
-                </div>
-                <div class="item2-column">
-                  <div class="form-cells-hd">全职/兼职</div>
-                  <input
-                    class="ipt"
-                    type="text"
-                    placeholder="请输入"
-                     v-model="JobType"
-                    placeholder-style="color:#b5b5b5;"
-                  >
-                </div>
-              </div>
-              <div class="form-cells-item form-cells-item2">
-                <div class="item2-column">
-                  <div class="form-cells-hd">工作时间</div>
-                  <input
-                    class="ipt"
-                    type="text"
-                    disabled
-                    placeholder="请选择"
-                     v-model="WorkTime"
-                    placeholder-style="color:#b5b5b5;"
-                  >
-                </div>
                 <div class="item2-column" v-if="PageId==34">
                   <div class="form-cells-hd">性别要求</div>
                   <input
@@ -580,7 +640,17 @@
                     type="text"
                     disabled
                     placeholder="请输入性别要求"
-                     v-model="JobSex"
+                     v-model="item.JobSex"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column" v-if="PageId==32 || PageId==33">
+                  <div class="form-cells-hd">全职/兼职</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                     v-model="item.JobType"
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
@@ -593,14 +663,50 @@
                       class="ipt"
                       type="text"
                       placeholder="请填写职位详细信息"
+                      v-model="item.PartDesc"
                       placeholder-style="color:#b5b5b5;"
                     >
                   </div>
                 </div>
               </div>
+              <div class="form-cells-item" v-if="PageId==32 || PageId==33">
+                <div class="">
+                  <div class="form-cells-hd">合伙待遇</div>
+                  <div class="form-cell-bd">
+                    <input
+                      class="ipt"
+                      type="text"
+                      placeholder="请输入待遇"
+                      v-model="item.Treatment"
+                      placeholder-style="color:#b5b5b5;"
+                    >
+                  </div>
+                </div>
+              </div>
+              <div class="addDetail bg_fff" v-if="PartnerList.length>1 && pindex !==PartnerList.length-1">
+                <div class="btn btn-add" @click="delOrder(pindex)">
+                  删除职位
+                </div>
+              </div>
+              
+              <!--职位弹层-->
+              <div class="mask" v-if="item.ShowWork"  @tap="cancle2(pindex)"></div>
+              <div class="maskType boxSize" v-if="item.ShowWork" style="left:0">
+                  <div class="flex">
+                      <span class="size" @tap="cancle2(pindex)">取消</span>
+                      <span class="title">{{masktitle2}}</span>
+                      <span class="color size" @tap="subConfirm2(pindex)">确定</span>
+                  </div>
+                  <scroll-view :scroll-y="true" style="height:480rpx;"  class="showItem">
+                      <div v-for="(item,index) in list" :key="index">
+                          <p :class="{'itemactive':statu == index}" @tap="chose(index)" style="margin-top:3rpx;">{{item.Name}}
+                          </p>
+                      </div>
+                  </scroll-view>  
+              </div>
             </div>
           </div>
-          <div class="AddBtn_info">
+          <div class="AddBtn_info" @tap="addWork">
             <img class="icon" src="/static/images/icons/add_icon.png" alt="">
             <div class="tips">添加新的职位信息</div>
           </div>
@@ -611,40 +717,41 @@
     </div>
     <!--弹层-->
     <div class="mask" v-if="isShowMask" catchtouchmove="true" @tap="cancle"></div>
+    <!---->
     <div class="maskType boxSize" v-if="isShowMask" :class="showNoChange?'noParActive':''">
-        <div class="flex">
-              <span class="size" @tap="cancle">取消</span>
-              <span class="title">{{masktitle}}</span>
-              <span class="color size" @tap="subConfirm">确定</span>
-        </div>
-        <!--滑动选择时间-->
-        <div class="freeRoom" v-if="ShowTime">
-            <div>
-                <picker-view class="pickerView" :value="value" @change="bindDateChangeStart">
-                    <picker-view-column class="pickerColumn">
-                        <div class="pickerItem" v-for="(item,key) in hourses" :key='key'>{{item}}点</div>
-                    </picker-view-column>
-                    <picker-view-column class="pickerColumn">
-                        <div class="pickerItem" v-for="(item,key) in minutes" :key='key'>{{item}}分</div>
-                    </picker-view-column>
-                    <picker-view-column class="pickerColumn">
-                        <div class="pickerItem" v-for="(item,key) in hourses" :key='key'>{{item}}点</div>
-                    </picker-view-column>
-                    <picker-view-column class="pickerColumn">
-                        <div class="pickerItem" v-for="(item,key) in minutes" :key='key'>{{item}}分</div>
-                    </picker-view-column>
-                </picker-view>
-            </div>
-        </div> 
-        <div v-if="showInput" style="border:1px solid blue">
-            <input type="text" placeholder="请输入设备要求" v-model="deviceTip" style="padding:0 30rpx;border:1px solid red">
-        </div>
-        <scroll-view :scroll-y="true" style="height:480rpx;" :style="showNoChange?'height:200rpx':''" class="showItem" @scrolltolower="loadMore" v-else>
-          <div v-for="(item,index) in list" :key="index">
-              <p :class="{'itemactive':statu == index}" @tap="chose(index)" style="margin-top:3rpx;">{{item.Name}}
-              </p>
+      <div class="flex">
+            <span class="size" @tap="cancle">取消</span>
+            <span class="title">{{masktitle}}</span>
+            <span class="color size" @tap="subConfirm">确定</span>
+      </div>
+      <!--滑动选择时间-->
+      <div class="freeRoom" v-if="ShowTime">
+          <div>
+              <picker-view class="pickerView" :value="value" @change="bindDateChangeStart">
+                  <picker-view-column class="pickerColumn">
+                      <div class="pickerItem" v-for="(item,key) in hourses" :key='key'>{{item}}点</div>
+                  </picker-view-column>
+                  <picker-view-column class="pickerColumn">
+                      <div class="pickerItem" v-for="(item,key) in minutes" :key='key'>{{item}}分</div>
+                  </picker-view-column>
+                  <picker-view-column class="pickerColumn">
+                      <div class="pickerItem" v-for="(item,key) in hourses" :key='key'>{{item}}点</div>
+                  </picker-view-column>
+                  <picker-view-column class="pickerColumn">
+                      <div class="pickerItem" v-for="(item,key) in minutes" :key='key'>{{item}}分</div>
+                  </picker-view-column>
+              </picker-view>
           </div>
-        </scroll-view>
+      </div> 
+      <div v-if="showInput" style="border:1px solid blue">
+          <input type="text" placeholder="请输入设备要求" v-model="deviceTip" style="padding:0 30rpx;border:1px solid red">
+      </div>
+      <scroll-view :scroll-y="true" style="height:480rpx;" :style="showNoChange?'height:200rpx':''" class="showItem" @scrolltolower="loadMore" v-else>
+        <div v-for="(item,index) in list" :key="index">
+            <p :class="{'itemactive':statu == index}" @tap="chose(index)" style="margin-top:3rpx;">{{item.Name}}
+            </p>
+        </div>
+      </scroll-view>
     </div> 
     <!--时间插件-->
     <van-action-sheet :show="showDate" @close="showDate=false" @select="showDate=false">
@@ -709,6 +816,7 @@ export default {
       BrandId:"",
       detailInfo:[],
       picLength:6,//上传图片的长度
+
       imgArr:[],//上传图片的路径
       isShowMask:false,//是否显示弹层
       showNoChange:false,//控制是否选择高度
@@ -722,6 +830,7 @@ export default {
       
       list:[],//弹层列表
       masktitle:"",//弹层标题
+      masktitle2:"",
       statu:0,//控制弹层item选中样式
 
       PropertyPrice:'', //物业单价/设备单价
@@ -741,6 +850,10 @@ export default {
       PlanStartTime:"",//开始时间
       PlanEndTime:"",//结束时间
       timeFlag:false,//开始时间的标识
+      RingRate:"",//活动频率
+      RingNum:"",//计划人数
+      RingType:"",//圈子属性
+
 
       Title:"",//标题
       showDefaultCompany:false,//只有一个公司默认显示
@@ -752,24 +865,13 @@ export default {
       BuyBudget:'', //购买预算-计划投资
       PlanBuyDate:'', //计划购买日期--可租时间--成立日期
       PlanBuyArea:'', //计划购买面积--机构面积
-      JobTitle:'', //职位名称
-      Experience:'', //经验要求
-      Degree:'',      //学历要求
-      Treatment:'',   //合伙待遇（股份、工资、奖金）
-      JobType:'',     //全职/兼职
-      WorkTime:'',    //工作时间、时间要求
-      PartDesc:'',    //职位描述、合伙描述
-      JobSex:'',      //性别要求
- 
+      PartnerList:[ ],
+      showTouchEducation:false,//组件要求学历标识
       
       RentTimeLimit:"",//租赁期限
       ContentDetail:"",//办公室环境描述
       PropertyType:'', //物业/设备类型
       PropertySort:"", //物业/设备形式
-       
-      
-      
-      
       SpecsType:"",//规格型号
       NeedOfficeNum:"",//卡位需求（格式：3卡2室）
       ServiceName:"",//设施/设备 以英文逗号隔开
@@ -829,6 +931,7 @@ export default {
     this.showInput =false
     this.showTrade =  false
     this.showDate = false
+    this.showTouchEducation = false
     this.columns = []
     this.columns2 = []
     this.tradeList = {},//行业列表
@@ -914,6 +1017,32 @@ export default {
           this.upImgTitle = "请上传相关机构照片"
           this.addrTitle = "地理位置"
           this.addrPlaceholder = "位置名称 如：如京基大厦"
+        }
+        if(this.PageId==32 || this.PageId==33){
+          this.PartnerList=[
+              {
+                JobTitle:'', //职位名称
+                Experience:'', //经验要求
+                Degree:'',      //学历要求
+                Treatment:'',   //合伙待遇（股份、工资、奖金）
+                JobType:'',     //全职/兼职
+                WorkTime:'',    //工作时间、时间要求
+                PartDesc:'',    //职位描述、合伙描述
+                ShowWork:false,//学历要求
+            }
+          ]
+        }
+        if(this.PageId==34){
+          this.PartnerList=[
+              {
+                JobTitle:'', //职位名称
+                Experience:'', //经验要求
+                Degree:'',      //学历要求
+                WorkTime:'',    //工作时间、时间要求
+                PartDesc:'',    //职位描述、合伙描述
+                JobSex:'',      //性别要求
+            }
+          ]
         }
         if(this.PageId==32){
           this.pageTitle = '组件公司表单'
@@ -1017,9 +1146,14 @@ export default {
     showEducation(){
       this.isShowMask = true
       this.list = this.educationList
-      this.masktitle = '请选择学历'
+      this.masktitle = '请选择学历结构'
     },
-    
+    touchEducation(n){
+      this.PartnerList[n].ShowWork = true
+      this.list = this.educationList
+      this.masktitle2 = '请选择学历要求'
+      this.showTouchEducation = true
+    },
     //获取短租办公形式
     // getShortRent(){
     //   this.isShowMask = true
@@ -1070,15 +1204,34 @@ export default {
     chose(e){
         this.statu = e
     },
+    subConfirm2(n){
+      console.log(n)
+      console.log(this.PartnerList)
+        if(this.showTouchEducation){
+          console.log("this.list:",this.list)
+            // npm this.EducationLvl = this.list[i].Name
+            this.PartnerList[n].Degree = this.list[this.statu].Name
+        }
+        this.isShowMask = false
+        this.showNoChange = false
+        this.ShowTime = false
+        this.showInput = false
+        this.PartnerList[n].ShowWork = false
+        this.showTouchEducation = false
+        this.statu = 0
+        this.list = []
+
+    },
     //确定选择
     subConfirm(){
       for(let i in this.list){
           if(i*1 == this.statu){
-              if(this.masktitle =='请选择学历' ){
-                console.log("this.list:",this.list)
+              if(this.masktitle =='请选择学历结构' ){
+                // console.log("this.list:",this.list)
                   this.EducationLvl = this.list[i].Name
-                  this.Degree = this.list[i].Name
+                  // this.Degree = this.list[i].Name
               }
+              
           }
       }
       //选择时间
@@ -1117,11 +1270,21 @@ export default {
       this.showNoChange = false
       this.ShowTime = false
       this.showInput = false
+      this.showTouchEducation = false
       this.statu = 0
       this.list = []
     },
     //取消选择
     cancle(){
+      this.isShowMask = false
+      this.showNoChange = false
+      this.ShowTime = false
+      this.showInput = false
+      this.list = []
+      this.statu = 0
+    },
+    cancle2(n){
+      this.PartnerList[n].ShowWork = false
       this.isShowMask = false
       this.showNoChange = false
       this.ShowTime = false
@@ -1393,56 +1556,89 @@ export default {
           return false;
         }
       }
+      
       if(this.PageId==32 || this.PageId==33 || this.PageId==34){
-        if (this.JobTitle == '') {
-          this.toastTip(`职位名称!`)
-          return false;
-        }
-        if (this.Experience == '') {
-          this.toastTip(`经验要求!`)
-          return false;
-        }
-        if (this.Degree == '') {
-          this.toastTip(`学历要求!`)
-          return false;
-        }
-        if (this.WorkTime == '') {
-          this.toastTip(`工作时间、时间要求!`)
-          return false;
-        }
-        if (this.PartDesc == '') {
-          this.toastTip(`职位描述、合伙描述!`)
-          return false;
+        for(let i=0;i<this.PartnerList.length;i++){
+            if (this.PartnerList[i].JobTitle == '') {
+              this.toastTip(`职位名称!`)
+              return false;
+            }
+            if (this.PartnerList[i].Experience == '') {
+              this.toastTip(`经验要求!`)
+              return false;
+            }
+            if (this.PartnerList[i].Degree == '') {
+              this.toastTip(`学历要求!`)
+              return false;
+            }
+            if (this.PartnerList[i].WorkTime == '') {
+              this.toastTip(`工作时间、时间要求!`)
+              return false;
+            }
+            if (this.PartnerList[i].PartDesc == '') {
+              this.toastTip(`职位描述、合伙描述!`)
+              return false;
+            }
         }
       }
       if(this.PageId==32 || this.PageId==33){
-        if (this.JobType == '') {
-          this.toastTip(`全职/兼职!`)
-          return false;
-        }
-        if (this.Treatment == '') {
-          this.toastTip(`合伙待遇!`)
-          return false;
+        for(let i=0;i<this.PartnerList.length;i++){
+            if (this.PartnerList[i].JobType == '') {
+              this.toastTip(`全职/兼职!`)
+              return false;
+            }
+            if (this.PartnerList[i].Treatment == '') {
+              this.toastTip(`合伙待遇!`)
+              return false;
+            }
         }
       }
       if(this.PageId==34){
-        if (this.JobSex == '') {
-          this.toastTip(`性别!`)
-          return false;
+        for(let i=0;i<this.PartnerList.length;i++){
+            if (this.PartnerList[i].JobSex == '') {
+            this.toastTip(`性别!`)
+            return false;
+          }
         }
       }
 
 
       return true;
     },
+    //增加职位
+    addWork(){
+      if(this.PartnerList.length>3){
+        wx.showToast({
+          title:"最多添加3个！",
+          icon:"none",
+          duration:1500
+        })
+      }else{
+        let keys=this.PartnerList[0]
+        let info={}
+        // console.log(Object.keys(keys))
+        Object.keys(keys).map(item=>{
+          this.$set(info,item,"")
+        })
+        // console.log(info)
+        const _keys=JSON.stringify(info)
+        this.PartnerList.unshift(JSON.parse( _keys))
+      }
+      
+    },
+    delOrder(index){  //删除明细
+     this.PartnerList.splice(index,1);
+    },
     //提交发布
     async submitApply(){
+      console.log("PartnerList:",this.PartnerList)
       const that = this
       let PicList = await that.base64Img(that.imgArr);
       let _PicList = JSON.stringify(PicList)
       let pramas = {}
       let GoodsInfo = {}
-      let PartnerList = {}
+      let _PartnerList = {}
+      let infoTips = {}
       if(that.PageId == 36 || that.PageId == 35){
           GoodsInfo = {
           Title:that.Title,
@@ -1470,41 +1666,49 @@ export default {
       }
       if(that.PageId==43 ||　that.PageId==32　|| that.PageId==33){
           GoodsInfo = {
-          Title:that.Title,
-          CompanyId:that.CompanyId,
-          Company:that.Company,
-          CompanyAddr:that.CompanyAddr,
-          CompanyDoorNum:that.CompanyDoorNum,
-          Synopsis:that.Synopsis,
-          GladBuyerTradeId:that.GladBuyerTradeId,
-          GladBuyerTrade:that.GladBuyerTrade,
-          GladBuyArea:that.GladBuyArea,
-          GladBuyAreaId:that.GladBuyAreaId,
-          Founder:that.Founder,
-          BuyBudget:that.BuyBudget,
-          PlanBuyDate:that.PlanBuyDate,
-          PlanBuyArea:that.PlanBuyArea
+            Title:that.Title,
+            CompanyId:that.CompanyId,
+            Company:that.Company,
+            CompanyAddr:that.CompanyAddr,
+            CompanyDoorNum:that.CompanyDoorNum,
+            Synopsis:that.Synopsis,
+            GladBuyerTradeId:that.GladBuyerTradeId,
+            GladBuyerTrade:that.GladBuyerTrade,
+            GladBuyArea:that.GladBuyArea,
+            GladBuyAreaId:that.GladBuyAreaId,
+            Founder:that.Founder,
+            BuyBudget:that.BuyBudget,
+            PlanBuyDate:that.PlanBuyDate,
+            PlanBuyArea:that.PlanBuyArea
         }
         if(that.PageId==32　|| that.PageId==33){
-            PartnerList = {
-              JobTitle:that.JobTitle,
-              Experience:that.Experience,
-              Degree:that.Degree,
-              Treatment:that.Treatment,
-              JobType:that.JobType,
-              WorkTime:that.WorkTime,
-              PartDesc:that.PartDesc
-            }
+          console.log("*****************")
+          for(let i=0;i<that.PartnerList;i++){
+              infoTips = {
+                  JobTitle:that.PartnerList[i].JobTitle,
+                  Experience:that.PartnerList[i].Experience,
+                  Degree:that.PartnerList[i].Degree,
+                  Treatment:that.PartnerList[i].Treatment,
+                  JobType:that.PartnerList[i].JobType,
+                  WorkTime:that.PartnerList[i].WorkTime,
+                  PartDesc:that.PartnerList[i].PartDesc
+              }
+              _PartnerList.push(infoTips)
+          }
+          console.log("_PartnerList:",_PartnerList)
         }
         if(that.PageId==34){
-            PartnerList = {
-              JobTitle:that.JobTitle,
-              Experience:that.Experience,
-              Degree:that.Degree,
-              WorkTime:that.WorkTime,
-              PartDesc:that.PartDesc,
-              JobSex:that.JobSex,
-            }
+          for(let i in that.PartnerList){
+              infoTips = {
+                  JobTitle:that.PartnerList[i].JobTitle,
+                  Experience:that.PartnerList[i].Experience,
+                  Degree:that.PartnerList[i].Degree,
+                  JobSex:that.PartnerList[i].JobSex,
+                  WorkTime:that.PartnerList[i].WorkTime,
+                  PartDesc:that.PartnerList[i].PartDesc
+              }
+              _PartnerList.push(infoTips)
+          }
         }
       }
       console.log("++++++")
@@ -1525,7 +1729,7 @@ export default {
               TypeId:this.TypeId,
               PicList:_PicList,
               GoodsInfo:GoodsInfo,
-              PartnerList:PartnerList
+              PartnerList:_PartnerList
            }
           }else{
             pramas={
@@ -1595,14 +1799,7 @@ export default {
       this.PlanEndTime = ''
       this.PlanBuyNum = ''
       this.PlanAllNum = ''
-      this.JobTitle = ''
-      this.Experience = ''
-      this.Degree = ''
-      this.Treatment = ''
-      this.JobType = ''
-      this.WorkTime = ''
-      this.PartDesc = ''
-      this.JobSex = ''
+      this.PartnerList=[]
 
     }
     
