@@ -200,6 +200,7 @@ export default {
       },this.curPage).then(res=>{
         if(res.code==0){
           this.personInfo = res.data
+          wx.setStorageSync("mobile",res.data.ContactsTel);
           console.log(res)
         }
       })
