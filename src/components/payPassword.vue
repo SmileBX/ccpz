@@ -34,6 +34,7 @@ export default {
       };
   },
   onShow(){
+    console.log(this.password,"_____")
     this.password='';
     this.focusflag = true;
   },

@@ -213,7 +213,7 @@
                     type="text"
                     disabled
                     placeholder="请选择"
-                     @click="showDate=true"
+                    @click="showDate=true"
                     v-model="PlanBuyDate"
                     placeholder-style="color:#b5b5b5;"
                   >
@@ -1279,6 +1279,7 @@ export default {
       this.companyTipFlag = true
       this.showTrade = true
     },
+
     addDeviceNum(e){
       if(this.Devicelist[e].Name=="自定义+"){
         this.isShowMask = true
