@@ -4,7 +4,7 @@
     <div class="headerTop">
       <div class="inner flex flexAlignCenter">
         <div class="local">
-          <span class="name">{{cityName}}</span>
+          <span class="name" @click="goSelectCity">{{CityName}}</span>
           <span class="icon-arrow arrow-down"></span>
         </div>
         <div class="searchBox flex1">
@@ -413,22 +413,29 @@
 <script>
 import { post,getCurrentPageUrlWithArgs} from "@/utils";
 import { mapState, mapMutations } from "vuex"; //vuex辅助函数
+import initLocation from '@/utils/initLocation'
 export default {
   data() {
     return {
-      cityName:"",
+      // cityName:"",
       picList: [],//banner图
       newList:[],//头条消息
       publishType:[],//发布类型
-      CityName:"深圳"
+      // CityName:"深圳"
     };
   },
   onLoad() {     
     this.setBarTitle();
+    initLocation(this)
   },
   onShow() {
     this.initData();
-    this.getLocal();
+    // this.getLocal();GetCityCode
+    // 初始化定位和城市名称
+    // .then(res=>{
+    //   this.GetCityCode(this.CityName);
+    console.log('getCityCode',this.getCityCode)
+    // });
   },
   computed:{
     ...mapState(["CityName"])
@@ -498,34 +505,35 @@ export default {
     newsDetail(id){
       wx.navigateTo({url:'/pages/messages/topNewsDetail/main?url=index&Id='+id})
     },
-    getLocal(){
-      let that = this;
-      wx.getLocation({
-      type: 'wgs84',
-        success (res) {
-          const latitude = res.latitude;
-          const longitude = res.longitude;
-          wx.request({
-            url: 'https://api.map.baidu.com/geocoder/v2/?ak=KpdqD9A6OzIRDWUV1Au2jcPgy9BZxDGG&location=' + latitude + ',' + longitude + '&output=json&pois=1',
-            data: {},
-            header: {
-              'Content-Type': 'application/json'
-            },
-            success: function (res2) {
-              that.GetCityCode(res2.data.result.addressComponent.city);
-              // that.cityName=res2.data.result.addressComponent.city;
-            },
-            fail: function () {
-              // that.cityName="深圳市"
-              that.GetCityCode("深圳市");
-            },
-            complete: function () {
-            }
-          })
-        }
-      })
-    },
+    // getLocal(){
+    //   let that = this;
+    //   wx.getLocation({
+    //   type: 'wgs84',
+    //     success (res) {
+    //       const latitude = res.latitude;
+    //       const longitude = res.longitude;
+    //       wx.request({
+    //         url: 'https://api.map.baidu.com/geocoder/v2/?ak=KpdqD9A6OzIRDWUV1Au2jcPgy9BZxDGG&location=' + latitude + ',' + longitude + '&output=json&pois=1',
+    //         data: {},
+    //         header: {
+    //           'Content-Type': 'application/json'
+    //         },
+    //         success: function (res2) {
+    //           that.GetCityCode(res2.data.result.addressComponent.city);
+    //           // that.cityName=res2.data.result.addressComponent.city;
+    //         },
+    //         fail: function () {
+    //           // that.cityName="深圳市"
+    //           that.GetCityCode("深圳市");
+    //         },
+    //         complete: function () {
+    //         }
+    //       })
+    //     }
+    //   })
+    // },
     GetCityCode(localName){  //根据定位城市名获取对应的城市代码code
+      console.log('当前选择城市',localName)
      post("Area/GetCityCode",{
        Name:localName
      }).then(res => {
@@ -533,6 +541,10 @@ export default {
         wx.setStorageSync("cityName",res.data.Name);
         wx.setStorageSync("cityCode",res.data.Code);
      })
+    },
+    // 跳转选择城市
+    goSelectCity(){
+      wx.navigateTo({url:'/pages/city-select/main'})
     }
   },
 
