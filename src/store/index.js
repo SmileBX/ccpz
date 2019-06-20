@@ -8,6 +8,9 @@ const store = new Vuex.Store({
     state: {
         // selectedFriends: []
         CityName:'',
+        CityCode:'',
+        lng:'',
+        lat:'',
         Wallet:0,
         cardId: "",
         selectCard: {

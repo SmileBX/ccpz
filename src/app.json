@@ -10,7 +10,8 @@
         "pages/bindTel/main",
         "pages/inviteFriends/main",
         "pages/inviteRecord/main",
-        "pages/VerticalStatus/main"
+        "pages/VerticalStatus/main",
+        "pages/city-select/main"
 
     ],
     "window": {

@@ -4,7 +4,7 @@
     <div class="headerTop">
       <div class="inner flex flexAlignCenter">
         <div class="local">
-          <span class="name">{{cityName}}</span>
+          <span class="name" @click="goCitySelect">{{CityName}}</span>
           <span class="icon-arrow arrow-down"></span>
         </div>
         <div class="searchBox flex1">
@@ -112,7 +112,7 @@
     <div
       class="modal_mask flex second"
       v-if="isShadeType == 'GladBuyerTrade' && filterMenu[0].selected"
-    >
+     >
       <div class="scroll flex1">
         <div @click="getTrade(1,-1)" :class="{'active':tradeOneTab===-1}">
           <p>不限</p>
@@ -273,6 +273,7 @@
 </template>
 <script>
 import { post, toLogin, getCurrentPageUrlWithArgs, trim } from "@/utils";
+import {mapState} from 'vuex'
 export default {
   data() {
     return {
@@ -330,7 +331,7 @@ export default {
       page: 1,
       pageSize: 10,
       cityCode: "", //城市code
-      cityName: "", //城市名称
+      // cityName: "", //城市名称
       dataMoreFilter: {}, //不会变的更多的筛选数据
       dataMoreFilter2:{},
       moreFilter: {}, //更多的筛选数据
@@ -344,6 +345,9 @@ export default {
     };
   },
   components: {},
+  computed:{
+    ...mapState(['CityName'])
+  },
   onLoad() {
     this.setBarTitle();
   },
@@ -351,7 +355,7 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
-    this.cityName = wx.getStorageSync("cityName");
+    // this.cityName = wx.getStorageSync("cityName");
     this.cityCode = wx.getStorageSync("cityCode");
     this.twoTypeList = [];
     this.initAll();
@@ -523,7 +527,7 @@ export default {
               if (res.data[key].Value) {
                 for (let key2 in res.data[key].Value) {
                   res.data[key] = Object.assign({}, res.data[key], {
-                    selected: "-1"
+                    selected: -1
                   });
                 }
               }
@@ -778,8 +782,15 @@ export default {
     },
     moreSelectItem(item, index, key) {
       //点击更多筛选的时候的可选项
-      this.$set(this.moreFilter[key], "selected", index);
-      console.log("这里是取消了更多的选项_____");
+      // let key2 = this.moreFilter[key]
+      // console.log("11111111",this.moreFilter[key]);
+      // key2.selected = -1
+      // key2.selected = index
+      // this.$set(this.moreFilter, key, key2);
+      // this.moreFilter[key].selected=index
+      // this.$set(this.moreFilter[key], "selected", -1);
+      // this.$set(this.moreFilter[key], "selected", index);
+      console.log("这里是取消了更多的选项_____",index);
       console.log(this.moreFilter);
       console.log("这个是dataMoreFilter++++++");
       console.log(this.dataMoreFilter);
@@ -867,6 +878,9 @@ export default {
       console.log(this.dataMoreFilter);
       this.isShade = false;
       this.$set(this.filterMenu[3], "selected", false);
+    },
+    goCitySelect(){
+      wx.navigateTo({url:'/pages/city-select/main'})
     }
   }
 };
