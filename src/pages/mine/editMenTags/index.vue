@@ -3,19 +3,33 @@
     <!-- 标签-->
       <div class="tagBox pd15 mt10 bg_fff" style="margin-bottom:20rpx">
           <div class="line flex flexColumn">
-            <div class=""> 
-                <h3 class="tagTile">资源标签</h3>
-                <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentStart flex1 tipsGray" style="margin-top:20rpx">
-                  <span >美工</span>
-                  <span >设计</span>
-                  <span >文员</span>
-                  <span >销售</span>
+            <div> 
+                <div class="tagTile2">资源标签</div>
+                <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentStart flex1" style="margin-top:20rpx">
+                  <span >美工 x</span>
+                  <span >设计 x</span>
+                  <span >文员 x</span>
+                  <span >销售 x</span>
+                  <span class="AddTag">+ 添加</span>
                 </div>
             </div>
           </div>
       </div>
        <!-- 标签-->
-      
+       <div class="tagBox pd15 mt10 bg_fff" style="margin-bottom:20rpx">
+          <div class="line flex flexColumn">
+            <div> 
+                <div class="tagTile2">资源标签</div>
+                <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentStart flex1 flexAlignCenter" style="margin-top:20rpx">
+                  <span >美工 x</span>
+                  <span >设计 x</span>
+                  <span >文员 x</span>
+                  <span >销售 x</span>
+                  <span class="AddTag">+ 添加</span>
+                </div>
+            </div>
+          </div>
+      </div>
     <!-- 底部 -->
     <div class="btnSub">确定</div>
   </div>
@@ -75,10 +89,21 @@ export default {
     color:#fff;
     margin-right:16rpx;
     margin-bottom: 18rpx;
+    vertical-align: middle;
   }
   span:nth-child(4n){
     margin-right:0
   }
+}
+.tagTile2{
+  font-size:32rpx;
+  font-weight:bold;
+  width:100%!important;
+}
+.AddTag{
+  border:1rpx  solid #ff9325!important;
+  color:#ff9325!important;
+  background:#fff!important
 }
 
 </style>
