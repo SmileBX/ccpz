@@ -56,10 +56,10 @@
     <div class="buyInfo">
       <div class="buyMemberInfo">
         <div class="perInfo level__perInfo flex flexAlignCenter">
-          <img src="/static/images/of/tx.jpg" class="tx" alt>
+          <img src="/static/images/icons/tx.jpg" class="tx" alt>
           <div class="info flex1">
             <p class="name">
-              13526458542
+              {{mobile}}
             </p>
           </div>
         </div>
@@ -70,10 +70,10 @@
               <p class="txt">精英会员</p>
             </div>
           </div>
-          <div class="weui-cell">
+          <div class="weui-cell" @tap="choseCard">
             <div class="weui-cell__hd">选择类型</div>
             <div class="weui-cell__bd text_r">
-              <p class="txt">年卡</p>
+              <p class="txt">{{cardBrand}}</p>
             </div>
             <span class="icon-arrow arrow-right"></span>
           </div>
@@ -82,7 +82,7 @@
             <div class="weui-cell__bd text_r">
               <p class="txt">
                 <span class="price">
-                  ￥<span class="num">698</span>
+                  ￥<span class="num">{{NeedMoney}}</span>
                 </span>
               </p>
             </div>
@@ -94,13 +94,13 @@
           </div>
         </div>
       </div>
-      <div class="weui-cells">
+      <div class="weui-cells" @tap="goToPage(0)">
         <div class="weui-cell">
           <div class="weui-cell__hd">优惠券</div>
-          <div class="weui-cell__bd text_r">&nbsp;</div>
+          <div class="weui-cell__bd text_r"><span v-if="Denomination>0">-</span>{{Denomination}}</div>
           <span class="icon-arrow arrow-right"></span>
         </div>
-        <div class="weui-cell">
+        <div class="weui-cell" @tap="goToPage(1)">
           <div class="weui-cell__hd">发票</div>
           <div class="weui-cell__bd text_r">
             <p class="txt">
@@ -108,6 +108,14 @@
             </p>
           </div>
           <span class="icon-arrow arrow-right"></span>
+        </div>
+        <div class="weui-cell">
+          <div class="weui-cell__hd">实付金额</div>
+          <div class="weui-cell__bd text_r">
+            <p class="txt">
+              <span class="color_ff952e">￥{{total}}</span>
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -117,45 +125,218 @@
       <div class="section__hd" style="padding-bottom:0;">
         <span class="title">支付方式</span>
       </div>
-      <radio-group>
-        <label class="check__item flex flexAlignCenter">
-          <img src="/static/images/icons/pay_weixin.jpg" class="icon-pay" alt>
-          <p class="title flex1">微信</p>
-          <radio color="#ff952e" value checked="true"/>
-        </label>
-        <label class="check__item flex flexAlignCenter">
-          <img src="/static/images/icons/pay_yue.jpg" class="icon-pay" alt>
-          <p class="title flex1">余额</p>
-          <radio color="#ff952e" value/>
+      <radio-group  @change="radioChange">
+        <label class="check__item flex flexAlignCenter" v-for="(item,index) in payList" :key="index">
+          <img src="/static/images/icons/pay_weixin.jpg" class="icon-pay" alt v-if="item.Id==1">
+          <img src="/static/images/icons/pay_yue.jpg" class="icon-pay" alt  v-if="item.Id==2">
+          <p class="title flex1">{{item.Name}}</p>
+          <radio color="#fff" :value="item.Id" :checked="item.Id==aa"/>
         </label>
       </radio-group>
     </div>
     <!-- 底部的定位按钮 -->
-    <div class="ftBtn" style="heigth:100rpx;">
+    <div class="ftBtn" style="heigth:100rpx;" @tap="payMoney">
       <div class="inner fixed bm0">
         <div class="btns">
           <div class="btn center bg_ff952e color_fff">立即支付</div>
         </div>
       </div>
     </div>
+    <div class="mask" v-if="isShowMask" catchtouchmove="true" @click="cancle"></div>
+    <div class="maskType boxSize" v-if="isShowMask">
+        <div class="flex">
+              <span class="size" @click="isShowMask=false">取消</span>
+              <span class="title">{{masktitle}}</span>
+              <span class="color size" @click="subConfirm">确定</span>
+        </div>
+        <scroll-view :scroll-y="true" style="height:480rpx;" class="showItem" @scrolltolower="loadMore">
+          <div v-for="(item,index) in list" :key="index">
+              <p :class="{'itemactive':statu == index}" @click="chose(index)" style="margin-top:3rpx;">{{item.Name}}
+              </p>
+          </div>
+        </scroll-view>
+    </div>
+    <payPassword :showStatus.sync="showPayPawStatus" @success="submit"></payPassword>
   </div>
 </template>
 <script>
+import { post, valPhone, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
+import payPassword from '@/components/payPassword.vue'
 export default {
   onLoad() {
     this.setBarTitle();
   },
-  onShow() {},
+  onShow() {
+    this.userId = wx.getStorageSync("userId");
+    this.token = wx.getStorageSync("token");
+    this.curPage = getCurrentPageUrlWithArgs();
+    this.mobile = wx.getStorageSync("mobile");
+    this.cardBrand = "请选择"
+    if(this.$root.$mp.query.Denomination){
+      this.CouponId = this.$root.$mp.query.CouponId
+      this.Denomination = this.$root.$mp.query.Denomination
+      console.log( this.Denomination,this.CouponId," this.Denomination")
+    }
+    if(this.$root.$mp.query.InvoiceId){
+        this.InvoiceId = this.$root.$mp.query.InvoiceId
+    }
+  },
+  components:{
+    payPassword
+  },
   data() {
     return {
-      cHeight: ""
+      userId:"",
+      token:"",
+      curPage:"",
+      cHeight: "",
+      mobile:"",
+      isShowMask:false,
+      list:[],
+      statu:0,
+      masktitle:"",
+      cardBrand:"请选择",//卡的种类
+      Id:0,//商品Id
+      Password:"",//支付密码
+      NeedMoney:0,//应付金额
+      InvoiceId:0,//发票Id
+      CouponId:0,  //优惠券ID
+      Denomination:"",//优惠券面额
+      payList:[
+        {Id:1,Name:"微信"},{Id:2,Name:"余额"}
+      ],
+      aa:1,
+      showPayPawStatus:false
+    
     };
+  },
+  computed:{
+    total(){
+      return this.NeedMoney -this.Denomination*1
+    }
   },
   methods: {
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "结算台"
       });
+    },
+    choseCard(){
+      this.isShowMask = true
+      this.masktitle="请选择种类"
+      this.getCardBrand()
+    },
+    //获取卡的种类
+    getCardBrand(){
+      post('User/VipGoodsList',{}).then(res=>{
+        console.log("res:",res)
+        this.list = res.data
+      })
+    },
+    chose(i){
+      console.log(i)
+      this.statu = i
+    },
+    subConfirm(){
+      this.cardBrand = this.list[this.statu].Name
+      this.NeedMoney = this.list[this.statu].NeedMoney
+      this.Id = this.list[this.statu].Id
+      this.isShowMask = false
+    },
+    //去选择优惠券 开发票
+    goToPage(index){
+      if(index==0){
+        wx.navigateTo({
+          url:"/pages/mine2/myCoupon/main?money="+this.NeedMoney+"&url=member2/buyFunction"
+        })
+      }else if(index==1){
+        wx.navigateTo({
+          url:"/pages/member2/invoiceList/main?invoiceType=1&url=member2/buyFunction"
+        })
+      }
+    },
+    radioChange(e){
+      this.aa = e.mp.detail.value
+    },
+    //提示语
+    toastTip(tip){
+       wx.showToast({
+          title: tip,
+          icon: "none",
+          duration: 1500
+        }); 
+    },
+    valOther(){
+      if(this.Id==0){
+        this.toastTip("请选择卡类型!")
+        return false
+      }
+      return true
+    },
+    //支付
+    payMoney(){
+      if(this.valOther()){
+        this.toPayMoney()
+      }
+    },
+    toPayMoney(){
+      console.log("9999")
+      if(this.aa==1){ //1微信支付  2-余额支付
+        this.getWxPay()
+        console.log("8888")
+      }else{
+        this.showPayPawStatus = true
+      }
+    },
+    getWxPay(){
+      console.log("___________")
+      post('User/WechatApplet_Pay_Vip',{
+          UserId:this.userId,
+          Token:this.token,
+          Id:this.Id,
+          InvoiceId:this.InvoiceId,
+          CouponId:this.CouponId
+      },this.curPage).then(res=>{
+        console.log(res)
+        if(res.code==0){
+            const JsParam = JSON.parse(res.data.JsParam)
+            this.wxPayMoney(JsParam)
+        }
+      })
+    },
+    wxPayMoney(JsParam){
+      wx.requestPayment({
+        timeStamp:JsParam.timeStamp,
+        nonceStr:JsParam.nonceStr,
+        package:JsParam.package,
+        signType: 'MD5',
+        paySign:JsParam.paySign,
+        success: (res)=>{ 
+          wx.navigateTo({url:"/pages/member2/memberManage/main"})
+        }
+      })
+    },
+    async submit(password){
+     const res=await  post('/User/VipGoodsPay',{
+          UserId:this.userId,
+          Token:this.token,
+          Id:this.Id,
+          Password:password,
+          InvoiceId:this.InvoiceId,
+          CouponId:this.CouponId
+
+        },this.curPage)
+        if(res.code==0){
+          wx.showToast({
+            title:"开通成功",
+            icon:"success",
+            duration:1500
+          })
+          this.showPayPawStatus = false
+          setTimeout(res=>{
+            wx.navigateTo({url:"/pages/member2/memberManage/main"})
+          },1500)
+        }
     }
   }
 };
@@ -196,5 +377,38 @@ export default {
 }
 .section__hd .title {
   font-weight: normal;
+}
+.maskType {
+    background: #fff;
+    width: 100%;
+    height: 600rpx;
+    padding: 30rpx 0;
+    bottom: 0!important;
+    position: fixed;
+    z-index: 999;
+    p {
+        padding: 15rpx 30rpx;
+        text-align:center;
+    }
+    .flex {
+        justify-content: space-between;
+        border-bottom: 1rpx solid #f2f2f2;
+        padding: 20rpx;
+        font-weight: 400;
+        font-size: 30rpx;
+        .color {
+            color: #ff2925
+        }
+        .size {
+            font-size: 26rpx;
+        }
+        .title {
+            font-weight: bold;
+        }
+    }
+    .itemactive {
+        background: #ff2925;
+        color: #fff
+    }
 }
 </style>

@@ -813,3 +813,19 @@ radio .wx-radio-input.wx-radio-input-checked::before {
     display: flex;
     align-items: center;
 }
+.addDetail{
+    text-align:center;
+    padding-bottom:40rpx;
+    padding-top:40rpx;
+    .btn-add {
+        display: block;
+        margin: 0 auto;
+        width: 400rpx;
+        line-height: 70rpx;
+        font-size: 32rpx;
+        text-align: center;
+        color:#666;
+        border-radius: 8rpx;
+        border: 1px solid #e5e5e5;
+    }
+}
