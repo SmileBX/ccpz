@@ -81,7 +81,8 @@
                 "set/main",
                 "setPayPassword/main",
                 "modifyTel/main",
-                "integral/main"
+                "integral/main",
+                "helpDetail/main"
 
             ]
         },

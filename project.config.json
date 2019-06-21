@@ -42,7 +42,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 52,
+			"current": 71,
 			"list": [
 				{
 					"id": 0,
@@ -171,7 +171,7 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 18,
 					"name": "帮助中心",
 					"pathName": "pages/member/help/main",
 					"query": "",
@@ -538,6 +538,13 @@
 					"id": -1,
 					"name": "我的",
 					"pathName": "pages/my/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "关于我们",
+					"pathName": "pages/mine2/aboutUs/main",
 					"query": "",
 					"scene": null
 				}
