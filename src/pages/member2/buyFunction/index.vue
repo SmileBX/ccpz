@@ -177,6 +177,9 @@ export default {
       this.Denomination = this.$root.$mp.query.Denomination
       console.log( this.Denomination,this.CouponId," this.Denomination")
     }
+    if(this.$root.$mp.query.InvoiceId){
+        this.InvoiceId = this.$root.$mp.query.InvoiceId
+    }
   },
   components:{
     payPassword
@@ -248,7 +251,7 @@ export default {
         })
       }else if(index==1){
         wx.navigateTo({
-          url:"/pages/member2/addInvoice/main?invoiceType=1"
+          url:"/pages/member2/invoiceList/main?invoiceType=1&url=member2/buyFunction"
         })
       }
     },
@@ -277,14 +280,41 @@ export default {
       }
     },
     toPayMoney(){
+      console.log("9999")
       if(this.aa==1){ //1微信支付  2-余额支付
         this.getWxPay()
+        console.log("8888")
       }else{
         this.showPayPawStatus = true
       }
     },
     getWxPay(){
-
+      console.log("___________")
+      post('User/WechatApplet_Pay_Vip',{
+          UserId:this.userId,
+          Token:this.token,
+          Id:this.Id,
+          InvoiceId:this.InvoiceId,
+          CouponId:this.CouponId
+      },this.curPage).then(res=>{
+        console.log(res)
+        if(res.code==0){
+            const JsParam = JSON.parse(res.data.JsParam)
+            this.wxPayMoney(JsParam)
+        }
+      })
+    },
+    wxPayMoney(JsParam){
+      wx.requestPayment({
+        timeStamp:JsParam.timeStamp,
+        nonceStr:JsParam.nonceStr,
+        package:JsParam.package,
+        signType: 'MD5',
+        paySign:JsParam.paySign,
+        success: (res)=>{ 
+          wx.navigateTo({url:"/pages/member2/memberManage/main"})
+        }
+      })
     },
     async submit(password){
      const res=await  post('/User/VipGoodsPay',{
@@ -304,7 +334,7 @@ export default {
           })
           this.showPayPawStatus = false
           setTimeout(res=>{
-           wx.navigateBack()
+            wx.navigateTo({url:"/pages/member2/memberManage/main"})
           },1500)
         }
     }

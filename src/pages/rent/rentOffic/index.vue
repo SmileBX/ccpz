@@ -638,7 +638,6 @@
                   <input
                     class="ipt"
                     type="text"
-                    disabled
                     placeholder="请输入性别要求"
                      v-model="item.JobSex"
                     placeholder-style="color:#b5b5b5;"
@@ -1068,6 +1067,8 @@ export default {
           this.introduce = "圈子简介"
           this.introducePlaceholder = "请填写圈子详细简介"
           this.upImgTitle = "请上传圈子相关照片"
+          this.addrTitle = "圈子地址"
+          this.addrPlaceholder = "地址名称 如：如京基大厦"
           
         }
         if(this.PageId==42){
@@ -1481,16 +1482,18 @@ export default {
         return false;
       }
       if (this.GladBuyAreaId=='') {
-        this.toastTip("请选择区域!")
-        return false;
-      }
-      if (this.GladBuyerTradeId == '') {
-        this.toastTip("请选择行业!")
+        this.toastTip("请选择区域!") 
         return false;
       }
       if (this.Founder == '') {
         this.toastTip(`请输入名称!`)
         return false;
+      }
+      if(this.PageId==36 || this.PageId==35 || this.PageId==43 || this.PageId==32 || this.PageId==33){
+        if (this.GladBuyerTradeId == '') {
+          this.toastTip("请选择行业!")
+          return false;
+        }
       }
       if(this.PageId==36 || this.PageId==35){
           if (this.PropertyPrice == '') {
@@ -1542,21 +1545,22 @@ export default {
             return false;
           }
       }
-      if(this.PageId==43 || this.PageId==32 || this.PageId==33){
+      if(this.PageId==43 || this.PageId==32 || this.PageId==33 || this.PageId==34){
         if (this.BuyBudget == '') {
           this.toastTip(`请输入投资预算!`)
           return false;
         }
-        if (this.PlanBuyDate == '') {
+        if (this.PlanBuyDate == '') { 
           this.toastTip(`请选择时间!`)
           return false;
         }
+      }
+      if(this.PageId==43 || this.PageId==32 || this.PageId==33){
         if (this.PlanBuyArea == '') {
           this.toastTip(`请输入面积!`)
           return false;
         }
       }
-      
       if(this.PageId==32 || this.PageId==33 || this.PageId==34){
         for(let i=0;i<this.PartnerList.length;i++){
             if (this.PartnerList[i].JobTitle == '') {
@@ -1600,6 +1604,18 @@ export default {
             return false;
           }
         }
+        if (this.RingType == '') {
+          this.toastTip(`请输入圈子属性!`)
+          return false;
+        }
+        if (this.RingNum == '') {
+          this.toastTip(`请输入圈子计划人数!`)
+          return false;
+        }
+        if (this.RingRate == '') {
+          this.toastTip(`请输入活动频率!`)
+          return false;
+        }
       }
 
 
@@ -1631,7 +1647,6 @@ export default {
     },
     //提交发布
     async submitApply(){
-      console.log("PartnerList:",this.PartnerList)
       const that = this
       let PicList = await that.base64Img(that.imgArr);
       let _PicList = JSON.stringify(PicList)
@@ -1682,7 +1697,6 @@ export default {
             PlanBuyArea:that.PlanBuyArea
         }
         if(that.PageId==32　|| that.PageId==33){
-          console.log("*****************")
           for(let i=0;i<that.PartnerList;i++){
               infoTips = {
                   JobTitle:that.PartnerList[i].JobTitle,
@@ -1697,18 +1711,35 @@ export default {
           }
           console.log("_PartnerList:",_PartnerList)
         }
-        if(that.PageId==34){
-          for(let i in that.PartnerList){
-              infoTips = {
-                  JobTitle:that.PartnerList[i].JobTitle,
-                  Experience:that.PartnerList[i].Experience,
-                  Degree:that.PartnerList[i].Degree,
-                  JobSex:that.PartnerList[i].JobSex,
-                  WorkTime:that.PartnerList[i].WorkTime,
-                  PartDesc:that.PartnerList[i].PartDesc
-              }
-              _PartnerList.push(infoTips)
-          }
+      }
+      if(that.PageId==34){
+          GoodsInfo = {
+            Title:that.Title,
+            CompanyId:that.CompanyId,
+            Company:that.Company,
+            CompanyAddr:that.CompanyAddr,
+            CompanyDoorNum:that.CompanyDoorNum,
+            Synopsis:that.Synopsis,
+            GladBuyArea:that.GladBuyArea,
+            GladBuyAreaId:that.GladBuyAreaId,
+            Founder:that.Founder,
+            BuyBudget:that.BuyBudget,
+            PlanBuyDate:that.PlanBuyDate,
+            RingType:that.RingType,
+            RingNum:that.RingNum,
+            RingRate:that.RingRate,
+        }
+        for(let i=0;i<that.PartnerList;i++){
+           console.log("*****************")
+            infoTips = {
+                JobTitle:that.PartnerList[i].JobTitle,
+                Experience:that.PartnerList[i].Experience,
+                Degree:that.PartnerList[i].Degree,
+                JobSex:that.PartnerList[i].JobSex,
+                WorkTime:that.PartnerList[i].WorkTime,
+                PartDesc:that.PartnerList[i].PartDesc
+            }
+            _PartnerList.push(infoTips)
         }
       }
       console.log("++++++")
@@ -1799,6 +1830,9 @@ export default {
       this.PlanEndTime = ''
       this.PlanBuyNum = ''
       this.PlanAllNum = ''
+      this.RingType = ''
+      this.RingNum = ''
+      this.RingRate = ''
       this.PartnerList=[]
 
     }
