@@ -2,30 +2,68 @@
   <div class="bg_fff" style="height:100vh">
     <!-- 标签-->
     <div class="flex flexWrap justifyContentStart taglist">
-      <span>美工</span>
-      <span>设计</span>
+      <span v-for="(item,index) in taglist" :key="index" :class="{'avtive':item.statu}" @tap="choseTag(index)">{{item.Name}}</span>
+      <!-- <span>设计</span>
       <span class="avtive">文员</span>
-      <span>销售</span>
+      <span>销售</span> -->
     </div>
     <!-- 底部 -->
     <div class="btnSub">确定</div>
   </div>
 </template>
 <script>
+import { post, valPhone, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
 export default {
   data(){
     return {
+      type:0, //2-能力标签 1-资源标签
       taglist:[ ]
     }
   },
   onLoad() {
     this.setBarTitle();
   },
+  onShow(){
+    this.statu = ''
+    this.type=this.$root.$mp.query.typeTips
+    if(this.type==2){
+      this.getTagsCap()
+    }
+    if(this.type==1){
+      this.getTagsRes()
+    }
+  },
   methods: {
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "标签管理"
       });
+    },
+    getTagsCap(){
+      post('Goods/GetTagsCap',{}).then(res=>{
+        if(res.code==0){
+          for(let i=0;i<res.data.length;i++){
+            this.$set(res.data[i],"statu",false)
+          }
+          this.taglist = res.data
+          console.log(this.taglist)
+        }
+      })
+    },
+    getTagsRes(){
+      post('Goods/GetTagsRes',{}).then(res=>{
+        if(res.code==0){
+          for(let i=0;i<res.data.length;i++){
+            this.$set(res.data[i],"statu",false)
+          }
+          this.taglist = res.data
+          console.log(this.taglist)
+        }
+      })
+    },
+    //选择标签
+    choseTag(i){
+      this.$set(this.taglist[i],"statu",true)
     }
   }
 };

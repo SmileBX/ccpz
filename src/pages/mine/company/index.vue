@@ -104,7 +104,7 @@
           </div>
         </div>
       
-    </div>
+      </div>
     <!--公司相关-->
     <div>
         <!--上传图片-->
@@ -165,15 +165,60 @@
           <div class="item"><img src="/static/images/icons/con_address.jpg" class="icon" alt="">布吉区-布吉关</div>
       </div>
     </div>
-    <!-- 底部 -->
-    <div class="ftBtn">
-      <div class="inner fixed bm0 flex">
-        <div class="btns flex1 flex center">
-          <div class="btn flex1 bg_ff952e color_fff">极速联系</div>
-          <div class="btn flex1 bg_ed3435 color_fff">加好友</div>
+    <!-- 公司简介 -->
+      <div class="section" style="margin-top:20rpx">
+        <div class="locationBox pd15">
+          <div class="flex justifyContentBetween">
+              <h3 class="title detail__title fontBold">公司简介</h3>
+              <p class="fontColor99">编辑
+                <span class="icon-arrow arrow-right"></span>
+              </p>
+          </div>
+          <div class="con">深圳市松大科技有限公司隶属于深圳市松大电通集团，秉承集团在建筑电气及智能化领域的事业，专业从事建筑智能化系统的产品研发、生产、销售和售后服务。</div>
         </div>
       </div>
-    </div>
+      <!-- 公司简介  end -->
+      <!-- 公司理念 -->
+      <div class="section" style="margin-top:20rpx">
+        <div class="locationBox pd15">
+          <div class="flex justifyContentBetween">
+              <h3 class="title detail__title fontBold">公司理念</h3>
+              <p class="fontColor99">编辑
+                <span class="icon-arrow arrow-right"></span>
+              </p>
+          </div>
+          <div class="con">深圳市松大科技有限公司隶属于深圳市松大电通集团，秉承集团在建筑电气及智能化领域的事业，专业从事建筑智能化系统的产品研发、生产、销售和售后服务。</div>
+        </div>
+      </div>
+      <!-- 公司理念  end -->
+      <!-- 照片 -->
+      <div class="form-cells-item pall bg_fff" style="margin-top:20rpx">
+        <div class="flex justifyContentBetween">
+              <h3 class="title detail__title fontBold">上传照片</h3>
+              <p class="fontColor99">编辑
+                <span class="icon-arrow arrow-right"></span>
+              </p>
+          </div>
+        <div class="form-cell-bd form-cell-img">
+          <div class="upbtn">
+            <span class="close" @click="delImg(pindex)">×</span>
+            <img class="upimg" src="/static/images/icons/upload_1.png">
+          </div>
+          <div class="upbtn" @click="chosseImg" >
+            <img class="upimg" src="/static/images/icons/upload_1.png">
+          </div>
+        </div>
+      </div>
+      <!-- 照片-->
+      <!-- 底部 -->
+      <!-- <div class="ftBtn">
+        <div class="inner fixed bm0 flex">
+          <div class="btns flex1 flex center">
+            <div class="btn flex1 bg_ff952e color_fff">极速联系</div>
+            <div class="btn flex1 bg_ed3435 color_fff">加好友</div>
+          </div>
+        </div>
+      </div> -->
   </div>
 </template>
 <script>
