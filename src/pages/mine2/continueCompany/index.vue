@@ -418,6 +418,7 @@ export default {
             icon: "none",
             duration: 1500
           });
+          wx.navigateBack()
         }
       });
     },
