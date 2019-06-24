@@ -2,7 +2,7 @@
   <div class="pageContent" v-if="hasData">
     <div class="manageTop">
       <!-- 未开通的时候 -->
-      <div class="noGredge gradge" v-if="info.IsVip==0">
+      <div class="noGredge gradge" v-if="info.IsVip===0">
         <span class="status">未开通</span>
         <h2 class="title">精英会员</h2>
         <div class="con">
@@ -16,7 +16,7 @@
         </div>
       </div>
       <!-- 会员卡 -->
-      <div class="gradge one__gradient" v-if="info.IsVip==1">
+      <div class="gradge one__gradient" v-if="info.IsVip===1">
         <span class="status">{{info.cardBrand}}</span>
         <img src="/static/images/icons/v3.png" class="icons-vip.gradient-vip" alt="">
         <div class="perInfo">
@@ -89,6 +89,8 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
+    this.hasData = false;
+    this.info = {};
     this.QueryVipInfo()
   },
   methods: {
@@ -109,17 +111,20 @@ export default {
       },this.curPage).then(res=>{
         console.log("res:",res)
         if(res.code==0){
-          this.hasData = true
+          this.hasData = true;
           this.info={
             Avatar:res.data.Avatar, //头像
             IsVip:res.data.IsVip, //是否Vip
             Name:res.data.Name,  //昵称
-            VipEndTime:res.data.VipEndTime,  //到期时间
-            Content:res.data.gr.Content,  //描述多少天内有效
-            cardBrand:res.data.gr.Name,  //会员卡名称
-            GradeName:res.data.gr.GradeName  //会员卡级别
+            VipEndTime:res.data.VipEndTime  //到期时间
           }
-          // console.log(this.info)
+          if(res.data.IsVip !==0){
+            this.info = Object.assign({},this.info,{
+              Content:res.data.gr.Content, //描述多少天内有效
+              cardBrand:res.data.gr.Name,  //会员卡名称
+            GradeName:res.data.gr.GradeName  //会员卡级别
+            })
+          }
         }
       })
     },
