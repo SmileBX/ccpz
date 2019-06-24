@@ -332,5 +332,5 @@ export default {
     valPhone: valPhone,
     previewImage: previewImage,
     trim,
-    getLocation
+    getLocation,
 }

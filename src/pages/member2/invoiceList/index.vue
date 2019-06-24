@@ -1,7 +1,7 @@
 <template>
   <div class="pageContent">
     <div class="invoiceList" v-if="list.length>0" style="margin-top:20rpx">
-      <div class="item" v-for="(item,index) in list" :key="index">
+      <div class="item" v-for="(item,index) in list" :key="index" @tap="choseInvoice(index)">
         <div class="item__bd">
           <div class="remarks">
             <text class="name">抬头名称：{{item.HeaderName}}</text>
@@ -51,6 +51,13 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
+    if(this.$root.$mp.query.invoiceType){
+        this.invoiceType = this.$root.$mp.query.invoiceType
+    }
+    if(this.$root.$mp.query.url){
+        this.pramas = this.$root.$mp.query.url
+    }
+    
     this.list = [];
     this.hasDataList = "";
     this.getInvoiceList();
@@ -61,6 +68,8 @@ export default {
       token: "",
       curPage: "",
       list: [],
+      invoiceType:"",
+      pramas:"",
       hasDataList: "",
       page: 1
     };
@@ -70,6 +79,25 @@ export default {
       wx.setNavigationBarTitle({
         title: "我的发票"
       });
+    },
+    //选择发票 --必传发票种类 个人/公司    路径
+    choseInvoice(i){
+      const InvoiceId = this.list[i].Id
+      let typeId = 0
+      if(this.list[i].InvoiceTitlestr=='公司'){
+          typeId=0
+      }else{
+          typeId=1
+      }
+      if(this.invoiceType != typeId){
+        wx.showToast({
+          title:"请选择合适类型的发票",
+          icon:"none",
+          duration:1500
+        })
+      }else{
+          wx.navigateTo({url:"/pages/"+this.pramas+"/main?InvoiceId="+InvoiceId})
+        }
     },
     getInvoiceList() {  //获取发票列表
       let that = this;

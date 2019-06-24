@@ -155,16 +155,21 @@
               </p>
           </div>
         </scroll-view>
-    </div> 
+    </div>
+    <payPassword :showStatus.sync="showPayPawStatus" @success="submit"></payPassword>
   </div>
 </template>
 <script>
 import { post, valPhone, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
+import payPassword from '@/components/payPassword.vue'
 export default {
   onLoad() {
     this.setBarTitle();
   },
   onShow() {
+    this.userId = wx.getStorageSync("userId");
+    this.token = wx.getStorageSync("token");
+    this.curPage = getCurrentPageUrlWithArgs();
     this.mobile = wx.getStorageSync("mobile");
     this.cardBrand = "请选择"
     if(this.$root.$mp.query.Denomination){
@@ -172,9 +177,18 @@ export default {
       this.Denomination = this.$root.$mp.query.Denomination
       console.log( this.Denomination,this.CouponId," this.Denomination")
     }
+    if(this.$root.$mp.query.InvoiceId){
+        this.InvoiceId = this.$root.$mp.query.InvoiceId
+    }
+  },
+  components:{
+    payPassword
   },
   data() {
     return {
+      userId:"",
+      token:"",
+      curPage:"",
       cHeight: "",
       mobile:"",
       isShowMask:false,
@@ -191,7 +205,8 @@ export default {
       payList:[
         {Id:1,Name:"微信"},{Id:2,Name:"余额"}
       ],
-      aa:1
+      aa:1,
+      showPayPawStatus:false
     
     };
   },
@@ -219,12 +234,13 @@ export default {
       })
     },
     chose(i){
+      console.log(i)
       this.statu = i
-      this.Id = this.list[i].Id
     },
     subConfirm(){
       this.cardBrand = this.list[this.statu].Name
       this.NeedMoney = this.list[this.statu].NeedMoney
+      this.Id = this.list[this.statu].Id
       this.isShowMask = false
     },
     //去选择优惠券 开发票
@@ -235,26 +251,92 @@ export default {
         })
       }else if(index==1){
         wx.navigateTo({
-          url:"/pages/member2/addInvoice/main?invoiceType=1"
+          url:"/pages/member2/invoiceList/main?invoiceType=1&url=member2/buyFunction"
         })
       }
     },
     radioChange(e){
       this.aa = e.mp.detail.value
     },
+    //提示语
+    toastTip(tip){
+       wx.showToast({
+          title: tip,
+          icon: "none",
+          duration: 1500
+        }); 
+    },
+    valOther(){
+      if(this.Id==0){
+        this.toastTip("请选择卡类型!")
+        return false
+      }
+      return true
+    },
     //支付
     payMoney(){
+      if(this.valOther()){
+        this.toPayMoney()
+      }
+    },
+    toPayMoney(){
+      console.log("9999")
       if(this.aa==1){ //1微信支付  2-余额支付
         this.getWxPay()
+        console.log("8888")
       }else{
-        this.getYue()
+        this.showPayPawStatus = true
       }
     },
     getWxPay(){
-
+      console.log("___________")
+      post('User/WechatApplet_Pay_Vip',{
+          UserId:this.userId,
+          Token:this.token,
+          Id:this.Id,
+          InvoiceId:this.InvoiceId,
+          CouponId:this.CouponId
+      },this.curPage).then(res=>{
+        console.log(res)
+        if(res.code==0){
+            const JsParam = JSON.parse(res.data.JsParam)
+            this.wxPayMoney(JsParam)
+        }
+      })
     },
-    getYue(){
-      
+    wxPayMoney(JsParam){
+      wx.requestPayment({
+        timeStamp:JsParam.timeStamp,
+        nonceStr:JsParam.nonceStr,
+        package:JsParam.package,
+        signType: 'MD5',
+        paySign:JsParam.paySign,
+        success: (res)=>{ 
+          wx.navigateTo({url:"/pages/member2/memberManage/main"})
+        }
+      })
+    },
+    async submit(password){
+     const res=await  post('/User/VipGoodsPay',{
+          UserId:this.userId,
+          Token:this.token,
+          Id:this.Id,
+          Password:password,
+          InvoiceId:this.InvoiceId,
+          CouponId:this.CouponId
+
+        },this.curPage)
+        if(res.code==0){
+          wx.showToast({
+            title:"开通成功",
+            icon:"success",
+            duration:1500
+          })
+          this.showPayPawStatus = false
+          setTimeout(res=>{
+            wx.navigateTo({url:"/pages/member2/memberManage/main"})
+          },1500)
+        }
     }
   }
 };

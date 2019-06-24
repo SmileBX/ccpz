@@ -33,7 +33,7 @@ export default {
   },
   data() {
     return {
-      menuArr:["/pages/member/modifyTel/main","/pages/member/setPayPassword/main","/pages/member/aboutUs/main"]
+      menuArr:["/pages/member/modifyTel/main","/pages/member/setPayPassword/main","/pages/mine2/aboutUs/main"]
     }
   },
   methods: {

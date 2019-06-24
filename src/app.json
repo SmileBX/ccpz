@@ -16,7 +16,7 @@
     ],
     "window": {
         "backgroundTextStyle": "light",
-        "navigationBarBackgroundColor": "#fff",
+        "navigationBarBackgroundColor": "#ffffff",
         "navigationBarTitleText": "成成企业拼租",
         "navigationBarTextStyle": "black"
     },
@@ -82,7 +82,8 @@
                 "set/main",
                 "setPayPassword/main",
                 "modifyTel/main",
-                "integral/main"
+                "integral/main",
+                "helpDetail/main"
 
             ]
         },
@@ -113,6 +114,7 @@
                 "continueCompany/main",
                 "company/main",
                 "tags/main",
+                "editMenTags/main",
                 "publish/main",
                 "addCard/main",
                 "addCard2/main",
