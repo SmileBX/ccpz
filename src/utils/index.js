@@ -22,7 +22,7 @@ export function formatTime(date) {
 }
 
 export function getCurrentPageUrlWithArgs(changeJson) {
-    console.log(changeJson, "changeJson")
+    // console.log(changeJson, "changeJson")
     const pages = getCurrentPages()
     const currentPage = pages[pages.length - 1]
     const url = currentPage.route
@@ -55,7 +55,6 @@ function request(url, method, data, curPage, header = {}) {
                 'content-type': 'application/json' // 默认值
             },
             success: function(res) {
-                console.log('datadatadatadata',data)
                 setTimeout(function() {
                     wx.hideLoading()
                 }, 800);
@@ -193,23 +192,50 @@ function wx_login(code, iv, encryptedData) {
                 wx.setStorageSync("unionid", "");
                 wx.setStorageSync("userId", res.data.meta.dic.UserId);
                 wx.setStorageSync("token", res.data.meta.dic.Token);
+                let askUrl = wx.getStorageSync("askUrl");
+                if (askUrl !== "undefined" && askUrl) {
+                    askUrl = askUrl.toString().replace(/\%3F/g, '?').replace(/\%3D/g, '=').replace(/\%26/g, '&');
+                }
                 wx.showToast({
                         title: "登录成功！",
                         icon: 'success',
                         duration: 1500,
                         success: function() {
-                            if (wx.getStorageSync("askUrl") !== "undefined" && wx.getStorageSync("askUrl")) {
+                            if (askUrl !== "undefined" && askUrl) {
+                                // let .toString().replace(/\%3F/g, '?').replace(/\%3D/g, '=').replace(/\%26/g, '&')
                                 setTimeout(function() {
-                                    wx.reLaunch({
-                                        url: wx.getStorageSync("askUrl")
-                                    });
+                                    if (askUrl.indexOf("/my/") > -1) {
+                                        wx.switchTab({
+                                            url: '/pages/my/main'
+                                        })
+                                    } else if (askUrl.indexOf("/index/") > -1) {
+                                        wx.switchTab({
+                                            url: '/pages/index/main'
+                                        })
+                                    } else if (askUrl.indexOf("/newsletter/") > -1) {
+                                        wx.switchTab({
+                                            url: '/pages/newsletter/main'
+                                        })
+                                    } else if (askUrl.indexOf("/publish/") > -1) {
+                                        wx.switchTab({
+                                            url: '/pages/publish/main'
+                                        })
+                                    } else if (askUrl.indexOf("/message/") > -1) {
+                                        wx.switchTab({
+                                            url: '/pages/message/main'
+                                        })
+                                    } else {
+                                        wx.redirectTo({
+                                            url: wx.getStorageSync("askUrl")
+                                        });
+                                    }
                                     wx.setStorageSync("askUrl", "");
                                 }, 1500);
                             } else {
                                 setTimeout(function() {
-                                    wx.reLaunch({
-                                        url: "/pages/my/main"
-                                    });
+                                    wx.switchTab({
+                                        url: '/pages/my/main'
+                                    })
                                 }, 1500);
                             }
 

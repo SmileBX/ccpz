@@ -421,6 +421,7 @@
       <div class="mask"></div>
       <div class="shadeContent">
          <div class="gift">
+           <img src="/static/images/icons/cancle2.png" class="icon-close" @click="closeGiftShade" alt="">
            <div class="gift__hd">
              <img src="/static/images/icons/giftTopBg.png" mode="widthFix" class="giftTopBg" alt="">
            </div>
@@ -608,9 +609,7 @@ export default {
         UserId:that.userId,
         Token:that.token
       },that.curPage).then(res => {
-        if(res.code===0){
-          that.giftList = res.data;
-        }
+        
       })
     },
     IsNewUser(){  //判断是否是新用户
@@ -621,7 +620,7 @@ export default {
       },that.curPage).then(res => {
          if(res.code===0){
            if(res.data.IsNewUser===1){  //是新用户
-              //that.isNewUser = true;
+              that.isNewUser = true;
               that.giftList = res.data.list;
               if(that.showGiftCount===0){
                 that.showGiftCount++;
@@ -629,10 +628,14 @@ export default {
                 that.GetNewCoupon();
               }
            }else{
-             //that.isNewUser = false;
+             that.isNewUser = false;
            }
          }
       })
+    },
+    closeGiftShade(){
+      //关闭礼包弹窗
+      this.isNewUser = false;
     }
   },
 
@@ -710,6 +713,9 @@ export default {
   width:100%;
   display: block;
 }
+.gift{
+  position: relative;
+}
 .gift .gift__hd{
   margin-top:-60rpx;
 }
@@ -783,5 +789,13 @@ export default {
   height: 80rpx;
   line-height: 80rpx;
   text-align: center;
+}
+.shade .icon-close{
+  width: 44rpx;
+  height: 44rpx;
+  position: absolute;
+  right: 0;
+  top:-60rpx;
+  z-index: 30;
 }
 </style>

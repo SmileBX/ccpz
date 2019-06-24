@@ -1,7 +1,7 @@
 <template>
   <div class="pageContent bg_fff" :class="(showMoreShop || showMoreEquip)?'over_hidden':''">
     <!-- 头部搜索 -->
-    <!-- <div class="headerTop">
+    <div class="headerTop">
       <div class="inner flex flexAlignCenter">
         <div class="local">
           <span class="name" @click.stop="goCitySelect">{{CityName}}</span>
@@ -24,7 +24,7 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
     <!-- tab切换 -->
     <div class="filterMenu pt15">
       <!-- 一级分类 -->
@@ -79,14 +79,14 @@
       </div>
       <!-- 一级分类对应的二级分类  end -->
       <div class="column levelPanel storeList" v-if="dataList.length>0">
-        <rentList @click="toDetail(item.Id)" :list="item" v-for="(item,index) in dataList" :key="index"></rentList>
+        <rentList @click="toDetail" :list="item" v-for="(item,index) in dataList" :key="index"></rentList>
       </div>
       <!-- 暂无数据等提示 -->
-      <div class="noData center" style="padding:60rpx 30rpx;" v-if="hasDataList&& page===1">暂无数据</div>
+      <div class="noData center" style="padding:60rpx 30rpx;" v-if="hasDataList && page===1">暂无数据</div>
       <div
         class="noData center"
         style="margin-top:0;line-height:80rpx;"
-        v-if="hasDataList&& page!==1"
+        v-if="hasDataList && page!==1"
       >我也是有底线的!</div>
       <!-- 暂无数据等提示  end -->
     </scroll-view>
@@ -326,7 +326,7 @@ export default {
       maxNum: 0, //最大面积
       page: 1,
       pageSize: 5,
-      cityCode: "", //城市code
+      cityCode: "440300", //城市code
       // cityName: "", //城市名称
       dataMoreFilter: {}, //不会变的更多的筛选数据
       dataMoreFilter2: {},
@@ -346,7 +346,7 @@ export default {
   },
   components: {},
   computed: {
-    ...mapState(["CityName"])
+    ...mapState(["CityName",'cityCode'])
   },
   onLoad() {
     this.type = this.$root.$mp.query.type || "";
@@ -361,7 +361,8 @@ export default {
       this.token = wx.getStorageSync("token");
       this.curPage = getCurrentPageUrlWithArgs();
       // this.cityName = wx.getStorageSync("cityName");
-      this.cityCode = wx.getStorageSync("cityCode");
+      // this.cityCode = wx.getStorageSync("cityCode");
+      this.cityCode = this.cityCode;
       this.twoTypeList = [];
       this.twoTabIndex = 0;
       this.oneTabIndex = 0;
@@ -391,8 +392,9 @@ export default {
         title
       });
     },
-    toDetail(id) {
-      wx.navigateTo({ url: "/pages/rent/pinzuDetail/main?id" + id });
+    toDetail() {
+      console.log("点击了")
+      // wx.navigateTo({ url: "/pages/rent/pinzuDetail/main?id" + id });
     },
     //重置行业选择(选择了其他地区等的时候)
     initTrade() {
