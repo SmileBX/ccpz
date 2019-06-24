@@ -1,5 +1,5 @@
 <template>
-  <div class="pageContent">
+  <div class="pageContent" v-if="hasData">
     <div class="storeDetail">
        <div class="pagePerson pall">
           <p class="editinfo" @tap="editInfo">编辑</p>
@@ -19,7 +19,7 @@
               </p>
               <div class="msgList flex ">
                 <p class="msgList">
-                  <span class="msgItem font22" v-if="personInfo.CyList[0].job">{{personInfo.CyList[0].job}}</span>
+                  <span class="msgItem font22" v-if="personInfo.CyList[0].Job">{{personInfo.CyList[0].Job}}</span>
                   <span class="msgItem font22" v-else>未透漏职位</span>
                   <span class="msgItem font22" v-if="personInfo.CyList[0].Name">{{personInfo.CyList[0].Name}}</span>
                   <span class="msgItem font22" v-else>未透漏公司</span>
@@ -30,7 +30,7 @@
                 <span class="attestationStatus color_white font22" v-if="personInfo.CyList[0].IsAUT">
                   <span class="icon-gou"></span> 已认证
                 </span>
-                <span class="attestationStatus color_white font22">
+                <span class="attestationStatus color_white font22"  @tap="editCompany(personInfo.CyList[0].Id)">
                   <span> 编辑</span>
                 </span>
               </div>
@@ -38,7 +38,7 @@
           </div>
           
         </div>
-        <div class="weui-cells noBorder__weui-cells column__weui-cells" style="margin-bottom:20rpx">
+        <!-- <div class="weui-cells noBorder__weui-cells column__weui-cells" style="margin-bottom:20rpx">
             <div class="group flex justifyContentBetween">
               <div class="weui-cell">
                 <div class="weui-cell__hd">成立日期</div>
@@ -65,38 +65,33 @@
                 <div class="weui-cell__bd">无</div>
               </div>
             </div>
-      </div>
+        </div> -->
       <!-- 标签-->
       <div class="tagBox pd15 mt10 bg_fff" style="margin-bottom:20rpx">
           <div class="line flex flexColumn">
             <div class="flex justifyContentBetween"> 
                 <h3 class="tagTile">资源标签</h3>
-                <p class="fontColor99" @tap="gotoPage(0)" v-if="personInfo.TagsResGood[0] && personInfo.TagsResKnow[0]">编辑
+                <p class="fontColor99" @tap="gotoPage(0)">编辑
                   <span class="icon-arrow arrow-right"></span>
                 </p>
+                <!-- v-if="personInfo.TagsResGood[0] && personInfo.TagsResKnow[0]" -->
             </div>
             <div class="flex mt10" >
                 <div>我擅长</div>
-                <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentEnd flex1 tipsGray" v-if="personInfo.TagsResGood[0]">
-                  <span >美工</span>
-                  <span >设计</span>
-                  <span >文员</span>
-                  <span >销售</span>
+                <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentStart flex1 tipsGray" v-if="personInfo.TagsResGood.length>0">
+                  <span v-for="(item,tindex) in personInfo.TagsResGood" :key="tindex">{{item}}</span>
                 </div>
-                <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentEnd flex1" v-else>
-                  <span>+添加</span>
+                <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentStart flex1" v-else>
+                  <span>请添加</span>
                 </div>
             </div>
             <div class="flex mt10" >
                 <div>想认识</div>
-                <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentEnd flex1" v-if="personInfo.TagsResKnow[0]">
-                  <span>美工</span>
-                  <span>设计</span>
-                  <span>文员</span>
-                  <span>销售</span>
+                <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentStart flex1" v-if="personInfo.TagsResKnow.length>0">
+                  <span v-for="(item,pindex) in personInfo.TagsResKnow" :key="pindex">{{item}}</span>
                 </div>
-                <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentEnd flex1" v-else>
-                  <span>+添加</span>
+                <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentStart flex1" v-else>
+                  <span>请添加</span>
                 </div>
             </div>
           </div>
@@ -106,32 +101,27 @@
           <div class="line flex flexColumn">
             <div class="flex justifyContentBetween"> 
                 <h3 class="tagTile">能力标签</h3>
-                <p class="fontColor99" @tap="gotoPage(1)" v-if="personInfo.TagsCapGood[0] && personInfo.TagsCapKnow[0]">编辑
+                <p class="fontColor99" @tap="gotoPage(1)">编辑
                   <span class="icon-arrow arrow-right"></span>
                 </p>
+                <!-- v-if="personInfo.TagsCapGood[0] && personInfo.TagsCapKnow[0]" -->
             </div>
             <div class="flex mt10" >
                 <div>我擅长</div>
-                <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentEnd flex1 tipsGray" v-if="personInfo.TagsCapGood[0]">
-                  <span >美工</span>
-                  <span >设计</span>
-                  <span >文员</span>
-                  <span >销售</span>
+                <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentStart flex1 tipsGray" v-if="personInfo.TagsCapGood.length>0">
+                  <span v-for="(item,cindex) in personInfo.TagsCapGood" :key="cindex">{{item}}</span>
                 </div>
-                <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentEnd flex1" v-else>
-                  <span>+添加</span>
+                <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentStart flex1" v-else>
+                  <span>请添加</span>
                 </div>
             </div>
             <div class="flex mt10">
                 <div>想认识</div>
-                <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentEnd flex1" v-if="personInfo.TagsCapKnow[0]">
-                  <span>美工</span>
-                  <span>设计</span>
-                  <span>文员</span>
-                  <span>销售</span>
+                <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentStart flex1" v-if="personInfo.TagsCapKnow.length>0">
+                  <span v-for="(item,sindex) in personInfo.TagsCapKnow" :key="sindex">{{item}}</span>
                 </div>
-                <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentEnd flex1" v-else>
-                  <span>+添加</span>
+                <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentStart flex1" v-else>
+                  <span>请添加</span>
                 </div>
             </div>
             
@@ -251,7 +241,9 @@ export default {
       userId: "",
       token: "",
       personInfo:{},
-      menuAr:['/pages/mine/tags/main?typeTips=1','/pages/mine/tags/main?typeTips=2']
+      hasData:false,
+      companyId:"",
+      menuAr:['/pages/mine/editMenTags/main?typeTips=1','/pages/mine/editMenTags/main?typeTips=2']
     }
   },
   onShow(){
@@ -285,7 +277,20 @@ export default {
         if(res.code==0){
           this.$set(res.data,"Area",res.data.Area.split(',').slice(1).join('-'))
           this.$set(res.data,"Trade",res.data.Trade.split(',').join(' '))
+          if( res.data.TagsCapGood[0].length<=0){
+              this.$set(res.data,"TagsCapGood",res.data.TagsCapGood.splice(1))
+          }
+          if( res.data.TagsCapKnow[0].length<=0){
+              this.$set(res.data,"TagsCapKnow",res.data.TagsCapKnow.splice(1))
+          }
+          if( res.data.TagsResGood[0].length<=0){
+              this.$set(res.data,"TagsResGood",res.data.TagsResGood.splice(1))
+          }
+          if( res.data.TagsResKnow[0].length<=0){
+              this.$set(res.data,"TagsResKnow",res.data.TagsResKnow.splice(1))
+          }
           this.personInfo = res.data
+          this.hasData = true
           console.log(res.data.TagsCapKnow.length)
         }
       })
@@ -293,6 +298,10 @@ export default {
     //查看个人认证
     seeVertical(){
       wx.navigateTo({url:"/pages/mine2/myVertical/main"})
+    },
+    //编辑公司信息
+    editCompany(id){
+      wx.navigateTo({url:"/pages/mine2/continueCompany/main?id="+id})
     }
 
   }
@@ -367,9 +376,10 @@ export default {
 }
 .tipsList{
   width:100%;
+  margin-left:15rpx;
   span{
     width:19%;
-    font-size:24rpx;
+    font-size:22rpx;
     text-align:center;
     background: #FFF7F0;
     border:none;

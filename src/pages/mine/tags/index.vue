@@ -8,7 +8,7 @@
       <span>销售</span> -->
     </div>
     <!-- 底部 -->
-    <div class="btnSub">确定</div>
+    <div class="btnSub" @tap="addTagsSubmit">确定</div>
   </div>
 </template>
 <script>
@@ -16,8 +16,9 @@ import { post, valPhone, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
 export default {
   data(){
     return {
-      type:0, //2-能力标签 1-资源标签
-      taglist:[ ]
+      type:0, // 1-资源标签 2-能力标签
+      taglist:[ ],
+      flag:""
     }
   },
   onLoad() {
@@ -26,6 +27,7 @@ export default {
   onShow(){
     this.statu = ''
     this.type=this.$root.$mp.query.typeTips
+    this.flag =this.$root.$mp.query.flag
     if(this.type==2){
       this.getTagsCap()
     }
@@ -64,6 +66,23 @@ export default {
     //选择标签
     choseTag(i){
       this.$set(this.taglist[i],"statu",true)
+    },
+    //确定标签
+    addTagsSubmit(){
+      console.log("___",this.taglist)
+      let choseList = []
+      this.taglist.map(item=>{
+        if(item.statu){
+          choseList.push(item)
+        }
+      })
+      const _choseList = JSON.stringify(choseList)
+      wx.setStorageSync("choseList",_choseList)
+      wx.navigateTo({
+        url:"/pages/mine/editMenTags/main?typeTips="+this.type+"&flag="+this.flag
+      })
+
+      
     }
   }
 };

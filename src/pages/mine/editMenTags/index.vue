@@ -1,37 +1,31 @@
 <template>
   <div class="bg_fff" style="height:100vh">
-    <!-- 标签-->
+    <!-- 标签 擅长-->
       <div class="tagBox pd15 mt10 bg_fff" style="margin-bottom:20rpx">
           <div class="line flex flexColumn">
             <div> 
-                <div class="tagTile2">资源标签</div>
+                <div class="tagTile2">{{tag1}}</div>
                 <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentStart flex1" style="margin-top:20rpx">
-                  <span >美工 x</span>
-                  <span >设计 x</span>
-                  <span >文员 x</span>
-                  <span >销售 x</span>
-                  <span class="AddTag">+ 添加</span>
+                  <span v-for="(item,gindex) in goodList" :key="gindex" @tap="delTag(gindex)">{{item}} x</span>
+                  <span class="AddTag" @tap="addTagDetail(1)">+ 添加</span>
                 </div>
             </div>
           </div>
       </div>
-       <!-- 标签-->
+       <!-- 标签 需要-->
        <div class="tagBox pd15 mt10 bg_fff" style="margin-bottom:20rpx">
           <div class="line flex flexColumn">
             <div> 
-                <div class="tagTile2">资源标签</div>
+                <div class="tagTile2">{{tag2}}</div>
                 <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentStart flex1 flexAlignCenter" style="margin-top:20rpx">
-                  <span >美工 x</span>
-                  <span >设计 x</span>
-                  <span >文员 x</span>
-                  <span >销售 x</span>
-                  <span class="AddTag">+ 添加</span>
+                  <span v-for="(item,nindex) in needList" :key="nindex" v-if="needList">{{item}} x</span>
+                  <span class="AddTag" @tap="addTagDetail(2)">+ 添加</span>
                 </div>
             </div>
           </div>
       </div>
     <!-- 底部 -->
-    <div class="btnSub">确定</div>
+    <div class="btnSub" @tap="saveTag">确定</div>
   </div>
 </template>
 <script>
@@ -39,15 +33,48 @@ import { post, valPhone, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
 export default {
   data(){
     return {
-      type:0, //2-能力标签 1-资源标签
-      taglist:[ ]
+      type:0, // 1-资源标签 2-能力标签
+      taglist:[ ],
+      curPage: "",
+      userId: "",
+      token: "",
+      goodList:[],
+      needList:[],
+      tag1:"",
+      tag2:""
     }
   },
   onLoad() {
     this.setBarTitle();
   },
   onShow(){
-    
+    this.initData()
+    this.curPage = getCurrentPageUrlWithArgs();
+    this.userId = wx.getStorageSync("userId");
+    this.token = wx.getStorageSync("token");
+    // this.initData()
+    if(this.type==2){
+      if(!this.$root.$mp.query.flag){
+         this.getTagsCap()
+      }
+      this.tag1='我擅长的技能'
+      this.tag2='我需要的技能'
+    }
+    if(this.type==1){
+      if(!this.$root.$mp.query.flag){
+        this.getTagsRes()
+      }
+      this.tag1='我擅长的资源'
+      this.tag2='我需要的资源'
+    }
+  },
+  watch:{
+    goodList:{
+      handler(val,oldval){
+        console.log(666666666)
+      },
+      deep: true,
+    }
   },
   methods: {
     setBarTitle() {
@@ -55,8 +82,129 @@ export default {
         title: "标签编辑"
       });
     },
+    initData(){
+      this.type=this.$root.$mp.query.typeTips
+      if(this.$root.$mp.query.flag){
+        // console.log(this.$root.$mp.query.flag)
+        let choseList = JSON.parse(wx.getStorageSync("choseList"))
+        // console.log("_____",choseList)
+        let _choseList = []
+        choseList.map(item=>{
+            _choseList.push(item.Name)
+        })
+
+        if(this.$root.$mp.query.flag==1){
+          // this.goodList = Object.assign(this.goodList,_choseList)
+          this.goodList.push(..._choseList)
+        }else{
+          // this.needList = Object.assign(this.needList,_choseList)
+          this.needList.push(..._choseList)
+        }
+        console.log(" this.goodList:",this.goodList)
+        console.log(" this.needList:",this.needList)
+        
+      }
+    },
+    getTagsCap(){
+      console.log("执行1")
+      post('User/GetTagsCap',{
+        UserId:this.userId,
+        Token:this.token
+      },this.curPage).then(res=>{
+          console.log(res)
+        if(res.code==0){
+          if(res.code==0){
+            if(res.data.TagsCapGood[0].length<=0){
+              this.goodList = res.data.TagsCapGood.splice(1)
+            }else{
+              this.goodList = res.data.TagsCapGood
+            }
+            if(res.data.TagsCapKnow[0].length<=0){
+              this.needList = res.data.TagsCapKnow.splice(1)
+            }else{
+              this.needList = res.data.TagsCapKnow
+            }
+          }
+          // this.goodList = res.data.TagsCapGood
+          // this.needList = res.data.TagsCapKnow
+        }
+      })
+    },
+    getTagsRes(){
+      console.log("执行2")
+      post('User/GetTagsRes',{
+        UserId:this.userId,
+        Token:this.token
+      },this.curPage).then(res=>{
+          if(res.code==0){
+            if(res.data.TagsResGood[0].length<=0){
+              this.goodList = res.data.TagsResGood.splice(1)
+            }else{
+              this.goodList = res.data.TagsResGood
+            }
+            if(res.data.TagsResKnow[0].length<=0){
+              this.needList = res.data.TagsResKnow.splice(1)
+            }else{
+              this.needList = res.data.TagsResKnow
+            }
+            // this.needList = res.data.TagsResKnow
+          }
+      })
+    },
+    addTagDetail(n){
+      wx.navigateTo({
+        url:"/pages/mine/tags/main?typeTips="+this.type+"&flag="+n
+      })
+    },
+    //保存标签
+    saveTag(){
+      let _goodList = []
+      let _needList = []
+      _goodList=this.goodList.join(',')
+      _needList=this.needList.join(',')
+      console.log(_needList)
+
+      let objUrl = ''
+      let _pramas = {}
+      if(this.type==1){
+        objUrl = 'User/EditTagsRes'
+        _pramas = {
+          UserId:this.userId,
+          Token:this.token,
+          TagsResGood:_goodList,
+          TagsResKnow:_needList
+
+        }
+
+      }else{
+        objUrl = 'User/EditTagsCap'
+        _pramas = {
+          UserId:this.userId,
+          Token:this.token,
+          TagsCapGood:_goodList,
+          TagsCapKnow:_needList
+
+        }
+      }
+      post(objUrl,_pramas,this.curPage).then(res=>{
+        console.log("res:",res)
+        if(res.code==0){
+          wx.showToast({
+            title:res.msg,
+            inco:"success",
+            duration:1500
+          })
+        }
+        setTimeout(()=>{
+          wx.redirectTo({url:"/pages/mine/person/main"})
+        },1500)
+      })
+    },
+    //删除标签
+    delTag(i){
+      this.goodList.splice(i,1)
+    }
     
-   
     
   }
 };

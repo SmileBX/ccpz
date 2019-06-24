@@ -167,7 +167,7 @@ export default {
       const CityName =e.currentTarget.dataset.city
         console.log('CityName',CityName)
       //  const res = new this.getCityCode(CityName,this)
-      const res =this.getCityCode(CityName,this)
+      const res =this.getCityCode(CityName,this,2)
       .then(res=>{
         console.log('prototype',res)
         // this.update({ CityName});
@@ -177,6 +177,8 @@ export default {
         this.searchlist=[]
         this.cityList()
         wx.navigateBack()
+      }).catch(()=>{
+
       })
     },
     setBarTitle() {
