@@ -705,6 +705,29 @@ page {
             bottom: 0;
         }
     }
+    &.middle__shade {
+        .shadeContent {
+            background: none;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -moz-flex;
+            display: -ms-flex;
+            display: -o-flex;
+            display: flex;
+            -webkit-box-align: center !important;
+            -webkit-align-items: center !important;
+            -moz-align-items: center !important;
+            -ms-align-items: center !important;
+            -o-align-items: center !important;
+            align-items: center !important;
+            -webkit-justify-content: center !important;
+            -moz-justify-content: center !important;
+            -o-justify-content: center !important;
+            -ms-justify-content: center !important;
+            justify-content: center !important;
+            height: 100vh;
+        }
+    }
 }
 
 
