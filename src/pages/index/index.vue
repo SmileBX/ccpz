@@ -426,7 +426,8 @@ export default {
   },
   onLoad() {     
     this.setBarTitle();
-    initLocation(this)
+    initLocation(this).then(res=>{
+    })
   },
   onShow() {
     this.initData();

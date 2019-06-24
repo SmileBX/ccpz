@@ -1,5 +1,5 @@
 <template>
-  <div class="pageContent">
+  <div class="pageContent" v-if="showData">
     <div class="storeDetail">
       <div class="section pb20">
         <div class="swiper">
@@ -10,7 +10,7 @@
           <p class="priceArea">
             <span class="price">{{data.PropertyPrice.Value}}</span>元/月
           </p>
-          <p class="msgList">
+          <p class="msgList" v-if="data.FirstTags.Value.length>0">
             <span class="msgItem" 
               v-for="(item,index) in data.FirstTags.Value" :key="index">
               {{item}}
@@ -22,7 +22,7 @@
             <span class="msgItem">3卡2独</span>
             <span class="msgItem">罗湖</span> -->
           </p>
-          <p class="tipsList">
+          <p class="tipsList" v-if="data.SecondTags.Value.length>0">
             <span v-for="(item,index) in data.SecondTags.Value" :key="index">{{item}}</span>
             <!-- <span>可使用公司资质</span>
             <span>可挂牌</span> -->
@@ -264,6 +264,7 @@ export default {
       userId:'',
       token:'',
       IsCollection:false,
+      showData:false,
       data:{
       },
     }
@@ -292,9 +293,11 @@ export default {
         Token:this.token,
         Id:this.id
       })
+      console.log(res,'请求成功')
       this.data = res.data
       // 收藏
       this.IsCollection= res.data.IsCollection.Value
+      this.showData=true
     },
     // 收藏
     onIsCollection(){
