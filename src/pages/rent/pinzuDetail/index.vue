@@ -260,7 +260,7 @@ import {post} from '@/utils/index'
 export default {
   data(){
     return {
-      id:411,
+      id:'',
       userId:'',
       token:'',
       IsCollection:false,
@@ -271,6 +271,7 @@ export default {
   },
   onLoad() {
     this.setBarTitle();
+    console.log('this.$root.$mp.query.id',this.$root.$mp.query.id)
     if(this.$root.$mp.query.id){
       this.id = this.$root.$mp.query.id
     }
