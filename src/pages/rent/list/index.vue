@@ -8,9 +8,18 @@
           <span class="icon-arrow arrow-down"></span>
         </div>
         <div class="searchBox flex1">
-          <div class="search">
+          <div class="search " :class="{'flex':showSearch}"  @click="keyWords='';showSearch=true">
             <img src="/static/images/icons/search.png" class="icon_search" alt>
-            <span>搜索</span>
+            <input type="text" 
+              class="keyWords"
+              v-if="showSearch" 
+              :focus="showSearch" 
+              @blur="showSearch=false;keyWords?keyWords=keyWords:keyWords='搜索'" 
+              @confirm="getQueryRentList"
+              v-model="keyWords" 
+              confirm-type="搜索"
+            >
+            <span v-else>{{keyWords}}</span>
           </div>
         </div>
       </div>
@@ -47,7 +56,7 @@
     </div>
 
     <!--列表-->
-    <scroll-view class="filterContent" scroll-y="true">
+    <scroll-view class="filterContent" scroll-y="true" @scrolltolower="onReachBottom">
       <!--图标-->
       <!-- 一级分类对应的二级分类 -->
       <div class="navBox" v-if="twoTypeList.length>0">
@@ -82,7 +91,8 @@
                 {{item.Title}}
               </p>
               <p class="priceArea">
-                <span class="price">￥{{item.PropertyPrice}}</span>
+                <!-- <span class="price">￥{{item.PropertyPrice}}</span> -->
+                <span class="price">{{item.PropertyPrice}} 元/月</span>
               </p>
               <p class="msgList" v-if="item.FirstTags.length>0">
                 <span
@@ -103,7 +113,16 @@
         </li>
       </ul>
       <!-- 暂无数据等提示 -->
-      <div class="noData center" style="padding:60rpx 30rpx;" v-if="!hasDataList && hasDataList !=='' && page===1">暂无数据</div>
+      <div
+        class="noData center"
+        style="padding:60rpx 30rpx;"
+        v-if="hasDataList&& page===1"
+      >暂无数据</div>
+      <div
+        class="noData center"
+        style="margin-top:0;line-height:80rpx;"
+        v-if="hasDataList&& page!==1"
+      >我也是有底线的!</div>
       <!-- 暂无数据等提示  end -->
     </scroll-view>
     <!--弹层-->
@@ -187,7 +206,10 @@
     </div>
     <!-- 价格弹窗  end -->
     <!-- 更多的弹窗 -->
-    <div class="modal_mask more__modal_mask" v-if="isShadeType == 'More' && filterMenu[3].selected ">
+    <div
+      class="modal_mask more__modal_mask"
+      v-if="isShadeType == 'More' && filterMenu[3].selected "
+     >
       <div class="modal__bd">
         <ul class="modal_mask_shop">
           <li v-for="(item,key,index) in moreFilter" :key="index">
@@ -210,7 +232,7 @@
                     <span
                       class="item"
                       :class="{'active':item.selected==index2}"
-                      @click="moreSelectItem(item2,index2,key)"
+                      @click="moreSelectItem(item2,index2,key,item)"
                       v-for="(item2,index2) in item.Value"
                       :key="index2"
                     >
@@ -273,7 +295,7 @@
 </template>
 <script>
 import { post, toLogin, getCurrentPageUrlWithArgs, trim } from "@/utils";
-import {mapState} from 'vuex'
+import { mapState } from "vuex";
 export default {
   data() {
     return {
@@ -329,11 +351,11 @@ export default {
       minNum: 0, //最小面积
       maxNum: 0, //最大面积
       page: 1,
-      pageSize: 10,
+      pageSize: 5,
       cityCode: "", //城市code
       // cityName: "", //城市名称
       dataMoreFilter: {}, //不会变的更多的筛选数据
-      dataMoreFilter2:{},
+      dataMoreFilter2: {},
       moreFilter: {}, //更多的筛选数据
       oneFilter: {}, //单个的在menu中排列的数据（行业、地区等）
       currentDate: new Date().getTime(),
@@ -341,35 +363,45 @@ export default {
       isShowDate: false, //弹出选择计划日期
       setUpDate: "", //选择的计划日期
       dataList: [], //筛选出来的数据的列表
-      hasDataList: "" //是否有数据
+      hasDataList: "", //是否有数据
+      //筛选条件对象
+      goodsInfo: {}, //筛选条件对象
+      keyWords:'搜索', //搜索关键词
+      showSearch:false,
     };
   },
   components: {},
-  computed:{
-    ...mapState(['CityName'])
+  computed: {
+    ...mapState(["CityName"])
   },
   onLoad() {
     this.setBarTitle();
   },
   onShow() {
-    this.userId = wx.getStorageSync("userId");
-    this.token = wx.getStorageSync("token");
-    this.curPage = getCurrentPageUrlWithArgs();
-    // this.cityName = wx.getStorageSync("cityName");
-    this.cityCode = wx.getStorageSync("cityCode");
-    this.twoTypeList = [];
-    this.initAll();
-    this.initDataList();
-    if (
-      this.$root.$mp.query.type !== "undefined" &&
-      this.$root.$mp.query.type
-    ) {
-      this.type = this.$root.$mp.query.type;
-      this.getSubMenu();
-    }
-    console.log("")
+    this.init();
   },
   methods: {
+    init() {
+      this.userId = wx.getStorageSync("userId");
+      this.token = wx.getStorageSync("token");
+      this.curPage = getCurrentPageUrlWithArgs();
+      // this.cityName = wx.getStorageSync("cityName");
+      this.cityCode = wx.getStorageSync("cityCode");
+      this.twoTypeList = [];
+      this.twoTabIndex = 0;
+      this.oneTabIndex = 0;
+      this.isShade = false;
+      this.keyWords ='搜索';
+      this.initAll();
+      this.initDataList();
+      if (
+        this.$root.$mp.query.type !== "undefined" &&
+        this.$root.$mp.query.type
+      ) {
+        this.type = this.$root.$mp.query.type;
+        this.getSubMenu();
+      }
+    },
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "拼租"
@@ -378,35 +410,35 @@ export default {
     toDetail(id) {
       wx.navigateTo({ url: "/pages/rent/pinzuDetail/main?id" + id });
     },
+    //重置行业选择(选择了其他地区等的时候)
     initTrade() {
-      //重置行业选择(选择了其他地区等的时候)
       this.tradeOneTab = "";
       this.tradeTwoTab = "";
       this.tradelist = [];
     },
+    //重置地区选择
     initArea() {
-      //重置地区选择
       this.areaTabIndex = "";
     },
+    //重置价格选择
     initPrice() {
-      //重置价格选择
       this.priceTabIndex = "";
       this.minPrice = 0; //最低价，价格弹窗的时候
       this.maxPrice = 0; //最高价，价格弹窗的时候
       this.inputMinPrice = ""; //价格弹窗中输入的最低价
       this.inputMaxPrice = ""; //价格弹窗中输入的最高价
     },
+    //重置更多的选择
     initMore() {
-      //重置更多的选择
       console.log("执行恢复更多");
       this.minNum = 0; //最小面积
       this.maxNum = 0; //最大面积
       this.setUpDate = "";
       this.isShowDate = false;
-     this.moreFilter =  Object.assign({}, this.dataMoreFilter);
+      this.moreFilter = Object.assign({}, this.dataMoreFilter);
     },
+    //点击上面的一级类，及拼购拼租的时候，要清除所有行业等选择，跟筛选出来的筛选条件
     initAll() {
-      //点击上面的一级类，及拼购拼租的时候，要清除所有行业等选择，跟筛选出来的筛选条件
       //恢复行业等选择
       this.$set(this.filterMenu[0], "selected", false);
       this.$set(this.filterMenu[1], "selected", false);
@@ -422,19 +454,19 @@ export default {
       //清除更多
       this.initMore();
     },
+    //重置发布列表数据的初始值
     initDataList() {
-      //重置发布列表数据的初始值
       this.dataList = []; //筛选出来的数据的列表
       this.hasDataList = false; //是否有数据
     },
+    //如果有价格弹窗的时候，要在点击确认的时候，先判断输入的最高价有没有高于最低价，并且大于0
     valPriceShade() {
-      //如果有价格弹窗的时候，要在点击确认的时候，先判断输入的最高价有没有高于最低价，并且大于0
       let maxPrice = Number(trim(this.inputMaxPrice));
       let minPrice = Number(trim(this.inputMinPrice));
-      console.log("最大价格:"+maxPrice)
-      if(minPrice !==""){
-        if(Number.isInteger(minPrice)===false || minPrice < 0){
-            wx.showToast({
+      console.log("最大价格:" + maxPrice);
+      if (minPrice !== "") {
+        if (Number.isInteger(minPrice) === false || minPrice < 0) {
+          wx.showToast({
             title: "输入的不小于0的整数!",
             icon: "none",
             duration: 1500
@@ -442,9 +474,9 @@ export default {
           return false;
         }
       }
-      if(maxPrice !==""){
-        if(Number.isInteger(maxPrice)===false || maxPrice < 0){
-            wx.showToast({
+      if (maxPrice !== "") {
+        if (Number.isInteger(maxPrice) === false || maxPrice < 0) {
+          wx.showToast({
             title: "输入的不小于0的整数!",
             icon: "none",
             duration: 1500
@@ -464,8 +496,8 @@ export default {
       }
       return true;
     },
+    //获取一级类型
     getSubMenu() {
-      //获取一级类型
       let that = this;
       post("Goods/GetTypeL1", {
         BrandId: that.type
@@ -476,7 +508,8 @@ export default {
             //有下级类的时候
             that.oneId = res.data[0].Id;
             that.getSubTwoMenu();
-          }else{  //没有下级类的时候
+          } else {
+            //没有下级类的时候
             that.typeId = res.data[0].Id;
             that.pageId = res.data[0].PageId;
             that.getQueryRentList();
@@ -485,8 +518,8 @@ export default {
         }
       });
     },
+    //获取二级类型
     getSubTwoMenu() {
-      //获取二级类型
       let that = this;
       post("Goods/GetTypeL2", {
         TypeId: that.oneId
@@ -534,13 +567,12 @@ export default {
               this.moreFilter = Object.assign(this.moreFilter, {
                 [key]: res.data[key]
               });
-              
             }
-            this.dataMoreFilter  = JSON.parse(JSON.stringify(this.moreFilter));
+            this.dataMoreFilter = JSON.parse(JSON.stringify(this.moreFilter));
           }
           console.log("更多里面的要更改的");
           console.log(this.moreFilter);
-           console.log("更多里面的不要更改的");
+          console.log("更多里面的不要更改的");
           console.log(this.dataMoreFilter);
           console.log("menuone");
           console.log(this.oneFilter);
@@ -548,10 +580,16 @@ export default {
         }
       });
     },
-    getQueryRentList(goodsInfo, keyWords) {
-      //获取发布列表
+    //获取发布列表
+    getQueryRentList() {
       let that = this;
-      post(
+          if (that.page === 1) {
+            that.hasDataList = false;
+          }
+          if (that.hasDataList) {
+            return false;
+          }
+        post(
         "Goods/QueryRentList",
         {
           UserId: that.userId,
@@ -565,17 +603,18 @@ export default {
           MaxNum: that.maxNum,
           MinPrice: that.minPrice,
           MaxPrice: that.maxPrice,
-          KeyWords: keyWords,
-          GoodsInfo: goodsInfo
+          KeyWords: this.keyWords==='搜索'?'':this.keyWords,
+          GoodsInfo: this.goodsInfo
         },
         that.curPage
       ).then(res => {
         if (res.code === 0) {
-          if (res.data.length > 0) {
-            if(that.page===1){
-              that.dataList = [];
-              that.hasDataList = false;
-            }
+          if (that.page === 1) {
+            that.dataList = [];
+          }
+          if (res.data.length < that.pageSize) {
+            that.hasDataList = true;
+          }
             res.data.forEach(item => {
               if (item.FirstTags !== "") {
                 that.$set(item, "FirstTags", item.FirstTags.split("|"));
@@ -589,46 +628,47 @@ export default {
               }
             });
             that.dataList = that.dataList.concat(res.data);
-            that.hasDataList = true;
-            console.log(that.dataList);
-          }else{
-            that.hasDataList = false;
-          }
+          
         }
       });
     },
-
+    //切换一级类
     shiftOneType(index, id) {
-      //切换一级类
       this.oneTabIndex = index;
       this.oneId = id;
       this.hasFilter = false;
+      this.page = 1;
       this.twoTypeList = [];
       this.tradelist = []; //根据一级行业搜查对应的行业
       this.tradeOneTab = ""; //选择行业中的一级tab
       this.tradeTwoTab = ""; //选择行业中的二级tab
       this.isShadeType = ""; //类型弹窗
+      this.twoTabIndex = 0; //二级分类活动状态
+      this.goodsInfo = {}; //筛选条件对象
       this.isShade = false; //遮罩
       this.initAll();
-      if(this.oneTypeList[index].PageId !==0){  //没有二级
-       console.log("这里点击切换一级的时候，pageid不是0");
+      if (this.oneTypeList[index].PageId !== 0) {
+        //没有二级
+        console.log("这里点击切换一级的时候，pageid不是0");
         this.pageId = this.oneTypeList[index].PageId;
         this.typeId = id;
         this.getQueryRentList();
         this.GetFilterQuery();
-      }else{
+      } else {
         this.getSubTwoMenu();
       }
-      
     },
-    shiftTwoType(index, pageId,id) {
-      //切换二级类
+    //切换二级类
+    shiftTwoType(index, pageId, id) {
       this.pageId = pageId;
+      this.page = 1;
       this.typeId = id;
       this.filter = {};
+      this.goodsInfo = {}; //筛选条件对象
       this.hasFilter = false;
       this.twoTabIndex = index;
       this.initAll();
+      // debugger;
       this.initDataList();
       this.GetFilterQuery();
       this.getQueryRentList();
@@ -642,6 +682,7 @@ export default {
         }
       });
     },
+    // 点击show筛选弹窗
     filterShade(index) {
       console.log("index:" + index);
       this.$set(
@@ -665,8 +706,8 @@ export default {
         this.isShadeType = "";
       }
     },
+    //点击一级行业查出对应的二级行业
     getTrade(typeIndex, index, id) {
-      //点击一级行业查出对应的二级行业
       if (typeIndex === 1) {
         this.tradelist = [];
         this.tradeTwoTab = "";
@@ -685,7 +726,7 @@ export default {
           this.initArea();
           this.initPrice();
           this.initMore();
-          this.initDataList();  //清除发布数据的一些参数
+          this.initDataList(); //清除发布数据的一些参数
           this.getQueryRentList();
         }
       }
@@ -704,100 +745,86 @@ export default {
         this.isShade = false;
         this.$set(this.filterMenu[0], "selected", false);
         //清除不是行业选项的所有的一些选择了的参数
-        this.initArea();
-        this.initPrice();
-        this.initMore();
-        this.initDataList();
-        this.getQueryRentList({ GladBuyerTrade: tradeStr });
+        // this.initArea();
+        // this.initPrice();
+        // this.initMore();
+        // this.initDataList();
+        // 赛选条件对象
+        this.goodsInfo.GladBuyerTrade = tradeStr;
+        this.getQueryRentList();
       }
     },
-    selectAreaTab(index,name) {
-      //选择地区
+    //选择地区
+    selectAreaTab(index, name) {
       this.areaTabIndex = index;
       this.isShade = false;
       // this.isShadeType = "";
       this.$set(this.filterMenu[1], "selected", false);
       //清除不是地区选项的menu
-      this.initTrade();
-      this.initPrice();
-      this.initMore();
-      this.initDataList();
-      this.getQueryRentList({GladBuyArea:name});
+      // this.initTrade();
+      // this.initPrice();
+      // this.initMore();
+      // this.initDataList();
+      // 赛选条件对象
+      this.goodsInfo.GladBuyArea = name;
+      this.getQueryRentList();
     },
+
+    // **************************价格******************************************
+    //选择价格
     selectPriceTab(index, key, item) {
-      //选择价格
       this.priceTabIndex = index;
       this.minPrice = item.MinPrice;
-      this.maxPrice = item.MinPrice;
-      if(this.minPrice===0 && this.maxPrice===0){  //当选择不限的时候，要去掉下面输入的最高价跟最低价
+      this.maxPrice = item.MaxPrice;
+      if (this.minPrice === 0 && this.maxPrice === 0) {
+        //当选择不限的时候，要去掉下面输入的最高价跟最低价
         this.inputMinPrice = ""; //价格弹窗中输入的最低价
         this.inputMaxPrice = ""; //价格弹窗中输入的最高价
       }
     },
+    //价格弹窗中最低价格或者最高价格获取到聚焦之后，价格选项去掉
     priceFocus(type) {
-      //价格弹窗中最低价格或者最高价格获取到聚焦之后，价格选项去掉
       this.priceTabIndex = "";
     },
+    //点击了价格弹窗中的确定的时候，才开始搜出来
     btnFilterPrice() {
-      //点击了价格弹窗中的确定的时候，才开始搜出来
-      let aa = {b:{
-        dui:"粉丝粉丝对方"
-      },c:50};
-      let cc = Object.assign({},aa);
-      
-      console.log("aaa");
-      console.log(aa);
-      console.log("cc");
-      console.log(cc);
-      // this.$set(aa.b,"dui","这个是改变了的");
-      aa = Object.assign(aa,{b:{
-        dui:"这个是改变了的"
-      }});
-      console.log("aaa");
-      console.log(aa);
-      console.log("cc");
-      console.log(cc);
-      aa = Object.assign({},cc);
-      console.log("aaa");
-      console.log(aa);
-      console.log("cc");
-      console.log(cc);
       if (this.valPriceShade()) {
         //开始筛选
-        this.initTrade();
-        this.initArea();
-        this.initMore();
-        this.initDataList();
-        if(this.inputMinPrice!==""){
+        // this.initTrade();
+        // this.initArea();
+        // this.initMore();
+        // this.initDataList();
+        if (this.inputMinPrice) {
           this.minPrice = parseInt(this.inputMinPrice);
         }
-        if(this.inputMaxPrice!==""){
+        if (this.inputMaxPrice) {
           this.maxPrice = parseInt(this.inputMaxPrice);
         }
         this.isShade = false;
         this.$set(this.filterMenu[2], "selected", false);
         this.getQueryRentList();
-        
       }
     },
-    moreSelectItem(item, index, key) {
-      //点击更多筛选的时候的可选项
+    // **************************价格end******************************************
+    //点击更多筛选的时候的可选项
+    moreSelectItem(item2, index, key,item) {
       // let key2 = this.moreFilter[key]
-      // console.log("11111111",this.moreFilter[key]);
+      console.log("11111111",item);
       // key2.selected = -1
       // key2.selected = index
-      // this.$set(this.moreFilter, key, key2);
+      // this.$set(this.moreFilter, key, {});
       // this.moreFilter[key].selected=index
-      // this.$set(this.moreFilter[key], "selected", -1);
-      // this.$set(this.moreFilter[key], "selected", index);
-      console.log("这里是取消了更多的选项_____",index);
+      this.$set(item, "selected", -1);
+      this.$set(item, "selected", index);
+      // this.$set(item, {});
+      // this.$set(this, "moreFilter", this.moreFilter);
+      console.log("这里是取消了更多的选项_____", index);
       console.log(this.moreFilter);
       console.log("这个是dataMoreFilter++++++");
       console.log(this.dataMoreFilter);
-
     },
+    //选择计划购买日期
     confirmDate(e) {
-      //选择计划购买日期
       let dd = new Date(e.mp.detail);
       let year = dd.getFullYear();
       let month = dd.getMonth() + 1;
@@ -823,8 +850,8 @@ export default {
         this.$set(this.moreFilter[key], "No", 1);
       }
     },
+    //点击更多弹窗中的确定按钮
     sureMoreFilter() {
-      //点击更多弹窗中的确定按钮
       let json = {};
       for (let key in this.moreFilter) {
         if (
@@ -879,9 +906,21 @@ export default {
       this.isShade = false;
       this.$set(this.filterMenu[3], "selected", false);
     },
-    goCitySelect(){
-      wx.navigateTo({url:'/pages/city-select/main'})
+    goCitySelect() {
+      wx.navigateTo({ url: "/pages/city-select/main" });
+    },
+    // 上拉加载
+    onReachBottom() {
+      this.page += 1;
+      console.log("这里是取消了更多的选项");
+      this.getQueryRentList();
     }
+  },
+  // 下拉刷新
+  onPullDownRefresh() {
+    this.page = 1;
+    wx.stopPullDownRefresh();
+    this.init();
   }
 };
 </script>
@@ -953,5 +992,12 @@ export default {
   height: calc(100vh - 230rpx) !important;
   overflow: hidden;
   overflow-y: auto;
+}
+.search{
+  // transition:1s;
+}
+.keyWords{
+  text-align:left;
+  width:90%;
 }
 </style>

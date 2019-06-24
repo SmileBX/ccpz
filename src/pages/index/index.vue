@@ -1,7 +1,7 @@
 <template>
   <div class="pageContent">
     <!-- 顶部搜索 -->
-    <div class="headerTop">
+    <div class="headerTop" style="padding-top:20rpx;padding-bottom:20rpx;">
       <div class="inner flex flexAlignCenter">
         <div class="local">
           <span class="name" @click="goSelectCity">{{CityName}}</span>
@@ -15,8 +15,9 @@
         </div>
       </div>
     </div>
+    <scroll-view class="indexPage" scroll-y>
     <!-- banner -->
-    <div class="bannerBox">
+    <div class="bannerBox" style="padding:0;margin-bottom:0;">
       <swiper
         indicator-dots="true"
         autoplay="true"
@@ -50,10 +51,11 @@
     </div>
     <!-- 头条1 -->
     <div class="section">
-      <div class="toutiao pd15 flex">
+      <div class="toutiao flex">
         <div class="left flexColumn flex justifyContentCenter center" @click="goTo(1)">
-          <span class="name">成成</span>
-          <span class="tipsName">头条</span>
+          <!-- <span class="name">成成</span>
+          <span class="tipsName">头条</span> -->
+          <img src="/static/images/icons/newsTips.jpg" class="tipImg" alt="">
         </div>
         <div class="conMain flex1">
           <ul class="wenList">
@@ -235,14 +237,20 @@
     <!-- 为您推荐 -->
     <div class="section">
       <div class="section__hd flex flexAlignCenter" style="padding-bottom:15rpx;">
-        <div class="flex1">
+        <div>
           <p class="title">为您推荐</p>
         </div>
-        <span class="icon-arrow arrow-right"></span>
+        <div class="flex1 text_r recommendMenu">
+          <span class="active">拼租</span>
+          <span>组建</span>
+          <span>拼活动</span>
+          <span>房源</span>
+        </div>
+        
       </div>
       <div class="section__bd">
         <!-- 筛选条件 -->
-        <div class="filterMenu">
+        <!-- <div class="filterMenu">
           <ul class="menu flex justifyContentBetween center">
             <li>
               <div class="item">
@@ -275,7 +283,7 @@
               </div>
             </li>
           </ul>
-        </div>
+        </div> -->
         <!-- 结果 -->
         <div class="filterContent">
           <ul class="column levelPanel storeList">
@@ -407,6 +415,7 @@
         </div>
       </div>
     </div>
+    </scroll-view>
   </div>
 </template>
 
@@ -426,7 +435,8 @@ export default {
   },
   onLoad() {     
     this.setBarTitle();
-    initLocation(this)
+    initLocation(this).then(res=>{
+    })
   },
   onShow() {
     this.initData();
@@ -532,16 +542,16 @@ export default {
     //     }
     //   })
     // },
-    GetCityCode(localName){  //根据定位城市名获取对应的城市代码code
-      console.log('当前选择城市',localName)
-     post("Area/GetCityCode",{
-       Name:localName
-     }).then(res => {
-       this.cityName = res.data.Name;
-        wx.setStorageSync("cityName",res.data.Name);
-        wx.setStorageSync("cityCode",res.data.Code);
-     })
-    },
+    // GetCityCode(localName){  //根据定位城市名获取对应的城市代码code
+    //   console.log('当前选择城市',localName)
+    //  post("Area/GetCityCode",{
+    //    Name:localName
+    //  }).then(res => {
+    //    this.cityName = res.data.Name;
+    //     wx.setStorageSync("cityName",res.data.Name);
+    //     wx.setStorageSync("cityCode",res.data.Code);
+    //  })
+    // },
     // 跳转选择城市
     goSelectCity(){
       wx.navigateTo({url:'/pages/city-select/main'})
@@ -555,6 +565,64 @@ export default {
 .section {
   background: #fff;
   margin-bottom: 20rpx;
+}
+.navList{
+  padding:0;
+}
+.navList .icon-img,
+.navList .icon-img img{
+   width:100rpx;
+   height:100rpx;
+   margin-bottom: 10rpx;
+}
+.tipImg{
+  width:74rpx;
+  height: 74rpx;
+}
+.wenList li .type{
+  color:#ff952e;
+  border-color:#ff952e;
+}
+.indexPage{
+  height: calc( 100vh - 96rpx );
+  height: -webkit-calc( 100vh - 96rpx );
+  height: -moz-calc( 100vh - 96rpx );
+  height: -ms-calc( 100vh - 96rpx );
+  height: -o-calc( 100vh - 96rpx );
+  background: #fff;
+}
+.section{
+  margin-bottom:0;
+}
+.toutiao {
+  padding:16rpx 30rpx;
+  position: relative;
+  &::before,
+  &::after{
+    position: absolute;
+    content: "";
+    height: 1px;
+    left:30rpx;
+    right: 30rpx;
+    background: #f2f2f2;
+  }
+  &::before{
+    top:0;
+  }
+  &::after{
+    bottom:0;
+  }
+}
+.recommendMenu{
+  font-size: 28rpx;
+  color:#999;
+  span{
+    margin-left:40rpx;
+    &.active{
+      color:#ff952e;
+    }
+  }
+  
 }
 
 </style>

@@ -22,9 +22,11 @@ export default function initLocation(that){
                 that.$store.commit('update',{'lat':res.latitude,'lng':res.longitude,CityName})
                 console.log('初始化小程序',map)
                 console.log('this',that.$store.state)
-                getCityCode(CityName,that)
-                .then(()=>{
-                  resolve()
+                getCityCode(CityName,that,1)
+                .then((_res)=>{
+                  //beforeCityName，点击的城市
+                  _res.beforeCityName = CityName
+                  resolve(_res)
                 })
               }
         }) 
@@ -34,7 +36,9 @@ export default function initLocation(that){
     // 初始化定位和城市名称end
 }
 // 根据城市名称，请求城市代码
-export function getCityCode(name,that){
+// status：1- 提示：该城市未开通业务哦！自动为你展示深圳!
+// status：2- 提示：该城市未开通业务哦，
+export function getCityCode(name,that,status){
   return new Promise((resolve,reject)=>{
     console.log('name+++++1',name)
     // debugger;
@@ -44,17 +48,31 @@ export function getCityCode(name,that){
        console.log('name+++++2',name)
          const CityCode = res.data.Code
          const CityName = res.data.Name
+         
+       if(CityName!==name&&status===1){
+          that.$store.commit('update',{CityCode,CityName})
+          wx.showToast({
+            title:'该城市未开通业务哦!自动为你展示深圳!',
+            icon:'none'
+          })
+          setTimeout(()=>{
+            resolve({CityName,CityCode})
+          },1500)
+       }else if(CityName!==name&&status===2){
+         
+        wx.showToast({
+          title:'该城市未开通业务哦!',
+          icon:'none'
+        })
+        setTimeout(()=>{
+          reject({CityName,CityCode})
+        },1500)
+       }
+       else{
         that.$store.commit('update',{CityCode,CityName})
-       if(CityName!==name){
-         wx.showToast({
-           title:'该城市未开通业务哦!自动为你展示深圳!',
-           icon:'none'
-         })
-         setTimeout(()=>{
-           resolve(CityName,CityCode)
-         },1500)
-       }else{
-        resolve(CityName,CityCode)
+        // CityName 请求返回的城市
+        // CityCode 请求返回的城市代码
+        resolve({CityName,CityCode})
        }
      })
   })
