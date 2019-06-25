@@ -350,97 +350,7 @@
           <div v-if="PageId==42">
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">面积</div>
-                  <input
-                    class="ipt"
-                    type="text"
-                    placeholder="请输入"
-                    v-model="PropertyPrice"
-                    placeholder-style="color:#b5b5b5;"
-                  >
-                </div>
-                <div class="item2-column">
-                  <div class="form-cells-hd">厅室</div>
-                  <input
-                    class="ipt"
-                    type="text"
-                    placeholder="请输入"
-                    v-model="PlanBuyNum"
-                    placeholder-style="color:#b5b5b5;"
-                  >
-                </div>
-              </div>
-              <div class="form-cells-item form-cells-item2">
-                <div class="item2-column">
-                  <div class="form-cells-hd">朝向</div>
-                  <input
-                    class="ipt"
-                    type="text"
-                    placeholder="请输入"
-                    @tap="showDate=true"
-                    v-model="PlanBuyDate"
-                    placeholder-style="color:#b5b5b5;"
-                  >
-                </div>
-                <div class="item2-column">
-                  <div class="form-cells-hd">楼层</div>
-                  <input
-                    class="ipt"
-                    type="text"
-                    placeholder="请输入"
-                    v-model="AgeLevel"
-                    placeholder-style="color:#b5b5b5;"
-                  >
-                </div>
-              </div>
-              <div class="form-cells-item form-cells-item2">
-                <div class="item2-column">
-                  <div class="form-cells-hd">车位</div>
-                  <input
-                    class="ipt"
-                    type="text"
-                    placeholder="请输入"
-                    v-model="SexRatio"
-                    placeholder-style="color:#b5b5b5;"
-                  >
-                </div>
-                <div class="item2-column">
-                  <div class="form-cells-hd">电梯</div>
-                  <input
-                    class="ipt"
-                    type="text"
-                    placeholder="请输入"
-                    v-model="EducationLvl"
-                    @tap="showEducation"
-                    placeholder-style="color:#b5b5b5;"
-                  >
-                </div>
-              </div>
-              <div class="form-cells-item form-cells-item2">
-                <div class="item2-column">
-                  <div class="form-cells-hd">宜住人数</div>
-                  <input
-                    class="ipt"
-                    type="text"
-                    placeholder="请输入"
-                    v-model="GladBuyArea"
-                    placeholder-style="color:#b5b5b5;"
-                  >
-                </div>
-                <div class="item2-column">
-                  <div class="form-cells-hd">租金包含费用</div>
-                  <input
-                    class="ipt"
-                    type="text"
-                    placeholder="请输入"
-                    v-model="Founder"
-                    placeholder-style="color:#b5b5b5;"
-                  >
-                </div>
-              </div>
-              <div class="form-cells-item form-cells-item2">
-                <div class="item2-column">
-                  <div class="form-cells-hd">月租金</div>
+                  <div class="form-cells-hd">区域</div>
                   <input
                     class="ipt"
                     type="text"
@@ -452,24 +362,316 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">付款方式</div>
+                  <div class="form-cells-hd">面积</div>
                   <input
                     class="ipt"
                     type="text"
                     placeholder="请输入"
-                    v-model="Founder"
+                    v-model="PlanBuyArea"
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">小区</div>
+                  <div class="form-cells-hd">类型</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请选择"
+                    disabled
+                    v-model="PropertyType"
+                    @tap="getPropertyType"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">住宅性质</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入(例：临街)"
+                    v-model="PropertySort"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">宜住人数</div>
                   <input
                     class="ipt"
                     type="text"
                     placeholder="请输入"
+                    v-model="NeedStation"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">户型</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="NeedApartment"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">楼层</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="NeedFloor"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">面宽</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="NeedFaceWidth"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">层高</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="NeedFloorHeight"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">进深</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="NeedFloorDepth"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">付款方式</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入(例：押2付1)"
+                    v-model="PayType"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">租金/转让费</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="PropertyPrice"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">日租金</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="DeviceRent"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">是否装修</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    disabled
+                    placeholder="请选择"
+                    @click="getTrim(1)"
+                    v-model="IsTrimMsg"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">起租期</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请选输入(例：2年)"
+                    v-model="PlanRentDate"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+          </div>
+          <div v-if="PageId==41">
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">区域</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    disabled
+                    placeholder="请选择"
+                    @tap="isShowAddr=true"
                     v-model="GladBuyArea"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">面积</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="PlanBuyArea"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">类型</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请选择"
+                    disabled
+                    v-model="PropertyType"
+                    @tap="getPropertyType"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">办公性质</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入(例：临街)"
+                    v-model="PropertySort"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">容纳工位</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="NeedStation"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">户型</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="NeedApartment"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">楼层</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="NeedFloor"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">起租期</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请选输入(例：2年)"
+                    v-model="PlanRentDate"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">付款方式</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入(例：押2付1)"
+                    v-model="PayType"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">租金</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="PropertyPrice"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">是否可注册</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    disabled
+                    placeholder="请选择"
+                    @click="getTrim(2)"
+                    v-model="IsRegAreaMsg"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">是否装修</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    disabled
+                    placeholder="请选择"
+                    @click="getTrim(1)"
+                    v-model="IsTrimMsg"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">可否分割</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    disabled
+                    placeholder="请选择"
+                    @click="getTrim(3)"
+                    v-model="IsSubPackMsg"
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
@@ -490,8 +692,8 @@
               </div>
             </div>
           </div>
-          <!--公司理念-->
-          <!-- <div class="form-cells-item" v-if="PageId==42">
+          <!--房屋亮点-->
+          <div class="form-cells-item" v-if="PageId==42 || PageId==41">
             <div class="">
               <div class="form-cells-hd">{{infoMore}}</div>
               <div class="form-cell-bd">
@@ -499,14 +701,14 @@
                   class="ipt"
                   type="text"
                   :placeholder="infoMorePlaceHolder"
-                  v-model="AbilityTags"
+                  v-model="ContentDetail"
                   placeholder-style="color:#b5b5b5;"
                 >
               </div>
             </div>
-          </div> -->
-          <!--办公室描述-->
-          <!-- <div class="form-cells-item" v-if="PageId==42">
+          </div>
+          <!--接听时间段-->
+          <div class="form-cells-item" v-if="PageId==42 || PageId==41">
             <div class="form-cells-navigate navigate-right">
               <div class="form-cells-hd">{{TimeLimit}}</div>
               <div class="form-cell-bd">
@@ -521,7 +723,7 @@
                 >
               </div>
             </div>
-          </div> -->
+          </div>
           <!--上传图片-->
           <div class="form-cells-item">
             <div class="form-cells-hd">{{upImgTitle}}</div>
@@ -566,14 +768,14 @@
             </div>
           </div>
           <!-- 标签 -->
-          <!-- <div class="form-cells-item" v-if="PageId==42">
-            <div class="form-cells-hd">房屋配置</div>
+          <div class="form-cells-item" v-if="PageId==42 || PageId==41">
+            <div class="form-cells-hd">{{metion}}</div>
             <div class="form-cell-bd">
               <div class="btns-group">
                 <div class="btn" :class="{'cur':item.active}" v-for="(item,dindex) in Devicelist" :key="dindex" @tap="addDeviceNum(dindex)">{{item.Name}}</div>
               </div>
             </div>
-          </div> -->
+          </div>
         </div>
       </div>
       
@@ -795,7 +997,7 @@
 //组建 公司-pageid=32  团队-pageid＝　33  圈子-pageid-34 
         //机构- pageId=43
 //住房   写字楼-pageid=41  住房-pageid=42 厂房出租-pageid=37 厂房转让pageid=38
-        //商铺出租 pageid=39  商铺转让PAgeid=40
+        //商铺出租 pageid=39  商铺转让Pageid=40
 import "@/style/style_fb.scss";
 import { post,host,getCurrentPageUrlWithArgs} from "@/utils";
 // import areaList from "@/utils/areaList";
@@ -804,7 +1006,7 @@ export default {
   data() {
     return {
       currentDate: new Date().getTime(),
-      minDate: new Date().getTime(),
+      minDate: new Date().setFullYear(1600,0,1),
       hourses:[],
       minutes:[],
       curPage: "",
@@ -826,6 +1028,15 @@ export default {
       columns:[],//picker列表
       tradeList:{},//行业列表
       tradeListBox:[],//行业列表
+      PlanRentDate:"",//起租期
+      NeedStation:"",
+      NeedApartment:"",
+      NeedFloor:"",
+      NeedFaceWidth:"",
+      NeedFloorHeight:"",
+      NeedFloorDepth:"",
+      PayType:"",
+
       
       list:[],//弹层列表
       masktitle:"",//弹层标题
@@ -852,6 +1063,13 @@ export default {
       RingRate:"",//活动频率
       RingNum:"",//计划人数
       RingType:"",//圈子属性
+      IsTrimMsg:"",
+      IsTrim:"",
+      IsRegArea:"",
+      IsRegAreaMsg:"",
+      IsSubPack:"",
+      IsSubPackMsg:"",
+      
 
 
       Title:"",//标题
@@ -888,7 +1106,6 @@ export default {
       infoMorePlaceHolder:"",
       TimeLimit:"",//接听时间段
       TimeLimitPlaceHolder:"",//
-      AbilityTags:"",//亮点数据
       RentTime:"",//接听时间
       RentTimeBox:"",//临时接时间的
 
@@ -903,9 +1120,13 @@ export default {
       isShowAddr:false,
       hasAddr:false,
       columns2:[],
+      Devicelist:[],
       //拼租设施/设备写死的数据
-      Devicelist:[
+      Devicelist1:[
         {Id:1,Name:"宽带",active:false},{Id:2,Name:"床"},{Id:3,Name:"衣柜"},{Id:4,Name:"沙发"},{Id:5,Name:"停车位"},{Id:6,Name:"自定义+"},
+      ],
+      Devicelist2:[
+        {Id:1,Name:"网络/电话",active:false},{Id:2,Name:"会议室"},{Id:3,Name:"电梯"},{Id:4,Name:"空调"},{Id:5,Name:"卡位"},{Id:6,Name:"阳台"},
       ],
       deviceTip:"",//添加自定义
       educationList:[ 
@@ -990,8 +1211,10 @@ export default {
        this.isShowAddr = false
     },
     initData(){
-        this.addDetailTitle = "门牌号"
+      if(this.PageId==36 ||　this.PageId==35 || this.PageId==43 ||　this.PageId==32 || this.PageId==33 || this.PageId==34 || this.PageId==42){
+          this.addDetailTitle = "门牌号"
         this.addDetailPlaceholder = "门牌号/楼号等 例：3楼418室"
+        }
         if(this.PageId==36 ||　this.PageId==35){
           this.introduce = "公司简介"
           this.introducePlaceholder = "请填写公司详细简介"
@@ -1071,6 +1294,18 @@ export default {
           this.addrPlaceholder = "地址名称 如：如京基大厦"
           
         }
+        if(this.PageId==41){
+            this.pageTitle = '办公写字楼表单'
+            this.subTitle = '(写字楼/商务中心)'
+            this.introduce = "房源描述"
+            this.introducePlaceholder = "请填写出租要求"
+            this.upImgTitle = "房屋照片"
+            this.addrTitle = "商铺地址"
+            this.infoMore = "房屋亮点"
+            this.infoMorePlaceHolder = "请填写房屋亮点"
+            this.Devicelist = this.Devicelist2
+            this.metion = '商铺配置'
+        }
         if(this.PageId==42){
             this.pageTitle = '住房出租表单'
             this.subTitle = '(公寓/自建房)'
@@ -1078,15 +1313,66 @@ export default {
             this.introducePlaceholder = "请填写房屋出租要求"
             this.upImgTitle = "房屋照片"
             this.addrTitle = "房屋地址"
+            this.infoMore = "房屋亮点"
+            this.infoMorePlaceHolder = "请填写房屋亮点"
+            this.Devicelist = this.Devicelist1
+            this.metion = '房屋配置'
+        }
+        if(this.PageId==37){
+            this.pageTitle = '厂房出租表单'
+        }
+        if(this.PageId==38){
+            this.pageTitle = '厂房转让表单'
+        }
+        if(this.PageId==38 || this.PageId==37){
+            this.subTitle = '(厂房/车位/土地/仓库等)'
+            this.introduce = "出租要求"
+            this.introducePlaceholder = "请填写房屋出租要求"
+            this.upImgTitle = "厂房照片"
+            this.addrTitle = "房屋地址"
+            this.infoMore = "房屋亮点"
+            this.infoMorePlaceHolder = "请填写房屋亮点"
+        }
+        if(this.PageId==39){
+            this.pageTitle = '商铺出租表单'
+        }
+        if(this.PageId==40){
+            this.pageTitle = '商铺转让表单'
+        }
+        if(this.PageId==39 || this.PageId==40){
+            this.subTitle = '(厂房/车位/土地/仓库等)'
+            this.introduce = "商铺简介"
+            this.introducePlaceholder = "请填写商铺简介"
+            this.upImgTitle = "商铺照片"
+            this.addrTitle = "商铺地址"
+            this.infoMore = "商铺亮点"
+            this.infoMorePlaceHolder = "请填写商铺亮点"
+        }
+        if(this.PageId==40 ||　this.PageId==41 || this.PageId==42 || this.PageId==37 || this.PageId==38 || this.PageId==39){
+            this.TimeLimit = "接听时间段"
+            this.TimeLimitPlaceHolder = "选择只在所选时间内接听"
             this.addrPlaceholder = "详细地址如：如希尔顿小区"
             this.addDetailTitle = "补充几句"
             this.addDetailPlaceholder = "详细的描述会大大增加快速出租几率"
-            this.infoMore = "房屋亮点"
-            this.infoMorePlaceHolder = "请填写房屋亮点"
-            this.TimeLimit = "接听时间段"
-            this.TimeLimitPlaceHolder = "选择只在所选时间内接听"
         }
     },
+    //是否装修
+     getTrim(n){
+        this.isShowMask = true
+        this.showNoChange = true
+        if(n==1){
+          this.list = [{Id:1,Name:'需要装修'},{Id:0,Name:'不需要装修'}]
+          this.masktitle = '请选择是否装修'
+        }
+        if(n==2){
+          this.list = [{Id:1,Name:'可以注册'},{Id:0,Name:'不允许注册'}]
+          this.masktitle = '请选择可否注册'
+        }
+        if(n==3){
+          this.list = [{Id:1,Name:'可以分割'},{Id:0,Name:'不允许分割'}]
+          this.masktitle = '请选择可否分割'
+        }
+     },
     gethous(){
       for (let i =0; i <= 24; i++) {
           if(i.toString().length<2){
@@ -1108,6 +1394,7 @@ export default {
     },
     //选择接听时间
     choseTimeLimit(){
+      console.log("选择接听时间")
         this.gethous()
         this.getMinutes()
         this.isShowMask = true
@@ -1128,6 +1415,8 @@ export default {
         }else{
           this.PlanStartTime = `${year}-${month}-${dd}`;
           this.PlanBuyDate = `${year}-${month}-${dd}`;
+          
+
         }
         
         this.showDate = false
@@ -1189,18 +1478,18 @@ export default {
     //   }
       
     // },
-    // //获取设备类型
-    // getPropertyType(){
-    //   this.isShowMask = true  
-    //   let info = {}
-    //   this.detailInfo.DeviceType.Value.map(item=>{
-    //       info={
-    //         Name:item
-    //       }
-    //       this.list.push(info)
-    //   })
-    //   this.masktitle = '请选择设备类型'
-    // },
+    //获取设备类型
+    getPropertyType(){
+      this.isShowMask = true  
+      let info = {}
+      this.detailInfo.RoomType.Value.map(item=>{
+          info={
+            Name:item
+          }
+          this.list.push(info)
+      })
+      this.masktitle = '请选择类型'
+    },
     //选择弹层item
     chose(e){
         this.statu = e
@@ -1225,6 +1514,7 @@ export default {
     },
     //确定选择
     subConfirm(){
+      console.log(this.list,this.statu)
       for(let i in this.list){
           if(i*1 == this.statu){
               if(this.masktitle =='请选择学历结构' ){
@@ -1232,12 +1522,37 @@ export default {
                   this.EducationLvl = this.list[i].Name
                   // this.Degree = this.list[i].Name
               }
-              
+              if(this.masktitle =='请选择是否装修'){
+                this.IsTrim = this.list[i].Id;
+                if(this.list[i].Id==0){
+                  this.IsTrimMsg = '否';
+                }else{
+                   this.IsTrimMsg = '是';
+                }
+              }
+              if(this.masktitle =='请选择可否注册'){
+                this.IsRegArea = this.list[i].Id;
+                if(this.list[i].Id==0){
+                  this.IsRegAreaMsg = '否';
+                }else{
+                   this.IsRegAreaMsg = '是';
+                }
+              }
+              if(this.masktitle =='请选择可否分割'){
+                this.IsSubPack = this.list[i].Id;
+                if(this.list[i].Id==0){
+                  this.IsSubPackMsg = '否';
+                }else{
+                   this.IsSubPackMsg = '是';
+                }
+              }
+              if(this.masktitle =='请选择类型'){
+                  this.PropertyType = this.list[i].Name;
+              }
           }
       }
-      //选择时间
-      if(this.masktitle = '请选择接听时间'){
-        if(this.RentTime[0]>this.RentTime[2]){
+      if(this.masktitle == '请选择接听时间'){
+        if(this.RentTimeBox[0]>this.RentTimeBox[2]){
           wx.showToast({
               title: '选择时间有误！',
               icon: 'none',
@@ -1257,6 +1572,9 @@ export default {
         }
     
       }
+      
+      //选择时间
+      
       //自定义设备
       if(this.masktitle =='请输入自定义的内容'){
         console.log("______________________")
@@ -1274,6 +1592,8 @@ export default {
       this.showTouchEducation = false
       this.statu = 0
       this.list = []
+      this.hourses = []
+      this.minutes = []
     },
     //取消选择
     cancle(){
@@ -1283,6 +1603,8 @@ export default {
       this.showInput = false
       this.list = []
       this.statu = 0
+      this.hourses = []
+      this.minutes = []
     },
     cancle2(n){
       this.PartnerList[n].ShowWork = false
@@ -1465,29 +1787,124 @@ export default {
         this.toastTip("请上传图片!")
         return false;
       }
-      if (this.CompanyAddr == '') {
-        this.toastTip("请输入地址!")
-        return false;
-      }
-      if (this.CompanyDoorNum == '') {
-        this.toastTip("请输入门牌号!")
-        return false;
-      }
-      if (this.CompanyId == '') {
-        this.toastTip("请选择公司!")
-        return false;
-      }
       if (this.Synopsis == '') {
-        this.toastTip("请输入简介!")
+        this.toastTip("请描述简介要求!")
         return false;
       }
       if (this.GladBuyAreaId=='') {
         this.toastTip("请选择区域!") 
         return false;
       }
-      if (this.Founder == '') {
-        this.toastTip(`请输入名称!`)
+      if (this.CompanyAddr == '') {
+        this.toastTip("请输入地址!")
         return false;
+      }
+      if(this.PageId==42 || this.PageId==41){
+        if (this.CompanyDoorNum == '') {
+          this.toastTip("请输入补充说明!")
+          return false;
+        }
+        if (this.ContentDetail=='') {
+          this.toastTip("请输入亮点!") 
+          return false;
+        }
+        if (this.RentTime=='') {
+          this.toastTip("请选择接听时间!") 
+          return false;
+        }
+        if (this.PropertyPrice=='') {
+          this.toastTip("请输入相关费用!") 
+          return false;
+        }
+        if (this.PayType=='') {
+          this.toastTip("请输入付款方式!") 
+          return false;
+        }
+        
+        if (this.NeedFloor=='') {
+          this.toastTip("请输入楼层!") 
+          return false;
+        }
+        if (this.NeedApartment=='') {
+          this.toastTip("请输入户型!") 
+          return false;
+        }
+        
+        if (this.PropertySort=='') {
+          this.toastTip("请输入性质!") 
+          return false;
+        }
+        if (this.PropertyType=='') {
+          this.toastTip("请选择类型!") 
+          return false;
+        }
+        if (this.PlanRentDate=='') {
+          this.toastTip("请选择起租期!") 
+          return false;
+        }
+        if (this.PlanBuyArea=='') {
+          this.toastTip("请输入建筑面积!") 
+          return false;
+        }
+        if (this.IsTrim=='') {
+          this.toastTip("请选择是否装修!") 
+          return false;
+        }
+      }
+      if(this.PageId==42){
+        if (this.NeedFloorDepth=='') {
+          this.toastTip("请输入进深!") 
+          return false;
+        }
+        if (this.NeedFloorHeight=='') {
+          this.toastTip("请输入层高!") 
+          return false;
+        }
+        if (this.DeviceRent=='') {
+          this.toastTip("请输入租金要求!") 
+          return false;
+        }
+        if (this.NeedStation=='') {
+          this.toastTip("请输入宜住人数!") 
+          return false;
+        }
+        if (this.NeedFaceWidth=='') {
+          this.toastTip("请输入面宽!") 
+          return false;
+        }
+
+      }
+      if(this.PageId==41){
+        if (this.IsRegArea=='') {
+          this.toastTip("请选择可否注册!") 
+          return false;
+        }
+        if (this.IsSubPack=='') {
+          this.toastTip("请选择可否分割!") 
+          return false;
+        }
+        if (this.NeedStation=='') {
+          this.toastTip("请输入工位要求!") 
+          return false;
+        }
+      }
+      if(this.PageId==36 || this.PageId==35 || this.PageId==43 || this.PageId==32 || this.PageId==33 || this.PageId==34){
+          if (this.CompanyAddr == '') {
+            this.toastTip("请输入地址!")
+            return false;
+          }
+          if (this.CompanyDoorNum == '') {
+            this.toastTip("请输入门牌号!")
+            return false;
+          }
+          if (this.CompanyId == '') {
+            this.toastTip("请选择公司!")
+            return false;
+          }
+          if (this.Founder == '') {
+            this.toastTip(`请输入名称!`)
+            return false;
+          }
       }
       if(this.PageId==36 || this.PageId==35 || this.PageId==43 || this.PageId==32 || this.PageId==33){
         if (this.GladBuyerTradeId == '') {
@@ -1679,6 +2096,58 @@ export default {
           Founder:that.Founder
         }
       }
+      if(that.PageId == 42){
+          GoodsInfo = {
+          Title:that.Title,
+          CompanyAddr:that.CompanyAddr,
+          CompanyDoorNum:that.CompanyDoorNum,
+          Synopsis:that.Synopsis,
+          ContentDetail:that.ContentDetail,
+          RentTime:that.RentTime,
+          ServiceName:that.ServiceName,
+          GladBuyAreaId:that.GladBuyAreaId,
+          GladBuyArea:that.GladBuyArea,
+          PlanBuyArea:that.PlanBuyArea,
+          PlanRentDate:that.PlanRentDate,
+          PropertyType:that.PropertyType,
+          NeedFloor:that.NeedFloor,
+          NeedFaceWidth:that.NeedFaceWidth,
+          NeedFloorHeight:that.NeedFloorHeight,
+          NeedFloorDepth:that.NeedFloorDepth,
+          PayType:that.PayType,
+          PropertyPrice:that.PropertyPrice,
+          DeviceRent:that.DeviceRent,
+          IsTrim:that.IsTrim,
+          PropertySort:that.PropertySort,
+          NeedStation:that.NeedStation,
+          NeedApartment:that.NeedApartment,
+        }
+      }
+      if(that.PageId == 41){
+          GoodsInfo = {
+          Title:that.Title,
+          CompanyAddr:that.CompanyAddr,
+          CompanyDoorNum:that.CompanyDoorNum,
+          Synopsis:that.Synopsis,
+          ContentDetail:that.ContentDetail,
+          RentTime:that.RentTime,
+          ServiceName:that.ServiceName,
+          GladBuyAreaId:that.GladBuyAreaId,
+          GladBuyArea:that.GladBuyArea,
+          PlanBuyArea:that.PlanBuyArea,
+          PlanRentDate:that.PlanRentDate,
+          PropertyType:that.PropertyType,
+          PropertySort:that.PropertySort,
+          NeedFloor:that.NeedFloor,
+          PayType:that.PayType,
+          PropertyPrice:that.PropertyPrice,
+          IsTrim:that.IsTrim,
+          IsRegArea:that.IsRegArea,
+          IsSubPack:that.IsSubPack,
+          NeedStation:that.NeedStation,
+          NeedApartment:that.NeedApartment,
+        }
+      }
       if(that.PageId==43 ||　that.PageId==32　|| that.PageId==33){
           GoodsInfo = {
             Title:that.Title,
@@ -1744,7 +2213,7 @@ export default {
       }
       console.log("++++++")
       if(that.valOther()){
-          if(that.PageId == 65){
+          if(that.PageId == 42 || that.PageId == 43){
             for(let i in that.Devicelist){
               if(that.Devicelist[i].active){
                 that.ServiceName+=that.Devicelist[i].Name+","
@@ -1804,8 +2273,8 @@ export default {
       this.CompanyCulture = ''
       this.Synopsis = ''
       this.GladBuyerTrade = ''
-      // this.PropertyType = ''
-      // this.PropertySort = ''
+      this.PropertyType = ''
+      this.PropertySort = ''
       this.PropertyPrice = ''
       this.PlanBuyArea = ''
       this.PlanBuyDate = ''
@@ -1834,6 +2303,16 @@ export default {
       this.RingNum = ''
       this.RingRate = ''
       this.PartnerList=[]
+      this.RentTime = ''
+      this.NeedFloor = ''
+      this.NeedFaceWidth = ''
+      this.NeedFloorHeight = ''
+      this.NeedFloorDepth = ''
+      this.PayType = ''
+      this.IsTrim = ''
+      this.IsTrimMsg = ''
+      this.NeedStation = ''
+      this.NeedApartment = ''
 
     }
     
