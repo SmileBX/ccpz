@@ -140,10 +140,9 @@ export default {
                 duration: 1500
               });
               setTimeout(() => {
-              //   wx.switchTab({
-              //     url: "/pages/my/main"
-              //   });
-              wx.navigateBack()
+                  wx.switchTab({
+                    url: '/pages/my/main'
+                  })
               }, 1500);
             } else {
               wx.showToast({

@@ -451,7 +451,7 @@
 <script>
 import { post,getCurrentPageUrlWithArgs} from "@/utils";
 import { mapState, mapMutations } from "vuex"; //vuex辅助函数
-import initLocation from '@/utils/initLocation'
+import location from '@/utils/location'
 export default {
   data() {
     return {
@@ -470,7 +470,7 @@ export default {
   },
   onLoad() {     
     this.setBarTitle();
-    initLocation(this).then(res=>{
+    location(this).then(res=>{
     })
   },
   onShow() {

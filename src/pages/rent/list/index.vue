@@ -89,7 +89,7 @@
         <!-- <houseItem  :list="dataList" v-if="type*1 ===24"></houseItem> -->
       </div>
       <!-- 暂无数据等提示 -->
-      <div class="noData center" style="padding:60rpx 30rpx;" v-if="hasDataList&& page===1">暂无数据</div>
+      <div class="noData center" style="padding:60rpx 30rpx;" v-if="dataList.length<1&& page===1">暂无数据</div>
       <div
         class="noData center"
         style="margin-top:0;line-height:80rpx;"
@@ -347,7 +347,7 @@ export default {
       isShowDate: false, //弹出选择计划日期
       setUpDate: "", //选择的计划日期
       dataList: [], //筛选出来的数据的列表
-      hasDataList: "", //是否有数据
+      hasDataList: false, //是否有数据
       //筛选条件对象
       goodsInfo: {}, //筛选条件对象
       keyWords: "搜索", //搜索关键词
@@ -360,6 +360,7 @@ export default {
   onLoad() {
     this.type = this.$root.$mp.query.type || "";
     this.setBarTitle();
+    this.cityCode = this.CityCode;
   },
   onShow() {
     this.init();
@@ -370,7 +371,6 @@ export default {
       this.token = wx.getStorageSync("token");
       this.curPage = getCurrentPageUrlWithArgs();
       // this.cityName = wx.getStorageSync("cityName");
-      this.cityCode = this.CityCode;
       this.twoTypeList = [];
       this.twoTabIndex = 0;
       this.oneTabIndex = 0;
@@ -578,12 +578,8 @@ export default {
     //获取发布列表
     getQueryRentList() {
       let that = this;
-      if (that.page === 1) {
-        that.hasDataList = false;
-      }
-      if (that.hasDataList) {
-        return false;
-      }
+      that.page === 1 &&(that.hasDataList = false)
+      if (that.hasDataList) return false;
       post(
         "Goods/QueryRentList",
         {
@@ -610,19 +606,23 @@ export default {
           if (res.data.length < that.pageSize) {
             that.hasDataList = true;
           }
-          res.data.forEach(item => {
-            if (item.FirstTags !== "") {
+          res.data.map(item => {
+          console.log(that.dataList,item,'res1')
+            if (item.FirstTags) {
               that.$set(item, "FirstTags", item.FirstTags.split("|"));
             } else {
               that.$set(item, "FirstTags", []);
             }
-            if (item.SecondTags !== "") {
+          console.log(that.dataList,'res2')
+            if (item.SecondTags) {
               that.$set(item, "SecondTags", item.SecondTags.split("|"));
             } else {
               that.$set(item, "SecondTags", []);
             }
           });
+          console.log(that.dataList,'res3')
           that.dataList = that.dataList.concat(res.data);
+          console.log(that.dataList,'dataList')
         }
       });
     },

@@ -365,6 +365,7 @@
   </div>
 </template>
 <script>
+import { post, toLogin, getCurrentPageUrlWithArgs, trim } from "@/utils";
 export default {
   onLoad() {
     this.setBarTitle();
@@ -372,7 +373,13 @@ export default {
   onShow() {},
   data() {
     return {
-      tabIndex: 0
+      tabIndex: 0,
+      userId:"",
+      token:"",
+      curPage:"",
+      pageSize:15,
+      page:1,
+      type:0   //0：产品；1：商家
     };
   },
   methods: {
@@ -399,6 +406,18 @@ export default {
           });
           break;
       }
+    },
+    MemberCollections(){
+      let that = this;
+      post("User/MemberCollections",{
+        UserId:that.userId,
+        Token:that.token,
+        PageSize:that.pageSize,
+        Page:that.page,
+        Type:that.type
+      },that.curPage).then(res => {
+        
+      })
     }
   }
 };

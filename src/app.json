@@ -11,7 +11,8 @@
         "pages/inviteFriends/main",
         "pages/inviteRecord/main",
         "pages/VerticalStatus/main",
-        "pages/city-select/main"
+        "pages/city-select/main",
+        "pages/agreement/main"
 
     ],
     "window": {
