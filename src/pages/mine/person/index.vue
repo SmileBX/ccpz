@@ -131,22 +131,22 @@
       <div class="section" style="margin-top:20rpx">
         <div class="locationBox pd15">
           <h3 class="title detail__title fontBold">教育经历</h3>
-          <div class="flex justifyContentBetween">
+          <div class="flex justifyContentBetween" v-for="(item,aindex) in personInfo.EduList" :key="aindex">
             <div class="flex">
                 <img src="/static/images/icons/jiaoyujl.jpg" alt="" class="addPro">
                 <div style="margin-left:30rpx">
-                    <p>九江学院</p>
+                    <p>{{item.School}}</p>
                     <p class="font_four flex">
-                      <span class="mrr2">本科/应用计算机技术</span>
-                      <span>2005-2008</span>
+                      <span class="mrr2">{{item.Major}}/{{item.Education}}</span>
+                      <span>{{item.IntStart}}-{{item.IntEnd}}</span>
                     </p>
                 </div>
             </div>
-            <p class="fontColor99">编辑
+            <p class="fontColor99" @tap="editEdcu(1,item.Id)">编辑
               <span class="icon-arrow arrow-right"></span>
             </p>
           </div>
-          <div class="flex flexAlignCenter justifyContentCenter mt15">
+          <div class="flex flexAlignCenter justifyContentCenter mt15" v-if="personInfo.EduList.length<=0" @tap="AddExperience(1)">
               <img src="/static/images/icons/add2.jpg" alt="" class="add_pic mrr2">
               <span >添加经历</span>
           </div>
@@ -156,22 +156,22 @@
       <div class="section" style="margin-top:20rpx">
         <div class="locationBox pd15">
           <h3 class="title detail__title fontBold">工作经历</h3>
-          <div class="flex justifyContentBetween">
+          <div class="flex justifyContentBetween" v-for="(item,windex) in personInfo.WorkList" :key="windex">
               <div class="flex">
-                <img src="/static/images/icons/jiaoyujl.jpg" alt="" class="addPro">
+                <img src="/static/images/icons/gongzuojl.jpg" alt="" class="addPro">
                 <div style="margin-left:30rpx">
-                    <p>腾讯科技</p>
+                    <p>{{item.Company}}</p>
                     <p class="font_four flex">
-                      <span class="mrr2">技术总监</span>
-                      <span>2005-至今</span>
+                      <span class="mrr2">{{item.Job}}</span>
+                      <span>{{item.IntStart}}-{{item.IntEnd}}</span>
                     </p>
                 </div>
               </div>
-              <p class="fontColor99">编辑
+              <p class="fontColor99" @tap="editEdcu(2,item.Id)">编辑
                 <span class="icon-arrow arrow-right"></span>
               </p>
           </div>
-          <div class="flex flexAlignCenter justifyContentCenter mt15">
+          <div class="flex flexAlignCenter justifyContentCenter mt15" v-if="personInfo.WorkList.length<=0" @tap="AddExperience(2)">
               <img src="/static/images/icons/add2.jpg" alt="" class="add_pic mrr2">
               <span>添加经历</span>
           </div>
@@ -302,6 +302,14 @@ export default {
     //编辑公司信息
     editCompany(id){
       wx.navigateTo({url:"/pages/mine2/continueCompany/main?id="+id})
+    },
+    //添加经验
+    AddExperience(n){
+      wx.navigateTo({url:"/pages/mine/editExperience/main?tip="+n})
+    },
+    //编辑经验
+    editEdcu(n,id){
+      wx.navigateTo({url:"/pages/mine/editExperience/main?tip="+n+"&Id="+id})
     }
 
   }
