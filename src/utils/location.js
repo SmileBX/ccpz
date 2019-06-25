@@ -1,17 +1,17 @@
 
 import QQMapWX from "@/utils/qqmap-wx-jssdk"; //腾讯地图，reverseGeocoder逆地址转码
 import {post} from '@/utils/index'
-export default function initLocation(that){
-    
+
+const qqmapsdk = new QQMapWX({
+  key: "3P2BZ-6G4WD-CEX43-PIV5G-3VDYH-N5BGH" // 必填
+});
+// 初始化定位和城市名称
+export default function location(that){
   return new Promise((resolve,reject)=>{
-    // 初始化定位和城市名称
-    const qqmapsdk = new QQMapWX({
-          key: "3P2BZ-6G4WD-CEX43-PIV5G-3VDYH-N5BGH" // 必填
-        });
-    
     wx.getLocation({
       type:'gcj02',
       success(res){ 
+        // 根据坐标获取城市
         qqmapsdk.reverseGeocoder({
               location: {
                 latitude: res.latitude,
@@ -75,5 +75,23 @@ export function getCityCode(name,that,status){
         resolve({CityName,CityCode})
        }
      })
+  })
+}
+// 根据地址解析为坐标
+export function getAddressLocation(address){
+  return new Promise ((resolve,reject)=>{
+    qqmapsdk.geocoder({
+      address,
+      success(res){
+        resolve(res.result.location)
+      },
+      fail(err){
+        wx.showToast({
+          title:err.message,
+          icon:'none'
+        })
+        reject()
+      }
+    })
   })
 }

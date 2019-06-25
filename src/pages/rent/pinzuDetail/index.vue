@@ -10,7 +10,7 @@
           <p class="priceArea">
             <span class="price">{{data.PropertyPrice.Value}}</span>元/月
           </p>
-          <p class="msgList" v-if="data.FirstTags.Value.length>0">
+          <p class="msgList" v-if="data.FirstTags&&data.FirstTags.Value.length>0">
             <span class="msgItem" 
               v-for="(item,index) in data.FirstTags.Value" :key="index">
               {{item}}
@@ -22,39 +22,51 @@
             <span class="msgItem">3卡2独</span>
             <span class="msgItem">罗湖</span> -->
           </p>
-          <p class="tipsList" v-if="data.SecondTags.Value.length>0">
+          <p class="tipsList" v-if="data.SecondTags&&data.SecondTags.Value.length>0">
             <span v-for="(item,index) in data.SecondTags.Value" :key="index">{{item}}</span>
             <!-- <span>可使用公司资质</span>
             <span>可挂牌</span> -->
           </p>
-          <p class="purpose">
-            <span class="label">意向拼购方行业</span>
-            <span>{{data.GladBuyerTrade.Value}}</span>
-          </p>
+          <div class="flex">
+            <!-- 公司行业 -->
+            <p class="purpose" v-if="data.CompanyTrade">
+              <span class="label">{{data.CompanyTrade.Text}}</span>
+              <span>{{data.CompanyTrade.Value}}</span>
+            </p>
+            <!-- 意向拼购方行业 -->
+            <p class="purpose" v-if="data.GladBuyerTrade">
+              <span class="label">{{data.GladBuyerTrade.Text}}</span>
+              <span>{{data.GladBuyerTrade.Value}}</span>
+            </p>
+          </div>
         </div>
         <!-- 公司简介 -->
         <div class="comAbout pt15">
           <!-- 商铺详情的 -->
           <div class="weui-cells noBorder__weui-cells column__weui-cells mt0">
             <div class="group flex">
-              <div class="weui-cell flex1">
-                <div class="weui-cell__hd">公司名称</div>
+              <!-- 公司名称 -->
+              <div class="weui-cell flex1" v-if="data.Company">
+                <div class="weui-cell__hd">{{data.Company.Text}}</div>
                 <div class="weui-cell__bd">{{data.Company.Value}}</div>
               </div>
             </div>
             <div class="group flex">
-              <div class="weui-cell flex1">
-                <div class="weui-cell__hd">成立时间</div>
+              <!-- 成立时间 -->
+              <div class="weui-cell flex1" v-if="data.SetUpDate">
+                <div class="weui-cell__hd">{{data.SetUpDate.Text}}</div>
                 <div class="weui-cell__bd">{{data.SetUpDate.Value}}</div>
               </div>
-              <div class="weui-cell flex1">
-                <div class="weui-cell__hd">物业形式</div>
+              <!-- 物业形式 -->
+              <div class="weui-cell flex1" v-if="data.PropertySort">
+                <div class="weui-cell__hd">{{data.PropertySort.Text}}</div>
                 <div class="weui-cell__bd">{{data.PropertySort.Value}}</div>
               </div>
             </div>
             <div class="group flex">
-              <div class="weui-cell flex1">
-                <div class="weui-cell__hd">计划购买面积</div>
+              <!-- 计划购买面积 -->
+              <div class="weui-cell flex1" v-if="data.PlanBuyArea">
+                <div class="weui-cell__hd">{{data.PlanBuyArea.Text}}</div>
                 <div class="weui-cell__bd">
                   <span>
                     {{data.PlanBuyArea.Value}}
@@ -62,32 +74,34 @@
                   </span>
                 </div>
               </div>
-              <div class="weui-cell flex1">
-                <div class="weui-cell__hd">购买预算</div>
+              <!-- 购买预算 -->
+              <div class="weui-cell flex1" v-if="data.BuyBudget">
+                <div class="weui-cell__hd">{{data.BuyBudget.Text}}</div>
                 <div class="weui-cell__bd">{{data.BuyBudget.Value}}</div>
               </div>
             </div>
             <div class="group flex">
-              <div class="weui-cell flex1">
+              <div class="weui-cell flex1" v-if="data.SetUpDate">
                 <!-- 区间价格 -->
-                <div class="weui-cell__hd">成立时间</div>
+                <!-- 成立时间 -->
+                <div class="weui-cell__hd">{{data.SetUpDate.Text}}</div>
                 <div class="weui-cell__bd">{{data.SetUpDate.Value}}</div>
               </div>
-              <div class="weui-cell flex1">
-                <div class="weui-cell__hd">是否装修</div>
+              <div class="weui-cell flex1" v-if="data.IsTrim">
+                <div class="weui-cell__hd">{{data.IsTrim.Text}}</div>
                 <div class="weui-cell__bd">{{data.IsTrim.Value}}</div>
               </div>
             </div>
             <div class="group flex">
-              <div class="weui-cell flex1">
-                <div class="weui-cell__hd">计划购买日期</div>
+              <div class="weui-cell flex1" v-if="data.PlanBuyDate">
+                <div class="weui-cell__hd">{{data.PlanBuyDate.Text}}</div>
                 <div class="weui-cell__bd">{{data.PlanBuyDate.Value}}</div>
               </div>
             </div>
           </div>
           <!-- 商铺详情的  end -->
           <!-- 设备详情的 -->
-          <div class="weui-cells noBorder__weui-cells column__weui-cells mt0" style="display:none">
+          <div class="weui-cells noBorder__weui-cells column__weui-cells mt0" style="display:none" v-if="false">
             <div class="group flex">
               <div class="weui-cell flex1">
                 <div class="weui-cell__hd">{{data.SetUpDate.Text}}</div>
@@ -138,13 +152,13 @@
           <!-- 设备详情的  end -->
           <!-- 公司简介 -->
           <div class="about">
-            <div class="item">
+            <div class="item" v-if="data.Synopsis">
               <h3 class="title label">{{data.Synopsis.Text}}</h3>
               <div
                 class="con"
               >{{data.Synopsis.Value}}</div>
             </div>
-            <div class="item">
+            <div class="item" v-if="data.PlanBuyDate">
               <h3 class="title label">{{data.PlanBuyDate.Text}}</h3>
               <div class="con">{{data.PlanBuyDate.Value}}</div>
             </div>
@@ -152,7 +166,7 @@
         </div>
       </div>
       <!-- 商铺详情、办公室详情才有的 -->
-      <div class="section pt10 pb10">
+      <div class="section pt10 pb10"  v-if="data.CompanyInfo">
         <div class="weui-cells noBorder__weui-cells column__weui-cells mt0">
           <div class="group flex flex-flow" >
             <div class="weui-cell firm" v-for="(item,index) in data.CompanyInfo.Value" :key="index">
@@ -168,26 +182,22 @@
       </div>
       <!-- 商铺详情、办公室详情才有的 end -->
       <!-- 拼租条件 -->
-      <div class="section pd15">
-        <h3 class="title detail__title">拼租条件表明</h3>
+      <div class="section pd15" v-if="data.ServiceName">
+        <h3 class="title detail__title">{{data.ServiceName.Text}}</h3>
         <p class="tipsList border__tipsList">
-          <span>网络</span>
-          <span>打印机</span>
-          <span>会议室</span>
-          <span>前台</span>
-          <span>电梯</span>
+          <span v-for="(item,index) in data.ServiceName.Value" :key="index">{{item}}</span>
         </p>
       </div>
       <!-- 拼租条件  end -->
       <div class="section">
-        <div class="locationBox pd15">
+        <div class="locationBox pd15" >
           <h3 class="title detail__title">地理位置</h3>
           <div class="flex flexAlignCenter">
             <div class="flex1">
-              <p class="address">{{data.CompanyDoorNum.Value}}</p>
-              <!-- <p class="space">距离宝华站地铁站357米</p> -->
+              <p class="address">{{data.CompanyAddr.Value}}</p>
+              <p class="space">{{data.CompanyDoorNum.Value}}</p>
             </div>
-            <img src="/static/images/icons/map.jpg" class="map" alt>
+            <img src="/static/images/icons/map.jpg" class="map" alt @click="checkLocation">
           </div>
         </div>
       </div>
@@ -220,14 +230,14 @@
       </div>
       <!-- 个人主页不同的样式  end -->
       <!-- 办公室描述 -->
-      <div class="section">
+      <div class="section" v-if="data.ContentDetail">
         <div class="locationBox pd15">
-          <h3 class="title detail__title">办公室描述</h3>
-          <div class="con">
-            <p>1、交通：距离地铁2号线科苑站约221米交通四通八达，畅通无阻;员工， 上下班在地理位置.上没有任何困扰</p>
+          <h3 class="title detail__title">{{data.ContentDetail.Text}}</h3>
+          <div class="con" v-html="data.ContentDetail.Value">
+            <!-- <p>1、交通：距离地铁2号线科苑站约221米交通四通八达，畅通无阻;员工， 上下班在地理位置.上没有任何困扰</p>
             <p>2、装修：精装修、可分割</p>
             <p>3、管理费空调费: 27.5元/m</p>
-            <p>4、家私：可商量带家私事宜</p>
+            <p>4、家私：可商量带家私事宜</p> -->
           </div>
         </div>
       </div>
@@ -249,7 +259,7 @@
         </div>
         <div class="btns flex1 flex center">
           <div class="btn flex1 bg_ff952e color_fff" @click="contant">极速联系</div>
-          <div class="btn flex1 bg_ed3435 color_fff" @click="addFre">加好友</div>
+          <div class="btn flex1 bg_ed3435 color_fff" v-if="data.IsAddFriend&&data.IsAddFriend.Value==1" @click="addFre">加好友</div>
         </div>
       </div>
     </div>
@@ -257,6 +267,7 @@
 </template>
 <script>
 import {post} from '@/utils/index'
+import {getAddressLocation} from '@/utils/location'
 export default {
   data(){
     return {
@@ -301,7 +312,22 @@ export default {
       this.showData=true
     },
     // 收藏
-    onIsCollection(){
+    async onIsCollection(){
+      // Type:0://产品 1://商家
+      const params = {
+        UserId:this.userId,
+        Token:this.token,
+        Type:0,
+        Id:this.id
+      }
+      if(!this.IsCollection){
+        await post('User/AddCollections',params)
+        wx.showToast({title:'收藏成功'})
+      }else{
+        await post('User/ReCollections',params)
+        wx.showToast({title:'取消收藏成功'})
+      }
+      // const res = await post('User/AddCollections',params)
       this.IsCollection = !this.IsCollection
     },
     // 举报
@@ -330,6 +356,20 @@ export default {
         })
       }
     },
+    // 查看地理位置
+    checkLocation(){
+      if(this.data.CompanyAddr){
+        const address = (this.data.CompanyAddr.Value||'') + (this.data.CompanyDoorNum.Value||'')
+        console.log(address,'要转换的地址')
+        getAddressLocation(address).then(res=>{
+          console.log(res,'转换后的地址')
+          wx.openLocation({
+            latitude:res.lat,
+            longitude:res.lng
+          })
+        })
+      }
+    }
   }
 };
 </script>
@@ -345,5 +385,13 @@ export default {
 .flex-flow{
   display:flex;
   flex-flow:row wrap;
+}
+.comAbout{
+  .group{
+    .weui-cell{
+      padding: 6rpx 0 6rpx 30rpx;
+      min-width:345rpx;
+    }
+  }
 }
 </style>

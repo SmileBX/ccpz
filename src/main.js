@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import App from './App'
-import {getCityCode} from './utils/initLocation'
+import {getCityCode} from './utils/location'
 
 Vue.config.productionTip = false
 App.mpType = 'app'
