@@ -165,14 +165,17 @@ radio .wx-radio-input.wx-radio-input-checked::before {
     font-size: 24rpx;
     color: #9999
 }
-.font22{
-    font-size:22rpx
+
+.font22 {
+    font-size: 22rpx
 }
+
 .fontColor {
     color: #9999
 }
-.color_white{
-    color:#fff!important
+
+.color_white {
+    color: #fff!important
 }
 
 .fontColor99 {
@@ -238,7 +241,6 @@ radio .wx-radio-input.wx-radio-input-checked::before {
 .mm1 {
     margin: 0 20rpx
 }
-
 
 
 /*中间块*/
@@ -572,8 +574,8 @@ radio .wx-radio-input.wx-radio-input-checked::before {
 /*********************我的**************************/
 
 .icon_card {
-    width: 220rpx;
-    height: 128rpx;
+    width: 180rpx;
+    height: 104rpx;
     position: absolute;
     right: 30rpx;
     top: 30rpx;
@@ -819,10 +821,11 @@ radio .wx-radio-input.wx-radio-input-checked::before {
     display: flex;
     align-items: center;
 }
-.addDetail{
-    text-align:center;
-    padding-bottom:40rpx;
-    padding-top:40rpx;
+
+.addDetail {
+    text-align: center;
+    padding-bottom: 40rpx;
+    padding-top: 40rpx;
     .btn-add {
         display: block;
         margin: 0 auto;
@@ -830,7 +833,7 @@ radio .wx-radio-input.wx-radio-input-checked::before {
         line-height: 70rpx;
         font-size: 32rpx;
         text-align: center;
-        color:#666;
+        color: #666;
         border-radius: 8rpx;
         border: 1px solid #e5e5e5;
     }

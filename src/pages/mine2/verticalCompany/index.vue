@@ -119,7 +119,7 @@
     <div class="ftBtn center">
       <div class="inner">
         <div class="btns">
-          <div class="btn color_fff bg_ff952e" @click="btnSubmit">下一步</div>
+          <div class="btn color_fff bg_ff952e" @click="btnSubmit">{{btnTxt}}</div>
         </div>
       </div>
     </div>
@@ -136,12 +136,21 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
+    if(this.$root.$mp.query.id && this.$root.$mp.query.id !==""){
+      console.log("fdddddddddddddddddddddddddddddddddd")
+      this.btnTxt = "保存";
+      this.id = parseInt(this.$root.$mp.query.id);
+      //获取对应的企业认证信息
+      this.UserBusinessAuthxq();
+    }
   },
   data() {
     return {
       userId: "",
       token: "",
       curPage: "",
+      btnTxt:"下一步",
+      id:"",  //企业认证id
       name: "", //企业名称
       regNum: "", //企业注册号,
       legalPerson: "", //法人
@@ -281,7 +290,12 @@ export default {
         if(this.otherSeniority){
           otherSeniority = await this.base64Img(this.otherSeniority);
         }
-        this.UserBusinessAuth(idcardPositive,idcardNegative,businessLicense,otherSeniority);
+        if(this.id && this.id !==""){
+          this.UserBusinessAuthEdit(idcardPositive,idcardNegative,businessLicense,otherSeniority);
+        }else{
+           this.UserBusinessAuth(idcardPositive,idcardNegative,businessLicense,otherSeniority);
+        }
+        
       }
     },
     UserBusinessAuth(
@@ -313,10 +327,68 @@ export default {
           wx.showToast({
             title: "提交资料成功",
             icon: "none",
-            duration: 1500
+            duration: 1500,
+            success:function(){
+              setTimeout(() => {
+                wx.redirectTo({
+                  url: '/pages/mine2/continueCompany/main?id='+res.data.Id
+                })
+              },1500)
+            }
           });
         }
       });
+    },
+    UserBusinessAuthxq(){  //获取对应的企业认证详情
+      let that = this;
+      post("User/UserBusinessAuthxq",{
+        UserId:that.userId,
+        Token:that.token,
+        Id:that.id
+      },that.curPage).then(res => {
+        if(res.code===0){
+          that.name = res.data.Name;
+          that.regNum = res.data.RegNum;
+          that.legalPerson = res.data.LegalPerson;
+          that.idCard = res.data.Idcard;
+        }
+      })
+    },
+    UserBusinessAuthEdit(idcardPositive,
+      idcardNegative,
+      businessLicense,
+      otherSeniority){  //编辑对应的企业认证
+      let that = this;
+      post("User/UserBusinessAuthEdit",{
+        UserId:that.userId,
+        Token:that.token,
+        Company:{
+           Id:that.id,
+          Name: that.name,
+          RegNum: that.regNum,
+          LegalPerson: that.legalPerson,
+          Idcard: that.idCard,
+          IdcardPositive: idcardPositive,
+          IdcardNegative: idcardNegative,
+          BusinessLicense: businessLicense,
+          OtherSeniority: otherSeniority
+        }
+      },that.curPage).then(res => {
+        if (res.code === 0) {
+          wx.showToast({
+            title: "提交修改资料成功！",
+            icon: "none",
+            duration: 1500,
+            success:function(){
+              setTimeout(() => {
+                wx.redirectTo({
+                  url:"/pages/mine2/myVertical/main?verticalType=2"
+                })
+              },1500)
+            }
+          });
+        }
+      })
     }
   }
 };

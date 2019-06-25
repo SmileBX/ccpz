@@ -76,7 +76,7 @@
       </div>
     </div>
 
-    <div class="weui-cells">
+    <div class="weui-cells" style="display:none;">
       <div class="weui-cell">
         <label class="weui-label">联系人</label>
         <div class="weui-cell__bd text_r">
@@ -370,17 +370,23 @@ export default {
      this.isUploadBtn = true;
     },
     async base64Img(path) {
-      const base64Arr = await pathToBase64(path);
+      let base64Arr = [];
+      for (let i = 0; i < arr.length; i += 1) {
+        const res = await pathToBase64(arr[i]);
+        base64Arr.push({
+          PicUrl: res
+        });
+      }
       return base64Arr;
     },
     async btnSubmit() {
       //提交下一步
       if (this.valOther()) {
-        let companyPic = "";
-        if(trim(companyPic)){
+        let companyPic = [];
+        if(this.companyPic.length>0){
            companyPic = await this.base64Img(this.companyPic);
         }
-        this.UserBusinessAuthNext(companyPic);
+        this.UserBusinessAuthNext(JSON.stringify(companyPic));
       }
     },
     UserBusinessAuthNext(companyPic) {
