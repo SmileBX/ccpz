@@ -118,7 +118,8 @@
                 "publish/main",
                 "addCard/main",
                 "addCard2/main",
-                "addCard3/main"
+                "addCard3/main",
+                "editExperience/main"
             ]
         },
         {
