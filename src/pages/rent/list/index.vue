@@ -606,21 +606,20 @@ export default {
           if (res.data.length < that.pageSize) {
             that.hasDataList = true;
           }
+          // *********************拼租
           res.data.map(item => {
-          console.log(that.dataList,item,'res1')
             if (item.FirstTags) {
               that.$set(item, "FirstTags", item.FirstTags.split("|"));
             } else {
               that.$set(item, "FirstTags", []);
             }
-          console.log(that.dataList,'res2')
             if (item.SecondTags) {
               that.$set(item, "SecondTags", item.SecondTags.split("|"));
             } else {
               that.$set(item, "SecondTags", []);
             }
           });
-          console.log(that.dataList,'res3')
+          // **************
           that.dataList = that.dataList.concat(res.data);
           console.log(that.dataList,'dataList')
         }
