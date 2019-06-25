@@ -254,14 +254,27 @@
   </div>
 </template>
 <script>
+import { post, valPhone, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
 export default {
   onLoad() {
     this.setBarTitle();
   },
-  onShow() {},
+  onShow() {
+    this.curPage = getCurrentPageUrlWithArgs();
+    this.userId = wx.getStorageSync("userId");
+    this.token = wx.getStorageSync("token");
+    this.MemberFootprint();
+  },
   data() {
     return {
-      tabIndex:0
+      tabIndex:0,
+      userId:"",
+      token:"",
+      curPage:"",
+      page:1,
+      pageSize:15,
+      type:0,   //0：我的浏览；1：谁看过我
+      list:[]
     };
   },
   methods: {
@@ -272,6 +285,25 @@ export default {
     },
     shiftTab(index){
       this.tabIndex = parseInt(index);
+    },
+    MemberFootprint(){  //浏览列表
+      let that = this;
+      post("User/MemberFootprint",{
+        UserId:that.userId,
+        Token:that.token,
+        PageSize:that.pageSize,
+        Page:that.page,
+        Type:that.type
+      },that.curPage).then(res => {
+        if(res.code===0){
+          if(that.page===1){
+            that.list = [];
+          }
+          if(res.data.length>0){
+            that.list = that.list.concat(res.data);
+          }
+        }
+      })
     }
   }
 };

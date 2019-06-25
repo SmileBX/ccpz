@@ -439,7 +439,7 @@
              </div>
            </div>
            <div class="gift__ft">
-             <div class="btn">立即查看</div>
+             <div class="btn" @click="gotoCoupon">立即查看</div>
            </div>
          </div>
       </div>
@@ -636,6 +636,11 @@ export default {
     closeGiftShade(){
       //关闭礼包弹窗
       this.isNewUser = false;
+    },
+    gotoCoupon(){  //跳转到优惠券
+       wx.navigateTo({
+        url: '/pages/mine2/myCoupon/main'
+      })
     }
   },
 
