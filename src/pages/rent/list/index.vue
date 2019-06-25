@@ -4,19 +4,20 @@
     <div class="headerTop">
       <div class="inner flex flexAlignCenter">
         <div class="local">
-          <span class="name" @click="goCitySelect">{{CityName}}</span>
+          <span class="name" @click.stop="goCitySelect">{{CityName}}</span>
           <span class="icon-arrow arrow-down"></span>
         </div>
         <div class="searchBox flex1">
-          <div class="search " :class="{'flex':showSearch}"  @click="keyWords='';showSearch=true">
+          <div class="search" :class="{'flex':showSearch}" @click="keyWords='';showSearch=true">
             <img src="/static/images/icons/search.png" class="icon_search" alt>
-            <input type="text" 
+            <input
+              type="text"
               class="keyWords"
-              v-if="showSearch" 
-              :focus="showSearch" 
-              @blur="showSearch=false;keyWords?keyWords=keyWords:keyWords='搜索'" 
+              v-if="showSearch"
+              :focus="showSearch"
+              @blur="showSearch=false;keyWords?keyWords=keyWords:keyWords='搜索'"
               @confirm="getQueryRentList"
-              v-model="keyWords" 
+              v-model="keyWords"
               confirm-type="搜索"
             >
             <span v-else>{{keyWords}}</span>
@@ -77,47 +78,18 @@
         </ul>
       </div>
       <!-- 一级分类对应的二级分类  end -->
-      <ul class="column levelPanel storeList" v-if="dataList.length>0">
-        <li class="item" @click="toDetail(item.Id)" v-for="(item,index) in dataList" :key="index">
-          <div class="outside">
-            <div class="pictrueAll">
-              <div class="pictrue img">
-                <img :src="item.PicNo" alt>
-              </div>
-            </div>
-            <div class="txtBox">
-              <p class="title ellipsis">
-                <span class="typeName" v-if="item.GladBuyerTrade !==''">{{item.GladBuyerTrade}}</span>
-                {{item.Title}}
-              </p>
-              <p class="priceArea">
-                <!-- <span class="price">￥{{item.PropertyPrice}}</span> -->
-                <span class="price">{{item.PropertyPrice}} 元/月</span>
-              </p>
-              <p class="msgList" v-if="item.FirstTags.length>0">
-                <span
-                  class="msgItem"
-                  v-for="(item2,index2) in item.FirstTags"
-                  :key="index2"
-                >{{item2}}</span>
-              </p>
-              <p class="tipsList" v-if="item.SecondTags.length>0">
-                <span
-                  v-for="(item3,index3) in item.SecondTags"
-                  :key="index3"
-                  v-if="index3<3"
-                >{{item3}}</span>
-              </p>
-            </div>
-          </div>
-        </li>
-      </ul>
+      <div class="column levelPanel storeList" v-if="dataList&&dataList.length>0">
+        <rentItem  :list="dataList" v-if="type*1 ===21"></rentItem>
+        <formationItem  :list="dataList" v-if="type*1 ===22"></formationItem>
+        <activityItem  :list="dataList" v-if="type*1 ===23"></activityItem>
+        <houseItem  :list="dataList" v-if="type*1 ===24"></houseItem>
+
+        <!-- <formationItem  :list="dataList" ></formationItem> -->
+        <!-- <activityItem  :list="dataList" v-if="type*1 ===23"></activityItem> -->
+        <!-- <houseItem  :list="dataList" v-if="type*1 ===24"></houseItem> -->
+      </div>
       <!-- 暂无数据等提示 -->
-      <div
-        class="noData center"
-        style="padding:60rpx 30rpx;"
-        v-if="hasDataList&& page===1"
-      >暂无数据</div>
+      <div class="noData center" style="padding:60rpx 30rpx;" v-if="hasDataList&& page===1">暂无数据</div>
       <div
         class="noData center"
         style="margin-top:0;line-height:80rpx;"
@@ -296,7 +268,19 @@
 <script>
 import { post, toLogin, getCurrentPageUrlWithArgs, trim } from "@/utils";
 import { mapState } from "vuex";
+import rentItem from "@/components/rentItem.vue";
+import houseItem from "@/components/houseItem.vue";
+import activityItem from "@/components/activityItem.vue";
+import formationItem from "@/components/formationItem.vue";
+// 拼租 = 21,
+// 组建 = 22,
+// 拼活动 = 23,
+// 房源 = 24,
+
 export default {
+  components: { 
+    rentItem,houseItem,formationItem,activityItem
+   },
   data() {
     return {
       userId: "",
@@ -351,7 +335,7 @@ export default {
       minNum: 0, //最小面积
       maxNum: 0, //最大面积
       page: 1,
-      pageSize: 5,
+      pageSize: 12,
       cityCode: "", //城市code
       // cityName: "", //城市名称
       dataMoreFilter: {}, //不会变的更多的筛选数据
@@ -366,15 +350,15 @@ export default {
       hasDataList: "", //是否有数据
       //筛选条件对象
       goodsInfo: {}, //筛选条件对象
-      keyWords:'搜索', //搜索关键词
-      showSearch:false,
+      keyWords: "搜索", //搜索关键词
+      showSearch: false
     };
   },
-  components: {},
   computed: {
-    ...mapState(["CityName"])
+    ...mapState(["CityName",'CityCode'])
   },
   onLoad() {
+    this.type = this.$root.$mp.query.type || "";
     this.setBarTitle();
   },
   onShow() {
@@ -386,28 +370,39 @@ export default {
       this.token = wx.getStorageSync("token");
       this.curPage = getCurrentPageUrlWithArgs();
       // this.cityName = wx.getStorageSync("cityName");
-      this.cityCode = wx.getStorageSync("cityCode");
+      this.cityCode = this.CityCode;
       this.twoTypeList = [];
       this.twoTabIndex = 0;
       this.oneTabIndex = 0;
       this.isShade = false;
-      this.keyWords ='搜索';
+      this.keyWords = "搜索";
       this.initAll();
       this.initDataList();
-      if (
-        this.$root.$mp.query.type !== "undefined" &&
-        this.$root.$mp.query.type
-      ) {
-        this.type = this.$root.$mp.query.type;
-        this.getSubMenu();
-      }
+      // debugger;
+      this.getSubMenu();
     },
     setBarTitle() {
+      let title = "";
+      switch (this.type * 1) {
+        case 21:
+          title = "拼租";
+          break;
+        case 22:
+          title = "组建";
+          break;
+        case 23:
+          title = "拼活动";
+          break;
+        case 24:
+          title = "房源";
+          break;
+      }
       wx.setNavigationBarTitle({
-        title: "拼租"
+        title
       });
     },
     toDetail(id) {
+      console.log(id,'ididididi')
       wx.navigateTo({ url: "/pages/rent/pinzuDetail/main?id" + id });
     },
     //重置行业选择(选择了其他地区等的时候)
@@ -583,13 +578,13 @@ export default {
     //获取发布列表
     getQueryRentList() {
       let that = this;
-          if (that.page === 1) {
-            that.hasDataList = false;
-          }
-          if (that.hasDataList) {
-            return false;
-          }
-        post(
+      if (that.page === 1) {
+        that.hasDataList = false;
+      }
+      if (that.hasDataList) {
+        return false;
+      }
+      post(
         "Goods/QueryRentList",
         {
           UserId: that.userId,
@@ -603,7 +598,7 @@ export default {
           MaxNum: that.maxNum,
           MinPrice: that.minPrice,
           MaxPrice: that.maxPrice,
-          KeyWords: this.keyWords==='搜索'?'':this.keyWords,
+          KeyWords: this.keyWords === "搜索" ? "" : this.keyWords,
           GoodsInfo: this.goodsInfo
         },
         that.curPage
@@ -615,20 +610,19 @@ export default {
           if (res.data.length < that.pageSize) {
             that.hasDataList = true;
           }
-            res.data.forEach(item => {
-              if (item.FirstTags !== "") {
-                that.$set(item, "FirstTags", item.FirstTags.split("|"));
-              } else {
-                that.$set(item, "FirstTags", []);
-              }
-              if (item.SecondTags !== "") {
-                that.$set(item, "SecondTags", item.SecondTags.split("|"));
-              } else {
-                that.$set(item, "SecondTags", []);
-              }
-            });
-            that.dataList = that.dataList.concat(res.data);
-          
+          res.data.forEach(item => {
+            if (item.FirstTags !== "") {
+              that.$set(item, "FirstTags", item.FirstTags.split("|"));
+            } else {
+              that.$set(item, "FirstTags", []);
+            }
+            if (item.SecondTags !== "") {
+              that.$set(item, "SecondTags", item.SecondTags.split("|"));
+            } else {
+              that.$set(item, "SecondTags", []);
+            }
+          });
+          that.dataList = that.dataList.concat(res.data);
         }
       });
     },
@@ -807,9 +801,9 @@ export default {
     },
     // **************************价格end******************************************
     //点击更多筛选的时候的可选项
-    moreSelectItem(item2, index, key,item) {
+    moreSelectItem(item2, index, key, item) {
       // let key2 = this.moreFilter[key]
-      console.log("11111111",item);
+      console.log("11111111", item);
       // key2.selected = -1
       // key2.selected = index
       // this.$set(this.moreFilter, key, {});
@@ -907,6 +901,7 @@ export default {
       this.$set(this.filterMenu[3], "selected", false);
     },
     goCitySelect() {
+      console.log("这里是取消了更多的选项??????????");
       wx.navigateTo({ url: "/pages/city-select/main" });
     },
     // 上拉加载
@@ -993,11 +988,11 @@ export default {
   overflow: hidden;
   overflow-y: auto;
 }
-.search{
+.search {
   // transition:1s;
 }
-.keyWords{
-  text-align:left;
-  width:90%;
+.keyWords {
+  text-align: left;
+  width: 90%;
 }
 </style>

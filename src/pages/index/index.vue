@@ -416,6 +416,35 @@
       </div>
     </div>
     </scroll-view>
+    <!-- 新用户礼包弹窗 -->
+    <div class="shade middle__shade gift__shade" v-if="giftList.length>0 && isNewUser && showGiftCount===1">
+      <div class="mask"></div>
+      <div class="shadeContent">
+         <div class="gift">
+           <img src="/static/images/icons/cancle2.png" class="icon-close" @click="closeGiftShade" alt="">
+           <div class="gift__hd">
+             <img src="/static/images/icons/giftTopBg.png" mode="widthFix" class="giftTopBg" alt="">
+           </div>
+           <div class="gift__bd">
+             <div class="giftList">
+               <div class="item flex" v-for="(item,index) in giftList" :key="index">
+                 <div class="priceBox flex flexAlignCenter justifyContentCenter">
+                   <p>￥<span class="num">{{item.Denomination}}</span></p>
+                 </div>
+                 <div class="txtBox flex1">
+                   <p class="title ellipsis">{{item.Name}}</p>
+                   <p class="time">{{item.StartEndTime}}</p>
+                 </div>
+               </div>
+             </div>
+           </div>
+           <div class="gift__ft">
+             <div class="btn" @click="gotoCoupon">立即查看</div>
+           </div>
+         </div>
+      </div>
+    </div>
+    <!-- 新用户礼包弹窗  end -->
   </div>
 </template>
 
@@ -431,6 +460,12 @@ export default {
       newList:[],//头条消息
       publishType:[],//发布类型
       // CityName:"深圳"
+      curPage:"",
+      userId:"",
+      token:"",
+      giftList:[],  //新用户礼包
+      isNewUser:true,   //是否是新用户
+      showGiftCount:0
     };
   },
   onLoad() {     
@@ -440,6 +475,18 @@ export default {
   },
   onShow() {
     this.initData();
+    this.curPage = getCurrentPageUrlWithArgs();
+    this.userId = wx.getStorageSync("userId");
+    this.token = wx.getStorageSync("token");
+    if(wx.getStorageSync("showGiftCount") !==""){
+      this.showGiftCount = wx.getStorageSync("showGiftCount");
+    }else{
+      this.showGiftCount = 0;
+    }
+    console.log("showGiftCount:"+this.showGiftCount);
+    if(this.userId && this.token){
+       this.IsNewUser();
+    }
     // this.getLocal();GetCityCode
     // 初始化定位和城市名称
     // .then(res=>{
@@ -555,6 +602,45 @@ export default {
     // 跳转选择城市
     goSelectCity(){
       wx.navigateTo({url:'/pages/city-select/main'})
+    },
+    GetNewCoupon(){  //新用户礼包列表
+      let that = this;
+      post("Coupon/GetNewCoupon",{
+        UserId:that.userId,
+        Token:that.token
+      },that.curPage).then(res => {
+        
+      })
+    },
+    IsNewUser(){  //判断是否是新用户
+      let that = this;
+      post("Coupon/IsNewUser",{
+        UserId:that.userId,
+        Token:that.token
+      },that.curPage).then(res => {
+         if(res.code===0){
+           if(res.data.IsNewUser===1){  //是新用户
+              that.isNewUser = true;
+              that.giftList = res.data.list;
+              if(that.showGiftCount===0){
+                that.showGiftCount++;
+                wx.setStorageSync("showGiftCount",that.showGiftCount);
+                that.GetNewCoupon();
+              }
+           }else{
+             that.isNewUser = false;
+           }
+         }
+      })
+    },
+    closeGiftShade(){
+      //关闭礼包弹窗
+      this.isNewUser = false;
+    },
+    gotoCoupon(){  //跳转到优惠券
+       wx.navigateTo({
+        url: '/pages/mine2/myCoupon/main'
+      })
     }
   },
 
@@ -624,5 +710,97 @@ export default {
   }
   
 }
-
+.gift__shade .gift {
+  width:590rpx;
+  // background: #fff;
+}
+.giftTopBg{
+  width:100%;
+  display: block;
+}
+.gift{
+  position: relative;
+}
+.gift .gift__hd{
+  margin-top:-60rpx;
+}
+.gift__bd,
+.gift__ft{
+  background: #fff;
+  padding:30rpx;
+}
+.gift__bd{
+  padding-bottom: 0;
+}
+.giftList{
+  height: 438rpx;
+  overflow: hidden;
+  overflow-y: auto;
+}
+.giftList .item{
+  border-radius: 12rpx;
+  background: #fdf4ec;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+  position: relative;
+}
+.giftList .item .priceBox{
+  position: absolute;
+  height: 100%;
+  background-image: -webkit-linear-gradient(177deg, #ff9468,#fdb973);
+  color:#fff;
+  font-size: 28rpx;
+  width: 142rpx;
+  text-align: center;
+  .num{
+    font-size: 48rpx;
+  }
+  &::before{
+    position: absolute;
+    content: "";
+    width:24rpx;
+    height: 24rpx;
+    border-radius: 50%;
+    z-index: 10;
+    background: #fff;
+    top:50%;
+    margin-top: -12rpx;
+    left:-12rpx;
+  }
+}
+.giftList .item .txtBox{
+  padding:26rpx;
+  padding-left:168rpx;
+  .title{
+    font-size: 32rpx;
+    margin-bottom: 10rpx;
+  }
+  .time{
+    font-size: 24rpx;
+    color:#aaaaaa;
+  }
+}
+.gift__ft{
+  padding-bottom: 30rpx;
+}
+.gift__ft .btn{
+  font-size: 32rpx;
+  background: #ff952e;
+  width: 75%;
+  box-shadow: 0  0 10rpx #f0d4ba; 
+  margin:0 auto;
+  color:#fff;
+  border-radius: 200rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+}
+.shade .icon-close{
+  width: 44rpx;
+  height: 44rpx;
+  position: absolute;
+  right: 0;
+  top:-60rpx;
+  z-index: 30;
+}
 </style>
