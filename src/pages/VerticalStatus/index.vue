@@ -30,13 +30,13 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
-    if(this.$root.$mp.query.type && this.$root.$mp.query.type !=="undefined"){
+    if(this.$root.$mp.query.type && this.$root.$mp.query.type !==""){
       this.type = this.$root.$mp.query.type;
     }
-    if(this.$root.$mp.query.id && this.$root.$mp.query.id !=="undefined"){
+    if(this.$root.$mp.query.id && this.$root.$mp.query.id !==""){
       this.id = this.$root.$mp.query.id;
     }
-    if(this.$root.$mp.query.verticalType && this.$root.$mp.query.verticalType !=="undefined"){
+    if(this.$root.$mp.query.verticalType && this.$root.$mp.query.verticalType !==""){
       this.verticalType = this.$root.$mp.query.verticalType;
     }
   },

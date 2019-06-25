@@ -116,7 +116,7 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.initData();
-    if (this.$root.$mp.query.id !== "undefined" && this.$root.$mp.query.id) {
+    if (this.$root.$mp.query.id !== "" && this.$root.$mp.query.id) {
       this.invoiceId = this.$root.$mp.query.id;
       this.getInvoiceInfo();
     }

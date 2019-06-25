@@ -151,6 +151,9 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
+    if(this.$root.$mp.query.verticalType !=="" && this.$root.$mp.query.verticalType){
+       this.verticalType = this.$root.$mp.query.verticalType;
+    }
     this.UserOwnerAuthInfo();
   },
   methods: {

@@ -18,8 +18,10 @@ export default {
     this.curPage = getCurrentPageUrlWithArgs();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
-    this.id = parseInt(this.$root.$mp.query.id);
-    this.GetHelpCenter();
+    if(this.$root.$mp.query.id && this.$root.$mp.query.id !==""){
+      this.id = parseInt(this.$root.$mp.query.id);
+      this.GetHelpCenter();
+    }
   },
   data() {
     return {
