@@ -1,6 +1,7 @@
 
 <template>
-  <div class="item">
+<div>
+  <div class="item" v-for="(item,index) in list" :key="index" @click="toDetail(item.Id)">
     <div class="outside">
       <div class="pictrueAll">
         <div class="pictrue img">
@@ -24,26 +25,31 @@
         </p>
       </div>
     </div>
-  </div>
+    </div>
+    </div>
 </template>
 <script>
 // 拼租列表
 export default {
   props: {
-    item: {
-      type: Object,
-      default: {}
+    list: {
+      type: Array,
+      default: ()=>[]
     }
   },
-	data() {},
+	data() {
+    return {
+
+    }
+  },
 	mounted(){
-		console.log('列表item',this.item)
+		console.log('列表item',this.list)
 	},
   methods: {
     toDetail(id) {
-		console.log('列表item',this.item)
-		return false;
-      wx.navigateTo({ url: "/pages/rent/pinzuDetail/main?id" + id });
+		console.log('列表id',id)
+		// return false;
+      wx.navigateTo({ url: "/pages/rent/pinzuDetail/main?id=" + id });
     }
   }
 };

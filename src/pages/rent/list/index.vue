@@ -78,15 +78,22 @@
         </ul>
       </div>
       <!-- 一级分类对应的二级分类  end -->
-      <div class="column levelPanel storeList" v-if="dataList.length>0">
-        <rentList @click="toDetail" :list="item" v-for="(item,index) in dataList" :key="index"></rentList>
+      <div class="column levelPanel storeList" v-if="dataList&&dataList.length>0">
+        <rentItem  :list="dataList" v-if="type*1 ===21"></rentItem>
+        <formationItem  :list="dataList" v-if="type*1 ===22"></formationItem>
+        <activityItem  :list="dataList" v-if="type*1 ===23"></activityItem>
+        <houseItem  :list="dataList" v-if="type*1 ===24"></houseItem>
+
+        <!-- <formationItem  :list="dataList" ></formationItem> -->
+        <!-- <activityItem  :list="dataList" v-if="type*1 ===23"></activityItem> -->
+        <!-- <houseItem  :list="dataList" v-if="type*1 ===24"></houseItem> -->
       </div>
       <!-- 暂无数据等提示 -->
-      <div class="noData center" style="padding:60rpx 30rpx;" v-if="hasDataList && page===1">暂无数据</div>
+      <div class="noData center" style="padding:60rpx 30rpx;" v-if="hasDataList&& page===1">暂无数据</div>
       <div
         class="noData center"
         style="margin-top:0;line-height:80rpx;"
-        v-if="hasDataList && page!==1"
+        v-if="hasDataList&& page!==1"
       >我也是有底线的!</div>
       <!-- 暂无数据等提示  end -->
     </scroll-view>
@@ -96,7 +103,7 @@
     <div
       class="modal_mask flex second"
       v-if="isShadeType == 'GladBuyerTrade' && filterMenu[0].selected"
-    >
+     >
       <div class="scroll flex1">
         <div @click="getTrade(1,-1)" :class="{'active':tradeOneTab===-1}">
           <p>不限</p>
@@ -174,7 +181,7 @@
     <div
       class="modal_mask more__modal_mask"
       v-if="isShadeType == 'More' && filterMenu[3].selected "
-    >
+     >
       <div class="modal__bd">
         <ul class="modal_mask_shop">
           <li v-for="(item,key,index) in moreFilter" :key="index">
@@ -261,7 +268,10 @@
 <script>
 import { post, toLogin, getCurrentPageUrlWithArgs, trim } from "@/utils";
 import { mapState } from "vuex";
-import rentList from "@/components/rentList.vue";
+import rentItem from "@/components/rentItem.vue";
+import houseItem from "@/components/houseItem.vue";
+import activityItem from "@/components/activityItem.vue";
+import formationItem from "@/components/formationItem.vue";
 // 拼租 = 21,
 // 组建 = 22,
 // 拼活动 = 23,
@@ -269,7 +279,7 @@ import rentList from "@/components/rentList.vue";
 
 export default {
   components: { 
-    rentList
+    rentItem,houseItem,formationItem,activityItem
    },
   data() {
     return {
@@ -325,8 +335,8 @@ export default {
       minNum: 0, //最小面积
       maxNum: 0, //最大面积
       page: 1,
-      pageSize: 5,
-      cityCode: "440300", //城市code
+      pageSize: 12,
+      cityCode: "", //城市code
       // cityName: "", //城市名称
       dataMoreFilter: {}, //不会变的更多的筛选数据
       dataMoreFilter2: {},
@@ -344,9 +354,8 @@ export default {
       showSearch: false
     };
   },
-  components: {},
   computed: {
-    ...mapState(["CityName",'cityCode'])
+    ...mapState(["CityName",'CityCode'])
   },
   onLoad() {
     this.type = this.$root.$mp.query.type || "";
@@ -361,8 +370,7 @@ export default {
       this.token = wx.getStorageSync("token");
       this.curPage = getCurrentPageUrlWithArgs();
       // this.cityName = wx.getStorageSync("cityName");
-      // this.cityCode = wx.getStorageSync("cityCode");
-      this.cityCode = this.cityCode;
+      this.cityCode = this.CityCode;
       this.twoTypeList = [];
       this.twoTabIndex = 0;
       this.oneTabIndex = 0;
@@ -370,6 +378,7 @@ export default {
       this.keyWords = "搜索";
       this.initAll();
       this.initDataList();
+      // debugger;
       this.getSubMenu();
     },
     setBarTitle() {
@@ -392,9 +401,9 @@ export default {
         title
       });
     },
-    toDetail() {
-      console.log("点击了")
-      // wx.navigateTo({ url: "/pages/rent/pinzuDetail/main?id" + id });
+    toDetail(id) {
+      console.log(id,'ididididi')
+      wx.navigateTo({ url: "/pages/rent/pinzuDetail/main?id" + id });
     },
     //重置行业选择(选择了其他地区等的时候)
     initTrade() {
