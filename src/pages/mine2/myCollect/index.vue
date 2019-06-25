@@ -379,7 +379,8 @@ export default {
       curPage:"",
       pageSize:15,
       page:1,
-      type:0   //0：产品；1：商家
+      type:0,   //0：产品；1：商家
+      list:[]
     };
   },
   methods: {
@@ -416,7 +417,12 @@ export default {
         Page:that.page,
         Type:that.type
       },that.curPage).then(res => {
-        
+        if(res.code===0){
+          if(that.page===1){
+            that.list = [];
+          }
+          that.list = that.list.concat(res.data);
+        }
       })
     }
   }
