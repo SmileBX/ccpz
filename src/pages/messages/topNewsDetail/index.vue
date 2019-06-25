@@ -44,8 +44,12 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
-    this.newsId = this.$root.$mp.query.Id
-    this.param = this.$root.$mp.query.url
+    if(this.$root.$mp.query.Id && this.$root.$mp.query.Id !==""){
+      this.newsId = this.$root.$mp.query.Id;
+    }
+    if(this.$root.$mp.query.url && this.$root.$mp.query.url!==""){
+       this.param = this.$root.$mp.query.url;
+    }
     if(this.param == 'message'){ //获取通知详情
       console.log('通知')
         this.getNoticeDetail()

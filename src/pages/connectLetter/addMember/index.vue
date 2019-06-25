@@ -103,13 +103,13 @@ export default {
     this.curPage = getCurrentPageUrlWithArgs();
     if (
       this.$root.$mp.query.groupId &&
-      this.$root.$mp.query.groupId !== "undefined"
+      this.$root.$mp.query.groupId !== ""
     ) {
       this.groupId = this.$root.$mp.query.groupId;
     }
     if (
       this.$root.$mp.query.groupName &&
-      this.$root.$mp.query.groupName !== "undefined"
+      this.$root.$mp.query.groupName !== ""
     ) {
       this.groupName = this.$root.$mp.query.groupName;
     }
