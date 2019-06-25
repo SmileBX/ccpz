@@ -167,6 +167,12 @@ export default {
         title: "认证新企业"
       });
     },
+    initData(){
+      this.name = ""; //企业名称
+      this.regNum = ""; //企业注册号,
+      this.legalPerson =""; //法人
+      this.idCard = ""; //法人身份证号
+    },
     valOther() {
       //认证的校验
       if (trim(this.name) == "") {
