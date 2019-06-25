@@ -77,13 +77,6 @@
 					"scene": null
 				},
 				{
-					"id": 4,
-					"name": "组建公司详情",
-					"pathName": "pages/rent/companyDetail/main",
-					"query": "",
-					"scene": null
-				},
-				{
 					"id": 3,
 					"name": "添加好友",
 					"pathName": "pages/messages/addFre/main",

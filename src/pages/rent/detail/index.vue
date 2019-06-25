@@ -1,8 +1,9 @@
 <template>
   <div class="pageContent" v-if="showData">
     <!-- 详情 -->
-    <!-- v-if="type==21" -->
-    <pinzu  :data="data" @checkLocation="checkLocation"></pinzu>
+    <!--  -->
+    <pinzu v-if="type==21" :data="data" @checkLocation="checkLocation"></pinzu>
+    <formation v-if="type==22" :data="data"></formation>
     <!-- 底部 -->
     <div class="ftBtn">
       <div class="inner fixed bm0 flex">
@@ -33,11 +34,15 @@
 import {post} from '@/utils/index'
 import {getAddressLocation} from '@/utils/location'
 import pinzu from '../pinzuDetail/index.vue'
+import formation from '../formationDetail/index.vue'
+// import houseItem from "@/components/houseItem.vue";
+// import activityItem from "@/components/activityItem.vue";
 export default {
-  components:{pinzu},
+  components:{pinzu,formation},
   data(){
     return {
       id:'',
+      type:0,
       userId:'',
       token:'',
       IsCollection:false,
@@ -50,6 +55,9 @@ export default {
     console.log('this.$root.$mp.query.id',this.$root.$mp.query.id)
     if(this.$root.$mp.query.id){
       this.id = this.$root.$mp.query.id
+    }
+    if(this.$root.$mp.query.type){
+      this.type = this.$root.$mp.query.type
     }
   },
   onShow(){
