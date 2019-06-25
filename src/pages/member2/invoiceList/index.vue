@@ -51,10 +51,10 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
-    if(this.$root.$mp.query.invoiceType){
+    if(this.$root.$mp.query.invoiceType && this.$root.$mp.query.invoiceType !==""){
         this.invoiceType = this.$root.$mp.query.invoiceType
     }
-    if(this.$root.$mp.query.url){
+    if(this.$root.$mp.query.url && this.$root.$mp.query.url !==""){
         this.pramas = this.$root.$mp.query.url
     }
     

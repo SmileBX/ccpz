@@ -30,7 +30,12 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
-    this.pramas = this.$root.$mp.query.url
+    if(this.$root.$mp.query.url && this.$root.$mp.query.url !==""){
+      this.pramas = this.$root.$mp.query.url;
+    }else{
+      this.pramas = "message";
+    }
+    
     console.log(this.pramas,"pramas++++++++++++")
     if(this.pramas=="message"){  //消息页系统通知
        console.log('系统通知')

@@ -72,7 +72,7 @@ import { pathToBase64 } from "@/utils/image-tools";
 export default {
   onShow() {
     //type:1:合作加盟；2：增值服务；3：意见反馈
-    if(this.$root.$mp.query.type && this.$root.$mp.query.type !=="undefined"){
+    if(this.$root.$mp.query.type && this.$root.$mp.query.type !==""){
       this.type = parseInt(this.$root.$mp.query.type);
     }else{
       this.type =3;

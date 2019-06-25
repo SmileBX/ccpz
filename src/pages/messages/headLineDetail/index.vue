@@ -44,8 +44,11 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
-    this.newsId = this.$root.$mp.query.Id
-     this.getNewsDetail() //获取头条详情
+    if(this.$root.$mp.query.Id && this.$root.$mp.query.Id !==""){
+      this.newsId = this.$root.$mp.query.Id;
+      this.getNewsDetail() //获取头条详情
+    }
+    
   },
   methods: {
     setBarTitle() {
