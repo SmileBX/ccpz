@@ -20,7 +20,7 @@
         <div class="weui-cell__bd">
            <p class="txt">实名认证</p>
         </div>
-        <input type="text" placeholder="未认证" disabled v-model="IsAUT">
+        <input type="text" placeholder="未认证" disabled v-model="IsAUT" @tap="goVertical(IsAUT)">
       </div>
       <div class="weui-cell" @click="showArea = true">
         <div class="weui-cell__bd">
@@ -393,6 +393,12 @@ export default {
         wx.navigateTo({url:'/pages/mine/continueCompany/main'})
       }else{
          wx.navigateTo({url:'/pages/mine/continuePerson/main'})
+      }
+    },
+    //去认证
+    goVertical(){
+      if(this.IsAUT==0){
+         wx.navigateTo({url:'/pages/mine/continuePerson/main?verticalType=1'})
       }
     }
   }
