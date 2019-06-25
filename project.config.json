@@ -1,560 +1,561 @@
 {
-    "description": "项目配置文件。",
-    "setting": {
-        "urlCheck": false,
-        "es6": true,
-        "postcss": true,
-        "minified": true,
-        "newFeature": true,
-        "autoAudits": false,
-        "checkInvalidKey": true,
-        "enhance": false,
-        "checkSiteMap": true,
-        "uploadWithSourceMap": true,
-        "babelSetting": {
-            "ignore": [],
-            "disablePlugins": [],
-            "outputPath": ""
-        }
-    },
-    "miniprogramRoot": "dist/wx/",
-    "compileType": "miniprogram",
-    "appid": "wx73dbae1cbf851757",
-    "projectname": "ccpinzu2",
-    "simulatorType": "wechat",
-    "simulatorPluginLibVersion": {},
-    "libVersion": "2.4.0",
-    "condition": {
-        "search": {
-            "current": -1,
-            "list": []
-        },
-        "conversation": {
-            "current": -1,
-            "list": []
-        },
-        "plugin": {
-            "current": -1,
-            "list": []
-        },
-        "game": {
-            "currentL": -1,
-            "list": []
-        },
-        "miniprogram": {
-            "current": 72,
-            "list": [{
-                    "id": 0,
-                    "name": "头条详情",
-                    "pathName": "pages/messages/topNewsDetail/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 1,
-                    "name": "头条列表",
-                    "pathName": "pages/messages/topNewsList/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 2,
-                    "name": "拼租列表列表",
-                    "pathName": "pages/rent/list/main",
-                    "query": "type=21",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "商铺详情",
-                    "pathName": "pages/rent/storeDetail/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 4,
-                    "name": "组建公司详情",
-                    "pathName": "pages/rent/companyDetail/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 3,
-                    "name": "添加好友",
-                    "pathName": "pages/messages/addFre/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "消息",
-                    "pathName": "pages/message/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 5,
-                    "name": "新朋友",
-                    "pathName": "pages/messages/newPromise/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "组建公司列表",
-                    "pathName": "pages/rent/buildTeam/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "聊天对话框",
-                    "pathName": "pages/messages/chatRoom/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "我的会员中心页面",
-                    "pathName": "pages/my/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 11,
-                    "name": "拼租发布",
-                    "pathName": "pages/rent/rentOffic/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 12,
-                    "name": "拼租发布二级",
-                    "pathName": "pages/rent/submenu/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 13,
-                    "name": "通讯录-分组",
-                    "pathName": "pages/connectLetter/addTeam/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "消息-新朋友",
-                    "pathName": "pages/messages/newPromise/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 15,
-                    "name": "通讯录",
-                    "pathName": "pages/newsletter/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 16,
-                    "name": "通讯录-新建分组",
-                    "pathName": "pages/connectLetter/addNewTeam/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 17,
-                    "name": "通讯录-添加成员",
-                    "pathName": "pages/connectLetter/addMember/main",
-                    "query": "groupName=\"冬冬2\"",
-                    "scene": null
-                },
-                {
-                    "id": 18,
-                    "name": "帮助中心",
-                    "pathName": "pages/member/help/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "服务卡兑换",
-                    "pathName": "pages/member/serviceCardChange/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "服务卡兑换状态页面",
-                    "pathName": "pages/member/changeStatus/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "联系客服",
-                    "pathName": "pages/member/contact/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "设置",
-                    "pathName": "pages/member/set/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 23,
-                    "name": "设置支付密码",
-                    "pathName": "pages/member/setPayPassword/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 24,
-                    "name": "修改手机号",
-                    "pathName": "pages/member/modifyTel/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 25,
-                    "name": "我的积分",
-                    "pathName": "pages/member/integral/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 26,
-                    "name": "积分明细",
-                    "pathName": "pages/member2/integralList/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 27,
-                    "name": "意见反馈、合作加盟、增值服务",
-                    "pathName": "pages/member2/feedback/main",
-                    "query": "type=2",
-                    "scene": null
-                },
-                {
-                    "id": 25,
-                    "name": "个人信息-基本信息(个人信息)",
-                    "pathName": "pages/mine/person/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "个人信息-查看认证",
-                    "pathName": "pages/mine/seeCertifical/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "个人信息-编辑信息第一页",
-                    "pathName": "pages/mine/editInfo/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "个人信息-编辑个人信息2",
-                    "pathName": "pages/mine/continuePerson/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "个人信息-编辑公司信息2",
-                    "pathName": "pages/mine/continueCompany/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 33,
-                    "name": "公司信息-基本信息",
-                    "pathName": "pages/mine/company/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "公司信息-标签管理",
-                    "pathName": "pages/mine/tags/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "个人信息-我的发布",
-                    "pathName": "pages/mine/publish/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 36,
-                    "name": "会员管理主页",
-                    "pathName": "pages/member2/memberManage/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 37,
-                    "name": "置顶功能",
-                    "pathName": "pages/member2/isTopAbout/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 38,
-                    "name": "刷新功能",
-                    "pathName": "pages/member2/freshenAbout/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 39,
-                    "name": "结算",
-                    "pathName": "pages/member2/buyFunction/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 40,
-                    "name": "隐藏",
-                    "pathName": "pages/member/hide/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 41,
-                    "name": "拼租更多",
-                    "pathName": "pages/rent/moreIcon/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 42,
-                    "name": "我的浏览",
-                    "pathName": "pages/member/browse/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 43,
-                    "name": "新增发票",
-                    "pathName": "pages/member2/addInvoice/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 44,
-                    "name": "发票列表",
-                    "pathName": "pages/member2/invoiceList/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 45,
-                    "name": "银行卡列表",
-                    "pathName": "pages/member2/cardList/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 46,
-                    "name": "添加银行卡",
-                    "pathName": "pages/mine/addCard/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 47,
-                    "name": "添加银行卡2",
-                    "pathName": "pages/mine/addCard2/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 48,
-                    "name": "添加银行卡3",
-                    "pathName": "pages/mine/addCard3/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 49,
-                    "name": "我的账户",
-                    "pathName": "pages/mine2/account/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 50,
-                    "name": "提现",
-                    "pathName": "pages/mine2/withdraw/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 51,
-                    "name": "充值",
-                    "pathName": "pages/mine2/deposit/main",
-                    "query": "Wallet=3000",
-                    "scene": null
-                },
-                {
-                    "id": 52,
-                    "name": "举报",
-                    "pathName": "pages/mine2/report/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 53,
-                    "name": "搜索历史",
-                    "pathName": "pages/rent/searchHistory/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 54,
-                    "name": "我的认证",
-                    "pathName": "pages/mine2/myVertical/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 55,
-                    "name": "我的收藏",
-                    "pathName": "pages/mine2/myCollect/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 56,
-                    "name": "我的优惠券",
-                    "pathName": "pages/mine2/myCoupon/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "登录方式",
-                    "pathName": "pages/loginWay/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "验证码登录",
-                    "pathName": "pages/codeLogin/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 59,
-                    "name": "城市列表",
-                    "pathName": "pages/rent/city/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "111",
-                    "pathName": "pages/publish/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "邀请好友页面",
-                    "pathName": "pages/inviteFriends/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "邀请记录",
-                    "pathName": "pages/inviteRecord/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "审核状态",
-                    "pathName": "pages/VerticalStatus/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 64,
-                    "name": "公司---认证新企业",
-                    "pathName": "pages/mine2/verticalCompany/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": 65,
-                    "name": "完善公司信息",
-                    "pathName": "pages/mine2/continueCompany/main",
-                    "query": "id=1",
-                    "scene": null
-                },
-                {
-                    "id": 66,
-                    "name": "拼租发布正式",
-                    "pathName": "pages/rent/rentDevice/main",
-                    "query": "TypeId=64",
-                    "scene": null
-                },
-                {
-                    "id": 67,
-                    "name": "拼租发布正式2",
-                    "pathName": "pages/rent/rentOffic/main",
-                    "query": "TypeId=47&PageId=33",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "收支明细",
-                    "pathName": "pages/mine2/moneyList/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "银行卡列表",
-                    "pathName": "pages/mine/chooseBank/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "我的",
-                    "pathName": "pages/my/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "关于我们",
-                    "pathName": "pages/mine2/aboutUs/main",
-                    "query": "",
-                    "scene": null
-                },
-                {
-                    "id": -1,
-                    "name": "编辑经历",
-                    "pathName": "pages/mine/editExperience/main",
-                    "query": "",
-                    "scene": null
-                }
-            ]
-        }
-    }
+	"description": "项目配置文件。",
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true,
+		"autoAudits": false,
+		"checkInvalidKey": true,
+		"enhance": false,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
+	},
+	"miniprogramRoot": "dist/wx/",
+	"compileType": "miniprogram",
+	"appid": "wx73dbae1cbf851757",
+	"projectname": "ccpinzu2",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"libVersion": "2.4.0",
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 67,
+			"list": [
+				{
+					"id": 0,
+					"name": "头条详情",
+					"pathName": "pages/messages/topNewsDetail/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 1,
+					"name": "头条列表",
+					"pathName": "pages/messages/topNewsList/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 2,
+					"name": "拼租列表列表",
+					"pathName": "pages/rent/list/main",
+					"query": "type=21",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "商铺详情",
+					"pathName": "pages/rent/storeDetail/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 4,
+					"name": "组建公司详情",
+					"pathName": "pages/rent/companyDetail/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 3,
+					"name": "添加好友",
+					"pathName": "pages/messages/addFre/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "消息",
+					"pathName": "pages/message/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 5,
+					"name": "新朋友",
+					"pathName": "pages/messages/newPromise/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "组建公司列表",
+					"pathName": "pages/rent/buildTeam/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "聊天对话框",
+					"pathName": "pages/messages/chatRoom/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的会员中心页面",
+					"pathName": "pages/my/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 11,
+					"name": "拼租发布",
+					"pathName": "pages/rent/rentOffic/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 12,
+					"name": "拼租发布二级",
+					"pathName": "pages/rent/submenu/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 13,
+					"name": "通讯录-分组",
+					"pathName": "pages/connectLetter/addTeam/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "消息-新朋友",
+					"pathName": "pages/messages/newPromise/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 15,
+					"name": "通讯录",
+					"pathName": "pages/newsletter/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 16,
+					"name": "通讯录-新建分组",
+					"pathName": "pages/connectLetter/addNewTeam/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 17,
+					"name": "通讯录-添加成员",
+					"pathName": "pages/connectLetter/addMember/main",
+					"query": "groupName=\"冬冬2\"",
+					"scene": null
+				},
+				{
+					"id": 18,
+					"name": "帮助中心",
+					"pathName": "pages/member/help/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "服务卡兑换",
+					"pathName": "pages/member/serviceCardChange/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "服务卡兑换状态页面",
+					"pathName": "pages/member/changeStatus/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "联系客服",
+					"pathName": "pages/member/contact/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "设置",
+					"pathName": "pages/member/set/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 23,
+					"name": "设置支付密码",
+					"pathName": "pages/member/setPayPassword/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 24,
+					"name": "修改手机号",
+					"pathName": "pages/member/modifyTel/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 25,
+					"name": "我的积分",
+					"pathName": "pages/member/integral/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 26,
+					"name": "积分明细",
+					"pathName": "pages/member2/integralList/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 27,
+					"name": "意见反馈、合作加盟、增值服务",
+					"pathName": "pages/member2/feedback/main",
+					"query": "type=2",
+					"scene": null
+				},
+				{
+					"id": 25,
+					"name": "个人信息-基本信息(个人信息)",
+					"pathName": "pages/mine/person/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "个人信息-查看认证",
+					"pathName": "pages/mine/seeCertifical/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "个人信息-编辑信息第一页",
+					"pathName": "pages/mine/editInfo/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "个人信息-编辑个人信息2",
+					"pathName": "pages/mine/continuePerson/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "个人信息-编辑公司信息2",
+					"pathName": "pages/mine/continueCompany/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 33,
+					"name": "公司信息-基本信息",
+					"pathName": "pages/mine/company/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "公司信息-标签管理",
+					"pathName": "pages/mine/tags/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "个人信息-我的发布",
+					"pathName": "pages/mine/publish/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 36,
+					"name": "会员管理主页",
+					"pathName": "pages/member2/memberManage/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 37,
+					"name": "置顶功能",
+					"pathName": "pages/member2/isTopAbout/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 38,
+					"name": "刷新功能",
+					"pathName": "pages/member2/freshenAbout/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 39,
+					"name": "结算",
+					"pathName": "pages/member2/buyFunction/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 40,
+					"name": "隐藏",
+					"pathName": "pages/member/hide/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 41,
+					"name": "拼租更多",
+					"pathName": "pages/rent/moreIcon/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 42,
+					"name": "我的浏览",
+					"pathName": "pages/member/browse/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 43,
+					"name": "新增发票",
+					"pathName": "pages/member2/addInvoice/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 44,
+					"name": "发票列表",
+					"pathName": "pages/member2/invoiceList/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 45,
+					"name": "银行卡列表",
+					"pathName": "pages/member2/cardList/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 46,
+					"name": "添加银行卡",
+					"pathName": "pages/mine/addCard/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 47,
+					"name": "添加银行卡2",
+					"pathName": "pages/mine/addCard2/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 48,
+					"name": "添加银行卡3",
+					"pathName": "pages/mine/addCard3/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 49,
+					"name": "我的账户",
+					"pathName": "pages/mine2/account/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 50,
+					"name": "提现",
+					"pathName": "pages/mine2/withdraw/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 51,
+					"name": "充值",
+					"pathName": "pages/mine2/deposit/main",
+					"query": "Wallet=3000",
+					"scene": null
+				},
+				{
+					"id": 52,
+					"name": "举报",
+					"pathName": "pages/mine2/report/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 53,
+					"name": "搜索历史",
+					"pathName": "pages/rent/searchHistory/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 54,
+					"name": "我的认证",
+					"pathName": "pages/mine2/myVertical/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 55,
+					"name": "我的收藏",
+					"pathName": "pages/mine2/myCollect/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 56,
+					"name": "我的优惠券",
+					"pathName": "pages/mine2/myCoupon/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "登录方式",
+					"pathName": "pages/loginWay/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "验证码登录",
+					"pathName": "pages/codeLogin/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 59,
+					"name": "城市列表",
+					"pathName": "pages/rent/city/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "111",
+					"pathName": "pages/publish/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "邀请好友页面",
+					"pathName": "pages/inviteFriends/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "邀请记录",
+					"pathName": "pages/inviteRecord/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "审核状态",
+					"pathName": "pages/VerticalStatus/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 64,
+					"name": "公司---认证新企业",
+					"pathName": "pages/mine2/verticalCompany/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 65,
+					"name": "完善公司信息",
+					"pathName": "pages/mine2/continueCompany/main",
+					"query": "id=1",
+					"scene": null
+				},
+				{
+					"id": 66,
+					"name": "拼租发布正式",
+					"pathName": "pages/rent/rentDevice/main",
+					"query": "TypeId=64",
+					"scene": null
+				},
+				{
+					"id": 67,
+					"name": "拼租发布正式2",
+					"pathName": "pages/rent/rentOffic/main",
+					"query": "TypeId=60&PageId=40",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "收支明细",
+					"pathName": "pages/mine2/moneyList/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "银行卡列表",
+					"pathName": "pages/mine/chooseBank/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "我的",
+					"pathName": "pages/my/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "关于我们",
+					"pathName": "pages/mine2/aboutUs/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "编辑经历",
+					"pathName": "pages/mine/editExperience/main",
+					"query": "",
+					"scene": null
+				}
+			]
+		}
+	}
 }
