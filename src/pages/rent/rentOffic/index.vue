@@ -1398,7 +1398,7 @@ export default {
   data() {
     return {
       currentDate: new Date().getTime(),
-      minDate: '',
+      minDate: new Date().getTime(),
       dateTips:false,
       hourses:[],
       minutes:[],
@@ -1430,8 +1430,6 @@ export default {
       NeedFloorDepth:"",
       PayType:"",
       RunStatus:"",
-
-      
       list:[],//弹层列表
       masktitle:"",//弹层标题
       masktitle2:"",
@@ -1549,7 +1547,6 @@ export default {
     this.showTrade =  false
     this.showDate = false
     this.showTouchEducation = false
-    this.minDate = ''
     this.columns = []
     this.columns2 = []
     this.tradeList = {},//行业列表
@@ -1573,17 +1570,13 @@ export default {
     },
     getEndTime(){
       this.showDate = true
-      this.minDate = new Date().getTime(),
       this.timeFlag = true
     },
     getStartTime(){
       this.showDate = true
-      this.minDate = new Date().getTime()
     },
     //选择成立日期
     choseDate(){
-        this.minDate = ''
-        this.minDate = new Date().setFullYear(1600,0,1)
         this.showDate = true
     },
     addDeviceNum(e){
@@ -1638,6 +1631,7 @@ export default {
           this.upImgTitle = "请上传活动场地照片"
           this.addrTitle = "公司地址"
           this.addrPlaceholder = "办公大楼名称 如：如京基大厦"
+          this.minDate = new Date().getTime()
         }
         if(this.PageId==36){
           this.pageTitle = '拼场地表单'
@@ -1656,8 +1650,10 @@ export default {
           this.upImgTitle = "请上传相关机构照片"
           this.addrTitle = "地理位置"
           this.addrPlaceholder = "位置名称 如：如京基大厦"
+          this.minDate = new Date().setFullYear(1600,0,1)
         }
         if(this.PageId==32 || this.PageId==33){
+          this.minDate = new Date().setFullYear(1600,0,1)
           this.PartnerList=[
               {
                 JobTitle:'', //职位名称
@@ -1672,6 +1668,7 @@ export default {
           ]
         }
         if(this.PageId==34){
+          this.minDate = new Date().setFullYear(1600,0,1)
           this.PartnerList=[
               {
                 JobTitle:'', //职位名称

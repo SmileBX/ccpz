@@ -201,7 +201,7 @@ export default {
 
 <style lang="scss" scoped>
 .moreHeight{
-  height:calc(100vh-295rpx)
+  height:calc(100vh-500rpx)
 }
 .index-list {
   position: relative;
