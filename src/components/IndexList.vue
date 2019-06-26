@@ -2,7 +2,7 @@
   <div class="index-list">
     <scroll-view
       scroll-y="true"
-      style="height:100vh"
+      class="moreHeight"
       :scroll-into-view="scrollTopId"
       @scroll="onListWrapScroll"
       ref="indexWrap"
@@ -200,6 +200,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.moreHeight{
+  height:calc(100vh-700rpx)
+}
 .index-list {
   position: relative;
   width: 100%;

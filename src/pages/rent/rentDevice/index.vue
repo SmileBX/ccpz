@@ -27,7 +27,7 @@
           </div>
           <!--公司名称 -->
           <div class="form-cells-item">
-            <div :class="{showDefaultCompany:'form-cells-navigate navigate-bottom'}">
+            <div :class="showDefaultCompany?'form-cells-navigate navigate-bottom':''">
               <div class="form-cells-hd">公司名称</div>
               <div class="form-cell-bd">
                 <input
@@ -35,7 +35,7 @@
                   type="text"
                   disabled
                   placeholder="请选择公司"
-                  @click="showDefaultCompany && getCompany"
+                  @click="getCompany"
                   placeholder-style="color:#b5b5b5;"
                   v-model="Company"
                 >
@@ -1313,6 +1313,7 @@ export default {
        this.isShowAddr = false
     },
     initData(){
+        this.showDefaultCompany = false
         this.isShowMask =false
         this.showNoChange = false
         this.showArea =false
@@ -1380,7 +1381,12 @@ export default {
     },
     //获取认证的公司
     getCompany(){
-        console.log(this.detailInfo,"detailInfo+++++++++++")
+        if(this.showDefaultCompany){
+          this.isShowMask = true
+          this.showNoChange = true
+          this.masktitle = '请选择公司'
+          this.list = this.detailInfo.CompanyList
+        }
     },
     //获取短租办公形式
     getShortRent(){
@@ -1553,6 +1559,10 @@ export default {
                    this.IsRegAreaMsg = '是';
                 }
               }
+              if(this.masktitle =='请选择公司'){
+                this.Company = this.list[i].Name
+                this.CompanyId = this.list[i].Id
+              }
               
           }
       }
@@ -1568,6 +1578,7 @@ export default {
       this.isShowMask = false
       this.showNoChange = false
       this.showInput = false
+      this.showDefaultCompany = false
       this.statu = 0
       this.list = []
     },
@@ -1576,6 +1587,7 @@ export default {
       this.isShowMask = false
       this.showNoChange = false
       this.showInput = false
+      this.showDefaultCompany = false
       this.list = []
       this.statu = 0
     },
@@ -1646,7 +1658,7 @@ export default {
               )
             }
             //公司的信息
-            if(res.data.CompanyList.lenght>1){
+            if(res.data.CompanyList.length>1){
                 this.showDefaultCompany = true
             }else{
                 this.showDefaultCompany = false
@@ -1953,7 +1965,7 @@ export default {
     },
     //提交发布
     async submitApply(){
-      console.log("++++++")
+      console.log(this.CompanyId,this.Company,"++++++")
       const that = this
       let PicList = await that.base27Img(that.imgArr);
       if(that.PageId == 30 || that.PageId == 27 || that.PageId == 28){

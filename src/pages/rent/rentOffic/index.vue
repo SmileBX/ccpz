@@ -26,14 +26,15 @@
             </div>
           </div>
           <div class="form-cells-item" v-if="BrandId!=24">
-            <div :class="{showDefaultCompany:'form-cells-navigate navigate-bottom'}">
+            <div :class="showDefaultCompany?'form-cells-navigate navigate-bottom':''">
               <div class="form-cells-hd">公司名称</div>
               <div class="form-cell-bd">
                 <input
                   class="ipt"
                   type="text"
+                  disabled
                   placeholder="请输入公司名称"
-                  @tap="showDefaultCompany && getCompany"
+                  @tap="getCompany"
                   v-model="Company"
                   placeholder-style="color:#b5b5b5;"
                 >
@@ -52,7 +53,7 @@
                             style="font-size:25rpx"
                             disabled
                             placeholder="开始时间"
-                            @tap="showDate=true"
+                            @tap="getStartTime"
                             v-model="PlanStartTime"
                             placeholder-style="color:#b5b5b5;"
                         >
@@ -222,7 +223,7 @@
                     type="text"
                     placeholder="请选择"
                     disabled
-                    @tap="showDate=true"
+                    @tap="choseDate"
                     v-model="PlanBuyDate"
                     placeholder-style="color:#b5b5b5;"
                   >
@@ -282,7 +283,7 @@
                     type="text"
                     placeholder="请输入"
                     disabled
-                    @tap="showDate=true"
+                    @tap="choseDate"
                     v-model="PlanBuyDate"
                     placeholder-style="color:#b5b5b5;"
                   >
@@ -1398,7 +1399,8 @@ export default {
   data() {
     return {
       currentDate: new Date().getTime(),
-      minDate: new Date().setFullYear(1600,0,1),
+      minDate:new Date().getTime(),
+      dateTips:false,
       hourses:[],
       minutes:[],
       curPage: "",
@@ -1429,8 +1431,6 @@ export default {
       NeedFloorDepth:"",
       PayType:"",
       RunStatus:"",
-
-      
       list:[],//弹层列表
       masktitle:"",//弹层标题
       masktitle2:"",
@@ -1555,7 +1555,6 @@ export default {
     this.deviceTip = ''
     // this.PageId = this.$root.$mp.query.PageId
     console.log("TypeId",this.TypeId)
-    console.log("PageId",this.PageId)
     this.GetPublishItems()
   },
   components: {},
@@ -1572,6 +1571,13 @@ export default {
     getEndTime(){
       this.showDate = true
       this.timeFlag = true
+    },
+    getStartTime(){
+      this.showDate = true
+    },
+    //选择成立日期
+    choseDate(){
+        this.showDate = true
     },
     addDeviceNum(e){
       if(this.Devicelist[e].Name=="自定义+"){
@@ -1607,6 +1613,13 @@ export default {
        this.isShowAddr = false
     },
     initData(){
+      this.isShowMask =false
+      this.showDefaultCompany = false
+      this.showNoChange = false
+      this.showArea =false
+      this.showInput =false
+      this.showTrade =  false
+      this.showDate = false
       if(this.PageId==36 ||　this.PageId==35 || this.PageId==43 ||　this.PageId==32 || this.PageId==33 || this.PageId==34 || this.PageId==42){
           this.addDetailTitle = "门牌号"
         this.addDetailPlaceholder = "门牌号/楼号等 例：3楼418室"
@@ -1617,6 +1630,7 @@ export default {
           this.upImgTitle = "请上传活动场地照片"
           this.addrTitle = "公司地址"
           this.addrPlaceholder = "办公大楼名称 如：如京基大厦"
+          
         }
         if(this.PageId==36){
           this.pageTitle = '拼场地表单'
@@ -1828,7 +1842,12 @@ export default {
     },
     //获取认证的公司
     getCompany(){
-        console.log(this.detailInfo,"detailInfo+++++++++++")
+        if(this.showDefaultCompany){
+          this.isShowMask = true
+          this.showNoChange = true
+          this.masktitle = '请选择公司'
+          this.list = this.detailInfo.CompanyList
+        }
     },
     //学历结构
     showEducation(){
@@ -1914,6 +1933,10 @@ export default {
               if(this.masktitle =='请选择类型'){
                   this.PropertyType = this.list[i].Name;
               }
+              if(this.masktitle =='请选择公司'){
+                this.Company = this.list[i].Name
+                this.CompanyId = this.list[i].Id
+              }
           }
       }
       if(this.masktitle == '请选择接听时间'){
@@ -1965,6 +1988,7 @@ export default {
       this.isShowMask = false
       this.showNoChange = false
       this.ShowTime = false
+      this.showDefaultCompany = false
       this.showInput = false
       this.list = []
       this.statu = 0
@@ -1975,6 +1999,7 @@ export default {
       this.PartnerList[n].ShowWork = false
       this.isShowMask = false
       this.showNoChange = false
+      this.showDefaultCompany = false
       this.ShowTime = false
       this.showInput = false
       this.list = []
@@ -2048,7 +2073,7 @@ export default {
               )
             }
             //公司的信息
-            if(res.data.CompanyList.lenght>1){
+            if(res.data.CompanyList.length>1){
                 this.showDefaultCompany = true
             }else{
                 this.showDefaultCompany = false
