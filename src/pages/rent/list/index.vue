@@ -106,20 +106,20 @@
       v-if="isShadeType == 'GladBuyerTrade' && filterItem.selected"
      >
       <div class="scroll flex1">
-        <div @click="getTrade(1,-1)" :class="{'active':tradeOneTab===-1}">
+        <div @click="getTrade(1,-1,0,filterIndex)" :class="{'active':tradeOneTab===-1}">
           <p>不限</p>
         </div>
         <div
           v-for="(item,index) in filterItem.Value"
           :key="index"
           :class="{'active':tradeOneTab===index}"
-          @click="getTrade(1,index,item)"
+          @click="getTrade(1,index,item,filterIndex)"
         >
           <p>{{item.Name}}</p>
         </div>
       </div>
       <div class="scroll flex1" v-if="tradelist.length>0" style="border-left:1rpx solid #f2f2f2">
-        <div @click="getTrade(2,-1)" :class="{'active':tradeTwoTab===-1}">
+        <div @click="getTrade(2,-1,0,filterIndex)" :class="{'active':tradeTwoTab===-1}">
           <p>不限</p>
         </div>
         <div
@@ -159,7 +159,7 @@
         <div
           v-for="(item,index) in  filterItem.Value"
           :key="index"
-          @click="selectPriceTab(index,item)"
+          @click="selectPriceTab(index,item,filterItem)"
           :class="{'active':priceTabIndex===index}"
         >
           <p>{{item.Text}}</p>
@@ -301,6 +301,10 @@ import formationItem from "@/components/formationItem.vue";
 // 组建 = 22,
 // 拼活动 = 23,
 // 房源 = 24,
+// isHot ：
+// 1-优质房源
+// 2-热门商铺
+// 3-为您推荐
 
 export default {
   components: { 
@@ -312,6 +316,7 @@ export default {
       token: "",
       curPage: "",
       type: "", //一级类型id
+      isHot:'', //热门筛选
       typeId: "", //筛选发布列表需要传入的二级类的id
       hasFilter: false, //是否搜出了对应的查询条件
       oneTypeList: [], //根据对应类型搜出对应的一级类
@@ -589,6 +594,8 @@ export default {
     },
     // 筛选数组数据添加
     filterMenuPush(_res,key,name){
+      if(_res[key]){
+        
           if(_res[key]){
             this.filterMenu.push({
               title:name,
@@ -597,6 +604,7 @@ export default {
               Value:_res[key].Value
             })
           }
+      }
     },
     //获取发布列表
     getQueryRentList() {
@@ -613,8 +621,8 @@ export default {
           TypeId: that.typeId,
           Page: that.page,
           PageSize: that.pageSize,
-          MinNum: that.minNum,
-          MaxNum: that.maxNum,
+          MinNum: that.minNum||'',
+          MaxNum: that.maxNum||'',
           MinPrice: that.minPrice,
           MaxPrice: that.maxPrice,
           KeyWords: this.keyWords === "搜索" ? "" : this.keyWords,
@@ -709,7 +717,7 @@ export default {
         })
       console.log("index:",this.filterMenu[index].selected);
     },
-    //行业---点击一级行业查出对应的二级
+    //***********************行业---点击一级行业查出对应的二级************
     getTrade(typeIndex, index, item,filterIndex) {
       // 点击第一级
       if (typeIndex === 1) {
@@ -718,20 +726,26 @@ export default {
         this.tradeOneTab = index;
         if (index !== -1) {
           // this.oneFilter.GladBuyerTrade.Value.forEach(item => {
-            // if (item.Id == id) {
-              this.tradelist = item.Child;
-            // }
+            if (item.Child&&item.Child.length>0) {
+             this.tradelist = item.Child;
+            }else{
+              // 没有二级分类的时候
+              const name = this.filterMenu[filterIndex].Value[index].Name;
+              this.goodsInfo.GladBuyerTrade = name;
+              this.getQueryRentList();
+            }
           // });
         } else {
           //行业不限的时候，搜索
           this.isShade = false;
+          this.goodsInfo.GladBuyerTrade = '';
           this.$set(this.filterMenu[0], "selected", false);
           //清除不是行业选项的所有的一些选择了的参数
           // this.initArea();
           // this.initPrice();
           // this.initMore();
           // this.initDataList(); //清除发布数据的一些参数
-          // this.getQueryRentList();
+          this.getQueryRentList();
         }
       }
       // 点击第二级
@@ -775,7 +789,7 @@ export default {
 
     // **************************价格******************************************
     //选择价格
-    selectPriceTab(index, item) {
+    selectPriceTab(index, item,filterItem) {
       this.priceTabIndex = index;
       this.minPrice = item.MinPrice;
       this.maxPrice = item.MaxPrice;
@@ -784,6 +798,9 @@ export default {
         this.inputMinPrice = ""; //价格弹窗中输入的最低价
         this.inputMaxPrice = ""; //价格弹窗中输入的最高价
       }
+        this.isShade = false;
+        this.$set(filterItem, "selected", false);
+        this.getQueryRentList();
     },
     //价格弹窗中最低价格或者最高价格获取到聚焦之后，价格选项去掉
     priceFocus(type) {
@@ -797,12 +814,10 @@ export default {
         // this.initArea();
         // this.initMore();
         // this.initDataList();
-        if (this.inputMinPrice) {
-          this.minPrice = parseInt(this.inputMinPrice);
-        }
-        if (this.inputMaxPrice) {
-          this.maxPrice = parseInt(this.inputMaxPrice);
-        }
+      console.log("最小价格1:" + this.inputMinPrice);
+      console.log("最大价格1:" + this.inputMaxPrice);
+          this.minPrice = this.inputMinPrice;
+          this.maxPrice = this.inputMaxPrice;
         this.isShade = false;
         this.$set(filterItem, "selected", false);
         this.getQueryRentList();
@@ -813,7 +828,8 @@ export default {
       let maxPrice = Number(trim(this.inputMaxPrice));
       let minPrice = Number(trim(this.inputMinPrice));
       console.log("最大价格:" + maxPrice);
-      if (minPrice !== "") {
+      console.log("最小价格:" + minPrice);
+      if (minPrice) {
         if (Number.isInteger(minPrice) === false || minPrice < 0) {
           wx.showToast({
             title: "输入的不小于0的整数!",
@@ -823,7 +839,7 @@ export default {
           return false;
         }
       }
-      if (maxPrice !== "") {
+      if (maxPrice) {
         if (Number.isInteger(maxPrice) === false || maxPrice < 0) {
           wx.showToast({
             title: "输入的不小于0的整数!",
