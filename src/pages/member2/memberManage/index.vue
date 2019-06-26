@@ -56,7 +56,7 @@
       </ul>
     </div>
     <!--按钮-->
-    <div class="ftBtn" style="height:100rpx" @click="addBankCard">
+    <!-- <div class="ftBtn" style="height:100rpx" @click="addBankCard">
         <div class="inner fixed bm0">
           <div class="btns">
             <div class="btn center bg_ff952e color_fff">
@@ -64,7 +64,7 @@
             </div>
           </div>
         </div>
-      </div>
+    </div> -->
   </div>
 </template>
 <script>
@@ -76,7 +76,7 @@ export default {
   data() {
     return {
       menuArr:[
-       "/pages/member2/isTopAbout/main", "/pages/member2/freshenAbout/main","/pages/member2/buyFunction/main",
+       "/pages/member2/isTopAbout/main", "/pages/member2/freshenAbout/main","/pages/member2/buyFunction/main?type=3",
       ],
       userId: "",
       token: "",

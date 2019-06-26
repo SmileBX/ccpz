@@ -32,6 +32,7 @@
                 <input
                   class="ipt"
                   type="text"
+                  disabled
                   placeholder="请输入公司名称"
                   @tap="getCompany"
                   v-model="Company"
@@ -1398,7 +1399,7 @@ export default {
   data() {
     return {
       currentDate: new Date().getTime(),
-      minDate: new Date().getTime(),
+      minDate:new Date().getTime(),
       dateTips:false,
       hourses:[],
       minutes:[],
@@ -1554,7 +1555,6 @@ export default {
     this.deviceTip = ''
     // this.PageId = this.$root.$mp.query.PageId
     console.log("TypeId",this.TypeId)
-    console.log("PageId",this.PageId)
     this.GetPublishItems()
   },
   components: {},
@@ -1613,7 +1613,6 @@ export default {
        this.isShowAddr = false
     },
     initData(){
-      this.trimData()
       this.isShowMask =false
       this.showDefaultCompany = false
       this.showNoChange = false
@@ -1631,7 +1630,7 @@ export default {
           this.upImgTitle = "请上传活动场地照片"
           this.addrTitle = "公司地址"
           this.addrPlaceholder = "办公大楼名称 如：如京基大厦"
-          this.minDate = new Date().getTime()
+          
         }
         if(this.PageId==36){
           this.pageTitle = '拼场地表单'
@@ -1650,10 +1649,8 @@ export default {
           this.upImgTitle = "请上传相关机构照片"
           this.addrTitle = "地理位置"
           this.addrPlaceholder = "位置名称 如：如京基大厦"
-          this.minDate = new Date().setFullYear(1600,0,1)
         }
         if(this.PageId==32 || this.PageId==33){
-          this.minDate = new Date().setFullYear(1600,0,1)
           this.PartnerList=[
               {
                 JobTitle:'', //职位名称
@@ -1668,7 +1665,6 @@ export default {
           ]
         }
         if(this.PageId==34){
-          this.minDate = new Date().setFullYear(1600,0,1)
           this.PartnerList=[
               {
                 JobTitle:'', //职位名称
