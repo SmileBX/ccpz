@@ -14,9 +14,19 @@
       <!-- 信息 -->
       <div class="column levelPanel storeList" style="padding:0;" v-if="tabIndex===0">
         <block v-for="(item,index) in list" :key="index">
-          <div class="section__hd" v-if="item.DateStr !== list[index-1].DateStr || index===0">
-            <span class="time">{{item.DateStr}}</span>
+          <div class="section__hd" v-if="index===0 || list[index-1].DateStr !== item.DateStr">
+              <span class="time">{{item.DateStr}}</span>
           </div>
+          <!-- <block v-if="index===0">
+            <div class="section__hd">
+              <span class="time">{{item.DateStr}}</span>
+            </div>
+          </block>
+          <block v-if="item.DateStr !== list[index-1].DateStr && index>0">
+             <div class="section__hd">
+              <span class="time">{{item.DateStr}}</span>
+            </div>
+          </block> -->
           <van-swipe-cell :right-width="65" :on-close="onClose" class="swipe-cell">
             <van-cell-group>
               <van-cell class="item">
@@ -27,17 +37,13 @@
                     </div>
                   </div>
                   <div class="txtBox text_l">
-                    <p class="title ellipsis">
-                      <span class="typeName" v-if="item.TypeName !==''">{{item.TypeName}}</span>{{item.Title}}
+                    <p class="title ellipsis" style="color:#333;">
+                      <!-- <span class="typeName" v-if="item.TypeName !==''">{{item.TypeName}}</span> -->
+                      {{item.Title}}
                     </p>
                     <p class="msgList" style="margin-top:20rpx;">
-                      <span class="msgItem">工程设计</span>
-                      <span class="msgItem">
-                        100m
-                        <span class="sup">2</span>
-                      </span>
-                      <span class="msgItem">3卡2独</span>
-                      <span class="msgItem">罗湖</span>
+                      <span class="typeName msgItem" v-if="item.TypeName !==''">{{item.TypeName}}</span>
+                      <span class="msgItem">{{item.GladBuyArea}}</span>
                     </p>
                     <div class="flex" style="margin-top:38rpx;">
                       <p class="priceArea flex1 flexAlignCenter">
@@ -51,7 +57,7 @@
             </van-cell-group>
             <span
               slot="right"
-              class="van-swipe-cell__right flex flexAlignCenter justifyContentCenter"
+              class="van-swipe-cell__right flex flexAlignCenter justifyContentCenter" @tap="btnDelFootPrint(item.Id)"
             >删除</span>
           </van-swipe-cell>
         </block>
@@ -162,6 +168,9 @@ export default {
       this.isOver = false;
       this.hasDataList = false;
     },
+    btnDelFootPrint(id){  //右边滑动删除
+      console.log("点击了删除了")
+    },
     shiftTab(index) {
       this.initData();
       this.tabIndex = parseInt(index);
@@ -194,6 +203,18 @@ export default {
           }
         }
       });
+    },
+    DelFootprint(id){  //删除
+      let that = this;
+      post("User/DelFootprint",{
+        UserId:that.userId,
+        Token:that.token,
+        Id:id
+      },that.curPage).then(res => {
+         if(res.code===0){  //删除成功
+            
+         }
+      })
     },
     moreLoad(){  //加载更多
       if(!this.isOver){
