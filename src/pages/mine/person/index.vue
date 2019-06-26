@@ -17,22 +17,23 @@
                 <span class="msgItem font22" v-if="personInfo.WorkLife">{{personInfo.WorkLife}}</span>
                 <span class="msgItem font22" v-else>未透漏经验</span>
               </p>
-              <div class="msgList flex ">
+              <div class="msgList flex" v-for="(item,key) in companyInfo" :key="key">
                 <p class="msgList">
-                  <span class="msgItem font22" v-if="personInfo.CyList[0].Job">{{personInfo.CyList[0].Job}}</span>
+                  <span class="msgItem font22" v-if="item.Job">{{item.Job}}</span>
                   <span class="msgItem font22" v-else>未透漏职位</span>
-                  <span class="msgItem font22" v-if="personInfo.CyList[0].Name">{{personInfo.CyList[0].Name}}</span>
+                  <span class="msgItem font22" v-if="item.Name">{{item.Name}}</span>
                   <span class="msgItem font22" v-else>未透漏公司</span>
                 </p>
-               <span class="attestationStatus color_white font22">
-                  <span > 切换</span>
-                </span>
-                <span class="attestationStatus color_white font22" v-if="personInfo.CyList[0].IsAUT">
-                  <span class="icon-gou"></span> 已认证
-                </span>
-                <span class="attestationStatus color_white font22"  @tap="editCompany(personInfo.CyList[0].Id)">
+                <span class="attestationStatus color_white font22"  @tap="editCompany(item.Id)">
                   <span> 编辑</span>
                 </span>
+                <span class="attestationStatus color_white font22" @tap="changeCompany">
+                  <span > 切换</span>
+                </span>
+                <span class="attestationStatus color_white font22" v-if="item.IsAUT">
+                  <span class="icon-gou"></span> 已认证
+                </span>
+                
               </div>
             </div>
           </div>
@@ -227,6 +228,21 @@
         </div>
       </div>
     </div> -->
+    <!--弹层-->
+    <div class="mask" v-if="isShowMask" catchtouchmove="true" @click="cancle"></div>
+    <div class="maskType boxSize" v-if="isShowMask" :class="showNoChange?'noParActive':''">
+        <div class="flex">
+              <span class="size" @click="cancle">取消</span>
+              <span class="title">{{masktitle}}</span>
+              <span class="color size" @click="subConfirm">确定</span>
+        </div>
+        <scroll-view :scroll-y="true" style="height:200rpx;" :style="showNoChange?'height:200rpx':''" class="showItem" @scrolltolower="loadMore">
+          <div v-for="(item,index) in list" :key="index">
+              <p :class="{'itemactive':statu == index}" @click="chose(index)" style="margin-top:3rpx;">{{item.Name}}
+              </p>
+          </div>
+        </scroll-view>
+    </div> 
   </div>
 </template>
 <script>
@@ -241,7 +257,13 @@ export default {
       userId: "",
       token: "",
       personInfo:{},
+      companyInfo:[],
       hasData:false,
+      isShowMask:false,
+      showNoChange:false,//控制是否选择高度
+      masktitle:"",
+      list:[],
+      statu:0,
       companyId:"",
       menuAr:['/pages/mine/editMenTags/main?typeTips=1','/pages/mine/editMenTags/main?typeTips=2']
     }
@@ -250,6 +272,9 @@ export default {
     this.curPage = getCurrentPageUrlWithArgs();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
+    this.companyInfo = []
+    this.list = []
+    this.hasData = false
     this.getMyHomePage()
   },
   methods: {
@@ -290,6 +315,8 @@ export default {
               this.$set(res.data,"TagsResKnow",res.data.TagsResKnow.splice(1))
           }
           this.personInfo = res.data
+          this.companyInfo.push(this.personInfo.CyList[0])
+          console.log(this.companyInfo)
           this.hasData = true
           console.log(res.data.TagsCapKnow.length)
         }
@@ -310,6 +337,38 @@ export default {
     //编辑经验
     editEdcu(n,id){
       wx.navigateTo({url:"/pages/mine/editExperience/main?tip="+n+"&Id="+id})
+    },
+    //切换公司
+    changeCompany(){
+      this.isShowMask = true
+      this.showNoChange = true
+      this.masktitle = '请选择公司'
+      this.list = this.personInfo.CyList
+    },
+    chose(e){
+      this.statu = e
+    },
+    cancle(){
+      this.isShowMask = false
+      this.showNoChange = false
+      this.list =[]
+      this.statu = 0
+    },
+    subConfirm(){
+      for(let i in this.list){
+           if(i*1 == this.statu){
+              if(this.masktitle =='请选择公司'){
+                  let  _companyInfo = []
+                   _companyInfo.push(this.list[i])
+                  this.companyInfo=Object.assign(this.companyInfo, _companyInfo);
+                  console.log(this.companyInfo)
+              }
+           }
+      }
+      this.isShowMask = false
+      this.showNoChange = false
+      this.list =[]
+      this.statu = 0
     }
 
   }
@@ -412,6 +471,42 @@ export default {
 .add_pic{
   width:30rpx;
   height:30rpx
+}
+.maskType {
+    background: #fff;
+    width: 100%;
+    height: 600rpx;
+    padding: 30rpx 0;
+    bottom: 0!important;
+    position: fixed;
+    z-index: 999;
+    p {
+        padding: 15rpx 30rpx;
+        text-align:center;
+    }
+    .flex {
+        justify-content: space-between;
+        border-bottom: 1rpx solid #f2f2f2;
+        padding: 20rpx;
+        font-weight: 400;
+        font-size: 30rpx;
+        .color {
+            color: #ff2925
+        }
+        .size {
+            font-size: 26rpx;
+        }
+        .title {
+            font-weight: bold;
+        }
+    }
+    .itemactive {
+        background: #ff2925;
+        color: #fff
+    }
+}
+.noParActive{
+  height:320rpx!important;
 }
  
 </style>
