@@ -40,7 +40,6 @@
             "pages": [
                 "list/main",
                 "storeDetail/main",
-                "companyDetail/main",
                 "buildTeam/main",
                 "moreIcon/main",
                 "rentOffic/main",

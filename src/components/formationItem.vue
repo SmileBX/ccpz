@@ -79,7 +79,7 @@ export default {
     toDetail(id) {
       console.log("列表item", this.list);
       // return false;
-      wx.navigateTo({ url: "/pages/rent/pinzuDetail/main?id=" + id });
+      wx.navigateTo({ url: `/pages/rent/detail/main?id=${id}&&type=22` });
     }
   }
 };
