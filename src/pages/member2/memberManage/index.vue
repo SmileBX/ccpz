@@ -16,10 +16,10 @@
         </div>
       </div>
       <!-- 会员卡 -->
-      <div class="gradge one__gradient" v-if="info.IsVip===1">
+      <div class="gradge" v-if="info.IsVip===1"  :class="{'one__gradient':info.cardBrand=='次卡','month__gradient':info.cardBrand=='月卡','season__gradient':info.cardBrand=='季卡','year__gradient':info.cardBrand=='年卡'}">
         <span class="status">{{info.cardBrand}}</span>
         <img src="/static/images/icons/v3.png" class="icons-vip.gradient-vip" alt="">
-        <div class="perInfo">
+        <div class="perInfo" >
           <img :src="info.Avatar" class="tx" alt>
           <div class="info">
             <p class="name">
@@ -122,7 +122,7 @@ export default {
             this.info = Object.assign({},this.info,{
               Content:res.data.gr.Content, //描述多少天内有效
               cardBrand:res.data.gr.Name,  //会员卡名称
-            GradeName:res.data.gr.GradeName  //会员卡级别
+              GradeName:res.data.gr.GradeName  //会员卡级别
             })
           }
         }
