@@ -369,7 +369,7 @@ export default {
      this.companyPic.splice(index,1);
      this.isUploadBtn = true;
     },
-    async base64Img(path) {
+    async base64Img(arr) {
       let base64Arr = [];
       for (let i = 0; i < arr.length; i += 1) {
         const res = await pathToBase64(arr[i]);

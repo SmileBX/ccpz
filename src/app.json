@@ -40,7 +40,6 @@
             "pages": [
                 "list/main",
                 "storeDetail/main",
-                "companyDetail/main",
                 "buildTeam/main",
                 "moreIcon/main",
                 "rentOffic/main",
@@ -48,7 +47,7 @@
                 "searchHistory/main",
                 "submenu/main",
                 "city/main",
-                "pinzuDetail/main"
+                "detail/main"
             ]
         },
         {
