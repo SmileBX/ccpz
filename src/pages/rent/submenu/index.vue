@@ -123,8 +123,10 @@ export default {
     // },
     //去往发布页面
     getType(bid,id,pid){
+      console.log("_____________________________")
+      console.log("bid",bid)
       console.log('pid',pid)
-      if(bid != 21){
+      if(parseInt(bid) !== 21){
           wx.navigateTo({
             url: '/pages/rent/rentOffic/main?TypeId='+id+'&PageId='+pid
           })

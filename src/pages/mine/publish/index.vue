@@ -12,17 +12,17 @@
       <div class="boxSize column levelPanel storeList" v-if="tabindex==0">
           <!--item-->
           <div class="flex flexAlignCenter list_item bg_fff" v-for="(item,index) in pinzuList" :key="index">
-              <input type="checkbox" class="checkbox-cart" checked v-if="showEdit" />
               <van-swipe-cell :right-width="65" async-close @close="onClose(arguments[0],item.Id)" class="swipe-cell">
                 <van-cell-group>
                   <van-cell class="item" async-close @click="onClick" clickable>
                       <div class="outside">
+                        <input type="checkbox" class="checkbox-cart" checked v-if="showEdit" />
                         <div class="pictrueAll">
                           <div class="pictrue img">
                             <img :src="item.PicNo" alt>
                           </div>
                         </div>
-                        <div class="txtBox">
+                        <div class="txtBox flex1">
                           <p class="title ellipsis" style="color:#1a1a1a">
                             <span class="typeName">{{item.TypeName}}</span>{{item.Title}}
                           </p>
@@ -125,17 +125,17 @@
       <div class="boxSize column levelPanel storeList" v-if="tabindex==3">
           <!--item-->
           <div class="flex flexAlignCenter list_item bg_fff" v-for="(item,index) in fangList" :key="index">
-              <input type="checkbox" class="checkbox-cart"  v-if="showEdit" />
               <van-swipe-cell :right-width="65" async-close @close="onClose" class="swipe-cell">
                 <van-cell-group>
                   <van-cell class="item" async-close clickable>
                       <div class="outside">
+                        <input type="checkbox" class="checkbox-cart"  v-if="showEdit" />
                         <div class="pictrueAll">
                           <div class="pictrue img">
                             <img :src="item.PicNo" alt>
                           </div>
                         </div>
-                        <div class="txtBox">
+                        <div class="txtBox flex1">
                           <p class="title ellipsis" style="color:#1a1a1a">
                             <span class="typeName">{{item.TypeName}}</span>{{item.Title}}
                           </p>
@@ -171,13 +171,12 @@
       <div class="ftBtn fixed bm0" v-else>
           <div class="btns" @click="setshowEdit">编辑</div>
       </div>
-      <van-dialog id="van-dialog"/>
+      <!-- <van-dialog id="van-dialog"/> -->
   </div>
 </template>
 
 <script>
 import { post, valPhone, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
-import Dialog from "../../../../static/vant/dialog/dialog";
 export default {
   data () {
     return {
@@ -211,7 +210,7 @@ export default {
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "我的发布"
-      });//DragEvent
+      });
     },
     selectIndex(index,id){
       this.tabindex=index;
@@ -258,51 +257,7 @@ export default {
           })
         }
       })
-    },
-    onClose(e,id) {
-      console.log(e,id)
-      const {position, instance} = e.mp.detail
-      switch (position) {
-        case 'left':
-        case 'cell':
-        // case 'outside':
-          instance.close();
-          break;
-        case 'right':
-          Dialog.confirm({
-            message: '确定删除吗？'
-          }).then(() => {
-            instance.close();
-            this.deletePublish(id);
-          }).catch(() => {
-            instance.close();
-          });
-          break;
-      }
     }
-    // onClose(clickPosition, instance) {
-    //   console.log('123',clickPosition)
-    //   return false;
-    //   switch (clickPosition) {
-    //     case 'left':
-    //     case 'cell':
-    //     case 'outside':
-    //       instance.close();
-    //       break;
-    //     case 'right':
-    //       Dialog.confirm({
-    //         message: '确定删除吗？'
-    //       }).then(() => {
-    //         instance.close();
-    //       });
-    //       break;
-    //   }
-    // }
-
-  },
-
-  created () {
-    // let app = getApp()
   }
 }
 </script>
@@ -322,12 +277,24 @@ export default {
   text-align: center;
   background-color: #f44;
 }
-
+.storeList.levelPanel{
+  padding:20rpx 0;
+}
+.list_item {
+  margin-bottom: 20rpx !important;
+}
+.levelPanel .item .pictrueAll{
+  width: 260rpx !important;
+  height: 200rpx !important;
+}
 .levelPanel .item .outside{
   padding:0
 }
 .storeList.levelPanel .item .outside{
   padding:0
+}
+.levelPanel .item .outside .txtBox .title{
+  margin-bottom: 30rpx !important;
 }
 .txtBox{
   text-align:left;
@@ -336,7 +303,7 @@ export default {
   }
 }
 .ftBtn{
-  height: 80rpx;
+  height: 90rpx;
   width:100%;
   background: #fff;
   .cancle{
@@ -347,8 +314,8 @@ export default {
 .btn-right{
   width:50%;
   .btn{
-      height: 80rpx;
-      line-height: 80rpx;
+      height: 90rpx;
+      line-height: 90rpx;
       color:#fff;
       width:100%;
       text-align:center;
@@ -357,8 +324,8 @@ export default {
 .btns{
   position:absolute;
   right:0;
-  height: 80rpx;
-  line-height: 80rpx;
+  height: 90rpx;
+  line-height: 90rpx;
   width:20%;
   background:#ff9325;
   color:#fff;
