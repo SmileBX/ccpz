@@ -16,13 +16,13 @@
       </div>
     </div>
     <!-- 底部的定位按钮 -->
-    <div class="ftBtn" style="heigth:100rpx;" @tap="gotoPage">
+    <!-- <div class="ftBtn" style="heigth:100rpx;" @tap="gotoPage">
       <div class="inner fixed bm0">
         <div class="btns">
           <div class="btn center bg_ff952e color_fff">立即购买</div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 <script>

@@ -223,7 +223,7 @@ export default {
     },
     gotoSet(){
       wx.navigateTo({
-        url:"/pages/member/set/main"
+        url:"/pages/member/set/main?type=1"
       })
     },
     editInfo(){
