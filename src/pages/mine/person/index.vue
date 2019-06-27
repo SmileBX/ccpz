@@ -265,7 +265,7 @@
         </div>
         <div class="btns flex1 flex center">
           <div class="btn flex1 bg_ff952e color_fff" @click="contant">极速联系</div>
-          <div class="btn flex1 bg_ed3435 color_fff"  @click="addFre" v-if="personInfo.Footer.Value.IsAddFriend &&　personInfo.Footer.Value.IsAddFriend.Value==1">加好友</div>
+          <div class="btn flex1 bg_ed3435 color_fff"  @click="addFre">加好友</div>
         </div>
       </div>
     </div>
