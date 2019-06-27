@@ -1337,8 +1337,8 @@
               </picker-view>
           </div>
       </div> 
-      <div v-if="showInput" style="border:1px solid blue">
-          <input type="text" placeholder="请输入设备要求" v-model="deviceTip" style="padding:0 30rpx;border:1px solid red">
+      <div v-if="showInput">
+          <input type="text" placeholder="请输入设备要求" v-model="deviceTip" style="padding:0 30rpx;">
       </div>
       <scroll-view :scroll-y="true" style="height:480rpx;" :style="showNoChange?'height:200rpx':''" class="showItem" @scrolltolower="loadMore" v-else>
         <div v-for="(item,index) in list" :key="index">
@@ -1519,10 +1519,10 @@ export default {
         {Id:1,Name:"宽带",active:false},{Id:2,Name:"床"},{Id:3,Name:"衣柜"},{Id:4,Name:"沙发"},{Id:5,Name:"停车位"},{Id:6,Name:"自定义+"},
       ],
       Devicelist2:[
-        {Id:1,Name:"网络/电话",active:false},{Id:2,Name:"会议室"},{Id:3,Name:"电梯"},{Id:4,Name:"空调"},{Id:5,Name:"卡位"},{Id:6,Name:"阳台"},
+        {Id:1,Name:"网络/电话",active:false},{Id:2,Name:"会议室"},{Id:3,Name:"电梯"},{Id:4,Name:"空调"},{Id:5,Name:"卡位"},{Id:6,Name:"阳台"},{Id:7,Name:"自定义+"}
       ],
       Devicelist3:[
-        {Id:1,Name:"网络/电话",active:false},{Id:2,Name:"排污"},{Id:3,Name:"可明火"},{Id:4,Name:"管煤"},{Id:5,Name:"停车位"},{Id:6,Name:"自定义"},
+        {Id:1,Name:"网络/电话",active:false},{Id:2,Name:"排污"},{Id:3,Name:"可明火"},{Id:4,Name:"管煤"},{Id:5,Name:"停车位"},{Id:6,Name:"自定义+"},
       ],
       deviceTip:"",//添加自定义
       educationList:[ 
@@ -1803,6 +1803,7 @@ export default {
     },
     bindDateChangeStart (e) {
         this.RentTimeBox = e.mp.detail.value
+        console.log(this.RentTimeBox,"this.RentTimeBox")
     },
     //选择接听时间
     choseTimeLimit(){
@@ -2698,39 +2699,39 @@ export default {
         }
       }
       console.log("++++++")
-      if(that.valOther()){
-          if(that.PageId == 42 || that.PageId == 43){
-            for(let i in that.Devicelist){
-              if(that.Devicelist[i].active){
-                that.ServiceName+=that.Devicelist[i].Name+","
-              }
-            }
-          console.log("that.ServiceName:",that.ServiceName)
-          }
-          console.log("_____")
-          if(that.PageId==32　|| that.PageId==33 || that.PageId==34){
-           pramas={
-              UserId:this.userId,
-              Token:this.token,
-              TypeId:this.TypeId,
-              PicList:_PicList,
-              GoodsInfo:GoodsInfo,
-              PartnerList:_PartnerList
-           }
-          }else{
-            pramas={
-              UserId:this.userId,
-              Token:this.token,
-              TypeId:this.TypeId,
-              PicList:_PicList,
-              GoodsInfo:GoodsInfo
-           }
-          }
-          console.log(pramas,"pramas")
-          that.submitAll(pramas)
-          // hat.submitAll(JSON.stringify(PicList),GoodsInfo)
+      // if(that.valOther()){
+      //     if(that.PageId == 42 || that.PageId == 43){
+      //       for(let i in that.Devicelist){
+      //         if(that.Devicelist[i].active){
+      //           that.ServiceName+=that.Devicelist[i].Name+","
+      //         }
+      //       }
+      //     console.log("that.ServiceName:",that.ServiceName)
+      //     }
+      //     console.log("_____")
+      //     if(that.PageId==32　|| that.PageId==33 || that.PageId==34){
+      //      pramas={
+      //         UserId:this.userId,
+      //         Token:this.token,
+      //         TypeId:this.TypeId,
+      //         PicList:_PicList,
+      //         GoodsInfo:GoodsInfo,
+      //         PartnerList:_PartnerList
+      //      }
+      //     }else{
+      //       pramas={
+      //         UserId:this.userId,
+      //         Token:this.token,
+      //         TypeId:this.TypeId,
+      //         PicList:_PicList,
+      //         GoodsInfo:GoodsInfo
+      //      }
+      //     }
+      //     console.log(pramas,"pramas")
+      //     that.submitAll(pramas)
+      //     // hat.submitAll(JSON.stringify(PicList),GoodsInfo)
         
-      }
+      // }
     },
     submitAll(pramas){
       post('Goods/RentSharing',pramas,this.curPage).then(res=>{

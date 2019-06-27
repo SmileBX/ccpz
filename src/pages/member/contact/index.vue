@@ -3,18 +3,18 @@
     <div class="weui-cells">
       <div class="weui-cell">
         <img src="/static/images/icons/con_tel.jpg" class="icon-nav" alt="">
-        <div class="weui-cell__bd">
+        <button class="weui-cell__bd" style="border:none;text-align:left" plain>
            <p class="tel">40000000000000</p>
            <p class="time">服务时间&nbsp;09：00-20：00</p>
-        </div>
+        </button>
         <span class="icon-arrow arrow-right"></span>
       </div>
       <div class="weui-cell">
         <img src="/static/images/icons/con_kefu.jpg" class="icon-nav" alt="">
-        <div class="weui-cell__bd">
+        <button class="weui-cell__bd" plain style="border:none;text-align:left" open-type="contact" >
            <p class="tel">在线客服</p>
            <p class="time">服务时间&nbsp;09：00-20：00</p>
-        </div>
+        </button>
         <span class="icon-arrow arrow-right"></span>
       </div>
     </div>
