@@ -1537,6 +1537,7 @@ export default {
     this.setBarTitle();
   },
   onShow(){
+    console.log("}}}}}}}}}}}}}}}}}}}}}}")
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();

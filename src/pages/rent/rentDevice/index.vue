@@ -1256,10 +1256,10 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
-    this.TypeId = this.$root.$mp.query.TypeId
-    this.PageId = this.$root.$mp.query.PageId
-    console.log("TypeId",this.TypeId)
-    console.log("PageId",this.PageId)
+    this.TypeId = this.$root.$mp.query.TypeId;
+    this.PageId = this.$root.$mp.query.PageId;
+    console.log("TypeId",this.TypeId);
+   console.log("PageId",this.PageId);
     this.initData()
     this.GetPublishItems()
   },
