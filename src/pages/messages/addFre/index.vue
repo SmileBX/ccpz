@@ -21,12 +21,12 @@
       <div class="bg_fff group boxSize">
           <div class="flex flexAlignCenter slide boxSize sign">
               <p>备注</p>
-              <input type="text"  v-model="specName" class="flex1">
+              <input type="text"  v-model="specName" class="flex1" placeholder="请输入备注">
           </div>
           <div class="flex flexAlignCenter slide boxSize">
               <p>分组</p>
-              <p class="flex flex1">
-                  <input type="text"  v-model="specPlace" class="flex1">
+              <p class="flex flex1" @tap="choseTeam">
+                  <input type="text" disabled v-model="specPlace" placeholder="请选择分组名称" class="flex1">
                   <span class="icon-arrow arrow-right"></span>
               </p>
           </div>
@@ -47,23 +47,27 @@ export default {
       lat:0,
       lng:0,
       verMsg:'',
-      specName:'傻不傻',
-      specPlace:'我的好友',
+      specName:'',
+      specPlace:'',
     }
   },
   onLoad() {
     this.setBarTitle();
-    if(this.$root.$mp.query.FriendId){
-      this.FriendId = this.$root.$mp.query.FriendId
-    }
-    const res =getLocation()
-      console.log(res)
-      this.lat = res.latitude;
-      this.lng=res.longitude;
+    
   },
   onShow(){
     this.userId = wx.getStorageSync('userId')
     this.token = wx.getStorageSync('token')
+    if(this.$root.$mp.query.FriendId){
+      this.FriendId = this.$root.$mp.query.FriendId
+    }
+    if(this.$root.$mp.query.groupName){
+      this.specPlace = this.$root.$mp.query.groupName
+    }
+    const res =getLocation()
+    console.log(res)
+    this.lat = res.latitude;
+    this.lng=res.longitude;
 
   },
 
@@ -94,7 +98,13 @@ export default {
         title:'发送成功!'
       })
       }
-    }
+    },
+    //选择分组
+    choseTeam(){
+      wx.navigateTo({
+        url:"/pages/connectLetter/addTeam/main?url=messages/addFre"
+      })
+    },
   },
 
   created () {
