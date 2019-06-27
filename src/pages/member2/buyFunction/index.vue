@@ -96,7 +96,7 @@
       </div>
     </div>
     <div class="weui-cells">
-        <div class="weui-cell" v-if="type!=3">
+        <!-- <div class="weui-cell" v-if="type!=3">
           <div class="weui-cell__hd">购买数量</div>
           <div class="weui-cell__bd text_r">
             <div class="handleNumber">
@@ -105,7 +105,7 @@
               <span class="btn btn-add" @tap="addNum">+</span>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="weui-cell" @tap="goToPage(0)">
           <div class="weui-cell__hd">优惠券</div>
           <div class="weui-cell__bd text_r"><span v-if="Denomination>0">-</span>{{Denomination}}</div>
@@ -194,10 +194,12 @@ export default {
     if(this.$root.$mp.query.InvoiceId){
         this.InvoiceId = this.$root.$mp.query.InvoiceId
     }
-    if(this.$root.$mp.query.price){
-        this.NeedMoney = this.$root.$mp.query.price
+    if(this.$root.$mp.query.publishId){
+        this.publishId = this.$root.$mp.query.publishId
     }
-    console.log(this.type,this.NeedMoney,"{{{{{{{{{{{")
+    this.getPrice()
+    
+    
   },
   components:{
     payPassword
@@ -222,6 +224,7 @@ export default {
       InvoiceId:0,//发票Id
       CouponId:0,  //优惠券ID
       Denomination:"",//优惠券面额
+      publishId:0,//发布Id
       payList:[
         {Id:1,Name:"微信"},{Id:2,Name:"余额"}
       ],
@@ -232,12 +235,7 @@ export default {
   },
   computed:{
     total(){
-      if(this.type==3){
-        return this.NeedMoney -this.Denomination*1
-      }else{
-        return (this.NeedMoney * this.num) -this.Denomination*1
-      }
-      
+      return this.NeedMoney -this.Denomination*1
     }
   },
   methods: {
@@ -250,6 +248,24 @@ export default {
       this.isShowMask = true
       this.masktitle="请选择种类"
       this.getCardBrand()
+    },
+    getPrice(){
+      let objUrl = ''
+        if(this.type==1){
+         objUrl = 'User/ReadTopSetting'
+        }
+        if(this.type==2){
+           objUrl = 'User/ReadRefreshSetting'
+        }
+        post(objUrl,{
+          UserId: this.userId,
+          Token: this.token
+        },this.curPage).then(res=>{
+          if(res.code==0){
+              this.NeedMoney = res.data.Price
+            }
+
+        })
     },
     //获取卡的种类
     getCardBrand(){
@@ -323,13 +339,34 @@ export default {
     },
     getWxPay(){
       console.log("___________")
-      post('User/WechatApplet_Pay_Vip',{
+      let objUrl = ''
+      let pramas = {}
+      if(this.type==3){
+        objUrl = 'User/WechatApplet_Pay_Vip'
+        pramas = {
           UserId:this.userId,
           Token:this.token,
           Id:this.Id,
           InvoiceId:this.InvoiceId,
           CouponId:this.CouponId
-      },this.curPage).then(res=>{
+        }
+      }
+      if(this.type==2 || this.type == 1){
+        if(this.type==1){
+          objUrl = 'User/WechatApplet_PayTop'
+        }else{
+          objUrl = 'User/WechatApplet_PayRefresh'
+        }
+        pramas = {
+          UserId:this.userId,
+          Token:this.token,
+          Id:this.publishId,
+          InvoiceId:this.InvoiceId,
+          CouponId:this.CouponId
+        }
+      }
+
+      post(objUrl, pramas,this.curPage).then(res=>{
         console.log(res)
         if(res.code==0){
             const JsParam = JSON.parse(res.data.JsParam)
@@ -350,15 +387,35 @@ export default {
       })
     },
     async submit(password){
-     const res=await  post('/User/VipGoodsPay',{
+      let objUrl = ''
+      let pramas = {}
+      if(this.type==3){
+        objUrl = '/User/VipGoodsPay'
+        pramas = {
+            UserId:this.userId,
+            Token:this.token,
+            Id:this.Id,
+            Password:password,
+            InvoiceId:this.InvoiceId,
+            CouponId:this.CouponId
+        }
+      }
+      if(this.type==2 || this.type == 1){
+        if(this.type==1){
+          objUrl = 'User/Pay_TopPublish'
+        }else{
+          objUrl = 'User/Pay_RefreshPublish'
+        }
+        pramas = {
           UserId:this.userId,
           Token:this.token,
-          Id:this.Id,
+          Id:this.publishId,
           Password:password,
           InvoiceId:this.InvoiceId,
           CouponId:this.CouponId
-
-        },this.curPage)
+        }
+      }
+     const res=await  post(objUrl,pramas,this.curPage)
         if(res.code==0){
           wx.showToast({
             title:"开通成功",
