@@ -1651,32 +1651,35 @@ export default {
           this.addrTitle = "地理位置"
           this.addrPlaceholder = "位置名称 如：如京基大厦"
         }
-        if(this.PageId==32 || this.PageId==33){
-          this.PartnerList=[
-              {
-                JobTitle:'', //职位名称
-                Experience:'', //经验要求
-                Degree:'',      //学历要求
-                Treatment:'',   //合伙待遇（股份、工资、奖金）
-                JobType:'',     //全职/兼职
-                WorkTime:'',    //工作时间、时间要求
-                PartDesc:'',    //职位描述、合伙描述
-                ShowWork:false,//学历要求
+        if(this.imgArr.length<=0){
+            if(this.PageId==32 || this.PageId==33){
+              this.PartnerList=[
+                  {
+                    JobTitle:'', //职位名称
+                    Experience:'', //经验要求
+                    Degree:'',      //学历要求
+                    Treatment:'',   //合伙待遇（股份、工资、奖金）
+                    JobType:'',     //全职/兼职
+                    WorkTime:'',    //工作时间、时间要求
+                    PartDesc:'',    //职位描述、合伙描述
+                    ShowWork:false,//学历要求
+                }
+              ]
             }
-          ]
-        }
-        if(this.PageId==34){
-          this.PartnerList=[
-              {
-                JobTitle:'', //职位名称
-                Experience:'', //经验要求
-                Degree:'',      //学历要求
-                WorkTime:'',    //工作时间、时间要求
-                PartDesc:'',    //职位描述、合伙描述
-                JobSex:'',      //性别要求
+            if(this.PageId==34){
+              this.PartnerList=[
+                  {
+                    JobTitle:'', //职位名称
+                    Experience:'', //经验要求
+                    Degree:'',      //学历要求
+                    WorkTime:'',    //工作时间、时间要求
+                    PartDesc:'',    //职位描述、合伙描述
+                    JobSex:'',      //性别要求
+                }
+              ]
             }
-          ]
         }
+        
         if(this.PageId==32){
           this.pageTitle = '组件公司表单'
           this.subTitle = '(将根据您的要求推荐优质候选人)'
@@ -2700,39 +2703,39 @@ export default {
         }
       }
       console.log("++++++")
-      // if(that.valOther()){
-      //     if(that.PageId == 42 || that.PageId == 43){
-      //       for(let i in that.Devicelist){
-      //         if(that.Devicelist[i].active){
-      //           that.ServiceName+=that.Devicelist[i].Name+","
-      //         }
-      //       }
-      //     console.log("that.ServiceName:",that.ServiceName)
-      //     }
-      //     console.log("_____")
-      //     if(that.PageId==32　|| that.PageId==33 || that.PageId==34){
-      //      pramas={
-      //         UserId:this.userId,
-      //         Token:this.token,
-      //         TypeId:this.TypeId,
-      //         PicList:_PicList,
-      //         GoodsInfo:GoodsInfo,
-      //         PartnerList:_PartnerList
-      //      }
-      //     }else{
-      //       pramas={
-      //         UserId:this.userId,
-      //         Token:this.token,
-      //         TypeId:this.TypeId,
-      //         PicList:_PicList,
-      //         GoodsInfo:GoodsInfo
-      //      }
-      //     }
-      //     console.log(pramas,"pramas")
-      //     that.submitAll(pramas)
-      //     // hat.submitAll(JSON.stringify(PicList),GoodsInfo)
+      if(that.valOther()){
+          if(that.PageId == 42 || that.PageId == 43){
+            for(let i in that.Devicelist){
+              if(that.Devicelist[i].active){
+                that.ServiceName+=that.Devicelist[i].Name+","
+              }
+            }
+          console.log("that.ServiceName:",that.ServiceName)
+          }
+          console.log("_____")
+          if(that.PageId==32　|| that.PageId==33 || that.PageId==34){
+           pramas={
+              UserId:this.userId,
+              Token:this.token,
+              TypeId:this.TypeId,
+              PicList:_PicList,
+              GoodsInfo:GoodsInfo,
+              PartnerList:_PartnerList
+           }
+          }else{
+            pramas={
+              UserId:this.userId,
+              Token:this.token,
+              TypeId:this.TypeId,
+              PicList:_PicList,
+              GoodsInfo:GoodsInfo
+           }
+          }
+          console.log(pramas,"pramas")
+          that.submitAll(pramas)
+          // hat.submitAll(JSON.stringify(PicList),GoodsInfo)
         
-      // }
+      }
     },
     submitAll(pramas){
       post('Goods/RentSharing',pramas,this.curPage).then(res=>{

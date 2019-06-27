@@ -324,7 +324,7 @@ export default {
     // if(this.$root.$mp.query.Id){  //进入他人主页传递的Id
     //    this.Id = this.$root.$mp.query.Id
     // }
-    this.Id = 10389
+    this.Id = 10394
     this.type = 2
     this.companyInfo = []
     this.list = []
@@ -473,7 +473,7 @@ export default {
     //极速联系
     contant(){
       if(this.IsContact){
-           wx.navigateTo({url:"/pages/messages/addFre/main?FriendId="+this.conFriendId})
+           wx.navigateTo({url:"/pages/messages/chatRoom/main?FriendId="+this.conFriendId})
       }
     },
     //加好友
