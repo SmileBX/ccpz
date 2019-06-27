@@ -53,15 +53,15 @@
       </div>
       <div class="section radius8 bg_fff mt10 mb20">
         <!-- 邀请好友送积分 -->
-        <div style="padding:30rpx 20rpx;border-bottom:1px solid #e5e5e5;">
-        <div class="inviteBox flex flexAlignCenter">
-          <div class="flex1">
-            <img src="/static/images/icons/invite.png" class="icon_invite" alt>邀请好友加入
+        <button style="padding:30rpx 20rpx;border:none;border-bottom:1px solid #e5e5e5;" open-type="share" plain>
+          <div class="inviteBox flex flexAlignCenter">
+            <div class="flex1">
+              <img src="/static/images/icons/invite.png" class="icon_invite" alt>邀请好友加入
+            </div>
+            <span class="msg">有机会得600积分</span>
+            <span class="icon-arrow arrow-right"></span>
           </div>
-          <span class="msg">有机会得600积分</span>
-          <span class="icon-arrow arrow-right"></span>
-        </div>
-        </div>
+        </button>
         <!-- 邀请好友送积分  end -->
         <div class="navBox">
           <ul class="navList li_25 center navList2">
@@ -223,7 +223,7 @@ export default {
     },
     gotoSet(){
       wx.navigateTo({
-        url:"/pages/member/set/main"
+        url:"/pages/member/set/main?type=1"
       })
     },
     editInfo(){
@@ -232,6 +232,16 @@ export default {
       })
     }
     
+  },
+   onShareAppMessage: function (res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target,"___")
+    }
+    return {
+      title: '分享好友得积分',
+      path: '/pages/my/main'
+    }
   }
 };
 </script>

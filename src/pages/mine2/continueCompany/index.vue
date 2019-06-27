@@ -173,6 +173,7 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
+    this.columns = []
     if(this.$root.$mp.query.id !=="" && this.$root.$mp.query.id){
       this.id = this.$root.$mp.query.id;
     }

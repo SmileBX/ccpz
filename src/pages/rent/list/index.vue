@@ -45,7 +45,7 @@
           class="flex1"
           v-for="(item,index) in filterMenu"
           :key="index"
-          :class="{'active':item.str===isShadeType}"
+          :class="{'active':item.selected}"
         >
           <div class="item" @click="filterShade(index)">
             {{item.title}}
@@ -97,35 +97,36 @@
       >我也是有底线的!</div>
       <!-- 暂无数据等提示  end -->
     </scroll-view>
+    <div v-for="(filterItem,filterIndex) in filterMenu" :key="filterIndex">
     <!--弹层-->
     <div class="mask" v-if="isShade"></div>
     <!--行业分类-->
     <div
       class="modal_mask flex second"
-      v-if="isShadeType == 'GladBuyerTrade' && filterMenu[0].selected"
+      v-if="isShadeType == 'GladBuyerTrade' && filterItem.selected"
      >
       <div class="scroll flex1">
-        <div @click="getTrade(1,-1)" :class="{'active':tradeOneTab===-1}">
+        <div @click="getTrade(1,-1,0,filterIndex)" :class="{'active':tradeOneTab===-1}">
           <p>不限</p>
         </div>
         <div
-          v-for="(item,index) in oneFilter.GladBuyerTrade.Value"
+          v-for="(item,index) in filterItem.Value"
           :key="index"
           :class="{'active':tradeOneTab===index}"
-          @click="getTrade(1,index,item.Id)"
+          @click="getTrade(1,index,item,filterIndex)"
         >
           <p>{{item.Name}}</p>
         </div>
       </div>
       <div class="scroll flex1" v-if="tradelist.length>0" style="border-left:1rpx solid #f2f2f2">
-        <div @click="getTrade(2,-1)" :class="{'active':tradeTwoTab===-1}">
+        <div @click="getTrade(2,-1,0,filterIndex)" :class="{'active':tradeTwoTab===-1}">
           <p>不限</p>
         </div>
         <div
           v-for="(item,index) in tradelist "
           :key="index"
           :class="{'active':tradeTwoTab===index}"
-          @click="getTrade(2,index,item.Id)"
+          @click="getTrade(2,index,item,filterIndex)"
         >
           <p>{{item.Name}}</p>
         </div>
@@ -133,12 +134,18 @@
     </div>
     <!--行业分类  end-->
     <!-- 地区 -->
-    <div class="modal_mask" v-if="isShadeType == 'GladBuyArea' && filterMenu[1].selected">
+    <div class="modal_mask" v-if="isShadeType == 'GladBuyArea' && filterItem.selected">
       <div class="scroll scroll_price">
         <div
-          v-for="(item,index) in  oneFilter.GladBuyArea.Value[0].Child"
+          @click="selectAreaTab(filterItem,-1,'')"
+          :class="{'active':areaTabIndex===-1}"
+        >
+          <p>不限</p>
+        </div>
+        <div
+          v-for="(item,index) in  filterItem.Value[0].Child"
           :key="index"
-          @click="selectAreaTab(index,item.Name)"
+          @click="selectAreaTab(filterItem,index,item.Name)"
           :class="{'active':areaTabIndex===index}"
         >
           <p>{{item.Name}}</p>
@@ -147,12 +154,12 @@
     </div>
     <!-- 地区  end -->
     <!-- 价格弹窗 -->
-    <div class="modal_mask" v-if="isShadeType == 'PropertyPrice' && filterMenu[2].selected ">
+    <div class="modal_mask" v-if="isShadeType == 'PropertyPrice' && filterItem.selected ">
       <div class="scroll scroll_price">
         <div
-          v-for="(item,index) in  oneFilter.PropertyPrice.Value"
+          v-for="(item,index) in  filterItem.Value"
           :key="index"
-          @click="selectPriceTab(index,'PropertyPrice',item)"
+          @click="selectPriceTab(index,item,filterItem)"
           :class="{'active':priceTabIndex===index}"
         >
           <p>{{item.Text}}</p>
@@ -170,34 +177,50 @@
         <div class="ftBtn center">
           <div class="inner">
             <div class="btns">
-              <div class="btn bg_ff952e color_fff" @click="btnFilterPrice">确认</div>
+              <div class="btn bg_ff952e color_fff" @click="btnFilterPrice(filterItem)">确认</div>
             </div>
           </div>
         </div>
       </div>
     </div>
     <!-- 价格弹窗  end -->
+    <!-- 面积 -->
+    <div class="modal_mask" v-if="isShadeType == 'PlanBuyArea' && filterItem.selected">
+      <div class="scroll scroll_price">
+        <div
+          v-for="(item,index) in  filterItem.Value"
+          :key="index"
+          @click="selectAcreage(filterItem,index,item)"
+          :class="{'active':acreageIndex===index}"
+        >
+          <p>{{item.Text}}</p>
+        </div>
+      </div>
+    </div>
+    <!-- 面积 end -->
     <!-- 更多的弹窗 -->
     <div
       class="modal_mask more__modal_mask"
-      v-if="isShadeType == 'More' && filterMenu[3].selected "
+      v-if="isShadeType == 'More' && filterItem.selected "
      >
       <div class="modal__bd">
         <ul class="modal_mask_shop">
-          <li v-for="(item,key,index) in moreFilter" :key="index">
-            <block v-if="key !== 'PlanBuyDate' ">
+          <li v-for="(item,key,index) in filterItem.list" :key="index">
+            <block v-if="key !== 'PlanBuyDate'">
               <div class="modal_shop_title">{{item.Text}}</div>
               <div class="mask_shop_bd">
-                <block v-if="item.No || item.Yes">
+                <!-- 单选框 -->
+                <block v-if="item.No===0 || item.Yes===0">
                   <radio-group class="radio-group">
-                    <label class="radio" @tap="changeStatu(key,true)">
-                      <radio :value="item.Yes" :checked="item.Yes===1" color="#fff"/>是
+                    <label class="radio" @tap="changeStatu(item,true)">
+                      <radio :value="item.Yes" :checked="item.Yes" color="#fff"/>是
                     </label>
-                    <label class="radio" @tap="changeStatu(key,false)">
-                      <radio :value="item.No" :checked="item.No===1" color="#fff"/>否
+                    <label class="radio" @tap="changeStatu(item,false)">
+                      <radio :value="item.No" :checked="item.No" color="#fff"/>否
                     </label>
                   </radio-group>
                 </block>
+                <!-- tab选项 -->
                 <block v-if="item.Value">
                   <div class="tipsList border__tipsList">
                     <!-- <block v-if="item2.Name">{{item2.Name}}</block> -->
@@ -215,6 +238,7 @@
                 </block>
               </div>
             </block>
+            <!-- 选择日期 -->
             <block v-else>
               <div class="modal_shop_title">{{item}}</div>
               <div
@@ -238,8 +262,8 @@
       <div class="ftBtn center">
         <div class="inner bm0 fixed">
           <div class="btns flex">
-            <div class="btn flex1" style="background:#F2F2F2;" @tap="cancleMoreFilter">取消</div>
-            <div class="btn flex1 bg_ff952e color_fff" @tap="sureMoreFilter">确定</div>
+            <div class="btn flex1" style="background:#F2F2F2;" @tap="initMore">重置</div>
+            <div class="btn flex1 bg_ff952e color_fff" @tap="sureMoreFilter(filterItem)">确定</div>
           </div>
         </div>
       </div>
@@ -247,8 +271,8 @@
     <!-- 更多的弹窗  end -->
     <!-- 日期选择 -->
     <div class="shade bottom__shade" style="z-index:300" v-if="isShowDate">
-      <div class="mask" style="z-index:200;background:rgba(0,0,0,1);top:0;"></div>
-      <div class="shadeContent" style="z-index:230">
+      <div class="mask" style="top:0;"></div>
+      <div class="shadeContent" style="">
         <div class="shade__bd">
           <van-datetime-picker
             show-toolbar
@@ -263,6 +287,7 @@
       </div>
     </div>
     <!-- 日期选择  end -->
+    </div>
   </div>
 </template>
 <script>
@@ -276,6 +301,10 @@ import formationItem from "@/components/formationItem.vue";
 // 组建 = 22,
 // 拼活动 = 23,
 // 房源 = 24,
+// isHot ：
+// 1-优质房源
+// 2-热门商铺
+// 3-为您推荐
 
 export default {
   components: { 
@@ -287,6 +316,7 @@ export default {
       token: "",
       curPage: "",
       type: "", //一级类型id
+      isHot:'', //热门筛选
       typeId: "", //筛选发布列表需要传入的二级类的id
       hasFilter: false, //是否搜出了对应的查询条件
       oneTypeList: [], //根据对应类型搜出对应的一级类
@@ -334,11 +364,12 @@ export default {
       inputMaxPrice: "", //价格弹窗中输入的最高价
       minNum: 0, //最小面积
       maxNum: 0, //最大面积
+      acreageIndex:'',//面积选择index
       page: 1,
       pageSize: 12,
       cityCode: "", //城市code
       // cityName: "", //城市名称
-      dataMoreFilter: {}, //不会变的更多的筛选数据
+      dataMoreFilter: [], //不会变的更多的筛选数据
       dataMoreFilter2: {},
       moreFilter: {}, //更多的筛选数据
       oneFilter: {}, //单个的在menu中排列的数据（行业、地区等）
@@ -372,15 +403,16 @@ export default {
       this.curPage = getCurrentPageUrlWithArgs();
       // this.cityName = wx.getStorageSync("cityName");
       this.twoTypeList = [];
+      this.goodsInfo={};
       this.twoTabIndex = 0;
       this.oneTabIndex = 0;
       this.isShade = false;
       this.keyWords = "搜索";
       this.initAll();
       this.initDataList();
-      // debugger;
       this.getSubMenu();
     },
+    // 头部标题
     setBarTitle() {
       let title = "";
       switch (this.type * 1) {
@@ -401,10 +433,6 @@ export default {
         title
       });
     },
-    toDetail(id) {
-      console.log(id,'ididididi')
-      wx.navigateTo({ url: "/pages/rent/pinzuDetail/main?id" + id });
-    },
     //重置行业选择(选择了其他地区等的时候)
     initTrade() {
       this.tradeOneTab = "";
@@ -414,6 +442,10 @@ export default {
     //重置地区选择
     initArea() {
       this.areaTabIndex = "";
+    },
+    //重置地区的选中的active
+    initAreaTab(){
+      this.areaTabIndex= ""; 
     },
     //重置价格选择
     initPrice() {
@@ -425,12 +457,20 @@ export default {
     },
     //重置更多的选择
     initMore() {
-      console.log("执行恢复更多");
+      console.log("执行恢复更多",this.dataMoreFilter);
       this.minNum = 0; //最小面积
       this.maxNum = 0; //最大面积
+      // this.initAreaTab(); //地区的选中的active
       this.setUpDate = "";
       this.isShowDate = false;
-      this.moreFilter = Object.assign({}, this.dataMoreFilter);
+      this.goodsInfo={};
+      // return false;
+      this.filterMenu.map(item=>{
+        if(item.str ==='More'){
+          item.list = JSON.parse(JSON.stringify(this.dataMoreFilter));
+          console.log("执行恢复更多2",item.list);
+        }
+      })
     },
     //点击上面的一级类，及拼购拼租的时候，要清除所有行业等选择，跟筛选出来的筛选条件
     initAll() {
@@ -453,43 +493,6 @@ export default {
     initDataList() {
       this.dataList = []; //筛选出来的数据的列表
       this.hasDataList = false; //是否有数据
-    },
-    //如果有价格弹窗的时候，要在点击确认的时候，先判断输入的最高价有没有高于最低价，并且大于0
-    valPriceShade() {
-      let maxPrice = Number(trim(this.inputMaxPrice));
-      let minPrice = Number(trim(this.inputMinPrice));
-      console.log("最大价格:" + maxPrice);
-      if (minPrice !== "") {
-        if (Number.isInteger(minPrice) === false || minPrice < 0) {
-          wx.showToast({
-            title: "输入的不小于0的整数!",
-            icon: "none",
-            duration: 1500
-          });
-          return false;
-        }
-      }
-      if (maxPrice !== "") {
-        if (Number.isInteger(maxPrice) === false || maxPrice < 0) {
-          wx.showToast({
-            title: "输入的不小于0的整数!",
-            icon: "none",
-            duration: 1500
-          });
-          return false;
-        }
-      }
-      if (maxPrice && minPrice) {
-        if (maxPrice <= minPrice) {
-          wx.showToast({
-            title: "输入的最高价需高于最低价",
-            icon: "none",
-            duration: 1500
-          });
-          return false;
-        }
-      }
-      return true;
     },
     //获取一级类型
     getSubMenu() {
@@ -528,8 +531,8 @@ export default {
         }
       });
     },
-    GetFilterQuery() {
       //获取对应发布筛选
+    GetFilterQuery() {
       let that = this;
       post(
         "Goods/GetFilterQuery",
@@ -542,38 +545,66 @@ export default {
         that.curPage
       ).then(res => {
         if (res.code === 0 && Object.keys(res.data).length > 0) {
-          for (let key in res.data) {
-            if (
-              key == "GladBuyArea" ||
-              key == "GladBuyerTrade" ||
-              key == "PropertyPrice"
-            ) {
-              this.oneFilter = Object.assign(this.oneFilter, {
-                [key]: res.data[key]
-              });
-            } else {
-              if (res.data[key].Value) {
-                for (let key2 in res.data[key].Value) {
-                  res.data[key] = Object.assign({}, res.data[key], {
-                    selected: -1
-                  });
-                }
-              }
-              this.moreFilter = Object.assign(this.moreFilter, {
-                [key]: res.data[key]
-              });
-            }
-            this.dataMoreFilter = JSON.parse(JSON.stringify(this.moreFilter));
+          this.filterMenu=[];
+          const _res = res.data;
+          // 行业
+          this.filterMenuPush(_res,'GladBuyerTrade','行业')
+          // 地区
+          this.filterMenuPush(_res,'GladBuyArea','地区')
+          // 价格
+          this.filterMenuPush(_res,'PropertyPrice','价格')
+          // 面积
+          this.filterMenuPush(_res,'PlanBuyArea','面积')
+          // 更多****************
+          let params ={}
+          // 物业类型
+          if(_res.PropertyType){
+            params.PropertyType = _res.PropertyType
           }
-          console.log("更多里面的要更改的");
-          console.log(this.moreFilter);
-          console.log("更多里面的不要更改的");
-          console.log(this.dataMoreFilter);
-          console.log("menuone");
-          console.log(this.oneFilter);
+          // 物业形式
+          if(_res.PropertySort){
+            params.PropertySort= _res.PropertySort
+          }
+          // 是否可注册
+          if(_res.IsRegArea){
+            _res.IsRegArea.Yes= 0
+            _res.IsRegArea.No= 0
+            params.IsRegArea= _res.IsRegArea
+          }
+          // 是否允许挂牌
+          if(_res.IsAllowOtherList){
+            _res.IsAllowOtherList.Yes= 0
+            _res.IsAllowOtherList.No= 0
+            params.IsAllowOtherList= _res.IsAllowOtherList
+          }
+          // 计划购买日期
+          if(_res.PlanBuyDate){
+            params.PlanBuyDate= _res.PlanBuyDate
+          }
+            this.filterMenu.push({
+              title:'更多',
+              str:'More',
+              selected:false,
+              list:params
+            })
+            this.dataMoreFilter = JSON.parse(JSON.stringify(params));
           that.hasFilter = true;
         }
       });
+    },
+    // 筛选数组数据添加
+    filterMenuPush(_res,key,name){
+      if(_res[key]){
+        
+          if(_res[key]){
+            this.filterMenu.push({
+              title:name,
+              str:key,
+              selected:false,
+              Value:_res[key].Value
+            })
+          }
+      }
     },
     //获取发布列表
     getQueryRentList() {
@@ -590,8 +621,8 @@ export default {
           TypeId: that.typeId,
           Page: that.page,
           PageSize: that.pageSize,
-          MinNum: that.minNum,
-          MaxNum: that.maxNum,
+          MinNum: that.minNum||'',
+          MaxNum: that.maxNum||'',
           MinPrice: that.minPrice,
           MaxPrice: that.maxPrice,
           KeyWords: this.keyWords === "搜索" ? "" : this.keyWords,
@@ -677,66 +708,59 @@ export default {
     },
     // 点击show筛选弹窗
     filterShade(index) {
-      console.log("index:" + index);
-      this.$set(
-        this.filterMenu[index],
-        "selected",
-        !this.filterMenu[index].selected
-      );
-
-      console.log("tttttttttttttttttt");
-      console.log(this.filterMenu[index]);
-      for (let key in this.filterMenu) {
-        if (this.filterMenu[key].index !== index) {
-          this.$set(this.filterMenu[key], "selected", false);
-        }
-      }
-      if (this.filterMenu[index].selected) {
-        this.isShade = true;
-        this.isShadeType = this.filterMenu[index].str;
-      } else {
-        this.isShade = false;
-        this.isShadeType = "";
-      }
+        const filterItem = this.filterMenu[index]
+        this.isShadeType = filterItem.str;
+        this.filterMenu[index].selected = !filterItem.selected;
+        this.filterMenu[index].selected?(this.isShade = true):(this.isShade = false)
+        this.filterMenu.map(item=>{
+          filterItem.str!==item.str?item.selected = false:''
+        })
+      console.log("index:",this.filterMenu[index].selected);
     },
-    //点击一级行业查出对应的二级行业
-    getTrade(typeIndex, index, id) {
+    //***********************行业---点击一级行业查出对应的二级************
+    getTrade(typeIndex, index, item,filterIndex) {
+      // 点击第一级
       if (typeIndex === 1) {
         this.tradelist = [];
         this.tradeTwoTab = "";
         this.tradeOneTab = index;
         if (index !== -1) {
-          this.oneFilter.GladBuyerTrade.Value.forEach(item => {
-            if (item.Id == id) {
-              this.tradelist = item.Child;
+          // this.oneFilter.GladBuyerTrade.Value.forEach(item => {
+            if (item.Child&&item.Child.length>0) {
+             this.tradelist = item.Child;
+            }else{
+              // 没有二级分类的时候
+              const name = this.filterMenu[filterIndex].Value[index].Name;
+              this.goodsInfo.GladBuyerTrade = name;
+              this.getQueryRentList();
             }
-          });
+          // });
         } else {
           //行业不限的时候，搜索
           this.isShade = false;
+          this.goodsInfo.GladBuyerTrade = '';
           this.$set(this.filterMenu[0], "selected", false);
           //清除不是行业选项的所有的一些选择了的参数
-          this.initArea();
-          this.initPrice();
-          this.initMore();
-          this.initDataList(); //清除发布数据的一些参数
+          // this.initArea();
+          // this.initPrice();
+          // this.initMore();
+          // this.initDataList(); //清除发布数据的一些参数
           this.getQueryRentList();
         }
       }
+      // 点击第二级
       if (typeIndex === 2) {
         this.tradeTwoTab = index;
         let tradeStr = "";
+        const name = this.filterMenu[filterIndex].Value[this.tradeOneTab].Name;
         if (index !== -1) {
-          tradeStr =
-            this.oneFilter.GladBuyerTrade.Value[this.tradeOneTab].Name +
-            "," +
-            this.tradelist[this.tradeTwoTab].Name;
+          tradeStr = name +"," +this.tradelist[index].Name;
         } else {
           //二级不限的时候
-          tradeStr = this.oneFilter.GladBuyerTrade.Value[this.tradeOneTab].Name;
+          tradeStr = name;
         }
         this.isShade = false;
-        this.$set(this.filterMenu[0], "selected", false);
+        this.$set(this.filterMenu[filterIndex], "selected", false);
         //清除不是行业选项的所有的一些选择了的参数
         // this.initArea();
         // this.initPrice();
@@ -747,12 +771,12 @@ export default {
         this.getQueryRentList();
       }
     },
-    //选择地区
-    selectAreaTab(index, name) {
+    //********************** */选择地区*********************************
+    selectAreaTab(filterItem,index, name) {
       this.areaTabIndex = index;
       this.isShade = false;
       // this.isShadeType = "";
-      this.$set(this.filterMenu[1], "selected", false);
+      this.$set(filterItem, "selected", false);
       //清除不是地区选项的menu
       // this.initTrade();
       // this.initPrice();
@@ -765,7 +789,7 @@ export default {
 
     // **************************价格******************************************
     //选择价格
-    selectPriceTab(index, key, item) {
+    selectPriceTab(index, item,filterItem) {
       this.priceTabIndex = index;
       this.minPrice = item.MinPrice;
       this.maxPrice = item.MaxPrice;
@@ -774,47 +798,90 @@ export default {
         this.inputMinPrice = ""; //价格弹窗中输入的最低价
         this.inputMaxPrice = ""; //价格弹窗中输入的最高价
       }
+        this.isShade = false;
+        this.$set(filterItem, "selected", false);
+        this.getQueryRentList();
     },
     //价格弹窗中最低价格或者最高价格获取到聚焦之后，价格选项去掉
     priceFocus(type) {
       this.priceTabIndex = "";
     },
     //点击了价格弹窗中的确定的时候，才开始搜出来
-    btnFilterPrice() {
+    btnFilterPrice(filterItem) {
       if (this.valPriceShade()) {
         //开始筛选
         // this.initTrade();
         // this.initArea();
         // this.initMore();
         // this.initDataList();
-        if (this.inputMinPrice) {
-          this.minPrice = parseInt(this.inputMinPrice);
-        }
-        if (this.inputMaxPrice) {
-          this.maxPrice = parseInt(this.inputMaxPrice);
-        }
+      console.log("最小价格1:" + this.inputMinPrice);
+      console.log("最大价格1:" + this.inputMaxPrice);
+          this.minPrice = this.inputMinPrice;
+          this.maxPrice = this.inputMaxPrice;
         this.isShade = false;
-        this.$set(this.filterMenu[2], "selected", false);
+        this.$set(filterItem, "selected", false);
         this.getQueryRentList();
       }
     },
+    //如果有价格弹窗的时候，要在点击确认的时候，先判断输入的最高价有没有高于最低价，并且大于0
+    valPriceShade() {
+      let maxPrice = Number(trim(this.inputMaxPrice));
+      let minPrice = Number(trim(this.inputMinPrice));
+      console.log("最大价格:" + maxPrice);
+      console.log("最小价格:" + minPrice);
+      if (minPrice) {
+        if (Number.isInteger(minPrice) === false || minPrice < 0) {
+          wx.showToast({
+            title: "输入的不小于0的整数!",
+            icon: "none",
+            duration: 1500
+          });
+          return false;
+        }
+      }
+      if (maxPrice) {
+        if (Number.isInteger(maxPrice) === false || maxPrice < 0) {
+          wx.showToast({
+            title: "输入的不小于0的整数!",
+            icon: "none",
+            duration: 1500
+          });
+          return false;
+        }
+      }
+      if (maxPrice && minPrice) {
+        if (maxPrice <= minPrice) {
+          wx.showToast({
+            title: "输入的最高价需高于最低价",
+            icon: "none",
+            duration: 1500
+          });
+          return false;
+        }
+      }
+      return true;
+    },
     // **************************价格end******************************************
-    //点击更多筛选的时候的可选项
+    // ***************************选择面积******************************************
+    selectAcreage(filterItem,index, item) {
+      this.acreageIndex = index;
+      this.isShade = false;
+      // this.isShadeType = "";
+      this.$set(filterItem, "selected", false);
+      //清除不是地区选项的menu
+      // this.initTrade();
+      // this.initPrice();
+      // this.initMore();
+      // this.initDataList();
+      // 赛选条件对象
+      this.minNum= item.MinNum, //最小面积
+      this.maxNum= item.MaxNum, //最大面积
+      this.getQueryRentList();
+    },
+    // **************************面积end******************************************
+    //点击更多筛选的时候的tab可选项
     moreSelectItem(item2, index, key, item) {
-      // let key2 = this.moreFilter[key]
-      console.log("11111111", item);
-      // key2.selected = -1
-      // key2.selected = index
-      // this.$set(this.moreFilter, key, {});
-      // this.moreFilter[key].selected=index
-      this.$set(item, "selected", -1);
       this.$set(item, "selected", index);
-      // this.$set(item, {});
-      // this.$set(this, "moreFilter", this.moreFilter);
-      console.log("这里是取消了更多的选项_____", index);
-      console.log(this.moreFilter);
-      console.log("这个是dataMoreFilter++++++");
-      console.log(this.dataMoreFilter);
     },
     //选择计划购买日期
     confirmDate(e) {
@@ -828,69 +895,50 @@ export default {
       this.currentDate = dd.getTime();
       this.isShowDate = false;
     },
-    closeDate() {
       //取消日期选择
+    closeDate() {
       this.isShowDate = false;
     },
-    changeStatu(key, bol) {
       //选择是或者否的时候
+    changeStatu(item,key, bol) {
       //修改对应的选项
       if (bol) {
-        this.$set(this.moreFilter[key], "Yes", 1);
-        this.$set(this.moreFilter[key], "No", 0);
+        this.$set(item, "Yes", 1);
+        this.$set(item, "No", 0);
       } else {
-        this.$set(this.moreFilter[key], "Yes", 0);
-        this.$set(this.moreFilter[key], "No", 1);
+        this.$set(item, "Yes", 0);
+        this.$set(item, "No", 1);
       }
     },
     //点击更多弹窗中的确定按钮
-    sureMoreFilter() {
-      let json = {};
-      for (let key in this.moreFilter) {
-        if (
-          this.moreFilter[key].Value &&
-          this.moreFilter[key].selected !== -1
-        ) {
-          if (key === "RentTimeLimit") {
-            //短租的期限，取值Value
-            json = Object.assign(json, {
-              [key]: this.moreFilter[key].Value[this.moreFilter[key].selected]
-                .Value
-            });
-          } else {
-            json = Object.assign(json, {
-              [key]: this.moreFilter[key].Value[this.moreFilter[key].selected]
-                .Text
-            });
+    sureMoreFilter(filterItem) {
+      Object.keys(filterItem.list).map(key=>{
+          const item = filterItem.list[key]
+          // 标签选项
+          if(item.Value&&item.selected!==undefined){
+            this.goodsInfo[key] = item.Value[item.selected].Value
           }
-        } else {
-          if (key === "PlanBuyDate" && trim(this.setUpDate)) {
-            json = Object.assign(json, { [key]: this.setUpDate });
+          // 单选框
+          if(item.Yes||item.No){
+            this.goodsInfo[key] = item.Yes?1:0
           }
-          if (this.moreFilter[key].Yes || this.moreFilter[key].No) {
-            this.moreFilter[key].Yes === 1
-              ? (json = Object.assign(json, {
-                  [key]: this.moreFilter[key].Yes
-                }))
-              : (json = Object.assign(json, {
-                  [key]: this.moreFilter[key].No
-                }));
+      });
+          // 日期
+          if(filterItem.list.PlanBuyDate){
+          this.goodsInfo['PlanBuyDate'] = this.setUpDate
           }
-        }
-      }
-      console.log("已经选择的整合");
-      console.log(json);
+      console.log('goodsInfo',filterItem,this.goodsInfo)
       //清除不是更多menu的一下选项
-      this.initTrade();
-      this.initPrice();
-      this.initArea();
-      this.initDataList();
-      this.getQueryRentList(json);
+      // this.initTrade();
+      // this.initPrice();
+      // this.initArea();
+      // this.initDataList();
       this.isShade = false;
-      this.$set(this.filterMenu[3], "selected", false);
+      this.$set(filterItem, "selected", false);
+      this.getQueryRentList();
     },
+    //点击更多弹窗中的取消按钮
     cancleMoreFilter() {
-      //点击更多弹窗中的取消按钮
       this.initMore();
       console.log("这里是取消了更多的选项");
       console.log(this.moreFilter);
@@ -934,6 +982,7 @@ export default {
   max-height: 600rpx;
   height: auto;
   &.scroll_price {
+    
   }
 }
 .modal_mask {

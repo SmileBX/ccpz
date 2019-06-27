@@ -24,10 +24,10 @@
                   <span class="msgItem font22" v-if="item.Name">{{item.Name}}</span>
                   <span class="msgItem font22" v-else>未透漏公司</span>
                 </p>
-                <span class="attestationStatus color_white font22"  @tap="editCompany(item.Id)">
+                <span class="attestationStatus color_white font22"  @tap="editCompany(item.Id)" v-if="type==1">
                   <span> 编辑</span>
                 </span>
-                <span class="attestationStatus color_white font22" @tap="changeCompany">
+                <span class="attestationStatus color_white font22" @tap="changeCompany"  v-if="type==1">
                   <span > 切换</span>
                 </span>
                 <span class="attestationStatus color_white font22" v-if="item.IsAUT">
@@ -39,34 +39,39 @@
           </div>
           
         </div>
-        <!-- <div class="weui-cells noBorder__weui-cells column__weui-cells" style="margin-bottom:20rpx">
+        <div class="weui-cells noBorder__weui-cells column__weui-cells" style="margin-bottom:20rpx" v-if="type==2" v-for="(item,skey) in companyInfo" :key="skey">
             <div class="group flex justifyContentBetween">
               <div class="weui-cell">
                 <div class="weui-cell__hd">成立日期</div>
-                <div class="weui-cell__bd">无</div>
+                <div class="weui-cell__bd" v-if="item.SetUpDate">{{item.SetUpDate}}</div>
+                <div class="weui-cell__bd" v-else>无</div>
               </div>
               <div class="weui-cell">
                 <div class="weui-cell__hd">人员规模</div>
-                <div class="weui-cell__bd">无</div>
+                <div class="weui-cell__bd" v-if="item.StaffSize">{{item.StaffSize}}</div>
+                <div class="weui-cell__bd" v-else>无</div>
               </div>
             </div>
             <div class="group flex justifyContentBetween">
               <div class="weui-cell">
                 <div class="weui-cell__hd">办公面积</div>
-                <div class="weui-cell__bd">无</div>
+                <div class="weui-cell__bd" v-if="item.OfficeArea">{{item.OfficeArea}}</div>
+                <div class="weui-cell__bd" v-else>无</div>
               </div>
               <div class="weui-cell">
                 <div class="weui-cell__hd">地区</div>
-                <div class="weui-cell__bd">无</div>
+                <div class="weui-cell__bd" v-if="item.NativePlace">{{item.NativePlace}}</div>
+                <div class="weui-cell__bd" v-else>无</div>
               </div>
             </div>
             <div class="group flex">
               <div class="weui-cell flex1">
                 <div class="weui-cell__hd">办公地址</div>
-                <div class="weui-cell__bd">无</div>
+                <div class="weui-cell__bd" v-if="item.OfficeAddr">{{item.OfficeAddr}}</div>
+                <div class="weui-cell__bd" v-else>无</div>
               </div>
             </div>
-        </div> -->
+        </div>
       <!-- 标签-->
       <div class="tagBox pd15 mt10 bg_fff" style="margin-bottom:20rpx">
           <div class="line flex flexColumn">
@@ -178,9 +183,8 @@
           </div>
         </div>
       </div>
-
       <!--个人主页 -->
-      <div class="section pd15 bg_fff" style="margin-top:20rpx">
+      <div class="section pd15 bg_fff" style="margin-top:20rpx" v-if="type==1">
         <h3 class="title detail__title fontBold">联系方式</h3>
         <div class="contactList2 clear">
             <div class="item">
@@ -217,17 +221,54 @@
             </div>
         </div>
       </div>
-      
-    </div>
-    <!-- 底部 -->
-    <!-- <div class="ftBtn">
-      <div class="inner fixed bm0 flex">
-        <div class="btns flex1 flex center">
-          <div class="btn flex1 bg_ff952e color_fff">极速联系</div>
-          <div class="btn flex1 bg_ed3435 color_fff">加好友</div>
+      <!-- 公司介绍 -->
+      <div class="section" v-if="type==2">
+        <div class="locationBox pd15 company">
+            <h3 class="title detail__title">公司简介</h3>
+            <div class="con">{{companyInfo[0].CompanyIntro}}</div>
         </div>
       </div>
-    </div> -->
+      <!-- 公司理念 -->
+      <div class="section" v-if="type==2">
+          <div class="locationBox pd15">
+            <h3 class="title detail__title">公司理念</h3>
+            <div class="con">{{companyInfo[0].CompanyCulture}}</div>
+          </div>
+      </div>
+      <!--照片-->
+      <div class="form-cells-item pall bg_fff" style="margin-top:20rpx" v-if="type==2&&companyInfo[0].CompanyPic.length>0" >
+        <div class="flex justifyContentBetween">
+              <h3 class="title detail__title fontBold">公司照片</h3>
+          </div>
+        <div class="form-cell-bd form-cell-img">
+          <div class="upbtn" v-for="(item,pindex) in companyInfo[0].CompanyPic" :key="pindex">
+            <img class="upimg" :src="item">
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    
+    <!-- 底部 -->
+    <div class="ftBtn" v-if="type==2">
+      <div class="inner fixed bm0 flex">
+        <div class="iconGroup flex flexAlignCenter">
+          <div class="item flex1" @click="onReport">
+            <img src="/static/images/icons/jubao.jpg" alt>
+            <p>举报</p>
+          </div>
+          <div class="item flex1" @click="onIsCollection">
+            <img v-if="!IsCollection" src="/static/images/icons/shoucang.png" alt>
+            <img v-else src="/static/images/icons/shoucang-action.png" alt>
+            <p>收藏</p>
+          </div>
+        </div>
+        <div class="btns flex1 flex center">
+          <div class="btn flex1 bg_ff952e color_fff" @click="contant">极速联系</div>
+          <div class="btn flex1 bg_ed3435 color_fff"  @click="addFre" v-if="personInfo.Footer.Value.IsAddFriend &&　personInfo.Footer.Value.IsAddFriend.Value==1">加好友</div>
+        </div>
+      </div>
+    </div>
     <!--弹层-->
     <div class="mask" v-if="isShowMask" catchtouchmove="true" @click="cancle"></div>
     <div class="maskType boxSize" v-if="isShowMask" :class="showNoChange?'noParActive':''">
@@ -253,6 +294,8 @@ export default {
   },
   data(){
     return {
+      type:0,//1-个人 2-他人
+      Id:"",//他人的Id
       curPage: "",
       userId: "",
       token: "",
@@ -265,6 +308,7 @@ export default {
       list:[],
       statu:0,
       companyId:"",
+      IsCollection:false,
       menuAr:['/pages/mine/editMenTags/main?typeTips=1','/pages/mine/editMenTags/main?typeTips=2']
     }
   },
@@ -272,6 +316,12 @@ export default {
     this.curPage = getCurrentPageUrlWithArgs();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
+    // this.type = this.$root.$mp.query.type
+    // if(this.$root.$mp.query.Id){  //看到他人主页传递的Id
+    //    this.Id = this.$root.$mp.query.Id
+    // }
+    this.Id = 10389
+    this.type = 2
     this.companyInfo = []
     this.list = []
     this.hasData = false
@@ -294,13 +344,28 @@ export default {
       wx.navigateTo({url:this.menuAr[index]})
     },
     getMyHomePage(){
-      post('User/MyHomePage',{
-        UserId: this.userId,
-        Token: this.token,
-      },this.curPage).then(res=>{
+      let objUrl = ''
+      let pramas = {}
+      if(this.type==1){
+        objUrl = 'User/MyHomePage'
+        pramas = {
+          UserId: this.userId,
+          Token: this.token,
+        }
+      }else{
+        objUrl = 'User/OtherHomePage'
+        pramas = {
+          UserId: this.userId,
+          Token: this.token,
+          ShopId :this.Id
+        }
+      }
+      post(objUrl,pramas,this.curPage).then(res=>{
         console.log("Res:",res)
         if(res.code==0){
-          this.$set(res.data,"Area",res.data.Area.split(',').slice(1).join('-'))
+          if(res.data.Area){
+            this.$set(res.data,"Area",res.data.Area.split(',').slice(1).join('-'))
+          }
           this.$set(res.data,"Trade",res.data.Trade.split(',').join(' '))
           if( res.data.TagsCapGood[0].length<=0){
               this.$set(res.data,"TagsCapGood",res.data.TagsCapGood.splice(1))
@@ -315,9 +380,10 @@ export default {
               this.$set(res.data,"TagsResKnow",res.data.TagsResKnow.splice(1))
           }
           this.personInfo = res.data
+          this.IsCollection = res.data.Footer.Value.IsCollection.Value
           this.companyInfo.push(this.personInfo.CyList[0])
-          console.log(this.companyInfo)
           this.hasData = true
+          console.log(this.companyInfo)
           console.log(res.data.TagsCapKnow.length)
         }
       })
@@ -328,6 +394,7 @@ export default {
     },
     //编辑公司信息
     editCompany(id){
+      console.log(id)
       wx.navigateTo({url:"/pages/mine2/continueCompany/main?id="+id})
     },
     //添加经验
@@ -369,6 +436,29 @@ export default {
       this.showNoChange = false
       this.list =[]
       this.statu = 0
+    },
+    //收藏
+    async onIsCollection(){
+      // Type:0://产品 1://商家
+      const params = {
+        UserId:this.userId,
+        Token:this.token,
+        Type:0,
+        Id:this.id
+      }
+      if(!this.IsCollection){
+        await post('User/AddCollections',params)
+        wx.showToast({title:'收藏成功'})
+      }else{
+        await post('User/ReCollections',params)
+        wx.showToast({title:'取消收藏成功'})
+      }
+      // const res = await post('User/AddCollections',params)
+      this.IsCollection = !this.IsCollection
+    },
+    //举报
+    onReport(){
+       wx.navigateTo({url:"/pages/mine2/report/main"})
     }
 
   }
@@ -376,7 +466,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .pagePerson{
-  background:#ff9325
+  background:#dfdedd
 }
 .storeNowrap .storeList .item,
 .storeNowrap .storeList .pictrueAll img {
