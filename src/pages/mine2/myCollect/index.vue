@@ -13,331 +13,49 @@
     <scroll-view class="filterContent bg_fff mt10" scroll-y="true">
       <!-- 信息 -->
       <div class="column levelPanel storeList" style="padding:0;" v-if="tabIndex===0">
-        <van-swipe-cell :right-width="65" :on-close="onClose" class="swipe-cell">
-          <van-cell-group>
-            <van-cell class="item">
-              <div class="outside">
-                <div class="pictrueAll">
-                  <div class="pictrue img">
-                    <img src="/static/images/of/index_a1.jpg" alt>
+        <block v-for="(item,index) in list" :key="index">
+          <van-swipe-cell
+            :right-width="65"
+            async-close
+            @close="ReCollections($event,item.Id,index)"
+            class="swipe-cell"
+          >
+            <van-cell-group>
+              <van-cell class="item">
+                <div class="outside">
+                  <div class="pictrueAll">
+                    <div class="pictrue img">
+                      <img :src="item.PicNo" alt>
+                    </div>
                   </div>
-                </div>
-                <div class="txtBox text_l">
-                  <p class="title ellipsis">
-                    <span class="typeName">拼办公室</span>深圳连锁办公室拼租
-                  </p>
-                  <p class="msgList" style="margin-top:20rpx;">
-                    <span class="msgItem">工程设计</span>
-                    <span class="msgItem">
-                      100m
-                      <span class="sup">2</span>
-                    </span>
-                    <span class="msgItem">3卡2独</span>
-                    <span class="msgItem">罗湖</span>
-                  </p>
-                  <div class="flex" style="margin-top:38rpx;">
-                    <p class="priceArea flex1 flexAlignCenter">
-                      <span class="price">3000</span>元/月
+                  <div class="txtBox text_l">
+                    <p class="title ellipsis" style="color:#333">
+                      {{item.Title}}
+                      <!-- <span class="typeName">拼办公室</span> -->
                     </p>
-                  </div>
-                </div>
-              </div>
-            </van-cell>
-          </van-cell-group>
-          <span
-            slot="right"
-            class="van-swipe-cell__right flex flexAlignCenter justifyContentCenter"
-          >删除</span>
-        </van-swipe-cell>
-        <van-swipe-cell :right-width="65" :on-close="onClose" class="swipe-cell">
-          <van-cell-group>
-            <van-cell class="item">
-              <div class="outside">
-                <div class="pictrueAll">
-                  <div class="pictrue img">
-                    <img src="/static/images/of/index_a1.jpg" alt>
-                  </div>
-                </div>
-                <div class="txtBox text_l">
-                  <p class="title ellipsis">
-                    <span class="typeName">拼办公室</span>深圳连锁办公室拼租
-                  </p>
-                  <p class="msgList" style="margin-top:20rpx;">
-                    <span class="msgItem">工程设计</span>
-                    <span class="msgItem">
-                      100m
-                      <span class="sup">2</span>
-                    </span>
-                    <span class="msgItem">3卡2独</span>
-                    <span class="msgItem">罗湖</span>
-                  </p>
-                  <div class="flex" style="margin-top:38rpx;">
-                    <p class="priceArea flex1 flexAlignCenter">
-                      <span class="price">3000</span>元/月
+                    <p class="msgList" style="margin-top:20rpx;">
+                      <span class="msgItem" v-if="item.TypeName !=='' ">{{item.TypeName}}</span>
+                      <span class="msgItem">{{item.GladBuyArea}}</span>
                     </p>
+                    <div class="flex" style="margin-top:38rpx;">
+                      <p class="priceArea flex1 flexAlignCenter">
+                        <span class="price">￥{{item.PropertyPrice}}</span>
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </van-cell>
-          </van-cell-group>
-          <span
-            slot="right"
-            class="van-swipe-cell__right flex flexAlignCenter justifyContentCenter"
-          >删除</span>
-        </van-swipe-cell>
-        <van-swipe-cell :right-width="65" :on-close="onClose" class="swipe-cell">
-          <van-cell-group>
-            <van-cell class="item">
-              <div class="outside">
-                <div class="pictrueAll">
-                  <div class="pictrue img">
-                    <img src="/static/images/of/index_a1.jpg" alt>
-                  </div>
-                </div>
-                <div class="txtBox text_l">
-                  <p class="title ellipsis">
-                    <span class="typeName">拼办公室</span>深圳连锁办公室拼租
-                  </p>
-                  <p class="msgList" style="margin-top:20rpx;">
-                    <span class="msgItem">工程设计</span>
-                    <span class="msgItem">
-                      100m
-                      <span class="sup">2</span>
-                    </span>
-                    <span class="msgItem">3卡2独</span>
-                    <span class="msgItem">罗湖</span>
-                  </p>
-                  <div class="flex" style="margin-top:38rpx;">
-                    <p class="priceArea flex1 flexAlignCenter">
-                      <span class="price">3000</span>元/月
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </van-cell>
-          </van-cell-group>
-          <span
-            slot="right"
-            class="van-swipe-cell__right flex flexAlignCenter justifyContentCenter"
-          >删除</span>
-        </van-swipe-cell>
-        <van-swipe-cell :right-width="65" :on-close="onClose" class="swipe-cell">
-          <van-cell-group>
-            <van-cell class="item">
-              <div class="outside">
-                <div class="pictrueAll">
-                  <div class="pictrue img">
-                    <img src="/static/images/of/index_a1.jpg" alt>
-                  </div>
-                </div>
-                <div class="txtBox text_l">
-                  <p class="title ellipsis">
-                    <span class="typeName">拼办公室</span>深圳连锁办公室拼租
-                  </p>
-                  <p class="msgList" style="margin-top:20rpx;">
-                    <span class="msgItem">工程设计</span>
-                    <span class="msgItem">
-                      100m
-                      <span class="sup">2</span>
-                    </span>
-                    <span class="msgItem">3卡2独</span>
-                    <span class="msgItem">罗湖</span>
-                  </p>
-                  <div class="flex" style="margin-top:38rpx;">
-                    <p class="priceArea flex1 flexAlignCenter">
-                      <span class="price">3000</span>元/月
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </van-cell>
-          </van-cell-group>
-          <span
-            slot="right"
-            class="van-swipe-cell__right flex flexAlignCenter justifyContentCenter"
-          >删除</span>
-        </van-swipe-cell>
-        <van-swipe-cell :right-width="65" :on-close="onClose" class="swipe-cell">
-          <van-cell-group>
-            <van-cell class="item">
-              <div class="outside">
-                <div class="pictrueAll">
-                  <div class="pictrue img">
-                    <img src="/static/images/of/index_a1.jpg" alt>
-                  </div>
-                </div>
-                <div class="txtBox text_l">
-                  <p class="title ellipsis">
-                    <span class="typeName">拼办公室</span>深圳连锁办公室拼租
-                  </p>
-                  <p class="msgList" style="margin-top:20rpx;">
-                    <span class="msgItem">工程设计</span>
-                    <span class="msgItem">
-                      100m
-                      <span class="sup">2</span>
-                    </span>
-                    <span class="msgItem">3卡2独</span>
-                    <span class="msgItem">罗湖</span>
-                  </p>
-                  <div class="flex" style="margin-top:38rpx;">
-                    <p class="priceArea flex1 flexAlignCenter">
-                      <span class="price">3000</span>元/月
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </van-cell>
-          </van-cell-group>
-          <span
-            slot="right"
-            class="van-swipe-cell__right flex flexAlignCenter justifyContentCenter"
-          >删除</span>
-        </van-swipe-cell>
-        <van-swipe-cell :right-width="65" :on-close="onClose" class="swipe-cell">
-          <van-cell-group>
-            <van-cell class="item">
-              <div class="outside">
-                <div class="pictrueAll">
-                  <div class="pictrue img">
-                    <img src="/static/images/of/index_a1.jpg" alt>
-                  </div>
-                </div>
-                <div class="txtBox text_l">
-                  <p class="title ellipsis">
-                    <span class="typeName">拼办公室</span>深圳连锁办公室拼租
-                  </p>
-                  <p class="msgList" style="margin-top:20rpx;">
-                    <span class="msgItem">工程设计</span>
-                    <span class="msgItem">
-                      100m
-                      <span class="sup">2</span>
-                    </span>
-                    <span class="msgItem">3卡2独</span>
-                    <span class="msgItem">罗湖</span>
-                  </p>
-                  <div class="flex" style="margin-top:38rpx;">
-                    <p class="priceArea flex1 flexAlignCenter">
-                      <span class="price">3000</span>元/月
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </van-cell>
-          </van-cell-group>
-          <span
-            slot="right"
-            class="van-swipe-cell__right flex flexAlignCenter justifyContentCenter"
-          >删除</span>
-        </van-swipe-cell>
-        <van-swipe-cell :right-width="65" :on-close="onClose" class="swipe-cell">
-          <van-cell-group>
-            <van-cell class="item">
-              <div class="outside">
-                <div class="pictrueAll">
-                  <div class="pictrue img">
-                    <img src="/static/images/of/index_a1.jpg" alt>
-                  </div>
-                </div>
-                <div class="txtBox text_l">
-                  <p class="title ellipsis">
-                    <span class="typeName">拼办公室</span>深圳连锁办公室拼租
-                  </p>
-                  <p class="msgList" style="margin-top:20rpx;">
-                    <span class="msgItem">工程设计</span>
-                    <span class="msgItem">
-                      100m
-                      <span class="sup">2</span>
-                    </span>
-                    <span class="msgItem">3卡2独</span>
-                    <span class="msgItem">罗湖</span>
-                  </p>
-                  <div class="flex" style="margin-top:38rpx;">
-                    <p class="priceArea flex1 flexAlignCenter">
-                      <span class="price">3000</span>元/月
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </van-cell>
-          </van-cell-group>
-          <span
-            slot="right"
-            class="van-swipe-cell__right flex flexAlignCenter justifyContentCenter"
-          >删除</span>
-        </van-swipe-cell>
+              </van-cell>
+            </van-cell-group>
+            <span
+              slot="right"
+              class="van-swipe-cell__right flex flexAlignCenter justifyContentCenter"
+            >删除</span>
+          </van-swipe-cell>
+        </block>
       </div>
       <!-- 谁看过我 -->
       <div class="weui-cells readList mt0" v-if="tabIndex===1">
-        <van-swipe-cell :right-width="65" :on-close="onClose" class="swipe-cell">
-          <van-cell-group>
-            <van-cell class="item">
-              <div class="weui-cell">
-                <img src="/static/images/of/tx.jpg" class="tx" alt>
-                <div class="weui-cell__bd text_l">
-                  <p>
-                    <span class="name">李刚</span>
-                    <img src="/static/images/icons/v.jpg" class="icon_attestation" alt>
-                  </p>
-                  <p class="msgList">
-                    <span class="msgItem">CEO</span>
-                    <span class="msgItem">上海某网络公司</span>
-                  </p>
-                </div>
-              </div>
-            </van-cell>
-          </van-cell-group>
-          <span
-            slot="right"
-            class="van-swipe-cell__right flex flexAlignCenter justifyContentCenter"
-          >删除</span>
-        </van-swipe-cell>
-        <van-swipe-cell :right-width="65" :on-close="onClose" class="swipe-cell">
-          <van-cell-group>
-            <van-cell class="item">
-              <div class="weui-cell">
-                <img src="/static/images/of/tx.jpg" class="tx" alt>
-                <div class="weui-cell__bd text_l">
-                  <p>
-                    <span class="name">李刚</span>
-                    <img src="/static/images/icons/v.jpg" class="icon_attestation" alt>
-                  </p>
-                  <p class="msgList">
-                    <span class="msgItem">CEO</span>
-                    <span class="msgItem">上海某网络公司</span>
-                  </p>
-                </div>
-              </div>
-            </van-cell>
-          </van-cell-group>
-          <span
-            slot="right"
-            class="van-swipe-cell__right flex flexAlignCenter justifyContentCenter"
-          >删除</span>
-        </van-swipe-cell>
-        <van-swipe-cell :right-width="65" :on-close="onClose" class="swipe-cell">
-          <van-cell-group>
-            <van-cell class="item">
-              <div class="weui-cell">
-                <img src="/static/images/of/tx.jpg" class="tx" alt>
-                <div class="weui-cell__bd text_l">
-                  <p>
-                    <span class="name">李刚</span>
-                    <img src="/static/images/icons/v.jpg" class="icon_attestation" alt>
-                  </p>
-                  <p class="msgList">
-                    <span class="msgItem">CEO</span>
-                    <span class="msgItem">上海某网络公司</span>
-                  </p>
-                </div>
-              </div>
-            </van-cell>
-          </van-cell-group>
-          <span
-            slot="right"
-            class="van-swipe-cell__right flex flexAlignCenter justifyContentCenter"
-          >删除</span>
-        </van-swipe-cell>
-        <van-swipe-cell :right-width="65" :on-close="onClose" class="swipe-cell">
+        <van-swipe-cell :right-width="65" class="swipe-cell">
           <van-cell-group>
             <van-cell class="item">
               <div class="weui-cell">
@@ -361,6 +79,12 @@
           >删除</span>
         </van-swipe-cell>
       </div>
+      <div class="noData center" style="padding:60rpx 30rpx;" v-if="list.length<1 && page===1">暂无数据</div>
+      <div
+        class="noData center"
+        style="margin-top:0;line-height:80rpx;"
+        v-if="hasDataList&& page!==1"
+      >我也是有底线的!</div>
     </scroll-view>
   </div>
 </template>
@@ -370,17 +94,23 @@ export default {
   onLoad() {
     this.setBarTitle();
   },
-  onShow() {},
+  onShow() {
+    this.curPage = getCurrentPageUrlWithArgs();
+    this.userId = wx.getStorageSync("userId");
+    this.token = wx.getStorageSync("token");
+    this.MemberCollections();
+  },
   data() {
     return {
-      tabIndex: 0,
-      userId:"",
-      token:"",
-      curPage:"",
-      pageSize:15,
-      page:1,
-      type:0,   //0：产品；1：商家
-      list:[]
+      tabIndex: 0, //0：产品；1：商家
+      userId: "",
+      token: "",
+      curPage: "",
+      pageSize: 15,
+      page: 1,
+      list: [],
+      isOver: false,
+      hasDataList: false
     };
   },
   methods: {
@@ -392,38 +122,78 @@ export default {
     shiftTab(index) {
       this.tabIndex = parseInt(index);
     },
-    onClose(clickPosition, instance) {
-      switch (clickPosition) {
-        case "left":
-        case "cell":
-        case "outside":
-          instance.close();
-          break;
-        case "right":
-          Dialog.confirm({
-            message: "确定删除吗？"
-          }).then(() => {
-            instance.close();
-          });
-          break;
-      }
-    },
-    MemberCollections(){
+    MemberCollections() {
       let that = this;
-      post("User/MemberCollections",{
-        UserId:that.userId,
-        Token:that.token,
-        PageSize:that.pageSize,
-        Page:that.page,
-        Type:that.type
-      },that.curPage).then(res => {
-        if(res.code===0){
-          if(that.page===1){
+      post(
+        "User/MemberCollections",
+        {
+          UserId: that.userId,
+          Token: that.token,
+          PageSize: that.pageSize,
+          Page: that.page,
+          Type: that.tabIndex
+        },
+        that.curPage
+      ).then(res => {
+        if (res.code === 0) {
+          if (that.page === 1) {
             that.list = [];
           }
-          that.list = that.list.concat(res.data);
+          if (res.data.length > 0) {
+            that.hasDataList = true;
+            that.list = that.list.concat(res.data);
+          }
+          if (res.data.length < that.pageSize) {
+            that.isOver = true;
+          }
         }
-      })
+      });
+    },
+    ReCollections(e, id, index) {
+      console.log("fffffffffffffffffffffffff")
+      //取消收藏
+      let that = this;
+      wx.showModal({
+        // title: '提示',
+        content: "你确定要取消收藏么？",
+        success(res) {
+          if (res.confirm) {
+            post(
+              "User/DelCollections",
+              {
+                UserId: that.userId,
+                Token: that.token,
+                Id: id
+              },
+              that.curPage
+            ).then(res => {
+              if (res.code === 0) {
+                //取消收藏成功
+                wx.showToast({
+                  title: "取消收藏成功！",
+                  icon: "none",
+                  duration: 1500,
+                  success: function() {
+                    setTimeout(() => {
+                      that.list.splice(index, 1);
+                      e.mp.detail.instance.close();
+                    }, 1500);
+                  }
+                });
+              }
+            });
+          } else if (res.cancel) {
+            e.mp.detail.instance.close();
+          }
+        }
+      });
+    },
+    moreLoad() {
+      //加载更多
+      if (!this.isOver) {
+        this.page++;
+        this.MemberCollections();
+      }
     }
   }
 };
@@ -433,7 +203,7 @@ export default {
   color: #333;
   font-size: 32rpx;
 }
-.item /deep/ .van-cell{
+.item /deep/ .van-cell {
   padding: 0 !important;
 }
 .item /deep/ .van-cell::after,
@@ -442,7 +212,7 @@ export default {
 .swipe-cell /deep/ .van-swipe-cell::before,
 .swipe-cell /deep/ .van-swipe-cell::after,
 .readList /deep/ .swipe-cell::before,
-.readList /deep/ .swipe-cell::after{
+.readList /deep/ .swipe-cell::after {
   display: none !important;
 }
 .van-swipe-cell__right {
@@ -479,7 +249,7 @@ export default {
   padding: 30rpx !important;
 }
 .storeList.levelPanel .item .outside::before,
-.storeList.levelPanel .item::before{
+.storeList.levelPanel .item::before {
   display: none;
 }
 .readList {
@@ -490,7 +260,6 @@ export default {
       left: 30rpx;
       right: 0;
     }
-   
   }
 }
 </style>

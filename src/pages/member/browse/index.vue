@@ -10,12 +10,21 @@
         </li>
       </ul>
     </div>
-    <scroll-view class="filterContent bg_fff mt10" scroll-y="true" @scrolltolower="moreLoad" v-if="list.length>0">
+    <scroll-view
+      class="filterContent"
+      scroll-y="true"
+      @scrolltolower="moreLoad"
+      v-if="list.length>0"
+    >
       <!-- 信息 -->
       <div class="column levelPanel storeList" style="padding:0;" v-if="tabIndex===0">
         <block v-for="(item,index) in list" :key="index">
-          <div class="section__hd" v-if="index===0 || list[index-1].DateStr !== item.DateStr">
-              <span class="time">{{item.DateStr}}</span>
+          <div
+            class="section__hd bg_fff"
+            v-if="index===0 || list[index-1].DateStr !== item.DateStr"
+            style="margin-top:20rpx;"
+          >
+            <span class="time">{{item.DateStr}}</span>
           </div>
           <!-- <block v-if="index===0">
             <div class="section__hd">
@@ -26,8 +35,13 @@
              <div class="section__hd">
               <span class="time">{{item.DateStr}}</span>
             </div>
-          </block> -->
-          <van-swipe-cell :right-width="65" :on-close="onClose" class="swipe-cell">
+          </block>-->
+          <van-swipe-cell
+            :right-width="65"
+            async-close
+            @close="btnDelFootPrint($event,item.Id,index)"
+            class="swipe-cell"
+          >
             <van-cell-group>
               <van-cell class="item">
                 <div class="outside">
@@ -47,7 +61,7 @@
                     </p>
                     <div class="flex" style="margin-top:38rpx;">
                       <p class="priceArea flex1 flexAlignCenter">
-                        <span class="price">3000</span>元/月
+                        <span class="price">￥{{item.PropertyPrice}}</span>
                       </p>
                       <span class="time">{{item.TimeStr}}</span>
                     </div>
@@ -57,7 +71,7 @@
             </van-cell-group>
             <span
               slot="right"
-              class="van-swipe-cell__right flex flexAlignCenter justifyContentCenter" @tap="btnDelFootPrint(item.Id)"
+              class="van-swipe-cell__right flex flexAlignCenter justifyContentCenter"
             >删除</span>
           </van-swipe-cell>
         </block>
@@ -144,16 +158,15 @@ export default {
   },
   data() {
     return {
-      tabIndex: 0,
+      tabIndex: 0, //0：我的浏览；1：谁看过我
       userId: "",
       token: "",
       curPage: "",
       page: 1,
       pageSize: 15,
-      type: 0, //0：我的浏览；1：谁看过我
       list: [],
-      isOver:false,
-      hasDataList:false
+      isOver: false,
+      hasDataList: false
     };
   },
   methods: {
@@ -162,15 +175,17 @@ export default {
         title: "我的浏览"
       });
     },
-    initData(){
+    initData() {
       this.page = 1;
       this.list = [];
       this.isOver = false;
       this.hasDataList = false;
     },
-    btnDelFootPrint(id){  //右边滑动删除
-      console.log("点击了删除了")
-    },
+    // btnDelFootPrint(){  //右边滑动删除
+    //   // console.log("点击了删除了",e,id)
+    //   // this.list.splice(index,1)
+    //   // e.mp.detail.instance.close()
+    // },
     shiftTab(index) {
       this.initData();
       this.tabIndex = parseInt(index);
@@ -186,7 +201,7 @@ export default {
           Token: that.token,
           PageSize: that.pageSize,
           Page: that.page,
-          Type: that.type
+          Type: that.tabIndex
         },
         that.curPage
       ).then(res => {
@@ -198,26 +213,53 @@ export default {
             that.hasDataList = true;
             that.list = that.list.concat(res.data);
           }
-          if(res.data.length < that.pageSize){
+          if (res.data.length < that.pageSize) {
             that.isOver = true;
           }
         }
       });
     },
-    DelFootprint(id){  //删除
+    btnDelFootPrint(e, id, index) {
+      //删除
       let that = this;
-      post("User/DelFootprint",{
-        UserId:that.userId,
-        Token:that.token,
-        Id:id
-      },that.curPage).then(res => {
-         if(res.code===0){  //删除成功
-            
-         }
-      })
+      wx.showModal({
+        // title: '提示',
+        content: "你确定要删除么？",
+        success(res) {
+          if (res.confirm) {
+            post(
+              "User/DelFootprint",
+              {
+                UserId: that.userId,
+                Token: that.token,
+                Id: id
+              },
+              that.curPage
+            ).then(res => {
+              if (res.code === 0) {
+                //删除成功
+                wx.showToast({
+                  title: "删除成功！",
+                  icon: "none",
+                  duration: 1500,
+                  success: function() {
+                    setTimeout(() => {
+                      that.list.splice(index, 1);
+                      e.mp.detail.instance.close();
+                    }, 1500);
+                  }
+                });
+              }
+            });
+          } else if (res.cancel) {
+            e.mp.detail.instance.close();
+          }
+        }
+      });
     },
-    moreLoad(){  //加载更多
-      if(!this.isOver){
+    moreLoad() {
+      //加载更多
+      if (!this.isOver) {
         this.page++;
         this.MemberFootprint();
       }
@@ -230,7 +272,7 @@ export default {
   color: #333;
   font-size: 32rpx;
 }
-.item /deep/ .van-cell{
+.item /deep/ .van-cell {
   padding: 0 !important;
 }
 .item /deep/ .van-cell::after,
@@ -239,7 +281,7 @@ export default {
 .swipe-cell /deep/ .van-swipe-cell::before,
 .swipe-cell /deep/ .van-swipe-cell::after,
 .readList /deep/ .swipe-cell::before,
-.readList /deep/ .swipe-cell::after{
+.readList /deep/ .swipe-cell::after {
   display: none !important;
 }
 .van-swipe-cell__right {
@@ -276,7 +318,7 @@ export default {
   padding: 30rpx !important;
 }
 .storeList.levelPanel .item .outside::before,
-.storeList.levelPanel .item::before{
+.storeList.levelPanel .item::before {
   display: none;
 }
 .readList {
@@ -287,7 +329,6 @@ export default {
       left: 30rpx;
       right: 0;
     }
-   
   }
 }
 </style>

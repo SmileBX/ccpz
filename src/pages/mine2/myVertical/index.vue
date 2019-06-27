@@ -183,7 +183,7 @@ export default {
     },
     gotoAreement(){  //跳转到协议查看
       wx.navigateTo({
-        url: '/pages/agreement/main'
+        url: '/pages/agreement/main?type=1'
       })
     },
     btnUserReset(){  //个人认证失败且点击了重新提交的时候
