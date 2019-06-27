@@ -21,7 +21,7 @@
           <span class="msgItem" v-if="item.PlanBuyArea">{{item.PlanBuyArea}}</span>
           <span class="msgItem" v-if="item.GladBuyArea">{{item.GladBuyArea}}</span>
         </p>
-        <p class="tipsList" v-if="item.ServiceName.length>0">
+        <p class="tipsList" v-if="item.ServiceName&&item.ServiceName.length>0">
           <span v-for="(item3,index3) in item.ServiceName" :key="index3" v-show="index3<5">{{item3}}</span>
         </p>
       </div>
