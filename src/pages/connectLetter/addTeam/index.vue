@@ -79,6 +79,7 @@ export default {
       curPage: "",
       userId: "",
       token: "",
+      isPmission:'',
       list: []
     };
   },
@@ -89,6 +90,9 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
+    if(this.$root.$mp.query.url){
+      this.isPmission = this.$root.$mp.query.url
+    }
     if (toLogin(this.curPage)) {
       this.GetFriendsGroup();
     }
@@ -102,7 +106,7 @@ export default {
       });
     },
     addTeam() {
-      wx.navigateTo({ url: "/pages/connectLetter/addNewTeam/main" });
+        wx.navigateTo({ url: "/pages/connectLetter/addNewTeam/main" });
     },
     Delete(index, id) {
       let that = this;
@@ -119,13 +123,19 @@ export default {
     },
     gotoAddNewTeam(id, name) {
       console.log("fsdfsdfsd__________");
-      wx.navigateTo({
-        url:
-          "/pages/connectLetter/addNewTeam/main?groupId=" +
-          id +
-          "&groupName=" +
-          name
-      });
+      if(this.isPmission){
+        wx.navigateTo({ url: "/pages/"+this.isPmission +"/main?groupName="+
+          name });
+      }else{
+         wx.navigateTo({
+          url:
+            "/pages/connectLetter/addNewTeam/main?groupId=" +
+            id +
+            "&groupName=" +
+            name
+        });
+      }
+     
     },
     GetFriendsGroup() {
       let that = this;

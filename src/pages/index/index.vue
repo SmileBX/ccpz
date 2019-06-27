@@ -115,14 +115,23 @@
           <div class="storeNowrapBox" v-if="hotStoreList.length>0">
             <scroll-view class="storeNowrap" scroll-x>
               <ul class="column storeList">
-                <li class="item" v-for="(item,index) in hotStoreList" :key="index" @tap="gotoRouseDetail(item.Id)">
+                <li
+                  class="item"
+                  v-for="(item,index) in hotStoreList"
+                  :key="index"
+                  @tap="gotoRouseDetail(item.Id)"
+                >
                   <div class="outside">
                     <div class="pictrueAll">
                       <img :src="item.PicNo" alt>
                     </div>
                     <div class="txtBox">
                       <p class="title ellipsis">
-                        <span class="typeName" v-if="item.GladBuyerTrade !==''">{{item.GladBuyerTrade}}</span>{{item.Title}}
+                        <span
+                          class="typeName"
+                          v-if="item.GladBuyerTrade !==''"
+                        >{{item.GladBuyerTrade}}</span>
+                        {{item.Title}}
                       </p>
                       <p class="other">
                         <span class="priceArea">
@@ -156,8 +165,13 @@
           <div>
             <p class="title">为您推荐</p>
           </div>
-          <div class="flex1 text_r recommendMenu"> 
-            <span :class="{'active':menuTab===index}" v-for="(item,index) in brandIdList" :key="index" @tap="shiftMenu(index,item.id)">{{item.title}}</span>
+          <div class="flex1 text_r recommendMenu">
+            <span
+              :class="{'active':menuTab===index}"
+              v-for="(item,index) in brandIdList"
+              :key="index"
+              @tap="shiftMenu(index,item.id)"
+            >{{item.title}}</span>
           </div>
         </div>
         <div class="section__bd">
@@ -207,13 +221,15 @@
               <formationItem :list="recomendList" v-if="menuTab===1"></formationItem>
               <!-- 组建组件 end -->
               <!-- 拼活动组件 -->
-              <activityItem  :list="recomendList" v-if="menuTab===2"></activityItem>
+              <activityItem :list="recomendList" v-if="menuTab===2"></activityItem>
               <!-- 拼活动组件  end -->
               <!-- 房源组件 -->
-              <houseItem  :list="recomendList" v-if="menuTab===3"></houseItem>
+              <houseItem :list="recomendList" v-if="menuTab===3"></houseItem>
               <!-- 房源组件  end -->
             </ul>
-            <p style="padding:0 30rpx 40rpx;color:#999;text-align:center"><span @tap="gotoMoreList" style="padding:20rpx 30rpx;">加载更多..</span></p>
+            <p style="padding:0 30rpx 40rpx;color:#999;text-align:center">
+              <span @tap="gotoMoreList" style="padding:20rpx 30rpx;">加载更多..</span>
+            </p>
           </div>
         </div>
       </div>
@@ -285,24 +301,25 @@ export default {
       giftList: [], //新用户礼包
       isNewUser: true, //是否是新用户
       showGiftCount: 0,
-      brandIdList:[{
-       id:21,
-       title:"拼租"
-      },
-      {
-       id:22,
-       title:"组建"
-      },
-      {
-       id:23,
-       title:"拼活动"
-      },
-      {
-        id:24,
-       title:"房源"
-      }
+      brandIdList: [
+        {
+          id: 21,
+          title: "拼租"
+        },
+        {
+          id: 22,
+          title: "组建"
+        },
+        {
+          id: 23,
+          title: "拼活动"
+        },
+        {
+          id: 24,
+          title: "房源"
+        }
       ], //为您推荐中的品牌id;拼租 = 21,组建 = 22,拼活动 = 23,房源 = 24,
-      menuTab:0,  //为您推荐中的tab选中
+      menuTab: 0, //为您推荐中的tab选中
       page: 1,
       ggaoList: [], //广告位
       ggaoPic: [], //为您推荐上面的广告
@@ -536,19 +553,22 @@ export default {
         url: "/pages/mine2/myCoupon/main"
       });
     },
-    shiftMenu(index,id){  //切换为您推荐中的选项
+    shiftMenu(index, id) {
+      //切换为您推荐中的选项
       this.menuTab = index;
-      
-      console.log("切换的"+id)
-      this.getQueryRentList(parseInt(id),3,20);
+
+      console.log("切换的" + id);
+      this.getQueryRentList(parseInt(id), 3, 20);
     },
-    gotoMoreList(){  //点击为您推荐中的加载更多的时候，跳转到相对应的列表中去
+    gotoMoreList() {
+      //点击为您推荐中的加载更多的时候，跳转到相对应的列表中去
       let type = this.brandIdList[this.menuTab].id;
       wx.navigateTo({
         url: `/pages/rent/list/main?type=${type}&isHot=3`
       });
     },
-    gotoRouseDetail(id){  //热门商铺跳转详情
+    gotoRouseDetail(id) {
+      //热门商铺跳转详情
       let type = this.brandIdList[3].id;
       wx.navigateTo({
         url: `/pages/rent/detail/main?type=${type}&id=${id}`
@@ -572,7 +592,7 @@ export default {
       ).then(res => {
         if (res.code === 0) {
           if (hotType === 2) {
-            if(that.page===1){
+            if (that.page === 1) {
               that.hotStoreList = [];
             }
             //热门商铺
@@ -581,23 +601,11 @@ export default {
             }
           }
           if (hotType === 3) {
-            if(that.page===1){
+            if (that.page === 1) {
               that.recomendList = [];
             }
             //为您推荐
             if (res.data.length > 0) {
-              res.data.map(item => {
-                if (item.FirstTags) {
-                  that.$set(item, "FirstTags", item.FirstTags.split("|"));
-                } else {
-                  that.$set(item, "FirstTags", []);
-                }
-                if (item.SecondTags) {
-                  that.$set(item, "SecondTags", item.SecondTags.split("|"));
-                } else {
-                  that.$set(item, "SecondTags", []);
-                }
-              });
               that.recomendList = res.data;
             }
           }

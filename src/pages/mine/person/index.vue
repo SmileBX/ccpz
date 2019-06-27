@@ -2,7 +2,7 @@
   <div class="pageContent" v-if="hasData">
     <div class="storeDetail">
        <div class="pagePerson pall">
-          <p class="editinfo" @tap="editInfo">编辑</p>
+          <p class="editinfo" @tap="editInfo" v-if="type==1">编辑</p>
           <div class="legalInfo flex">
             <img :src="personInfo.Avatar" class="tx" alt style="border-radius:50%">
             <div class="info flex1">
@@ -222,14 +222,14 @@
         </div>
       </div>
       <!-- 公司介绍 -->
-      <div class="section" v-if="type==2">
+      <div class="section" v-if="type==2" style="margin-top:20rpx">
         <div class="locationBox pd15 company">
             <h3 class="title detail__title">公司简介</h3>
             <div class="con">{{companyInfo[0].CompanyIntro}}</div>
         </div>
       </div>
       <!-- 公司理念 -->
-      <div class="section" v-if="type==2">
+      <div class="section" v-if="type==2" style="margin-top:20rpx">
           <div class="locationBox pd15">
             <h3 class="title detail__title">公司理念</h3>
             <div class="con">{{companyInfo[0].CompanyCulture}}</div>
@@ -253,33 +253,33 @@
     <div class="ftBtn" v-if="type==2">
       <div class="inner fixed bm0 flex">
         <div class="iconGroup flex flexAlignCenter">
-          <div class="item flex1" @click="onReport">
+          <div class="item flex1" @tap="onReport">
             <img src="/static/images/icons/jubao.jpg" alt>
             <p>举报</p>
           </div>
-          <div class="item flex1" @click="onIsCollection">
+          <div class="item flex1" @tap="onIsCollection">
             <img v-if="!IsCollection" src="/static/images/icons/shoucang.png" alt>
             <img v-else src="/static/images/icons/shoucang-action.png" alt>
             <p>收藏</p>
           </div>
         </div>
         <div class="btns flex1 flex center">
-          <div class="btn flex1 bg_ff952e color_fff" @click="contant">极速联系</div>
-          <div class="btn flex1 bg_ed3435 color_fff"  @click="addFre" v-if="personInfo.Footer.Value.IsAddFriend &&　personInfo.Footer.Value.IsAddFriend.Value==1">加好友</div>
+          <div class="btn flex1 bg_ff952e color_fff" @tap="contant">极速联系</div>
+          <div class="btn flex1 bg_ed3435 color_fff"  @tap="addFre" v-if="IsAddFriend">加好友</div>
         </div>
       </div>
     </div>
     <!--弹层-->
-    <div class="mask" v-if="isShowMask" catchtouchmove="true" @click="cancle"></div>
+    <div class="mask" v-if="isShowMask" catchtouchmove="true" @tap="cancle"></div>
     <div class="maskType boxSize" v-if="isShowMask" :class="showNoChange?'noParActive':''">
         <div class="flex">
-              <span class="size" @click="cancle">取消</span>
+              <span class="size" @tap="cancle">取消</span>
               <span class="title">{{masktitle}}</span>
-              <span class="color size" @click="subConfirm">确定</span>
+              <span class="color size" @tap="subConfirm">确定</span>
         </div>
         <scroll-view :scroll-y="true" style="height:200rpx;" :style="showNoChange?'height:200rpx':''" class="showItem" @scrolltolower="loadMore">
           <div v-for="(item,index) in list" :key="index">
-              <p :class="{'itemactive':statu == index}" @click="chose(index)" style="margin-top:3rpx;">{{item.Name}}
+              <p :class="{'itemactive':statu == index}" @tap="chose(index)" style="margin-top:3rpx;">{{item.Name}}
               </p>
           </div>
         </scroll-view>
@@ -309,6 +309,10 @@ export default {
       statu:0,
       companyId:"",
       IsCollection:false,
+      IsAddFriend:false, //加好友
+      IsContact:false,//极速联系
+      addFriendId:"",//好友Id
+      conFriendId:"",//极速联系Id
       menuAr:['/pages/mine/editMenTags/main?typeTips=1','/pages/mine/editMenTags/main?typeTips=2']
     }
   },
@@ -317,10 +321,10 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     // this.type = this.$root.$mp.query.type
-    // if(this.$root.$mp.query.Id){  //看到他人主页传递的Id
+    // if(this.$root.$mp.query.Id){  //进入他人主页传递的Id
     //    this.Id = this.$root.$mp.query.Id
     // }
-    this.Id = 10389
+    this.Id = 10394
     this.type = 2
     this.companyInfo = []
     this.list = []
@@ -380,11 +384,17 @@ export default {
               this.$set(res.data,"TagsResKnow",res.data.TagsResKnow.splice(1))
           }
           this.personInfo = res.data
-          this.IsCollection = res.data.Footer.Value.IsCollection.Value
+          if(this.type==2){
+              this.IsCollection = res.data.Footer.Value.IsCollection.Value
+              this.IsAddFriend = res.data.Footer.Value.IsAddFriend.Value
+              this.IsContact = res.data.Footer.Value.IsContact.Value
+              this.addFriendId = res.data.Footer.Value.IsAddFriend.FriendId
+              this.conFriendId = res.data.Footer.Value.IsContact.FriendId
+          }
+          
           this.companyInfo.push(this.personInfo.CyList[0])
           this.hasData = true
           console.log(this.companyInfo)
-          console.log(res.data.TagsCapKnow.length)
         }
       })
     },
@@ -459,7 +469,20 @@ export default {
     //举报
     onReport(){
        wx.navigateTo({url:"/pages/mine2/report/main"})
-    }
+    },
+    //极速联系
+    contant(){
+      if(this.IsContact){
+           wx.navigateTo({url:"/pages/messages/chatRoom/main?FriendId="+this.conFriendId})
+      }
+    },
+    //加好友
+    addFre(){
+      if(this.IsAddFriend){
+        wx.navigateTo({url:"/pages/messages/addFre/main?FriendId="+this.addFriendId})
+      }
+    },
+    
 
   }
 };

@@ -184,6 +184,8 @@ export default {
     this.type = this.$root.$mp.query.type
     this.cardBrand = "请选择"
     this.num = 1
+    this.statu = 1
+    this.aa = 1
     if(this.$root.$mp.query.Denomination){
       this.CouponId = this.$root.$mp.query.CouponId
       this.Denomination = this.$root.$mp.query.Denomination
