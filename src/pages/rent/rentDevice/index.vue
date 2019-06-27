@@ -1313,7 +1313,6 @@ export default {
        this.isShowAddr = false
     },
     initData(){
-        this.trimData()
         this.showDefaultCompany = false
         this.isShowMask =false
         this.showNoChange = false

@@ -60,19 +60,16 @@
         <div class="section">
           <div class="locationBox pd15 company">
               <h3 class="title detail__title">公司简介</h3>
-              <div
-              class="con"
-            >深圳市松大科技有限公司隶属于深圳市松大电通集团，秉承集团在建筑电气及智能化领域的事业，专业从事建筑智能化系统的产品研发、生产、销售和售后服务，已形成监控防盗系列产品、建筑智能化教仪系列产品、灯光照明系列产品、智能家居系列产品、车载电视产品等五大系列，近百种“松大”品牌产品。</div>
-            </div>
+              <div class="con">深圳市松大科技有限公司隶属于深圳市松大电通集团，秉承集团在建筑电气及智能化领域的事业，专业从事建筑智能化系统的产品研发、生产、销售和售后服务，已形成监控防盗系列产品、建筑智能化教仪系列产品、灯光照明系列产品、智能家居系列产品、车载电视产品等五大系列，近百种“松大”品牌产品。</div>
           </div>
+        </div>
           <!-- 公司理念 -->
-          <div class="section">
+        <div class="section">
             <div class="locationBox pd15">
               <h3 class="title detail__title">公司理念</h3>
               <div class="con">深圳市松大科技有限公司隶属于深圳市松大电通集团，秉承集团在建筑电气及智能化领域的事业，专业从事建筑智能化系统的产品研发、生产、销售和售后服务。</div>
             </div>
-          </div>
-        
+        </div>
       </div>
       <!-- 标签-->
       <div class="tagBox pd15 mt10 bg_fff" style="margin-bottom:20rpx">

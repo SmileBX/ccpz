@@ -1,30 +1,30 @@
 <template>
   <div class="pageContent">
     <!-- 功能开通的时候有的 -->
-    <div class="buyInfo" style="display:none;">
+    <div class="buyInfo">
       <!-- 置顶功能 -->
-      <div class="info">
+      <div class="info" v-if="type==1">
         <div class="flex priceBox flexAlignCenter">
           <p class="title">置顶功能</p>
           <p class="flex1 priceArea text_r">
             ￥
-            <span class="num">288</span>/次
+            <span class="num">{{NeedMoney}}</span>/次
           </p>
         </div>
         <div class="con">您当前正在购买置顶功能，每次置顶24小时。置顶为虚拟产品，购买后不会过期，不支持退款。</div>
       </div>
       <!-- 刷新功能 -->
-      <div class="info">
+      <div class="info" v-if="type==2">
         <div class="flex priceBox flexAlignCenter">
           <p class="title">刷新功能</p>
           <p class="flex1 priceArea text_r">
             ￥
-            <span class="num">188</span>/次
+            <span class="num">{{NeedMoney}}</span>/次
           </p>
         </div>
         <div class="con">您当前正在购买刷新功能，以前发布的信息通过刷新会显示在前面。刷新为虚拟产品，购买后不会过期，不支持退款。</div>
       </div>
-      <div class="weui-cells">
+      <!-- <div class="weui-cells">
         <div class="weui-cell">
           <div class="weui-cell__hd">购买数量</div>
           <div class="weui-cell__bd text_r">
@@ -49,11 +49,11 @@
           </div>
           <span class="icon-arrow arrow-right"></span>
         </div>
-      </div>
+      </div> -->
     </div>
     <!-- 功能开通的时候有的  end -->
     <!-- 购买会员的时候有的 -->
-    <div class="buyInfo">
+    <div class="buyInfo" v-if="type==3">
       <div class="buyMemberInfo">
         <div class="perInfo level__perInfo flex flexAlignCenter">
           <img src="/static/images/icons/tx.jpg" class="tx" alt>
@@ -94,8 +94,19 @@
           </div>
         </div>
       </div>
-      <div class="weui-cells" @tap="goToPage(0)">
-        <div class="weui-cell">
+    </div>
+    <div class="weui-cells">
+        <div class="weui-cell" v-if="type!=3">
+          <div class="weui-cell__hd">购买数量</div>
+          <div class="weui-cell__bd text_r">
+            <div class="handleNumber">
+              <span class="btn btn-reduce" @tap="delNum">-</span>
+              <span class="num">{{num}}</span>
+              <span class="btn btn-add" @tap="addNum">+</span>
+            </div>
+          </div>
+        </div>
+        <div class="weui-cell" @tap="goToPage(0)">
           <div class="weui-cell__hd">优惠券</div>
           <div class="weui-cell__bd text_r"><span v-if="Denomination>0">-</span>{{Denomination}}</div>
           <span class="icon-arrow arrow-right"></span>
@@ -118,7 +129,6 @@
           </div>
         </div>
       </div>
-    </div>
     <!-- 购买会员的时候有的  end -->
     <!-- 支付方式 -->
     <div class="payMethod">
@@ -171,7 +181,9 @@ export default {
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
     this.mobile = wx.getStorageSync("mobile");
+    this.type = this.$root.$mp.query.type
     this.cardBrand = "请选择"
+    this.num = 1
     if(this.$root.$mp.query.Denomination){
       this.CouponId = this.$root.$mp.query.CouponId
       this.Denomination = this.$root.$mp.query.Denomination
@@ -180,12 +192,18 @@ export default {
     if(this.$root.$mp.query.InvoiceId){
         this.InvoiceId = this.$root.$mp.query.InvoiceId
     }
+    if(this.$root.$mp.query.price){
+        this.NeedMoney = this.$root.$mp.query.price
+    }
+    console.log(this.type,this.NeedMoney,"{{{{{{{{{{{")
   },
   components:{
     payPassword
   },
   data() {
     return {
+      type:0,//置顶-1 刷新-2 开通会员-3
+      num:1,//购买次数
       userId:"",
       token:"",
       curPage:"",
@@ -212,7 +230,12 @@ export default {
   },
   computed:{
     total(){
-      return this.NeedMoney -this.Denomination*1
+      if(this.type==3){
+        return this.NeedMoney -this.Denomination*1
+      }else{
+        return (this.NeedMoney * this.num) -this.Denomination*1
+      }
+      
     }
   },
   methods: {
@@ -258,6 +281,16 @@ export default {
     radioChange(e){
       this.aa = e.mp.detail.value
     },
+    delNum(){
+      if(this.num==1){
+        this.toastTip('不能小于1！')
+      }else{
+        this.num--
+      }
+    },
+    addNum(){
+      this.num++
+    },
     //提示语
     toastTip(tip){
        wx.showToast({
@@ -265,19 +298,17 @@ export default {
           icon: "none",
           duration: 1500
         }); 
-    },
-    valOther(){
-      if(this.Id==0){
-        this.toastTip("请选择卡类型!")
         return false
-      }
-      return true
     },
     //支付
     payMoney(){
-      if(this.valOther()){
+      if(this.type==3 && this.Id==0){
+          this.toastTip("请选择卡类型!")
+          return false
+      }else{
         this.toPayMoney()
       }
+      
     },
     toPayMoney(){
       console.log("9999")
