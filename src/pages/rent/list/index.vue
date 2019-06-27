@@ -982,6 +982,7 @@ export default {
   max-height: 600rpx;
   height: auto;
   &.scroll_price {
+    
   }
 }
 .modal_mask {

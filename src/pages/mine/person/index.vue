@@ -244,12 +244,13 @@
           <div class="upbtn" v-for="(item,pindex) in companyInfo[0].CompanyPic" :key="pindex">
             <img class="upimg" :src="item">
           </div>
+          
         </div>
       </div>
     </div>
     
     <!-- 底部 -->
-    <div class="ftBtn" v-if="type==1">
+    <div class="ftBtn" v-if="type==2">
       <div class="inner fixed bm0 flex">
         <div class="iconGroup flex flexAlignCenter">
           <div class="item flex1" @click="onReport">
@@ -264,7 +265,7 @@
         </div>
         <div class="btns flex1 flex center">
           <div class="btn flex1 bg_ff952e color_fff" @click="contant">极速联系</div>
-          <div class="btn flex1 bg_ed3435 color_fff"  @click="addFre">加好友</div>
+          <div class="btn flex1 bg_ed3435 color_fff"  @click="addFre" v-if="personInfo.Footer.Value.IsAddFriend &&　personInfo.Footer.Value.IsAddFriend.Value==1">加好友</div>
         </div>
       </div>
     </div>
@@ -316,7 +317,9 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     // this.type = this.$root.$mp.query.type
-    // 
+    // if(this.$root.$mp.query.Id){  //看到他人主页传递的Id
+    //    this.Id = this.$root.$mp.query.Id
+    // }
     this.Id = 10389
     this.type = 2
     this.companyInfo = []
@@ -377,6 +380,7 @@ export default {
               this.$set(res.data,"TagsResKnow",res.data.TagsResKnow.splice(1))
           }
           this.personInfo = res.data
+          this.IsCollection = res.data.Footer.Value.IsCollection.Value
           this.companyInfo.push(this.personInfo.CyList[0])
           this.hasData = true
           console.log(this.companyInfo)
@@ -433,6 +437,7 @@ export default {
       this.list =[]
       this.statu = 0
     },
+    //收藏
     async onIsCollection(){
       // Type:0://产品 1://商家
       const params = {
@@ -451,6 +456,10 @@ export default {
       // const res = await post('User/AddCollections',params)
       this.IsCollection = !this.IsCollection
     },
+    //举报
+    onReport(){
+       wx.navigateTo({url:"/pages/mine2/report/main"})
+    }
 
   }
 };
