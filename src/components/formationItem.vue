@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     toDetail(id) {
-      console.log("列表item", this.list);
+      console.log("跳转详情id", id);
       // return false;
       wx.navigateTo({ url: `/pages/rent/detail/main?id=${id}&type=22` });
     }
