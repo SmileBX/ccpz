@@ -603,6 +603,18 @@ export default {
             _res.IsAllowOtherList.No= 0
             params.IsAllowOtherList= _res.IsAllowOtherList
           }
+          // 可否分割
+          if(_res.IsSubPack){
+            _res.IsSubPack.Yes= 0
+            _res.IsSubPack.No= 0
+            params.IsSubPack= _res.IsSubPack
+          }
+          // 是否是否装修
+          if(_res.IsTrim){
+            _res.IsTrim.Yes= 0
+            _res.IsTrim.No= 0
+            params.IsTrim= _res.IsTrim
+          }
           // 计划购买日期
           if(_res.PlanBuyDate){
             params.PlanBuyDate= _res.PlanBuyDate
@@ -667,20 +679,6 @@ export default {
           if (res.data.length < that.pageSize) {
             that.hasDataList = true;
           }
-          // *********************拼租
-          res.data.map(item => {
-            if (item.FirstTags) {
-              that.$set(item, "FirstTags", item.FirstTags.split("|"));
-            } else {
-              that.$set(item, "FirstTags", []);
-            }
-            if (item.SecondTags) {
-              that.$set(item, "SecondTags", item.SecondTags.split("|"));
-            } else {
-              that.$set(item, "SecondTags", []);
-            }
-          });
-          // **************
           that.dataList = that.dataList.concat(res.data);
           console.log(that.dataList,'dataList')
         }
