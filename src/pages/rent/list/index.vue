@@ -415,14 +415,14 @@ export default {
     this.cityCode = this.CityCode;
   },
   onShow() {
-    this.init();
+      this.init();
   },
   methods: {
     init() {
       this.userId = wx.getStorageSync("userId");
       this.token = wx.getStorageSync("token");
       this.curPage = getCurrentPageUrlWithArgs();
-      // this.cityName = wx.getStorageSync("cityName");
+      //this.cityName = wx.getStorageSync("cityName");
       this.twoTypeList = [];
       this.goodsInfo={};
       this.twoTabIndex = 0;
