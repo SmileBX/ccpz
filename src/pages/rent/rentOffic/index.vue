@@ -2699,39 +2699,39 @@ export default {
         }
       }
       console.log("++++++")
-      // if(that.valOther()){
-      //     if(that.PageId == 42 || that.PageId == 43){
-      //       for(let i in that.Devicelist){
-      //         if(that.Devicelist[i].active){
-      //           that.ServiceName+=that.Devicelist[i].Name+","
-      //         }
-      //       }
-      //     console.log("that.ServiceName:",that.ServiceName)
-      //     }
-      //     console.log("_____")
-      //     if(that.PageId==32　|| that.PageId==33 || that.PageId==34){
-      //      pramas={
-      //         UserId:this.userId,
-      //         Token:this.token,
-      //         TypeId:this.TypeId,
-      //         PicList:_PicList,
-      //         GoodsInfo:GoodsInfo,
-      //         PartnerList:_PartnerList
-      //      }
-      //     }else{
-      //       pramas={
-      //         UserId:this.userId,
-      //         Token:this.token,
-      //         TypeId:this.TypeId,
-      //         PicList:_PicList,
-      //         GoodsInfo:GoodsInfo
-      //      }
-      //     }
-      //     console.log(pramas,"pramas")
-      //     that.submitAll(pramas)
-      //     // hat.submitAll(JSON.stringify(PicList),GoodsInfo)
+      if(that.valOther()){
+          if(that.PageId == 42 || that.PageId == 43){
+            for(let i in that.Devicelist){
+              if(that.Devicelist[i].active){
+                that.ServiceName+=that.Devicelist[i].Name+","
+              }
+            }
+          console.log("that.ServiceName:",that.ServiceName)
+          }
+          console.log("_____")
+          if(that.PageId==32　|| that.PageId==33 || that.PageId==34){
+           pramas={
+              UserId:this.userId,
+              Token:this.token,
+              TypeId:this.TypeId,
+              PicList:_PicList,
+              GoodsInfo:GoodsInfo,
+              PartnerList:_PartnerList
+           }
+          }else{
+            pramas={
+              UserId:this.userId,
+              Token:this.token,
+              TypeId:this.TypeId,
+              PicList:_PicList,
+              GoodsInfo:GoodsInfo
+           }
+          }
+          console.log(pramas,"pramas")
+          that.submitAll(pramas)
+          // hat.submitAll(JSON.stringify(PicList),GoodsInfo)
         
-      // }
+      }
     },
     submitAll(pramas){
       post('Goods/RentSharing',pramas,this.curPage).then(res=>{

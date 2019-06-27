@@ -59,6 +59,7 @@ export default {
     if(this.$root.$mp.query.type){
       this.type = this.$root.$mp.query.type
     }
+      this.showData=false
   },
   onShow(){
     this.userId = wx.getStorageSync('userId')
