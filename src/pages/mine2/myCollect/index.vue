@@ -6,7 +6,7 @@
           <div class="item">信息</div>
         </li>
         <li :class="{'active':tabIndex===1}" @click="shiftTab(1)">
-          <div class="item">谁看过我</div>
+          <div class="item">用户</div>
         </li>
       </ul>
     </div>
@@ -370,7 +370,13 @@ export default {
   onLoad() {
     this.setBarTitle();
   },
-  onShow() {},
+  onShow() {
+    this.type = 0
+    this.curPage = getCurrentPageUrlWithArgs();
+    this.userId = wx.getStorageSync("userId");
+    this.token = wx.getStorageSync("token");
+    this.MemberCollections()
+  },
   data() {
     return {
       tabIndex: 0,
@@ -390,7 +396,10 @@ export default {
       });
     },
     shiftTab(index) {
+      this.list = []
       this.tabIndex = parseInt(index);
+      this.type = parseInt(index)
+      this.MemberCollections()
     },
     onClose(clickPosition, instance) {
       switch (clickPosition) {
@@ -417,6 +426,7 @@ export default {
         Page:that.page,
         Type:that.type
       },that.curPage).then(res => {
+        console.log("res:",res)
         if(res.code===0){
           if(that.page===1){
             that.list = [];
