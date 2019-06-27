@@ -33,9 +33,9 @@ VantComponent({
         swipeMove(offset = 0) {
             this.offset = offset;
             const transform = `translate3d(${offset}px, 0, 0)`;
-            const transition = this.draging
-                ? 'none'
-                : '.6s cubic-bezier(0.18, 0.89, 0.32, 1)';
+            const transition = this.draging ?
+                'none' :
+                '.6s cubic-bezier(0.18, 0.89, 0.32, 1)';
             this.set({
                 wrapperStyle: `
         -webkit-transform: ${transform};
@@ -50,11 +50,9 @@ VantComponent({
             const { offset } = this;
             if (rightWidth > 0 && -offset > rightWidth * THRESHOLD) {
                 this.open('right');
-            }
-            else if (leftWidth > 0 && offset > leftWidth * THRESHOLD) {
+            } else if (leftWidth > 0 && offset > leftWidth * THRESHOLD) {
                 this.open('left');
-            }
-            else {
+            } else {
                 this.swipeMove(0);
             }
         },
@@ -67,7 +65,7 @@ VantComponent({
             this.firstDirection = '';
             this.touchStart(event);
         },
-        noop() { },
+        noop() {},
         onDrag(event) {
             if (this.data.disabled) {
                 return;
@@ -103,8 +101,7 @@ VantComponent({
             }
             if (this.data.asyncClose) {
                 this.$emit('close', { position, instance: this });
-            }
-            else {
+            } else {
                 this.swipeMove(0);
             }
         }
