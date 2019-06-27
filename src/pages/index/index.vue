@@ -107,42 +107,56 @@
           <span class="icon-arrow arrow-right"></span>
         </div>
         <div class="section__bd">
-          <div class="noData center" style="padding:60rpx 30rpx;margin-top:0;" v-if="hotStoreList.length<1 && page===1">暂无数据</div>
+          <div
+            class="noData center"
+            style="padding:60rpx 30rpx;margin-top:0;"
+            v-if="hotStoreList.length<1 && page===1"
+          >暂无数据</div>
           <div class="storeNowrapBox" v-if="hotStoreList.length>0">
             <scroll-view class="storeNowrap" scroll-x>
               <ul class="column storeList">
-                <li class="item" v-for="(item,index) in hotStoreList" :key="index">
+                <li
+                  class="item"
+                  v-for="(item,index) in hotStoreList"
+                  :key="index"
+                  @tap="gotoRouseDetail(item.Id)"
+                >
                   <div class="outside">
                     <div class="pictrueAll">
-                      <img src="/static/images/of/index_a1.jpg" alt>
+                      <img :src="item.PicNo" alt>
                     </div>
                     <div class="txtBox">
                       <p class="title ellipsis">
-                        <span class="typeName">拼办公室</span>深圳连锁办公室拼租
+                        <span
+                          class="typeName"
+                          v-if="item.GladBuyerTrade !==''"
+                        >{{item.GladBuyerTrade}}</span>
+                        {{item.Title}}
                       </p>
                       <p class="other">
                         <span class="priceArea">
-                          <span class="price">3000</span>元/月
+                          <span class="price">￥{{item.PropertyPrice}}</span>
                         </span>
                         <span class="msgList">
-                          <span class="msgItem">1室</span>
-                          <span class="msgItem">
-                            100m
-                            <span class="sup">2</span>
-                          </span>
-                          <span class="msgItem">罗湖</span>
+                          <span class="msgItem">{{item.TypeName}}</span>
+                          <span class="msgItem">{{item.GladBuyArea}}</span>
                         </span>
                       </p>
                     </div>
                   </div>
                 </li>
+                <!-- <houseItem :list="hotStoreList"></houseItem> -->
               </ul>
             </scroll-view>
           </div>
         </div>
       </div>
       <!-- 广告图 -->
-      <div class="swiper pd15 bg_fff" v-if="ggaoPic.length>0" @tap="gotoList(ggaoPic[0].Id,ggaoPic[0].Url)">
+      <div
+        class="swiper pd15 bg_fff"
+        v-if="ggaoPic.length>0"
+        @tap="gotoList(ggaoPic[0].Id,ggaoPic[0].Url)"
+      >
         <img :src="ggaoPic[0].Pic" class="radius10" mode="widthFix" alt>
       </div>
       <!-- 为您推荐 -->
@@ -152,13 +166,20 @@
             <p class="title">为您推荐</p>
           </div>
           <div class="flex1 text_r recommendMenu">
-            <span class="active">拼租</span>
-            <span>组建</span>
-            <span>拼活动</span>
-            <span>房源</span>
+            <span
+              :class="{'active':menuTab===index}"
+              v-for="(item,index) in brandIdList"
+              :key="index"
+              @tap="shiftMenu(index,item.id)"
+            >{{item.title}}</span>
           </div>
         </div>
         <div class="section__bd">
+          <div
+            class="noData center"
+            style="padding:60rpx 30rpx;margin-top:0;"
+            v-if="recomendList.length<1 && page===1"
+          >暂无数据</div>
           <!-- 结果 -->
           <div class="filterContent" v-if="recomendList.length>0">
             <ul class="column levelPanel storeList">
@@ -192,9 +213,23 @@
                     </p>
                   </div>
                 </div>
-              </li> -->
-              <rentItem :list="recomendList"></rentItem>
+              </li>-->
+              <!-- 拼租组件 -->
+              <rentItem :list="recomendList" v-if="menuTab===0"></rentItem>
+              <!-- 拼租组件  end -->
+              <!-- 组建组件 -->
+              <formationItem :list="recomendList" v-if="menuTab===1"></formationItem>
+              <!-- 组建组件 end -->
+              <!-- 拼活动组件 -->
+              <activityItem :list="recomendList" v-if="menuTab===2"></activityItem>
+              <!-- 拼活动组件  end -->
+              <!-- 房源组件 -->
+              <houseItem :list="recomendList" v-if="menuTab===3"></houseItem>
+              <!-- 房源组件  end -->
             </ul>
+            <p style="padding:0 30rpx 40rpx;color:#999;text-align:center">
+              <span @tap="gotoMoreList" style="padding:20rpx 30rpx;">加载更多..</span>
+            </p>
           </div>
         </div>
       </div>
@@ -247,6 +282,9 @@ import { post, getCurrentPageUrlWithArgs } from "@/utils";
 import { mapState, mapMutations } from "vuex"; //vuex辅助函数
 import location from "@/utils/location";
 import rentItem from "@/components/rentItem.vue";
+import houseItem from "@/components/houseItem.vue";
+import activityItem from "@/components/activityItem.vue";
+import formationItem from "@/components/formationItem.vue";
 export default {
   //IsHot:1-优质房源;2-热门商铺;3-为您推荐
   data() {
@@ -255,6 +293,7 @@ export default {
       picList: [], //banner图
       newList: [], //头条消息
       publishType: [], //发布类型
+      cityCode: "", //城市code
       // CityName:"深圳"
       curPage: "",
       userId: "",
@@ -262,26 +301,45 @@ export default {
       giftList: [], //新用户礼包
       isNewUser: true, //是否是新用户
       showGiftCount: 0,
-      brandId: "", //品牌id;拼租 = 21,组建 = 22,拼活动 = 23,房源 = 24,
+      brandIdList: [
+        {
+          id: 21,
+          title: "拼租"
+        },
+        {
+          id: 22,
+          title: "组建"
+        },
+        {
+          id: 23,
+          title: "拼活动"
+        },
+        {
+          id: 24,
+          title: "房源"
+        }
+      ], //为您推荐中的品牌id;拼租 = 21,组建 = 22,拼活动 = 23,房源 = 24,
+      menuTab: 0, //为您推荐中的tab选中
       page: 1,
       ggaoList: [], //广告位
-      ggaoPic: [],//为您推荐上面的广告
-      hotStoreList:[],   //热门商铺的列表
-      recomendList:[]   //为您推荐的列表
+      ggaoPic: [], //为您推荐上面的广告
+      hotStoreList: [], //热门商铺的列表
+      recomendList: [] //为您推荐的列表
     };
   },
   onLoad() {
     this.setBarTitle();
-    location(this).then(res => {});
   },
   onShow() {
     this.curPage = getCurrentPageUrlWithArgs();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
+    location(this).then(res => {
+      this.cityCode = res.CityCode;
+      this.getQueryRentList(24, 2, 20); //热门商铺
+      this.getQueryRentList(21, 3, 20); //为您推荐
+    });
     this.initData();
-    this.curPage = getCurrentPageUrlWithArgs();
-    this.userId = wx.getStorageSync("userId");
-    this.token = wx.getStorageSync("token");
     if (wx.getStorageSync("showGiftCount") !== "") {
       this.showGiftCount = wx.getStorageSync("showGiftCount");
     } else {
@@ -295,14 +353,16 @@ export default {
     // 初始化定位和城市名称
     // .then(res=>{
     //   this.GetCityCode(this.CityName);
-    console.log("getCityCode", this.getCityCode);
     // });
   },
   computed: {
     ...mapState(["CityName"])
   },
   components: {
-    rentItem
+    rentItem,
+    houseItem,
+    activityItem,
+    formationItem
   },
 
   methods: {
@@ -310,10 +370,8 @@ export default {
       this.getBannerList(1); //获取banner
       this.getBannerList(3); //优质房源广告位
       this.getBannerList(4); //成成企业拼租广告位
-      this.getpublishType();  
+      this.getpublishType();
       this.getNews();
-      this.getQueryRentList(24,2,20);//热门商铺
-      this.getQueryRentList(21,3,20);//为您推荐
     },
     setBarTitle() {
       wx.setNavigationBarTitle({
@@ -383,18 +441,18 @@ export default {
         //头条消息headLineList
         wx.navigateTo({ url: "/pages/messages/headLineList/main?url=index" });
       }
-      if(n==2){  //跳转到房源并带参数
+      if (n == 2) {
+        //跳转到房源并带参数
         wx.navigateTo({ url: "/pages/rent/list/main?type=24&isHot=2" });
       }
-      if(n==3){  //跳转到房源并带参数
+      if (n == 3) {
+        //跳转到房源并带参数
         wx.navigateTo({ url: "/pages/rent/list/main?type=24&isHot=1" });
       }
       if (n == 5) {
         //5组件团队
         wx.navigateTo({ url: "/pages/rent/buildTeam/main" });
       }
-      
-
     },
     goToList(id) {
       wx.navigateTo({ url: "/pages/rent/list/main?type=" + id });
@@ -495,7 +553,28 @@ export default {
         url: "/pages/mine2/myCoupon/main"
       });
     },
-    getQueryRentList(brandId,hotType, pageSize) {
+    shiftMenu(index, id) {
+      //切换为您推荐中的选项
+      this.menuTab = index;
+
+      console.log("切换的" + id);
+      this.getQueryRentList(parseInt(id), 3, 20);
+    },
+    gotoMoreList() {
+      //点击为您推荐中的加载更多的时候，跳转到相对应的列表中去
+      let type = this.brandIdList[this.menuTab].id;
+      wx.navigateTo({
+        url: `/pages/rent/list/main?type=${type}&isHot=3`
+      });
+    },
+    gotoRouseDetail(id) {
+      //热门商铺跳转详情
+      let type = this.brandIdList[3].id;
+      wx.navigateTo({
+        url: `/pages/rent/detail/main?type=${type}&id=${id}`
+      });
+    },
+    getQueryRentList(brandId, hotType, pageSize) {
       let that = this;
       //获取发布列表
       post(
@@ -505,19 +584,28 @@ export default {
           Token: that.token,
           IsHot: hotType, //1:优质房源；2：热门商铺；3：为您推荐
           BrandId: brandId,
+          Code: that.cityCode,
           Page: that.page,
           PageSize: pageSize
         },
         that.curPage
       ).then(res => {
         if (res.code === 0) {
-          if(hotType===2){  //热门商铺
-            if(res.data.length>0){
+          if (hotType === 2) {
+            if (that.page === 1) {
+              that.hotStoreList = [];
+            }
+            //热门商铺
+            if (res.data.length > 0) {
               that.hotStoreList = res.data;
             }
           }
-          if(hotType===3){  //为您推荐
-             if(res.data.length>0){
+          if (hotType === 3) {
+            if (that.page === 1) {
+              that.recomendList = [];
+            }
+            //为您推荐
+            if (res.data.length > 0) {
               that.recomendList = res.data;
             }
           }

@@ -5,21 +5,21 @@
         <div class="swiper colorBlock bg_ff952e" style="padding-top:300rpx;"></div>
         <div class="shortInfo">
           <div class="legalInfo flex">
-            <img src="/static/images/of/tx.jpg" class="tx" alt>
+            <img :src="data.ShopInfo.Value.Avatar" class="tx" alt>
             <div class="info flex1">
               <div style="margin-bottom:16rpx;">
-                <span class="name">吴正华</span>
+                <span class="name">{{data.ShopInfo.Value.Name}}</span>
                 <img src="/static/images/icons/v.jpg" class="icon_attestation" alt>
                 <span class="lookAttestation"><img src="/static/images/icons/attestationTag.png" class="icon_attestationTag" alt="">查看认证</span>
               </div>
               <p class="msgList">
-                <span class="msgItem">技术总监</span>
-                <span class="msgItem">深圳松大科技有限公司</span>
+                <span class="msgItem">{{data.ShopInfo.Value.Job}}</span>
+                <span class="msgItem">{{data.ShopInfo.Value.Name}}</span>
                 <span class="attestationStatus">
-                  <span class="icon-gou"></span> 已认证
+                  <span class="icon-gou" v-if="data.ShopInfo.Value.IsAUT"></span> 已认证
                 </span>
               </p>
-              <p class="slogan">本人已有公司，寻求可以一起拼搏的人才</p>
+              <p class="slogan">{{data.ShopInfo.Value.Name}}</p>
             </div>
           </div>
           <div class="weui-cells noBorder__weui-cells column__weui-cells mt10">

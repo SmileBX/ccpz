@@ -137,16 +137,16 @@
     <div class="modal_mask" v-if="isShadeType == 'GladBuyArea' && filterItem.selected">
       <div class="scroll scroll_price">
         <div
-          @click="selectAreaTab(filterItem,-1,'')"
-          :class="{'active':areaTabIndex===-1}"
+          @click="selectDropDownList(filterItem,-2,'不限')"
+          :class="{'active':filterItem.selectIndex===-2}"
         >
           <p>不限</p>
         </div>
         <div
           v-for="(item,index) in  filterItem.Value[0].Child"
           :key="index"
-          @click="selectAreaTab(filterItem,index,item.Name)"
-          :class="{'active':areaTabIndex===index}"
+          @click="selectDropDownList(filterItem,index,item.Name)"
+          :class="{'active':filterItem.selectIndex===index}"
         >
           <p>{{item.Name}}</p>
         </div>
@@ -191,13 +191,34 @@
           v-for="(item,index) in  filterItem.Value"
           :key="index"
           @click="selectAcreage(filterItem,index,item)"
-          :class="{'active':acreageIndex===index}"
+          :class="{'active':filterItem.selectIndex===index}"
         >
           <p>{{item.Text}}</p>
         </div>
       </div>
     </div>
     <!-- 面积 end -->
+    <!-- 全职/兼职、合伙待遇、活动频率、圈子属性 -->
+    <div class="modal_mask" 
+      v-if="(isShadeType === 'JobType'||isShadeType === 'Treatment'||isShadeType === 'RingRate'||isShadeType === 'RingType')&& filterItem.selected">
+      <div class="scroll scroll_price">
+        <div
+          @click="selectDropDownList(filterItem,-2,'不限')"
+          :class="{'active':filterItem.selectIndex===-2}"
+        >
+          <p>不限</p>
+        </div>
+        <div
+          v-for="(item,index) in  filterItem.Value"
+          :key="index"
+          @click="selectDropDownList(filterItem,index,item.Text)"
+          :class="{'active':filterItem.selectIndex===index}"
+        >
+          <p>{{item.Text}}</p>
+        </div>
+      </div>
+    </div>
+    <!-- 全职/兼职、合伙待遇、活动频率、圈子属性end -->
     <!-- 更多的弹窗 -->
     <div
       class="modal_mask more__modal_mask"
@@ -394,14 +415,14 @@ export default {
     this.cityCode = this.CityCode;
   },
   onShow() {
-    this.init();
+      this.init();
   },
   methods: {
     init() {
       this.userId = wx.getStorageSync("userId");
       this.token = wx.getStorageSync("token");
       this.curPage = getCurrentPageUrlWithArgs();
-      // this.cityName = wx.getStorageSync("cityName");
+      //this.cityName = wx.getStorageSync("cityName");
       this.twoTypeList = [];
       this.goodsInfo={};
       this.twoTabIndex = 0;
@@ -475,10 +496,7 @@ export default {
     //点击上面的一级类，及拼购拼租的时候，要清除所有行业等选择，跟筛选出来的筛选条件
     initAll() {
       //恢复行业等选择
-      this.$set(this.filterMenu[0], "selected", false);
-      this.$set(this.filterMenu[1], "selected", false);
-      this.$set(this.filterMenu[2], "selected", false);
-      this.$set(this.filterMenu[3], "selected", false);
+      // debugger;
       this.isShadeType = "";
       //清除行业
       this.initTrade();
@@ -555,6 +573,14 @@ export default {
           this.filterMenuPush(_res,'PropertyPrice','价格')
           // 面积
           this.filterMenuPush(_res,'PlanBuyArea','面积')
+          // 全职/兼职
+          this.filterMenuPush(_res,'JobType','全职/兼职')
+          // 合伙待遇
+          this.filterMenuPush(_res,'Treatment','合伙待遇')
+          // 活动频率
+          this.filterMenuPush(_res,'RingRate','活动频率')
+          // 圈子属性
+          this.filterMenuPush(_res,'RingType','圈子属性')
           // 更多****************
           let params ={}
           // 物业类型
@@ -577,10 +603,24 @@ export default {
             _res.IsAllowOtherList.No= 0
             params.IsAllowOtherList= _res.IsAllowOtherList
           }
+          // 可否分割
+          if(_res.IsSubPack){
+            _res.IsSubPack.Yes= 0
+            _res.IsSubPack.No= 0
+            params.IsSubPack= _res.IsSubPack
+          }
+          // 是否是否装修
+          if(_res.IsTrim){
+            _res.IsTrim.Yes= 0
+            _res.IsTrim.No= 0
+            params.IsTrim= _res.IsTrim
+          }
           // 计划购买日期
           if(_res.PlanBuyDate){
             params.PlanBuyDate= _res.PlanBuyDate
           }
+          // 只有list大于0的时候才展示更多
+          if(Object.keys(params).length>0){
             this.filterMenu.push({
               title:'更多',
               str:'More',
@@ -588,6 +628,7 @@ export default {
               list:params
             })
             this.dataMoreFilter = JSON.parse(JSON.stringify(params));
+          }
           that.hasFilter = true;
         }
       });
@@ -601,6 +642,7 @@ export default {
               title:name,
               str:key,
               selected:false,
+              selectIndex:-1,
               Value:_res[key].Value
             })
           }
@@ -637,20 +679,6 @@ export default {
           if (res.data.length < that.pageSize) {
             that.hasDataList = true;
           }
-          // *********************拼租
-          res.data.map(item => {
-            if (item.FirstTags) {
-              that.$set(item, "FirstTags", item.FirstTags.split("|"));
-            } else {
-              that.$set(item, "FirstTags", []);
-            }
-            if (item.SecondTags) {
-              that.$set(item, "SecondTags", item.SecondTags.split("|"));
-            } else {
-              that.$set(item, "SecondTags", []);
-            }
-          });
-          // **************
           that.dataList = that.dataList.concat(res.data);
           console.log(that.dataList,'dataList')
         }
@@ -864,7 +892,8 @@ export default {
     // **************************价格end******************************************
     // ***************************选择面积******************************************
     selectAcreage(filterItem,index, item) {
-      this.acreageIndex = index;
+      // this.acreageIndex = index;
+      filterItem.selectIndex = index;
       this.isShade = false;
       // this.isShadeType = "";
       this.$set(filterItem, "selected", false);
@@ -879,7 +908,18 @@ export default {
       this.getQueryRentList();
     },
     // **************************面积end******************************************
-    //点击更多筛选的时候的tab可选项
+    // **************************选择下拉筛选列表******************************************
+      // index--激活的下标// Text--提交的文本// this.isShadeType--提交的key
+    selectDropDownList(filterItem,index,Text){
+      filterItem.selectIndex = index;
+      this.goodsInfo[this.isShadeType] = Text==='不限'?'':Text
+      filterItem.title = Text
+      this.isShade = false;
+      this.$set(filterItem, "selected", false);
+      this.getQueryRentList();
+    },
+    // **************************选择下拉筛选列表end******************************************
+//点击更多筛选的时候的tab可选项
     moreSelectItem(item2, index, key, item) {
       this.$set(item, "selected", index);
     },

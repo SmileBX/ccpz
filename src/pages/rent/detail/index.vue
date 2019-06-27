@@ -33,8 +33,8 @@
 // 房源 = 24,
 import {post} from '@/utils/index'
 import {getAddressLocation} from '@/utils/location'
-import pinzu from '../pinzuDetail/index.vue'
-import formation from '../formationDetail/index.vue'
+import pinzu from './pinzu/index.vue'
+import formation from './formation/index.vue'
 // import houseItem from "@/components/houseItem.vue";
 // import activityItem from "@/components/activityItem.vue";
 export default {

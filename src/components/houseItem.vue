@@ -10,18 +10,19 @@
       </div>
       <div class="txtBox">
         <p class="title ellipsis">
-          <span class="typeName" v-if="item.GladBuyerTrade !==''">{{item.GladBuyerTrade}}</span>
+          <!-- <span class="typeName" v-if="item.GladBuyerTrade !==''">{{item.GladBuyerTrade}}</span> -->
           {{item.Title}}
         </p>
         <p class="priceArea">
           <!-- <span class="price">￥{{item.PropertyPrice}}</span> -->
           <span class="price">{{item.PropertyPrice}} 元/月</span>
         </p>
-        <p class="msgList" v-if="item.FirstTags.length>0">
-          <span class="msgItem" v-for="(item2,index2) in item.FirstTags" :key="index2">{{item2}}</span>
+        <p class="msgList" >
+          <span class="msgItem" v-if="item.PlanBuyArea">{{item.PlanBuyArea}}</span>
+          <span class="msgItem" v-if="item.GladBuyArea">{{item.GladBuyArea}}</span>
         </p>
-        <p class="tipsList" v-if="item.SecondTags.length>0">
-          <span v-for="(item3,index3) in item.SecondTags" :key="index3" v-if="index3<3">{{item3}}</span>
+        <p class="tipsList" v-if="item.ServiceName&&item.ServiceName.length>0">
+          <span v-for="(item3,index3) in item.ServiceName" :key="index3" v-show="index3<5">{{item3}}</span>
         </p>
       </div>
     </div>
@@ -49,11 +50,11 @@ export default {
     toDetail(id) {
 		console.log('列表item',this.list)
 		// return false;
-      wx.navigateTo({ url: "/pages/rent/pinzuDetail/main?id=" + id });
+      wx.navigateTo({ url: `/pages/rent/detail/main?id=${id}&type=24`});
     }
   }
 };
 </script>
-<style lang="sass" scoped>
+<style lang="scss" scoped>
 
 </style>

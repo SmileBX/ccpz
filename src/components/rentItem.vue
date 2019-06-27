@@ -42,12 +42,26 @@ export default {
   },
   mounted() {
     console.log("列表item", this.list);
+          // *********************拼租
+          this.list.map(item => {
+            if (item.FirstTags) {
+              this.$set(item, "FirstTags", item.FirstTags.split("|"));
+            } else {
+              this.$set(item, "FirstTags", []);
+            }
+            if (item.SecondTags) {
+              this.$set(item, "SecondTags", item.SecondTags.split("|"));
+            } else {
+              this.$set(item, "SecondTags", []);
+            }
+          });
+          // **************
   },
   methods: {
     toDetail(id) {
       console.log("列表id", id);
       // return false;
-      wx.navigateTo({ url: `/pages/rent/detail/main?id=${id}&&type=21`});
+      wx.navigateTo({ url: `/pages/rent/detail/main?id=${id}&type=21`});
     }
   }
 };
