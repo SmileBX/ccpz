@@ -2178,12 +2178,13 @@ export default {
 
       },this.curPage).then(res=>{
         console.log("Goods/RentSharing",res)
-        wx.showToast({
-          title:res.msg,
-          icon:'success',
-          duration:1500,
-        })
+        
         if(res.code==0){
+            wx.showToast({
+              title:res.msg,
+              icon:'success',
+              duration:1500,
+            })
             setTimeout(() => {
               wx.navigateTo({
                 url:'/pages/VerticalStatus/main'

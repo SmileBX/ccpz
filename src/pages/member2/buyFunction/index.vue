@@ -3,7 +3,7 @@
     <!-- 功能开通的时候有的 -->
     <div class="buyInfo">
       <!-- 置顶功能 -->
-      <div class="info" v-if="type==1">
+      <div class="info" v-if="type==1" style="padding-bottom:20rpx">
         <div class="flex priceBox flexAlignCenter">
           <p class="title">置顶功能</p>
           <p class="flex1 priceArea text_r">
@@ -14,7 +14,7 @@
         <div class="con">您当前正在购买置顶功能，每次置顶24小时。置顶为虚拟产品，购买后不会过期，不支持退款。</div>
       </div>
       <!-- 刷新功能 -->
-      <div class="info" v-if="type==2">
+      <div class="info" v-if="type==2" style="padding-bottom:20rpx">
         <div class="flex priceBox flexAlignCenter">
           <p class="title">刷新功能</p>
           <p class="flex1 priceArea text_r">
@@ -181,7 +181,8 @@ export default {
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
     this.mobile = wx.getStorageSync("mobile");
-    this.type = this.$root.$mp.query.type
+    // this.type = this.$root.$mp.query.type
+    this.type = 1
     this.cardBrand = "请选择"
     this.num = 1
     this.statu = 1
