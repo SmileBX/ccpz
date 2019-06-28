@@ -1,11 +1,11 @@
 <template>
-  <div class="pageContent bg_fff">
+  <div class="pageContent bg_fff" v-if="jianjie">
     <div class="weui-cells">
       <div class="weui-cell">
         <img src="/static/images/icons/con_tel.jpg" class="icon-nav" alt="">
-        <button class="weui-cell__bd" style="border:none;text-align:left" plain>
-           <p class="tel">40000000000000</p>
-           <p class="time">服务时间&nbsp;09：00-20：00</p>
+        <button class="weui-cell__bd" style="border:none;text-align:left" plain @tap="makePhone">
+           <p class="tel">{{info.Mobile}}</p>
+           <p class="time">服务时间&nbsp;{{info.WebTel}}</p>
         </button>
         <span class="icon-arrow arrow-right"></span>
       </div>
@@ -13,7 +13,7 @@
         <img src="/static/images/icons/con_kefu.jpg" class="icon-nav" alt="">
         <button class="weui-cell__bd" plain style="border:none;text-align:left" open-type="contact" >
            <p class="tel">在线客服</p>
-           <p class="time">服务时间&nbsp;09：00-20：00</p>
+           <p class="time">服务时间&nbsp;{{info.WebTel}}</p>
         </button>
         <span class="icon-arrow arrow-right"></span>
       </div>
@@ -21,15 +21,39 @@
   </div>
 </template>
 <script>
+import { post, toLogin, getCurrentPageUrlWithArgs, trim } from "@/utils";
 export default {
   onLoad() {
     this.setBarTitle();
+  },
+  onShow(){
+    this.getConcat();
+  },
+  data(){
+    return {
+      info:{},
+      jianjie:false
+    }
   },
   methods: {
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "联系客服"
       });
+    },
+    getConcat(){
+       post("About/AboutUs",{}).then(res => {
+        if(res.code===0){
+          this.info = res.data;
+          this.jianjie = true;
+        }
+      })
+    },
+    //联系客服
+    makePhone(){
+      wx.makePhoneCall({
+        phoneNumber:this.info.Mobile //仅为示例，并非真实的电话号码
+      })
     }
   }
 };

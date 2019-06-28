@@ -687,7 +687,8 @@ radio .wx-radio-input.wx-radio-input-checked::before {
         border: none!important;
         width: 100%;
         .van-cell {
-            padding: 20rpx 10rpx!important;
+            // padding: 20rpx 10rpx!important;
+            padding: 0 !important;
         }
     }
 }

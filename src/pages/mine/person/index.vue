@@ -6,8 +6,8 @@
           <div class="legalInfo flex">
             <img :src="personInfo.Avatar" class="tx" alt style="border-radius:50%">
             <div class="info flex1">
-              <div style="margin-bottom:16rpx;">
-                <span class="name" style="color:#fff">{{personInfo.Name}}</span>
+              <div>
+                <span class="name" style="color:#1a1a1a">{{personInfo.Name}}</span>
                 <img src="/static/images/icons/v.jpg" class="icon_attestation" alt v-if="personInfo.IsAUT">
                 <span class="lookAttestation"><img src="/static/images/icons/attestationTag.png" class="icon_attestationTag" alt="" @tap="seeVertical">查看认证</span>
               </div>
@@ -37,7 +37,6 @@
               </div>
             </div>
           </div>
-          
         </div>
         <div class="weui-cells noBorder__weui-cells column__weui-cells" style="margin-bottom:20rpx" v-if="type==2" v-for="(item,skey) in companyInfo" :key="skey">
             <div class="group flex justifyContentBetween">
@@ -73,11 +72,11 @@
             </div>
         </div>
       <!-- 标签-->
-      <div class="tagBox pd15 mt10 bg_fff" style="margin-bottom:20rpx">
+      <div class="tagBox pd15 bg_fff">
           <div class="line flex flexColumn">
             <div class="flex justifyContentBetween"> 
                 <h3 class="tagTile">资源标签</h3>
-                <p class="fontColor99" @tap="gotoPage(0)">编辑
+                <p class="fontColor99" @tap="gotoPage(0)" v-if="type==1">编辑
                   <span class="icon-arrow arrow-right"></span>
                 </p>
                 <!-- v-if="personInfo.TagsResGood[0] && personInfo.TagsResKnow[0]" -->
@@ -88,7 +87,8 @@
                   <span v-for="(item,tindex) in personInfo.TagsResGood" :key="tindex">{{item}}</span>
                 </div>
                 <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentStart flex1" v-else>
-                  <span>请添加</span>
+                  <span v-if="type==1">请添加</span>
+                  <span v-if="type==2">未添加</span>
                 </div>
             </div>
             <div class="flex mt10" >
@@ -97,7 +97,8 @@
                   <span v-for="(item,pindex) in personInfo.TagsResKnow" :key="pindex">{{item}}</span>
                 </div>
                 <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentStart flex1" v-else>
-                  <span>请添加</span>
+                  <span v-if="type==1">请添加</span>
+                  <span v-if="type==2">未添加</span>
                 </div>
             </div>
           </div>
@@ -107,7 +108,7 @@
           <div class="line flex flexColumn">
             <div class="flex justifyContentBetween"> 
                 <h3 class="tagTile">能力标签</h3>
-                <p class="fontColor99" @tap="gotoPage(1)">编辑
+                <p class="fontColor99" @tap="gotoPage(1)" v-if="type==1">编辑
                   <span class="icon-arrow arrow-right"></span>
                 </p>
                 <!-- v-if="personInfo.TagsCapGood[0] && personInfo.TagsCapKnow[0]" -->
@@ -118,7 +119,8 @@
                   <span v-for="(item,cindex) in personInfo.TagsCapGood" :key="cindex">{{item}}</span>
                 </div>
                 <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentStart flex1" v-else>
-                  <span>请添加</span>
+                  <span v-if="type==1">请添加</span>
+                  <span v-if="type==2">未添加</span>
                 </div>
             </div>
             <div class="flex mt10">
@@ -127,7 +129,8 @@
                   <span v-for="(item,sindex) in personInfo.TagsCapKnow" :key="sindex">{{item}}</span>
                 </div>
                 <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentStart flex1" v-else>
-                  <span>请添加</span>
+                  <span v-if="type==1">请添加</span>
+                  <span v-if="type==2">未添加</span>
                 </div>
             </div>
             
@@ -148,13 +151,16 @@
                     </p>
                 </div>
             </div>
-            <p class="fontColor99" @tap="editEdcu(1,item.Id)">编辑
+            <p class="fontColor99" @tap="editEdcu(1,item.Id)" v-if="type==1">编辑
               <span class="icon-arrow arrow-right"></span>
             </p>
           </div>
-          <div class="flex flexAlignCenter justifyContentCenter mt15" v-if="personInfo.EduList.length<=0" @tap="AddExperience(1)">
+          <div class="flex flexAlignCenter justifyContentCenter mt15" v-if="type==1&&personInfo.EduList.length<=0" @tap="AddExperience(1)">
               <img src="/static/images/icons/add2.jpg" alt="" class="add_pic mrr2">
-              <span >添加经历</span>
+              <span>添加经历</span>
+          </div>
+          <div class="flex flexAlignCenter justifyContentCenter mt15" v-if="type==2&&personInfo.WorkList.length<=0" @tap="AddExperience(2)">
+              <span>未添加经历</span>
           </div>
         </div>
       </div>
@@ -173,13 +179,16 @@
                     </p>
                 </div>
               </div>
-              <p class="fontColor99" @tap="editEdcu(2,item.Id)">编辑
+              <p class="fontColor99" @tap="editEdcu(2,item.Id)" v-if="type==1">编辑
                 <span class="icon-arrow arrow-right"></span>
               </p>
           </div>
-          <div class="flex flexAlignCenter justifyContentCenter mt15" v-if="personInfo.WorkList.length<=0" @tap="AddExperience(2)">
+          <div class="flex flexAlignCenter justifyContentCenter mt15" v-if="type==1&&personInfo.WorkList.length<=0" @tap="AddExperience(2)">
               <img src="/static/images/icons/add2.jpg" alt="" class="add_pic mrr2">
               <span>添加经历</span>
+          </div>
+          <div class="flex flexAlignCenter justifyContentCenter mt15" v-if="type==2&&personInfo.WorkList.length<=0" @tap="AddExperience(2)">
+              <span>未添加经历</span>
           </div>
         </div>
       </div>
@@ -222,21 +231,21 @@
         </div>
       </div>
       <!-- 公司介绍 -->
-      <div class="section" v-if="type==2" style="margin-top:20rpx">
+      <div class="section" v-if="type==2 && companyInfo[0].CompanyIntro.length>0" style="margin-top:20rpx">
         <div class="locationBox pd15 company">
             <h3 class="title detail__title">公司简介</h3>
             <div class="con">{{companyInfo[0].CompanyIntro}}</div>
         </div>
       </div>
       <!-- 公司理念 -->
-      <div class="section" v-if="type==2" style="margin-top:20rpx">
+      <div class="section" v-if="type==2 && companyInfo[0].CompanyCulture.length>0" style="margin-top:20rpx">
           <div class="locationBox pd15">
             <h3 class="title detail__title">公司理念</h3>
             <div class="con">{{companyInfo[0].CompanyCulture}}</div>
           </div>
       </div>
       <!--照片-->
-      <div class="form-cells-item pall bg_fff" style="margin-top:20rpx" v-if="type==2&&companyInfo[0].CompanyPic.length>0" >
+      <div class="form-cells-item pall bg_fff" style="margin-top:20rpx" v-if="type==2&&companyInfo[0].CompanyPic[0].length>0" >
         <div class="flex justifyContentBetween">
               <h3 class="title detail__title fontBold">公司照片</h3>
           </div>
@@ -324,6 +333,7 @@ export default {
     // if(this.$root.$mp.query.Id){  //进入他人主页传递的Id
     //    this.Id = this.$root.$mp.query.Id
     // }
+    console.log(this.type)
     this.Id = 10394
     this.type = 2
     this.companyInfo = []
@@ -454,14 +464,31 @@ export default {
         UserId:this.userId,
         Token:this.token,
         Type:0,
-        Id:this.id
+        Id:this.Id 
       }
       if(!this.IsCollection){
-        await post('User/AddCollections',params)
-        wx.showToast({title:'收藏成功'})
+        let res = await post('User/AddCollections',params)
+        if(res.code==0){
+           wx.showToast({title:'收藏成功'})
+        }else{
+          wx.showToast({
+            title:res.msg,
+            icon:"none"
+            })
+          return false
+        }
+       
       }else{
-        await post('User/ReCollections',params)
-        wx.showToast({title:'取消收藏成功'})
+        let res = await post('User/ReCollections',params)
+        if(res.code==0){
+           wx.showToast({title:'取消收藏成功'})
+        }else{
+          wx.showToast({
+            title:res.msg,
+            icon:"none"
+            })
+          return false
+        }
       }
       // const res = await post('User/AddCollections',params)
       this.IsCollection = !this.IsCollection
@@ -489,12 +516,17 @@ export default {
 </script>
 <style lang="scss" scoped>
 .pagePerson{
-  background:#dfdedd
+  background:#E6E6E6;
 }
 .storeNowrap .storeList .item,
 .storeNowrap .storeList .pictrueAll img {
   width: 200rpx !important;
   height: 200rpx !important;
+}
+.color_white{
+    font-size: 22rpx!important;
+    color: #ff952e!important;
+    border:1rpx solid #ff9325!important
 }
 .group{
   padding:0;
@@ -503,7 +535,7 @@ export default {
 .msgItem{
   padding:0 4rpx;
   border-left: none;
-  color:#ffff
+  color:#9A9A9A
 }
 .msgItem:last-child{
   border-left: 1px solid #fff;
@@ -532,12 +564,12 @@ export default {
   padding:5rpx;
 
 }
-.icon-gou{
-  &::before {
-        border-left: 2px solid #fff;
-        border-bottom: 2px solid #fff;
-    }
-}
+// .icon-gou{
+//   &::before {
+//         border-left: 2px solid #fff;
+//         border-bottom: 2px solid #fff;
+//     }
+// }
 .contactList2 {
     font-size: 30rpx;
     margin-top: 10rpx;

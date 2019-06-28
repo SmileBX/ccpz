@@ -26,16 +26,6 @@
           >
             <span class="time">{{item.DateStr}}</span>
           </div>
-          <!-- <block v-if="index===0">
-            <div class="section__hd">
-              <span class="time">{{item.DateStr}}</span>
-            </div>
-          </block>
-          <block v-if="item.DateStr !== list[index-1].DateStr && index>0">
-             <div class="section__hd">
-              <span class="time">{{item.DateStr}}</span>
-            </div>
-          </block>-->
           <van-swipe-cell
             :right-width="65"
             async-close
@@ -44,7 +34,7 @@
           >
             <van-cell-group>
               <van-cell class="item">
-                <div class="outside">
+                <div class="outside" @click.stop="gotoDetail(item.ProId,item.BrandId)">
                   <div class="pictrueAll">
                     <div class="pictrue img">
                       <img :src="item.PicNo" alt>
@@ -52,7 +42,7 @@
                   </div>
                   <div class="txtBox text_l">
                     <p class="title ellipsis" style="color:#333;">
-                      <!-- <span class="typeName" v-if="item.TypeName !==''">{{item.TypeName}}</span> -->
+                      <span class="typeName" v-if="item.TypeName !==''">{{item.TypeName}}</span>
                       {{item.Title}}
                     </p>
                     <p class="msgList" style="margin-top:20rpx;">
@@ -77,69 +67,27 @@
         </block>
       </div>
       <!-- 谁看过我 -->
-      <div class="weui-cells readList" v-if="tabIndex===1">
-        <div class="weui-cell">
-          <img src="/static/images/of/tx.jpg" class="tx" alt>
-          <div class="weui-cell__bd">
+      <div class="weui-cells readList readList2" v-if="tabIndex===1">
+        <div class="weui-cell" v-for="(item,index) in list" :key="index" @tap="gotoPerson(item.ShopId)">
+          <img :src="item.Avatar" class="tx" alt>
+          <div class="weui-cell__bd text_l">
             <p>
-              <span class="name">李刚</span>
+              <span class="name">{{item.Name}}</span>
               <img src="/static/images/icons/v.jpg" class="icon_attestation" alt>
             </p>
-            <p class="msgList">
-              <span class="msgItem">CEO</span>
-              <span class="msgItem">上海某网络公司</span>
+            <p class="msgList" v-if="item.Company !==''">
+              <span class="msgItem">{{item.Company[0].Job}}</span>
+              <span class="msgItem">{{item.Company[0].Name}}</span>
             </p>
           </div>
-          <span class="time">8小时前到访</span>
-        </div>
-        <div class="weui-cell">
-          <img src="/static/images/of/tx.jpg" class="tx" alt>
-          <div class="weui-cell__bd">
-            <p>
-              <span class="name">李刚</span>
-              <img src="/static/images/icons/v.jpg" class="icon_attestation" alt>
-            </p>
-            <p class="msgList">
-              <span class="msgItem">CEO</span>
-              <span class="msgItem">上海某网络公司</span>
-            </p>
-          </div>
-          <span class="time">8小时前到访</span>
-        </div>
-        <div class="weui-cell">
-          <img src="/static/images/of/tx.jpg" class="tx" alt>
-          <div class="weui-cell__bd">
-            <p>
-              <span class="name">李刚</span>
-              <img src="/static/images/icons/v.jpg" class="icon_attestation" alt>
-            </p>
-            <p class="msgList">
-              <span class="msgItem">CEO</span>
-              <span class="msgItem">上海某网络公司</span>
-            </p>
-          </div>
-          <span class="time">8小时前到访</span>
-        </div>
-        <div class="weui-cell">
-          <img src="/static/images/of/tx.jpg" class="tx" alt>
-          <div class="weui-cell__bd">
-            <p>
-              <span class="name">李刚</span>
-              <img src="/static/images/icons/v.jpg" class="icon_attestation" alt>
-            </p>
-            <p class="msgList">
-              <span class="msgItem">CEO</span>
-              <span class="msgItem">上海某网络公司</span>
-            </p>
-          </div>
-          <span class="time">8小时前到访</span>
+          <span class="time">{{item.AddTimeStr}}到访</span>
         </div>
       </div>
-      <div class="noData center" style="padding:60rpx 30rpx;" v-if="list.length<1 && page===1">暂无数据</div>
+      <div class="noData center" style="padding:60rpx 30rpx;" v-if="hasDataList && page===1 && list.length===0">暂无数据</div>
       <div
         class="noData center"
         style="margin-top:0;line-height:80rpx;"
-        v-if="hasDataList&& page!==1"
+        v-if="list.length>0&& page!==1"
       >我也是有底线的!</div>
     </scroll-view>
   </div>
@@ -151,6 +99,7 @@ export default {
     this.setBarTitle();
   },
   onShow() {
+    this.initData();
     this.curPage = getCurrentPageUrlWithArgs();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
@@ -181,11 +130,16 @@ export default {
       this.isOver = false;
       this.hasDataList = false;
     },
-    // btnDelFootPrint(){  //右边滑动删除
-    //   // console.log("点击了删除了",e,id)
-    //   // this.list.splice(index,1)
-    //   // e.mp.detail.instance.close()
-    // },
+    gotoDetail(id,brandId) {
+      wx.navigateTo({
+        url: `/pages/rent/detail/main?type=${brandId}&id=${id}`
+      });
+    },
+    gotoPerson(id){  //跳转到他人或者个人主页；type;1:个人；2：他人
+      wx.navigateTo({
+        url: `/pages/mine/person/main?type=2&Id=${id}`
+      });
+    },
     shiftTab(index) {
       this.initData();
       this.tabIndex = parseInt(index);
@@ -206,11 +160,12 @@ export default {
         that.curPage
       ).then(res => {
         if (res.code === 0) {
+          that.hasDataList = true;
           if (that.page === 1) {
             that.list = [];
+            this.isOver = false;
           }
           if (res.data.length > 0) {
-            that.hasDataList = true;
             that.list = that.list.concat(res.data);
           }
           if (res.data.length < that.pageSize) {
@@ -294,7 +249,7 @@ export default {
 }
 
 .storeList .section__hd {
-  border-bottom: 1px solid #f2f2f2;
+  // border-bottom: 1px solid #f2f2f2;
   padding: 10rpx 30rpx;
 }
 .filterContent {
@@ -318,16 +273,19 @@ export default {
   padding: 30rpx !important;
 }
 .storeList.levelPanel .item .outside::before,
-.storeList.levelPanel .item::before {
+.storeList.levelPanel .item::before,
+.storeList.levelPanel .item::after,
+.storeList.levelPanel .item .outside::after {
   display: none;
 }
-.readList {
+.readList2 {
   .weui-cell {
     padding-top: 30rpx;
     padding-bottom: 30rpx;
     &::before {
       left: 30rpx;
       right: 0;
+      display: block !important;
     }
   }
 }

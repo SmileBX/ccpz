@@ -35,7 +35,7 @@ export default {
   },
   onShow(){
     console.log(this.password,"_____")
-    this.password='';
+    this.password = '';
     this.focusflag = true;
   },
   mounted() {},

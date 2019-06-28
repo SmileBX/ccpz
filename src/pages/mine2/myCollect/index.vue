@@ -6,7 +6,7 @@
           <div class="item">信息</div>
         </li>
         <li :class="{'active':tabIndex===1}" @click="shiftTab(1)">
-          <div class="item">谁看过我</div>
+          <div class="item">用户</div>
         </li>
       </ul>
     </div>
@@ -119,8 +119,16 @@ export default {
         title: "我的收藏"
       });
     },
+    initData(){
+      this.page = 1;
+      this.list = [];
+      this.isOver = false;
+      this.hasDataList = false
+    },
     shiftTab(index) {
       this.tabIndex = parseInt(index);
+      this.initData();
+      this.MemberCollections();
     },
     MemberCollections() {
       let that = this;
@@ -150,7 +158,6 @@ export default {
       });
     },
     ReCollections(e, id, index) {
-      console.log("fffffffffffffffffffffffff")
       //取消收藏
       let that = this;
       wx.showModal({
