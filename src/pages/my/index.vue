@@ -231,8 +231,7 @@ export default {
         url:"/pages/mine/editInfo/main"
       })
     }
-    
-  },
+  }
 
 };
 </script>
