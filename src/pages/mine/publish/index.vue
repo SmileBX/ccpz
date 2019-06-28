@@ -266,7 +266,7 @@
           </div>
         </block>
       </div>
-      <div class="noData center" style="padding:60rpx 30rpx;" v-if="!hasData && page===1">暂无数据</div>
+      <div class="noData center" style="padding:60rpx 30rpx;" v-if="!hasData && isRequest">暂无数据</div>
       <div
         class="noData center"
         style="margin-top:0;line-height:80rpx;"
@@ -329,7 +329,8 @@ export default {
         data: []
       }, //房源
       hasData: false,
-      isOver: false
+      isOver: false,
+      isRequest:false   //是否请求成功
     };
   },
   onLoad() {
@@ -349,6 +350,7 @@ export default {
       });
     },
     initData() {
+      this.isRequest = false;
       this.showEdit = false;
       this.hasData = false;
       this.isOver = false;
@@ -516,6 +518,7 @@ export default {
         this.curPage
       ).then(res => {
         if (res.code == 0) {
+          this.isRequest = true;
           if (this.page === 1) {
             this.initDataList();
             this.hasData = false;
