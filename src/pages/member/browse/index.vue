@@ -67,44 +67,27 @@
         </block>
       </div>
       <!-- 谁看过我 -->
-      <div class="weui-cells readList readList2" style="background:none !important;" v-if="tabIndex===1">
-        <block v-for="(item,index) in list" :key="index">
-          <van-swipe-cell
-            :right-width="65"
-            async-close
-            @close="btnDelFootPrint($event,item.Id,index)"
-            class="swipe-cell"
-          >
-            <van-cell-group>
-              <van-cell class="item">
-                <div class="weui-cell" @click.stop="gotoPerson(item.ShopId)">
-                  <img :src="item.Avatar" class="tx" alt>
-                  <div class="weui-cell__bd text_l">
-                    <p>
-                      <span class="name">{{item.Name}}</span>
-                      <img src="/static/images/icons/v.jpg" class="icon_attestation" alt>
-                    </p>
-                    <p class="msgList" v-if="item.Company !==''">
-                      <span class="msgItem">{{item.Company[0].Job}}</span>
-                      <span class="msgItem">{{item.Company[0].Name}}</span>
-                    </p>
-                  </div>
-                  <span class="time">{{item.AddTimeStr}}到访</span>
-                </div>
-              </van-cell>
-            </van-cell-group>
-            <span
-              slot="right"
-              class="van-swipe-cell__right flex flexAlignCenter justifyContentCenter"
-            >删除</span>
-          </van-swipe-cell>
-        </block>
+      <div class="weui-cells readList readList2" v-if="tabIndex===1">
+        <div class="weui-cell" v-for="(item,index) in list" :key="index" @tap="gotoPerson(item.ShopId)">
+          <img :src="item.Avatar" class="tx" alt>
+          <div class="weui-cell__bd text_l">
+            <p>
+              <span class="name">{{item.Name}}</span>
+              <img src="/static/images/icons/v.jpg" class="icon_attestation" alt>
+            </p>
+            <p class="msgList" v-if="item.Company !==''">
+              <span class="msgItem">{{item.Company[0].Job}}</span>
+              <span class="msgItem">{{item.Company[0].Name}}</span>
+            </p>
+          </div>
+          <span class="time">{{item.AddTimeStr}}到访</span>
+        </div>
       </div>
-      <div class="noData center" style="padding:60rpx 30rpx;" v-if="list.length<1 && page===1">暂无数据</div>
+      <div class="noData center" style="padding:60rpx 30rpx;" v-if="hasDataList && page===1 && list.length===0">暂无数据</div>
       <div
         class="noData center"
         style="margin-top:0;line-height:80rpx;"
-        v-if="hasDataList&& page!==1"
+        v-if="list.length>0&& page!==1"
       >我也是有底线的!</div>
     </scroll-view>
   </div>
@@ -116,6 +99,7 @@ export default {
     this.setBarTitle();
   },
   onShow() {
+    this.initData();
     this.curPage = getCurrentPageUrlWithArgs();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
@@ -176,11 +160,12 @@ export default {
         that.curPage
       ).then(res => {
         if (res.code === 0) {
+          that.hasDataList = true;
           if (that.page === 1) {
             that.list = [];
+            this.isOver = false;
           }
           if (res.data.length > 0) {
-            that.hasDataList = true;
             that.list = that.list.concat(res.data);
           }
           if (res.data.length < that.pageSize) {
@@ -288,28 +273,20 @@ export default {
   padding: 30rpx !important;
 }
 .storeList.levelPanel .item .outside::before,
-.storeList.levelPanel .item::before {
+.storeList.levelPanel .item::before,
+.storeList.levelPanel .item::after,
+.storeList.levelPanel .item .outside::after {
   display: none;
 }
-.readList {
+.readList2 {
   .weui-cell {
     padding-top: 30rpx;
     padding-bottom: 30rpx;
     &::before {
       left: 30rpx;
       right: 0;
+      display: block !important;
     }
-  }
-}
-.readList2 /deep/ .van-cell {
-  position: relative;
-  &::before{
-    position: absolute;
-    content: "";
-    left:30rpx;
-    right:0;
-    height: 1px;
-    background: #f2f2f2
   }
 }
 </style>
