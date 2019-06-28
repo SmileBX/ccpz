@@ -197,7 +197,7 @@ export default {
     if(this.$root.$mp.query.publishId){
         this.publishId = this.$root.$mp.query.publishId
     }
-    this.getPrice()
+    this.getPrice() //获取置顶、刷新的单价
     
     
   },
