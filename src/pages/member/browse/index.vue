@@ -26,16 +26,6 @@
           >
             <span class="time">{{item.DateStr}}</span>
           </div>
-          <!-- <block v-if="index===0">
-            <div class="section__hd">
-              <span class="time">{{item.DateStr}}</span>
-            </div>
-          </block>
-          <block v-if="item.DateStr !== list[index-1].DateStr && index>0">
-             <div class="section__hd">
-              <span class="time">{{item.DateStr}}</span>
-            </div>
-          </block>-->
           <van-swipe-cell
             :right-width="65"
             async-close
@@ -44,7 +34,7 @@
           >
             <van-cell-group>
               <van-cell class="item">
-                <div class="outside">
+                <div class="outside" @click.stop="gotoDetail(item.ProId,item.BrandId)">
                   <div class="pictrueAll">
                     <div class="pictrue img">
                       <img :src="item.PicNo" alt>
@@ -52,7 +42,7 @@
                   </div>
                   <div class="txtBox text_l">
                     <p class="title ellipsis" style="color:#333;">
-                      <!-- <span class="typeName" v-if="item.TypeName !==''">{{item.TypeName}}</span> -->
+                      <span class="typeName" v-if="item.TypeName !==''">{{item.TypeName}}</span>
                       {{item.Title}}
                     </p>
                     <p class="msgList" style="margin-top:20rpx;">
@@ -77,63 +67,38 @@
         </block>
       </div>
       <!-- 谁看过我 -->
-      <div class="weui-cells readList" v-if="tabIndex===1">
-        <div class="weui-cell">
-          <img src="/static/images/of/tx.jpg" class="tx" alt>
-          <div class="weui-cell__bd">
-            <p>
-              <span class="name">李刚</span>
-              <img src="/static/images/icons/v.jpg" class="icon_attestation" alt>
-            </p>
-            <p class="msgList">
-              <span class="msgItem">CEO</span>
-              <span class="msgItem">上海某网络公司</span>
-            </p>
-          </div>
-          <span class="time">8小时前到访</span>
-        </div>
-        <div class="weui-cell">
-          <img src="/static/images/of/tx.jpg" class="tx" alt>
-          <div class="weui-cell__bd">
-            <p>
-              <span class="name">李刚</span>
-              <img src="/static/images/icons/v.jpg" class="icon_attestation" alt>
-            </p>
-            <p class="msgList">
-              <span class="msgItem">CEO</span>
-              <span class="msgItem">上海某网络公司</span>
-            </p>
-          </div>
-          <span class="time">8小时前到访</span>
-        </div>
-        <div class="weui-cell">
-          <img src="/static/images/of/tx.jpg" class="tx" alt>
-          <div class="weui-cell__bd">
-            <p>
-              <span class="name">李刚</span>
-              <img src="/static/images/icons/v.jpg" class="icon_attestation" alt>
-            </p>
-            <p class="msgList">
-              <span class="msgItem">CEO</span>
-              <span class="msgItem">上海某网络公司</span>
-            </p>
-          </div>
-          <span class="time">8小时前到访</span>
-        </div>
-        <div class="weui-cell">
-          <img src="/static/images/of/tx.jpg" class="tx" alt>
-          <div class="weui-cell__bd">
-            <p>
-              <span class="name">李刚</span>
-              <img src="/static/images/icons/v.jpg" class="icon_attestation" alt>
-            </p>
-            <p class="msgList">
-              <span class="msgItem">CEO</span>
-              <span class="msgItem">上海某网络公司</span>
-            </p>
-          </div>
-          <span class="time">8小时前到访</span>
-        </div>
+      <div class="weui-cells readList readList2" style="background:none !important;" v-if="tabIndex===1">
+        <block v-for="(item,index) in list" :key="index">
+          <van-swipe-cell
+            :right-width="65"
+            async-close
+            @close="btnDelFootPrint($event,item.Id,index)"
+            class="swipe-cell"
+          >
+            <van-cell-group>
+              <van-cell class="item">
+                <div class="weui-cell" @click.stop="gotoPerson(item.ShopId)">
+                  <img :src="item.Avatar" class="tx" alt>
+                  <div class="weui-cell__bd text_l">
+                    <p>
+                      <span class="name">{{item.Name}}</span>
+                      <img src="/static/images/icons/v.jpg" class="icon_attestation" alt>
+                    </p>
+                    <p class="msgList" v-if="item.Company !==''">
+                      <span class="msgItem">{{item.Company[0].Job}}</span>
+                      <span class="msgItem">{{item.Company[0].Name}}</span>
+                    </p>
+                  </div>
+                  <span class="time">{{item.AddTimeStr}}到访</span>
+                </div>
+              </van-cell>
+            </van-cell-group>
+            <span
+              slot="right"
+              class="van-swipe-cell__right flex flexAlignCenter justifyContentCenter"
+            >删除</span>
+          </van-swipe-cell>
+        </block>
       </div>
       <div class="noData center" style="padding:60rpx 30rpx;" v-if="list.length<1 && page===1">暂无数据</div>
       <div
@@ -181,11 +146,16 @@ export default {
       this.isOver = false;
       this.hasDataList = false;
     },
-    // btnDelFootPrint(){  //右边滑动删除
-    //   // console.log("点击了删除了",e,id)
-    //   // this.list.splice(index,1)
-    //   // e.mp.detail.instance.close()
-    // },
+    gotoDetail(id,brandId) {
+      wx.navigateTo({
+        url: `/pages/rent/detail/main?type=${brandId}&id=${id}`
+      });
+    },
+    gotoPerson(id){  //跳转到他人或者个人主页；type;1:个人；2：他人
+      wx.navigateTo({
+        url: `/pages/mine/person/main?type=2&Id=${id}`
+      });
+    },
     shiftTab(index) {
       this.initData();
       this.tabIndex = parseInt(index);
@@ -294,7 +264,7 @@ export default {
 }
 
 .storeList .section__hd {
-  border-bottom: 1px solid #f2f2f2;
+  // border-bottom: 1px solid #f2f2f2;
   padding: 10rpx 30rpx;
 }
 .filterContent {
@@ -329,6 +299,17 @@ export default {
       left: 30rpx;
       right: 0;
     }
+  }
+}
+.readList2 /deep/ .van-cell {
+  position: relative;
+  &::before{
+    position: absolute;
+    content: "";
+    left:30rpx;
+    right:0;
+    height: 1px;
+    background: #f2f2f2
   }
 }
 </style>

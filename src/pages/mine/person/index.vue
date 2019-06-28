@@ -320,12 +320,12 @@ export default {
     this.curPage = getCurrentPageUrlWithArgs();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
-    // this.type = this.$root.$mp.query.type
-    // if(this.$root.$mp.query.Id){  //进入他人主页传递的Id
-    //    this.Id = this.$root.$mp.query.Id
-    // }
-    this.Id = 10394
-    this.type = 2
+    this.type = this.$root.$mp.query.type
+    if(this.$root.$mp.query.Id){  //进入他人主页传递的Id
+       this.Id = this.$root.$mp.query.Id
+    }
+    // this.Id = 10394
+    // this.type = 2
     this.companyInfo = []
     this.list = []
     this.hasData = false
