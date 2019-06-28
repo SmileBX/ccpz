@@ -14,7 +14,7 @@
       </ul>
     </div>
     <!--拼租列表-->
-    <scroll-view class="scroll-box" scroll-y>
+    <scroll-view class="scroll-box" scroll-y @scrolltolower="moreLoad">
       <div class="boxSize column levelPanel storeList" v-if="tabindex==0">
         <!--item-->
         <block v-if="hasData">
@@ -34,12 +34,13 @@
                 <van-cell class="item">
                   <div
                     class="outside"
-                    @click.stop="selectItem(item.Id,index,pinzuList.selectedIndex)"
+                    @click.stop="selectItem(item.Id,index,pinzuList.selectedIndex,item.Status)"
                   >
                     <input
                       type="checkbox"
                       class="checkbox-cart"
-                      :checked="pinzuList.selectedIndex===index"
+                      :disabled="item.Status!==1"
+                      :checked="pinzuList.selectedIndex===index && item.Status===1"
                       v-if="showEdit"
                     >
                     <div class="pictrueAll">
@@ -52,18 +53,21 @@
                     </div>
                     <div class="txtBox flex1">
                       <p class="title ellipsis" style="color:#1a1a1a">
-                        <span
-                          class="typeName"
-                          v-if="item.GladBuyerTrade !==''"
-                        >{{item.GladBuyerTrade}}</span>
+                        <span class="typeName" v-if="item.TypeName !==''">{{item.TypeName}}</span>
                         {{item.Title}}
                       </p>
-                      <p class="msgList" v-if="item.FirstTags.length>0">
+                      <p class="msgList">
                         <span
                           class="msgItem"
-                          v-for="(item2,index2) in item.FirstTags"
-                          :key="index2"
-                        >{{item2}}</span>
+                          v-if="item.GladBuyerTrade !==''"
+                        >{{item.GladBuyerTrade}}</span>
+                        <block v-if="item.FirstTags.length>0">
+                          <span
+                            class="msgItem"
+                            v-for="(item2,index2) in item.FirstTags"
+                            :key="index2"
+                          >{{item2}}</span>
+                        </block>
                       </p>
                       <p class="priceArea">
                         <span class="price">￥{{item.PropertyPrice}}</span>
@@ -79,128 +83,188 @@
       </div>
       <!--组建列表-->
       <div class="boxSize column levelPanel storeList" v-if="tabindex==1">
-        <div
-          class="flex flexAlignCenter list_item bg_fff"
-          v-for="(item,index) in zujianList"
-          :key="index"
-        >
-          <input type="checkbox" class="checkbox-cart" checked v-if="showEdit">
-          <van-swipe-cell :right-width="65" async-close @close="onClose" class="swipe-cell">
-            <van-cell-group>
-              <van-cell class="item">
-                <div class="outside">
-                  <!--类似头像小图片  组建-->
-                  <div class="avatarbox mrr2">
-                    <p class="avatar">公司</p>
+        <block v-if="hasData">
+          <div
+            class="flex flexAlignCenter list_item bg_fff"
+            v-for="(item,index) in zujianList.data"
+            :key="index"
+          >
+            <van-swipe-cell
+              :right-width="65"
+              async-close
+              @close="delectData($event,index,item.Id)"
+              class="swipe-cell"
+            >
+              <van-cell-group>
+                <van-cell class="item">
+                  <div
+                    class="outside"
+                    @click.stop="selectItem(item.Id,index,zujianList.selectedIndex,item.Status)"
+                  >
+                    <span
+                      class="isTopTag zujian__isTopTag"
+                      v-if="item.IsTop !=='' && item.IsRefresh !==''"
+                    >已置顶刷新</span>
+                    <span class="isTopTag zujian__isTopTag" v-if="item.IsTop !==''">已置顶</span>
+                    <span class="isTopTag zujian__isTopTag" v-if="item.IsRefresh !==''">已刷新</span>
+                    <input
+                      type="checkbox"
+                      class="checkbox-cart"
+                      :disabled="item.Status!==1"
+                      :checked="zujianList.selectedIndex===index && item.Status===1"
+                      v-if="showEdit"
+                    >
+                    <!--类似头像小图片  组建-->
+                    <div class="avatarbox mrr2">
+                      <p class="avatar">{{item.GrName}}</p>
+                    </div>
+                    <!--图片 其他-->
+                    <div class="txtBox flex1">
+                      <p
+                        class="title ellipsis"
+                        style="color:#1a1a1a;margin-bottom:22rpx !important;"
+                      >{{item.Title}}</p>
+                      <p class="msgList">
+                        <span class="msgItem" v-if="item.GladBuyerTrade !==''">{{item.GladBuyerTrade}}</span>
+                        <span class="msgItem">{{item.Company}}</span>
+                      </p>
+                      <!--组建2-->
+                      <p class="tipsList" v-if="item.jobArr.length>0">
+                        <span
+                          v-for="(item2,index2) in item.jobArr"
+                          v-if="index<5"
+                          :key="index2"
+                        >{{item2}}</span>
+                      </p>
+                    </div>
                   </div>
-                  <!--图片 其他-->
-                  <!-- <div class="pictrueAll">
-                        <div class="pictrue img">
-                          <img src="/static/images/of/index_a1.jpg" alt>
-                        </div>
-                  </div>-->
-                  <div class="txtBox">
-                    <p class="title ellipsis" style="color:#1a1a1a">{{item.Title}}</p>
-                    <p class="msgList">
-                      <span class="msgItem">{{item.GladBuyerTrade}}</span>
-                      <span class="msgItem">100m</span>
-                      <span class="msgItem">3卡2独</span>
-                      <span class="msgItem">{{item.Company}}</span>
-                    </p>
-                    <!--组建2-->
-                    <p class="tipsList">
-                      <span>股份合作</span>
-                      <span>可使用公司资质</span>
-                      <span>可挂牌</span>
-                    </p>
-                  </div>
-                </div>
-              </van-cell>
-            </van-cell-group>
-            <span slot="right" class="van-swipe-cell__right">删除</span>
-          </van-swipe-cell>
-        </div>
+                </van-cell>
+              </van-cell-group>
+              <span slot="right" class="van-swipe-cell__right">删除</span>
+            </van-swipe-cell>
+          </div>
+        </block>
       </div>
       <!--拼活动列表-->
       <div class="boxSize column levelPanel storeList" v-if="tabindex==2">
         <!--item-->
-        <div
-          class="flex flexAlignCenter list_item bg_fff"
-          v-for="(item,index) in huodongList"
-          :key="index"
-        >
-          <input type="checkbox" class="checkbox-cart" checked v-if="showEdit">
-          <van-swipe-cell :right-width="65" async-close @close="onClose" class="swipe-cell">
-            <van-cell-group>
-              <van-cell class="item" async-close @click="onClick" clickable>
-                <div class="outside">
-                  <div class="pictrueAll">
-                    <div class="pictrue img">
-                      <img :src="item.PicNo" alt>
+        <block>
+          <div
+            class="flex flexAlignCenter list_item bg_fff"
+            v-for="(item,index) in huodongList.data"
+            :key="index"
+          >
+            <van-swipe-cell
+              :right-width="65"
+              async-close
+              @close="delectData($event,index,item.Id)"
+              class="swipe-cell"
+            >
+              <van-cell-group>
+                <van-cell class="item">
+                  <div
+                    class="outside"
+                    @click.stop="selectItem(item.Id,index,huodongList.selectedIndex,item.Status)"
+                  >
+                    <input
+                      type="checkbox"
+                      class="checkbox-cart"
+                      :disabled="item.Status!==1"
+                      :checked="huodongList.selectedIndex===index && item.Status===1"
+                      v-if="showEdit"
+                    >
+                    <div class="pictrueAll">
+                      <span class="isTopTag" v-if="item.IsTop !=='' && item.IsRefresh !==''">已置顶刷新</span>
+                      <span class="isTopTag" v-if="item.IsTop !==''">已置顶</span>
+                      <span class="isTopTag" v-if="item.IsRefresh !==''">已刷新</span>
+                      <div class="pictrue img">
+                        <img :src="item.PicNo" alt>
+                      </div>
+                    </div>
+                    <div class="txtBox flex1">
+                      <p class="title ellipsis" style="color:#1a1a1a">
+                        <span class="typeName" v-if="item.TypeName !==''">{{item.TypeName}}</span>
+                        {{item.Title}}
+                      </p>
+                      <p class="msgList">
+                        <!-- <span class="msgItem" v-if="item.GladBuyerTrade !==''">{{item.GladBuyerTrade}}</span> -->
+                        <span class="msgItem">{{item.AddTime}}</span>
+                        <span class="msgItem">{{item.GladBuyArea}}</span>
+                      </p>
+                      <p class="priceArea">
+                        <span class="price">￥{{item.PropertyPrice}}</span>
+                      </p>
                     </div>
                   </div>
-                  <div class="txtBox">
-                    <p class="title ellipsis" style="color:#1a1a1a">
-                      <span class="typeName">{{item.TypeName}}</span>
-                      {{item.Title}}
-                    </p>
-                    <p class="msgList">
-                      <span class="msgItem">{{item.GladBuyerTrade}}</span>
-                      <span class="msgItem">{{item.GladBuyArea}}</span>
-                    </p>
-                    <p class="priceArea">
-                      <span class="price">{{item.PropertyPrice}}</span>场/月
-                    </p>
-                  </div>
-                </div>
-              </van-cell>
-            </van-cell-group>
-            <span slot="right" class="van-swipe-cell__right">删除</span>
-          </van-swipe-cell>
-        </div>
+                </van-cell>
+              </van-cell-group>
+              <span slot="right" class="van-swipe-cell__right">删除</span>
+            </van-swipe-cell>
+          </div>
+        </block>
       </div>
       <!--房源列表-->
       <div class="boxSize column levelPanel storeList" v-if="tabindex==3">
         <!--item-->
-        <div
-          class="flex flexAlignCenter list_item bg_fff"
-          v-for="(item,index) in fangList"
-          :key="index"
-        >
-          <van-swipe-cell :right-width="65" async-close @close="onClose" class="swipe-cell">
-            <van-cell-group>
-              <van-cell class="item" async-close clickable>
-                <div class="outside">
-                  <input type="checkbox" class="checkbox-cart" v-if="showEdit">
-                  <div class="pictrueAll">
-                    <div class="pictrue img">
-                      <img :src="item.PicNo" alt>
+        <block>
+          <div
+            class="flex flexAlignCenter list_item bg_fff"
+            v-for="(item,index) in fangList.data"
+            :key="index"
+          >
+            <van-swipe-cell
+              :right-width="65"
+              async-close
+              @close="delectData($event,index,item.Id)"
+              class="swipe-cell"
+            >
+              <van-cell-group>
+                <van-cell class="item">
+                  <div
+                    class="outside"
+                    @click.stop="selectItem(item.Id,index,fangList.selectedIndex,item.Status)"
+                  >
+                    <input
+                      type="checkbox"
+                      class="checkbox-cart"
+                      :disabled="item.Status!==1"
+                      :checked="fangList.selectedIndex===index && item.Status===1"
+                      v-if="showEdit"
+                    >
+                    <div class="pictrueAll">
+                      <span class="isTopTag" v-if="item.IsTop !=='' && item.IsRefresh !==''">已置顶刷新</span>
+                      <span class="isTopTag" v-if="item.IsTop !==''">已置顶</span>
+                      <span class="isTopTag" v-if="item.IsRefresh !==''">已刷新</span>
+                      <div class="pictrue img">
+                        <img :src="item.PicNo" alt>
+                      </div>
+                    </div>
+                    <div class="txtBox flex1">
+                      <p class="title ellipsis" style="color:#1a1a1a">
+                        <span class="typeName" v-if="item.TypeName !==''">{{item.TypeName}}</span>
+                        {{item.Title}}
+                      </p>
+                      <p class="msgList">
+                        <span
+                          class="msgItem"
+                          v-if="item.GladBuyerTrade !==''"
+                        >{{item.GladBuyerTrade}}</span>
+                        <span class="msgItem">{{item.GladBuyArea}}</span>
+                        <span class="msgItem" v-if="item.PlanBuyArea !==''">
+                          {{item.PlanBuyArea}}m<span class="sup">2</span>
+                        </span>
+                      </p>
+                      <p class="priceArea">
+                        <span class="price">￥{{item.PropertyPrice}}</span>
+                      </p>
                     </div>
                   </div>
-                  <div class="txtBox flex1">
-                    <p class="title ellipsis" style="color:#1a1a1a">
-                      <span class="typeName">{{item.TypeName}}</span>
-                      {{item.Title}}
-                    </p>
-                    <p class="msgList">
-                      <span class="msgItem">{{item.GladBuyerTrade}}</span>
-                      <!-- <span class="msgItem">
-                              100m
-                              <span class="sup">2</span>
-                      </span>-->
-                      <span class="msgItem">{{item.GladBuyArea}}</span>
-                      <span class="msgItem">{{item.PlanBuyArea}}</span>
-                    </p>
-                    <p class="priceArea">
-                      <span class="price">{{item.PropertyPrice}}</span>元/月
-                    </p>
-                  </div>
-                </div>
-              </van-cell>
-            </van-cell-group>
-            <span slot="right" class="van-swipe-cell__right">删除</span>
-          </van-swipe-cell>
-        </div>
+                </van-cell>
+              </van-cell-group>
+              <span slot="right" class="van-swipe-cell__right">删除</span>
+            </van-swipe-cell>
+          </div>
+        </block>
       </div>
     </scroll-view>
     <!-- 拼租 置顶 按钮底部 -->
@@ -228,6 +292,7 @@
 <script>
 import { post, valPhone, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
 export default {
+  //Status 0-待审核,1-审核通过,2-审核失败
   data() {
     return {
       showEdit: false, //是否显示底部刷新置顶
@@ -239,11 +304,26 @@ export default {
       ],
       BrandId: 21, //拼租 = 21,组建 = 22,拼活动 = 23,房源 = 24,
       tabindex: 0,
-      pinzuList: {}, //拼租
-      zujianList: {}, //组建
-      huodongList: {}, //活动
-      fangList: {}, //房源
-      hasData: false
+      page: 1,
+      pageSize: 15,
+      pinzuList: {
+        selectedIndex: "",
+        data: []
+      }, //拼租
+      zujianList: {
+        selectedIndex: "",
+        data: []
+      }, //组建
+      huodongList: {
+        selectedIndex: "",
+        data: []
+      }, //活动
+      fangList: {
+        selectedIndex: "",
+        data: []
+      }, //房源
+      hasData: false,
+      isOver: false
     };
   },
   onLoad() {
@@ -257,20 +337,39 @@ export default {
   components: {},
 
   methods: {
-    onClick(e) {
-      e.preventDefault();
-      e.stopPropagation();
-      console.log("e", e);
-    },
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "我的发布"
       });
     },
+    initData() {
+      this.showEdit = false;
+      this.hasData = false;
+      this.isOver = false;
+      this.page = 1;
+    },
+    initDataList() {
+      this.pinzuList = {
+        selectedIndex: "",
+        data: []
+      }; //拼租
+      this.zujianList = {
+        selectedIndex: "",
+        data: []
+      }; //组建
+      this.huodongList = {
+        selectedIndex: "",
+        data: []
+      }; //活动
+      this.fangList = {
+        selectedIndex: "",
+        data: []
+      }; //房源
+    },
     selectIndex(index, id) {
       this.tabindex = index;
       this.BrandId = id;
-      this.showEdit = false;
+      this.initData();
       this.getMyPublish(index);
     },
     setshowEdit(type) {
@@ -291,10 +390,18 @@ export default {
         }
       }
     },
-    selectItem(id, index, selectedIndex) {
+    selectItem(id, index, selectedIndex, status) {
       //如果已经点击编辑的，点全的时候就应该是选择，否则跳转到详情页
       if (this.showEdit) {
         //点击了编辑
+        if (status !== 1) {
+          wx.showToast({
+            title: "该条信息没有审核通过，不可以选择！",
+            icon: "none",
+            duration: 1500
+          });
+          return false;
+        }
         if (index === selectedIndex) {
           return false;
         } else {
@@ -325,7 +432,6 @@ export default {
       let item = "";
       let msg = "";
       let publishId = "";
-      let isGoto = false;
       if (this.tabindex === 0) {
         item = this.pinzuList.data[this.pinzuList.selectedIndex];
       }
@@ -348,16 +454,16 @@ export default {
       );
       if (type === 0) {
         if (isTop !== "") {
-          isGoto = true;
-        } else {
-          msg = "您已经购买了该条信息的置顶功能，是否要继续购买？";
+          msg = "您已经购买了该条信息的置顶功能，是否要继续购买？"; 
+        }else{
+          msg = "您确定要购买该条信息的置顶功能么？";
         }
       }
       if (type === 1) {
         if (isRefresh !== "") {
-          isGoto = true;
-        } else {
           msg = "您已经购买了该条信息的刷新功能，是否要继续购买？";
+        }else{
+          msg = "您确定要购买该条信息的刷新功能么？";
         }
       }
       wx.showModal({
@@ -397,12 +503,20 @@ export default {
         {
           UserId: this.userId,
           Token: this.token,
-          Page: 1,
+          Page: this.page,
+          PageSize: this.pageSize,
           BrandId: this.BrandId
         },
         this.curPage
       ).then(res => {
         if (res.code == 0) {
+          if (this.page === 1) {
+            this.initDataList();
+            this.hasData = false;
+          }
+          if (res.data.length < this.pageSize) {
+            this.isOver = true;
+          }
           if (res.data.length > 0) {
             if (index == 0) {
               res.data.map(item => {
@@ -417,29 +531,56 @@ export default {
                   this.$set(item, "SecondTags", []);
                 }
               });
-              this.pinzuList = Object.assign({}, this.pinzuList, {
-                data: res.data,
-                selectedIndex: ""
-              });
+              this.$set(
+                this.pinzuList,
+                "data",
+                this.pinzuList.data.concat(res.data)
+              );
+              // this.pinzuList = Object.assign({}, this.pinzuList, {
+              //   data: t,
+              //   selectedIndex: ""
+              // });
 
               // this.pinzuList= res.data;
             } else if (index == 1) {
-              this.zujianList = Object.assign({}, this.zujianList, {
-                data: res.data,
-                selectedIndex: ""
+              res.data.map(item => {
+                if (item.NeedJob !== "") {
+                  this.$set(item, "jobArr", item.NeedJob.split(","));
+                } else {
+                  this.$set(item, "jobArr", []);
+                }
               });
+              this.$set(
+                this.zujianList,
+                "data",
+                this.zujianList.data.concat(res.data)
+              );
+              // this.zujianList = Object.assign({}, this.zujianList, {
+              //   data:this.zujianList.concat(res.data),
+              //   selectedIndex: ""
+              // });
               // this.zujianList = res.data;
             } else if (index == 2) {
-              this.huodongList = Object.assign({}, this.huodongList, {
-                data: res.data,
-                selectedIndex: ""
-              });
+              this.$set(
+                this.huodongList,
+                "data",
+                this.huodongList.data.concat(res.data)
+              );
+              // this.huodongList = Object.assign({}, this.huodongList, {
+              //   data: res.data,
+              //   selectedIndex: ""
+              // });
               // this.huodongList = res.data;
             } else {
-              this.fangList = Object.assign({}, this.fangList, {
-                data: res.data,
-                selectedIndex: ""
-              });
+              this.$set(
+                this.fangList,
+                "data",
+                this.fangList.data.concat(res.data)
+              );
+              // this.fangList = Object.assign({}, this.fangList, {
+              //   data: res.data,
+              //   selectedIndex: ""
+              // });
               // this.fangList = res.data;
             }
             this.hasData = true;
@@ -463,19 +604,19 @@ export default {
             title: "删除成功",
             icon: "none",
             duration: 1500,
-            success: ()=> {
+            success: () => {
               setTimeout(() => {
                 if (this.tabindex === 0) {
-                  this.pinzuList.data.splice(index,1);
+                  this.pinzuList.data.splice(index, 1);
                 }
                 if (this.tabindex === 1) {
-                  this.zujianList.data.splice(index,1);
+                  this.zujianList.data.splice(index, 1);
                 }
                 if (this.tabindex === 2) {
-                  this.huodongList.data.splice(index,1);
+                  this.huodongList.data.splice(index, 1);
                 }
                 if (this.tabindex === 3) {
-                  this.fangList.data.splice(index,1);
+                  this.fangList.data.splice(index, 1);
                 }
                 e.mp.detail.instance.close();
               }, 1500);
@@ -483,6 +624,13 @@ export default {
           });
         }
       });
+    },
+    moreLoad() {
+      //加载更多
+      if (!this.isOver) {
+        this.page++;
+        this.getMyPublish(this.tabindex);
+      }
     }
   }
 };
@@ -499,7 +647,7 @@ export default {
 .van-swipe-cell__right {
   display: inline-block;
   width: 130rpx;
-  height: 240rpx;
+  height: 220rpx;
   font-size: 28rpx;
   line-height: 240rpx;
   color: #fff;
@@ -515,6 +663,10 @@ export default {
   padding: 2rpx 10rpx;
   font-size: 22rpx;
   line-height: 1.4;
+  &.zujian__isTopTag {
+    left: 30rpx;
+    top: 20rpx;
+  }
 }
 .storeList.levelPanel {
   padding: 20rpx 0;
@@ -524,6 +676,8 @@ export default {
   padding-left: 0 !important;
   .outside {
     padding: 20rpx 30rpx !important;
+    height: 220rpx;
+    box-sizing: border-box;
   }
 }
 .levelPanel .item .pictrueAll {
@@ -577,11 +731,14 @@ export default {
 .avatarbox {
   background: #ff9325;
   border-radius: 50%;
+  margin-right: 30rpx !important;
+  width: 90rpx !important;
+  height: 90rpx !important;
   .avatar {
     color: #fff;
-    width: 80rpx;
-    height: 80rpx;
-    line-height: 80rpx;
+    width: 90rpx;
+    height: 90rpx;
+    line-height: 90rpx;
     font-size: 24rpx;
     text-align: center;
   }
