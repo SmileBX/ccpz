@@ -489,7 +489,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .pagePerson{
-  background:#dfdedd
+  background:#E6E6E6;
 }
 .storeNowrap .storeList .item,
 .storeNowrap .storeList .pictrueAll img {

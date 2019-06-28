@@ -181,8 +181,8 @@ export default {
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
     this.mobile = wx.getStorageSync("mobile");
-    // this.type = this.$root.$mp.query.type
-    this.type = 1
+    this.type = this.$root.$mp.query.type
+    // this.type = 1
     this.cardBrand = "请选择"
     this.num = 1
     this.statu = 1
