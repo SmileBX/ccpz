@@ -11,30 +11,13 @@
         </p>
         <p class="msgList" v-if="data.FirstTags&&data.FirstTags.Value.length>0">
           <span class="msgItem" v-for="(item,index) in data.FirstTags.Value" :key="index">{{item}}</span>
-          <!-- <span class="msgItem">
-              100m
-              <span class="sup">2</span>
-            </span>
-            <span class="msgItem">3卡2独</span>
-          <span class="msgItem">罗湖</span>-->
+         
         </p>
         <p class="tipsList" v-if="data.SecondTags&&data.SecondTags.Value.length>0">
           <span v-for="(item,index) in data.SecondTags.Value" :key="index">{{item}}</span>
           <!-- <span>可使用公司资质</span>
           <span>可挂牌</span>-->
         </p>
-        <div class="flex">
-          <!-- 公司行业 -->
-          <p class="purpose" v-if="data.CompanyTrade">
-            <span class="label">{{data.CompanyTrade.Text}}</span>
-            <span>{{data.CompanyTrade.Value}}</span>
-          </p>
-          <!-- 意向拼购方行业 -->
-          <p class="purpose" v-if="data.GladBuyerTrade">
-            <span class="label">{{data.GladBuyerTrade.Text}}</span>
-            <span>{{data.GladBuyerTrade.Value}}</span>
-          </p>
-        </div>
       </div>
       <!-- 公司简介 -->
       <div class="comAbout pt15">
@@ -42,123 +25,23 @@
         <div class="weui-cells noBorder__weui-cells column__weui-cells mt0">
           <div class="group flex">
             <!-- 公司名称 -->
-            <div class="weui-cell flex1" v-if="data.Company">
-              <div class="weui-cell__hd">{{data.Company.Text}}</div>
-              <div class="weui-cell__bd">{{data.Company.Value}}</div>
-            </div>
-          </div>
-          <div class="group flex">
-            <!-- 成立时间 -->
-            <div class="weui-cell flex1" v-if="data.SetUpDate">
-              <div class="weui-cell__hd">{{data.SetUpDate.Text}}</div>
-              <div class="weui-cell__bd">{{data.SetUpDate.Value}}</div>
-            </div>
-            <!-- 物业形式 -->
-            <div class="weui-cell flex1" v-if="data.PropertySort">
-              <div class="weui-cell__hd">{{data.PropertySort.Text}}</div>
-              <div class="weui-cell__bd">{{data.PropertySort.Value}}</div>
-            </div>
-          </div>
-          <div class="group flex">
-            <!-- 计划购买面积 -->
-            <div class="weui-cell flex1" v-if="data.PlanBuyArea">
-              <div class="weui-cell__hd">{{data.PlanBuyArea.Text}}</div>
-              <div class="weui-cell__bd">
-                <span>
-                  {{data.PlanBuyArea.Value}}
-                  <!-- <span class="sup">2</span> -->
-                </span>
-              </div>
-            </div>
-            <!-- 购买预算 -->
-            <div class="weui-cell flex1" v-if="data.BuyBudget">
-              <div class="weui-cell__hd">{{data.BuyBudget.Text}}</div>
-              <div class="weui-cell__bd">{{data.BuyBudget.Value}}</div>
-            </div>
-          </div>
-          <div class="group flex">
-            <div class="weui-cell flex1" v-if="data.SetUpDate">
-              <!-- 区间价格 -->
-              <!-- 成立时间 -->
-              <div class="weui-cell__hd">{{data.SetUpDate.Text}}</div>
-              <div class="weui-cell__bd">{{data.SetUpDate.Value}}</div>
-            </div>
-            <div class="weui-cell flex1" v-if="data.IsTrim">
-              <div class="weui-cell__hd">{{data.IsTrim.Text}}</div>
-              <div class="weui-cell__bd">{{data.IsTrim.Value}}</div>
-            </div>
-          </div>
-          <div class="group flex">
-            <div class="weui-cell flex1" v-if="data.PlanBuyDate">
-              <div class="weui-cell__hd">{{data.PlanBuyDate.Text}}</div>
-              <div class="weui-cell__bd">{{data.PlanBuyDate.Value}}</div>
+            <div class="weui-cell group-item" v-for="(item,index) in attrArr" :key="index">
+              <div class="weui-cell__hd">{{item.Text}}</div>
+              <div class="weui-cell__bd">{{item.Value}}</div>
             </div>
           </div>
         </div>
         <!-- 商铺详情的  end -->
-        <!-- 设备详情的 -->
-        <div
-          class="weui-cells noBorder__weui-cells column__weui-cells mt0"
-          style="display:none"
-          v-if="false"
-        >
-          <div class="group flex">
-            <div class="weui-cell flex1">
-              <div class="weui-cell__hd">{{data.SetUpDate.Text}}</div>
-              <div class="weui-cell__bd">{{data.SetUpDate.Value}}</div>
-            </div>
-          </div>
-          <div class="group flex">
-            <div class="weui-cell flex1">
-              <div class="weui-cell__hd">{{data.SetUpDate.Text}}</div>
-              <div class="weui-cell__bd">{{data.SetUpDate.Value}}</div>
-            </div>
-            <div class="weui-cell flex1">
-              <div class="weui-cell__hd">{{data.SetUpDate.Text}}</div>
-              <div class="weui-cell__bd">{{data.SetUpDate.Value}}</div>
-            </div>
-          </div>
-          <div class="group flex">
-            <div class="weui-cell flex1">
-              <div class="weui-cell__hd">{{data.SetUpDate.Text}}</div>
-              <div class="weui-cell__bd">{{data.SetUpDate.Value}}</div>
-            </div>
-            <div class="weui-cell flex1">
-              <div class="weui-cell__hd">{{data.SetUpDate.Text}}</div>
-              <div class="weui-cell__bd">{{data.SetUpDate.Value}}</div>
-            </div>
-          </div>
-          <div class="group flex">
-            <div class="weui-cell flex1">
-              <div class="weui-cell__hd">{{data.SetUpDate.Text}}</div>
-              <div class="weui-cell__bd">{{data.SetUpDate.Value}}</div>
-            </div>
-            <div class="weui-cell flex1">
-              <div class="weui-cell__hd">{{data.SetUpDate.Text}}</div>
-              <div class="weui-cell__bd">{{data.SetUpDate.Value}}</div>
-            </div>
-          </div>
-          <div class="group flex">
-            <div class="weui-cell flex1">
-              <div class="weui-cell__hd">设备使用区域</div>
-              <div class="weui-cell__bd">龙华</div>
-            </div>
-            <div class="weui-cell flex1">
-              <div class="weui-cell__hd">计划购买日期</div>
-              <div class="weui-cell__bd">2019.05.15</div>
-            </div>
-          </div>
-        </div>
-        <!-- 设备详情的  end -->
-        <!-- 公司简介 -->
         <div class="about">
-          <div class="item" v-if="data.Synopsis">
+           <!-- 公司简介 -->
+          <div class="item" v-if="data.Synopsis&&data.Synopsis.Value">
             <h3 class="title label">{{data.Synopsis.Text}}</h3>
             <div class="con">{{data.Synopsis.Value}}</div>
           </div>
-          <div class="item" v-if="data.PlanBuyDate">
-            <h3 class="title label">{{data.PlanBuyDate.Text}}</h3>
-            <div class="con">{{data.PlanBuyDate.Value}}</div>
+          <!-- 公司理念 -->
+          <div class="item" v-if="data.CompanyCulture&&data.CompanyCulture.Value">
+            <h3 class="title label">{{data.CompanyCulture.Text}}</h3>
+            <div class="con">{{data.CompanyCulture.Value}}</div>
           </div>
         </div>
       </div>
@@ -242,14 +125,59 @@ export default {
     return {
       // 属性
       attrArr: [],
-      // 公司信息
-      CompanyInfo: []
       };
   },
   onLoad() {
     console.log("data", this.data);
+    this.onAttrArr()
   },
   methods: {
+    // 属性
+    onAttrArr() {
+      const data = this.data;
+      const attrArr = [];
+      // 公司名称
+      data["Company"] && attrArr.push(data["Company"]);
+      // 公司行业
+      data["CompanyTrade"] && attrArr.push(data["CompanyTrade"]);
+      // 意向拼购方行业
+      data["GladBuyerTrade"] && attrArr.push(data["GladBuyerTrade"]);
+      // 成立时间
+      data["SetUpDate"] && attrArr.push(data["SetUpDate"]);
+      // 注册
+      data["IsRegArea"] && attrArr.push(data["IsRegArea"]);
+      // if (data["IsRegArea"] && data["IsRegArea"].Value) {
+      //   const obj = {
+      //     Text: "注册",
+      //     Value: data["IsRegArea"].Value ? "是" : "否"
+      //   };
+      //   attrArr.push(obj);
+      // }
+      // 本公司是否挂牌
+      data["IsCompanyList"] && attrArr.push(data["IsCompanyList"]);
+      // 是否装修
+      data["IsTrim"] && attrArr.push(data["IsTrim"]);
+      // 计划购买面积
+      data["PlanBuyArea"] && attrArr.push(data["PlanBuyArea"]);
+      // 购买预算
+      data["BuyBudget"] && attrArr.push(data["BuyBudget"]);
+      // 物业形式
+      data["PropertySort"] && attrArr.push(data["PropertySort"]);
+      // 物业类型
+      data["PropertyType"] && attrArr.push(data["PropertyType"]);
+      // 出租卡位
+      data["NeedOfficeNum"] && attrArr.push(data["NeedOfficeNum"]);
+      // 租赁到期时间
+      data["PlanBuyDate"] && attrArr.push(data["PlanBuyDate"]);
+      // 期限
+      data["RentTimeLimit"] && attrArr.push(data["RentTimeLimit"]);
+      // 价格区间
+      data["PropertyPrice1"] && attrArr.push(data["PropertyPrice1"]);
+      // 计划日期
+      data["PlanBuyDate"] && attrArr.push(data["PlanBuyDate"]);
+      this.attrArr = attrArr;
+      console.log(this.attrArr, "this.attrArr");
+    },
     // 查看地理位置
     checkLocation() {
       this.$emit("checkLocation");
@@ -285,8 +213,15 @@ export default {
   .group {
     .weui-cell {
       padding: 6rpx 0 6rpx 30rpx;
-      min-width: 345rpx;
     }
+  }
+}
+.group {
+  flex-flow: row wrap;
+  padding: 0;
+  .group-item {
+    flex: 1 0 auto;
+    min-width: 300rpx;
   }
 }
 </style>
