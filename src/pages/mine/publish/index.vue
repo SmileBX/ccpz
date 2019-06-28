@@ -266,7 +266,7 @@
           </div>
         </block>
       </div>
-      <div class="noData center" style="padding:60rpx 30rpx;" v-if="!hasData && page===1">暂无数据</div>
+      <div class="noData center" style="padding:60rpx 30rpx;" v-if="!hasData && isRequest">暂无数据</div>
       <div
         class="noData center"
         style="margin-top:0;line-height:80rpx;"
@@ -283,8 +283,8 @@
         >取消</span>
       </div>
       <div class="flex center btn-right">
-        <div class="btn bg_ff952e" @tap="gotoBuy(1)">刷新</div>
-        <div class="btn bg_ed3435" @tap="gotoBuy(0)">置顶</div>
+        <div class="btn bg_ff952e" @tap="gotoBuy(2)">刷新</div>
+        <div class="btn bg_ed3435" @tap="gotoBuy(1)">置顶</div>
       </div>
     </div>
     <!-- 底部 -->
@@ -329,7 +329,8 @@ export default {
         data: []
       }, //房源
       hasData: false,
-      isOver: false
+      isOver: false,
+      isRequest:false   //是否请求成功
     };
   },
   onLoad() {
@@ -349,6 +350,7 @@ export default {
       });
     },
     initData() {
+      this.isRequest = false;
       this.showEdit = false;
       this.hasData = false;
       this.isOver = false;
@@ -432,7 +434,7 @@ export default {
       }
     },
     gotoBuy(type) {
-      //0:置顶；1：刷新
+      //1:置顶；2：刷新
       let isTop = "";
       let isRefresh = "";
       let item = "";
@@ -458,14 +460,14 @@ export default {
         "isRefresh:" + isRefresh,
         "publishId:" + publishId
       );
-      if (type === 0) {
+      if (type === 1) {
         if (isTop !== "") {
           msg = "您已经购买了该条信息的置顶功能，是否要继续购买？"; 
         }else{
           msg = "您确定要购买该条信息的置顶功能么？";
         }
       }
-      if (type === 1) {
+      if (type === 2) {
         if (isRefresh !== "") {
           msg = "您已经购买了该条信息的刷新功能，是否要继续购买？";
         }else{
@@ -516,6 +518,7 @@ export default {
         this.curPage
       ).then(res => {
         if (res.code == 0) {
+          this.isRequest = true;
           if (this.page === 1) {
             this.initDataList();
             this.hasData = false;
