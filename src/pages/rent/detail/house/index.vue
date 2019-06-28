@@ -71,7 +71,7 @@
     <div class="section pd15" v-if="data.ShopInfo">
       <h3 class="title detail__title">个人主页</h3>
       <div class="perInfo flex level__perInfo flexAlignCenter">
-        <img :src="data.ShopInfo.Value.Avatar.Value" class="tx" alt>
+        <img :src="data.ShopInfo.Value.Avatar.Value" class="tx" alt @click="$emit('goUserCenter')">
         <div class="info flex1">
           <p class="name">{{data.ShopInfo.Value.Name.Value}}</p>
           <p class="serviceTime">{{data.ShopInfo.Value.Job.Value}}</p>

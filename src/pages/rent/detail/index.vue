@@ -2,10 +2,10 @@
   <div class="pageContent" v-if="showData">
     <!-- 详情 -->
     <!--  -->
-    <pinzu v-if="type==21" :data="data" @checkLocation="checkLocation"></pinzu>
-    <formation v-if="type==22" :data="data" @checkLocation="checkLocation"></formation>
-    <activity v-if="type==23" :data="data" @checkLocation="checkLocation"></activity>
-    <house v-if="type==24" :data="data" @checkLocation="checkLocation"></house>
+    <pinzu v-if="type==21" :data="data" @checkLocation="checkLocation" @goUserCenter="goUserCenter"></pinzu>
+    <formation v-if="type==22" :data="data" @checkLocation="checkLocation" @goUserCenter="goUserCenter"></formation>
+    <activity v-if="type==23" :data="data" @checkLocation="checkLocation" @goUserCenter="goUserCenter"></activity>
+    <house v-if="type==24" :data="data" @checkLocation="checkLocation" @goUserCenter="goUserCenter"></house>
     <!-- 底部 -->
     <div class="ftBtn">
       <div class="inner fixed bm0 flex">
@@ -156,6 +156,12 @@ export default {
           icon:'none'
         })
       }
+    },
+    // 跳转到个人中心
+    goUserCenter(){
+      wx.navigateTo({
+        url: `/pages/mine/person/main?type=2&Id=${this.data.ShopInfo.Value.ShopId}`
+      });
     },
     // 查看地理位置
     checkLocation(){

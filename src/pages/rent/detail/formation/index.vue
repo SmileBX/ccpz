@@ -5,7 +5,7 @@
         <!-- 个人信息 -->
         <div class="shortInfo1 userInfo">
           <div class="legalInfo flex">
-            <img :src="data.ShopInfo.Value.Avatar.Value" class="tx" alt>
+            <img :src="data.ShopInfo.Value.Avatar.Value" class="tx" alt @click="$emit('goUserCenter')">
             <div class="info flex1">
               <div style="margin-bottom:16rpx;" class="flex-center">
                 <span class="name">{{data.ShopInfo.Value.Name.Value}}</span>
