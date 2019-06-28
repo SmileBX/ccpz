@@ -3,7 +3,9 @@
     <!-- 详情 -->
     <!--  -->
     <pinzu v-if="type==21" :data="data" @checkLocation="checkLocation"></pinzu>
-    <formation v-if="type==22" :data="data"></formation>
+    <formation v-if="type==22" :data="data" @checkLocation="checkLocation"></formation>
+    <activity v-if="type==23" :data="data" @checkLocation="checkLocation"></activity>
+    <house v-if="type==24" :data="data" @checkLocation="checkLocation"></house>
     <!-- 底部 -->
     <div class="ftBtn">
       <div class="inner fixed bm0 flex">
@@ -35,10 +37,10 @@ import {post} from '@/utils/index'
 import {getAddressLocation} from '@/utils/location'
 import pinzu from './pinzu/index.vue'
 import formation from './formation/index.vue'
-// import houseItem from "@/components/houseItem.vue";
-// import activityItem from "@/components/activityItem.vue";
+import house from "./house/index.vue";
+import activity from "./activity/index.vue";
 export default {
-  components:{pinzu,formation},
+  components:{pinzu,formation,house,activity},
   data(){
     return {
       id:'',
@@ -59,7 +61,6 @@ export default {
     if(this.$root.$mp.query.type){
       this.type = this.$root.$mp.query.type
     }
-      this.showData=false
   },
   onShow(){
     this.userId = wx.getStorageSync('userId')
@@ -74,15 +75,41 @@ export default {
     },
     // 获取详情
     async getData(){
+      this.showData=false
       const res =await post('Goods/GetRent_xq',{
         UserId:this.userId,
         Token:this.token,
         Id:this.id
       })
       console.log(res,'请求成功')
-      this.data = res.data
       // 收藏
       this.IsCollection= res.data.IsCollection.Value
+      // 公司信息
+      // 只有id不等于0时，展示
+      if(res.data.CompanyInfo.Value.Id.Value){
+        const data = res.data;
+        res.data.CompanyInfos=[]
+        const CompanyInfo = [];
+        const Company = data.CompanyInfo.Value;
+        // 法人
+        Company["LegalPerson"] && CompanyInfo.push(Company["LegalPerson"]);
+        // 籍贯
+        Company["NativePlace"] && CompanyInfo.push(Company["NativePlace"]);
+        // 注册资本
+        Company["RegCapital"] && CompanyInfo.push(Company["RegCapital"]);
+        // 实缴资本
+        Company["RealCapital"] && CompanyInfo.push(Company["RealCapital"]);
+        // 社会信用代码
+        Company["RegNum"] && CompanyInfo.push(Company["RegNum"]);
+        // 营业执照上传
+        Company["BusinessLicense"] && CompanyInfo.push(Company["BusinessLicense"]);
+        // 其他资质证书上传
+        Company["OtherSeniority"] && CompanyInfo.push(Company["OtherSeniority"]);
+        // 官网
+        Company["OfficialWebsite"] && CompanyInfo.push(Company["OfficialWebsite"]);
+        res.data.CompanyInfos =CompanyInfo
+      }
+      this.data = res.data
       this.showData=true
     },
     // 收藏

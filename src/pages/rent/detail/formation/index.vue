@@ -189,13 +189,13 @@
         <div class="con">
           <div class="post mt10">
             <div class="item" v-for="(item,index) in data.PartnerList" :key="index">
-              <div class="item__hd flex selectIpt">
-                <span class="label">职工名称</span>
-                <div class="info flex1">美工</div>
-                <span class="twoArrow twoArrow-down"></span>
+              <div class="item__hd flex selectIpt" v-show="showPartnerStatus !== index">
+                <span class="label">职位名称</span>
+                <div class="info flex1">{{item.Value.JobTitle.Value}}</div>
+                <span class="twoArrow twoArrow-down" @click="showPartner(index)"></span>
               </div>
-              <div class="item__bd" style="display:none;">
-                <div class="twoArrowBox">
+              <div class="item__bd" v-show="showPartnerStatus === index">
+                <div class="twoArrowBox" @click="showPartner(-1)">
                   <span class="twoArrow twoArrow-up"></span>
                 </div>
 
@@ -203,31 +203,31 @@
                   <div class="group flex">
                     <div class="weui-cell flex1">
                       <div class="weui-cell__hd">职位名称</div>
-                      <div class="weui-cell__bd">美工</div>
+                      <div class="weui-cell__bd">{{item.Value.JobTitle.Value}}</div>
                     </div>
                     <div class="weui-cell flex1">
                       <div class="weui-cell__hd">经验要求</div>
-                      <div class="weui-cell__bd">5年</div>
+                      <div class="weui-cell__bd">{{item.Value.Experience.Value}}</div>
                     </div>
                   </div>
                   <div class="group flex">
                     <div class="weui-cell flex1">
                       <div class="weui-cell__hd">最低学历</div>
-                      <div class="weui-cell__bd">大专</div>
+                      <div class="weui-cell__bd">{{item.Value.Degree.Value}}</div>
                     </div>
                     <div class="weui-cell flex1">
                       <div class="weui-cell__hd">合伙待遇</div>
-                      <div class="weui-cell__bd">股份</div>
+                      <div class="weui-cell__bd">{{item.Value.Treatment.Value}}</div>
                     </div>
                   </div>
                   <div class="group flex">
                     <div class="weui-cell flex1">
                       <div class="weui-cell__hd">工作性质</div>
-                      <div class="weui-cell__bd">全职</div>
+                      <div class="weui-cell__bd">{{item.Value.JobType.Value}}</div>
                     </div>
                     <div class="weui-cell flex1">
                       <div class="weui-cell__hd">工作时间</div>
-                      <div class="weui-cell__bd">8小时/天</div>
+                      <div class="weui-cell__bd">{{item.Value.WorkTime.Value}}</div>
                     </div>
                   </div>
                   <div class="group">
@@ -237,62 +237,7 @@
                     <div class="weui-cell">
                       <div
                         class="weui-cell__bd"
-                      >美工需要扎实的技术基础的，如果以前没做过，那么等着被批评的准备吧。因为每个人的欣赏和眼光不一样，现在主流的还是用PS，但是有些情况下需要出海报或者广告图的时候色彩会和打印室有误差。 其中涉及到调色的问题好。</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="item overed__item">
-              <div class="item__hd flex selectIpt" style="display:none;">
-                <span class="label">职工名称</span>
-                <div class="info flex1">设计师</div>
-                <span class="twoArrow twoArrow-down"></span>
-              </div>
-              <div class="item__bd">
-                <div class="twoArrowBox">
-                  <span class="twoArrow twoArrow-up"></span>
-                </div>
-                <img src="/static/images/icons/overedStatus.png" class="icons_status" alt>
-                <div class="weui-cells noBorder__weui-cells column__weui-cells mt0">
-                  <div class="group flex">
-                    <div class="weui-cell flex1">
-                      <div class="weui-cell__hd">职位名称</div>
-                      <div class="weui-cell__bd">设计师</div>
-                    </div>
-                    <div class="weui-cell flex1">
-                      <div class="weui-cell__hd">经验要求</div>
-                      <div class="weui-cell__bd">5年</div>
-                    </div>
-                  </div>
-                  <div class="group flex">
-                    <div class="weui-cell flex1">
-                      <div class="weui-cell__hd">最低学历</div>
-                      <div class="weui-cell__bd">大专</div>
-                    </div>
-                    <div class="weui-cell flex1">
-                      <div class="weui-cell__hd">合伙待遇</div>
-                      <div class="weui-cell__bd">股份</div>
-                    </div>
-                  </div>
-                  <div class="group flex">
-                    <div class="weui-cell flex1">
-                      <div class="weui-cell__hd">工作性质</div>
-                      <div class="weui-cell__bd">全职</div>
-                    </div>
-                    <div class="weui-cell flex1">
-                      <div class="weui-cell__hd">工作时间</div>
-                      <div class="weui-cell__bd">8小时/天</div>
-                    </div>
-                  </div>
-                  <div class="group">
-                    <div class="weui-cell">
-                      <div class="weui-cell__hd">职位描述</div>
-                    </div>
-                    <div class="weui-cell">
-                      <div
-                        class="weui-cell__bd"
-                      >美工需要扎实的技术基础的，如果以前没做过，那么等着被批评的准备吧。因为每个人的欣赏和眼光不一样，现在主流的还是用PS，但是有些情况下需要出海报或者广告图的时候色彩会和打印室有误差。 其中涉及到调色的问题好。</div>
+                      >{{item.Value.PartDesc.Value}}</div>
                     </div>
                   </div>
                 </div>
@@ -302,25 +247,6 @@
         </div>
       </div>
       <!-- 人员需求 end -->
-    </div>
-    <!-- 底部 -->
-    <div class="ftBtn">
-      <div class="inner fixed bm0 flex">
-        <div class="iconGroup flex flexAlignCenter">
-          <div class="item flex1">
-            <img src="/static/images/icons/jubao.jpg" alt>
-            <p>举报</p>
-          </div>
-          <div class="item flex1">
-            <img src="/static/images/icons/shoucang.jpg" alt>
-            <p>收藏</p>
-          </div>
-        </div>
-        <div class="btns flex1 flex center">
-          <div class="btn flex1 bg_ff952e color_fff">极速联系</div>
-          <div class="btn flex1 bg_ed3435 color_fff">加好友</div>
-        </div>
-      </div>
     </div>
   </div>
 </template>
@@ -336,7 +262,8 @@ export default {
     return {
       //   echarts,
       //   onInit: initChart
-      attrArr:[]
+      attrArr:[],
+      showPartnerStatus:-1,
     };
   },
   onLoad() {
@@ -359,7 +286,10 @@ export default {
         title: "公司详情"
       });
     },
-
+    // 显示隐藏职位信息
+    showPartner(index){
+      this.showPartnerStatus = index;
+    },
     // 查看地理位置
     checkLocation() {
       this.$emit("checkLocation");
