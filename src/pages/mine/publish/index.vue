@@ -266,6 +266,12 @@
           </div>
         </block>
       </div>
+      <div class="noData center" style="padding:60rpx 30rpx;" v-if="!hasData && page===1">暂无数据</div>
+      <div
+        class="noData center"
+        style="margin-top:0;line-height:80rpx;"
+        v-if="isOver&& page!==1"
+      >我也是有底线的!</div>
     </scroll-view>
     <!-- 拼租 置顶 按钮底部 -->
     <div class="ftBtn fixed bm0 flex flexAlignCenter" v-if="showEdit">
@@ -536,12 +542,6 @@ export default {
                 "data",
                 this.pinzuList.data.concat(res.data)
               );
-              // this.pinzuList = Object.assign({}, this.pinzuList, {
-              //   data: t,
-              //   selectedIndex: ""
-              // });
-
-              // this.pinzuList= res.data;
             } else if (index == 1) {
               res.data.map(item => {
                 if (item.NeedJob !== "") {
@@ -555,33 +555,18 @@ export default {
                 "data",
                 this.zujianList.data.concat(res.data)
               );
-              // this.zujianList = Object.assign({}, this.zujianList, {
-              //   data:this.zujianList.concat(res.data),
-              //   selectedIndex: ""
-              // });
-              // this.zujianList = res.data;
             } else if (index == 2) {
               this.$set(
                 this.huodongList,
                 "data",
                 this.huodongList.data.concat(res.data)
               );
-              // this.huodongList = Object.assign({}, this.huodongList, {
-              //   data: res.data,
-              //   selectedIndex: ""
-              // });
-              // this.huodongList = res.data;
             } else {
               this.$set(
                 this.fangList,
                 "data",
                 this.fangList.data.concat(res.data)
               );
-              // this.fangList = Object.assign({}, this.fangList, {
-              //   data: res.data,
-              //   selectedIndex: ""
-              // });
-              // this.fangList = res.data;
             }
             this.hasData = true;
           }
