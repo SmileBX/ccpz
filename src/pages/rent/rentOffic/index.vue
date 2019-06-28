@@ -1500,7 +1500,7 @@ export default {
       TimeLimit:"",//接听时间段
       TimeLimitPlaceHolder:"",//
       RentTime:"",//接听时间
-      RentTimeBox:"",//临时接时间的
+      RentTimeBox:[0,0,0,0],//临时接时间的
 
 
       upImgTitle:"",//上传图片标题
@@ -1903,7 +1903,7 @@ export default {
     },
     //确定选择
     subConfirm(){
-      console.log(this.list,this.statu)
+      // console.log(this.list,this.statu)
       for(let i in this.list){
           if(i*1 == this.statu){
               if(this.masktitle =='请选择学历结构' ){
@@ -1945,6 +1945,7 @@ export default {
           }
       }
       if(this.masktitle == '请选择接听时间'){
+        console.log(this.RentTimeBox,"RentTimeBox___________")
         if(this.RentTimeBox[0]>this.RentTimeBox[2]){
           wx.showToast({
               title: '选择时间有误！',

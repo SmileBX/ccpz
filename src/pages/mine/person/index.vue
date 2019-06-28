@@ -155,9 +155,12 @@
               <span class="icon-arrow arrow-right"></span>
             </p>
           </div>
-          <div class="flex flexAlignCenter justifyContentCenter mt15" v-if="personInfo.EduList.length<=0" @tap="AddExperience(1)">
+          <div class="flex flexAlignCenter justifyContentCenter mt15" v-if="type==1&&personInfo.EduList.length<=0" @tap="AddExperience(1)">
               <img src="/static/images/icons/add2.jpg" alt="" class="add_pic mrr2">
-              <span >添加经历</span>
+              <span>添加经历</span>
+          </div>
+          <div class="flex flexAlignCenter justifyContentCenter mt15" v-if="type==2&&personInfo.WorkList.length<=0" @tap="AddExperience(2)">
+              <span>未添加经历</span>
           </div>
         </div>
       </div>
@@ -180,9 +183,12 @@
                 <span class="icon-arrow arrow-right"></span>
               </p>
           </div>
-          <div class="flex flexAlignCenter justifyContentCenter mt15" v-if="personInfo.WorkList.length<=0" @tap="AddExperience(2)">
+          <div class="flex flexAlignCenter justifyContentCenter mt15" v-if="type==1&&personInfo.WorkList.length<=0" @tap="AddExperience(2)">
               <img src="/static/images/icons/add2.jpg" alt="" class="add_pic mrr2">
               <span>添加经历</span>
+          </div>
+          <div class="flex flexAlignCenter justifyContentCenter mt15" v-if="type==2&&personInfo.WorkList.length<=0" @tap="AddExperience(2)">
+              <span>未添加经历</span>
           </div>
         </div>
       </div>
@@ -239,7 +245,7 @@
           </div>
       </div>
       <!--照片-->
-      <div class="form-cells-item pall bg_fff" style="margin-top:20rpx" v-if="type==2&&companyInfo[0].CompanyPic.length>0" >
+      <div class="form-cells-item pall bg_fff" style="margin-top:20rpx" v-if="type==2&&companyInfo[0].CompanyPic[0].length>0" >
         <div class="flex justifyContentBetween">
               <h3 class="title detail__title fontBold">公司照片</h3>
           </div>
