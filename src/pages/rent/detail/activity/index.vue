@@ -136,16 +136,16 @@ export default {
     onAttrArr() {
       const data = this.data;
       const attrArr = [];
-      // 公司名称
-      data["Company"] && attrArr.push(data["Company"]);
+      // 活动名称
+      data["Founder"] && attrArr.push(data["Founder"]);
       // 公司行业
       data["CompanyTrade"] && attrArr.push(data["CompanyTrade"]);
-      // 意向拼购方行业
+      // 拼活动公司行业/主业
       data["GladBuyerTrade"] && attrArr.push(data["GladBuyerTrade"]);
-      // 成立时间
-      data["SetUpDate"] && attrArr.push(data["SetUpDate"]);
-      // 注册
-      data["IsRegArea"] && attrArr.push(data["IsRegArea"]);
+      // 本公司人数
+      data["PlanAllNum"] && attrArr.push(data["PlanAllNum"]);
+      // 拼活动公司人数
+      data["PlanBuyNum"] && attrArr.push(data["PlanBuyNum"]);
       // if (data["IsRegArea"] && data["IsRegArea"].Value) {
       //   const obj = {
       //     Text: "注册",
@@ -153,28 +153,15 @@ export default {
       //   };
       //   attrArr.push(obj);
       // }
-      // 本公司是否挂牌
-      data["IsCompanyList"] && attrArr.push(data["IsCompanyList"]);
-      // 是否装修
-      data["IsTrim"] && attrArr.push(data["IsTrim"]);
-      // 计划购买面积
-      data["PlanBuyArea"] && attrArr.push(data["PlanBuyArea"]);
-      // 购买预算
-      data["BuyBudget"] && attrArr.push(data["BuyBudget"]);
-      // 物业形式
-      data["PropertySort"] && attrArr.push(data["PropertySort"]);
-      // 物业类型
-      data["PropertyType"] && attrArr.push(data["PropertyType"]);
-      // 出租卡位
-      data["NeedOfficeNum"] && attrArr.push(data["NeedOfficeNum"]);
-      // 租赁到期时间
-      data["PlanBuyDate"] && attrArr.push(data["PlanBuyDate"]);
-      // 期限
-      data["RentTimeLimit"] && attrArr.push(data["RentTimeLimit"]);
-      // 价格区间
-      data["PropertyPrice1"] && attrArr.push(data["PropertyPrice1"]);
-      // 计划日期
-      data["PlanBuyDate"] && attrArr.push(data["PlanBuyDate"]);
+      // 活动类型
+      data["TypeName"] && attrArr.push(data["TypeName"]);
+      // 男女比例
+      data["SexRatio"] && attrArr.push(data["SexRatio"]);
+      // 起止时间
+      data["StartEndTime"] && attrArr.push(data["StartEndTime"]);
+      // 学历结构
+      data["EducationLvl"] && attrArr.push(data["EducationLvl"]);
+      
       this.attrArr = attrArr;
       console.log(this.attrArr, "this.attrArr");
     },

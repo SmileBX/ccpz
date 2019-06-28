@@ -9,14 +9,12 @@
         <p class="priceArea">
           <span class="price">{{data.PropertyPrice.Value}}</span>元/月
         </p>
-        <p class="msgList" v-if="data.FirstTags&&data.FirstTags.Value.length>0">
-          <span class="msgItem" v-for="(item,index) in data.FirstTags.Value" :key="index">{{item}}</span>
-         
+        <p class="msgList" v-if="FirstTags&&FirstTags.length>0">
+          <span class="msgItem" v-for="(item,index) in FirstTags" :key="index">{{item}}</span>
+          
         </p>
-        <p class="tipsList" v-if="data.SecondTags&&data.SecondTags.Value.length>0">
-          <span v-for="(item,index) in data.SecondTags.Value" :key="index">{{item}}</span>
-          <!-- <span>可使用公司资质</span>
-          <span>可挂牌</span>-->
+        <p class="tipsList" v-if="data.ServiceName&&data.ServiceName.Value.length>0">
+          <span v-for="(item,index) in data.ServiceName.Value" :key="index">{{item}}</span>
         </p>
       </div>
       <!-- 公司简介 -->
@@ -32,16 +30,15 @@
           </div>
         </div>
         <!-- 商铺详情的  end -->
-        <div class="about">
-           <!-- 公司简介 -->
-          <div class="item" v-if="data.Synopsis&&data.Synopsis.Value">
+        <!-- 公司简介 -->
+        <div class="about" v-if="false">
+          <div class="item" v-if="data.Synopsis">
             <h3 class="title label">{{data.Synopsis.Text}}</h3>
             <div class="con">{{data.Synopsis.Value}}</div>
           </div>
-          <!-- 公司理念 -->
-          <div class="item" v-if="data.CompanyCulture&&data.CompanyCulture.Value">
-            <h3 class="title label">{{data.CompanyCulture.Text}}</h3>
-            <div class="con">{{data.CompanyCulture.Value}}</div>
+          <div class="item" v-if="data.PlanBuyDate">
+            <h3 class="title label">{{data.PlanBuyDate.Text}}</h3>
+            <div class="con">{{data.PlanBuyDate.Value}}</div>
           </div>
         </div>
       </div>
@@ -63,14 +60,13 @@
       </div>
     </div>
     <!-- 公司信息 end -->
-    <!-- 拼租条件 -->
-    <div class="section pd15" v-if="data.ServiceName">
+    <!-- 设施/配置 -->
+    <div class="section pd15" v-if="data.ServiceName&&data.ServiceName.Value.length>0">
       <h3 class="title detail__title">{{data.ServiceName.Text}}</h3>
       <p class="tipsList border__tipsList">
         <span v-for="(item,index) in data.ServiceName.Value" :key="index">{{item}}</span>
       </p>
     </div>
-    <!-- 拼租条件  end -->
     <!-- 个人主页不同的样式 -->
     <div class="section pd15" v-if="data.ShopInfo">
       <h3 class="title detail__title">个人主页</h3>
@@ -84,19 +80,23 @@
       </div>
     </div>
     <!-- 个人主页不同的样式  end -->
-    <!-- 办公室描述 -->
+    <!-- 简介 -->
+    <div class="section" v-if="data.Synopsis">
+      <div class="locationBox pd15">
+        <h3 class="title detail__title">{{data.Synopsis.Text}}</h3>
+        <div class="con" v-html="data.Synopsis.Value"></div>
+      </div>
+    </div>
+    <!-- 简介 end -->
+    <!-- 亮点 -->
     <div class="section" v-if="data.ContentDetail">
       <div class="locationBox pd15">
         <h3 class="title detail__title">{{data.ContentDetail.Text}}</h3>
-        <div class="con" v-html="data.ContentDetail.Value">
-          <!-- <p>1、交通：距离地铁2号线科苑站约221米交通四通八达，畅通无阻;员工， 上下班在地理位置.上没有任何困扰</p>
-            <p>2、装修：精装修、可分割</p>
-            <p>3、管理费空调费: 27.5元/m</p>
-          <p>4、家私：可商量带家私事宜</p>-->
-        </div>
+        <div class="con" v-html="data.ContentDetail.Value"></div>
       </div>
     </div>
-    <!-- 办公室描述 end -->
+    <!-- 亮点 end -->
+    <!-- 拼租条件  end -->
     <div class="section">
       <div class="locationBox pd15">
         <h3 class="title detail__title">地理位置</h3>
@@ -123,58 +123,80 @@ export default {
   },
   data() {
     return {
+      // 面积、地区、等tag
+      FirstTags: [],
       // 属性
-      attrArr: [],
-      };
+      attrArr: []
+    };
   },
   onLoad() {
     console.log("data", this.data);
-    this.onAttrArr()
+    this.onFirstTags();
+    this.onAttrArr();
   },
   methods: {
+    // 面积、地区、等tag
+    onFirstTags() {
+      const data = this.data;
+      this.FirstTags = [];
+      const FirstTags = [];
+      data["PlanBuyArea"] && FirstTags.push(data["PlanBuyArea"].Value);
+      data["NeedApartment"] && FirstTags.push(data["NeedApartment"].Value);
+      data["GladBuyArea"] && FirstTags.push(data["GladBuyArea"].Value);
+      this.FirstTags = FirstTags;
+      console.log(this.FirstTags, "this.FirstTags");
+    },
+
     // 属性
     onAttrArr() {
       const data = this.data;
       const attrArr = [];
-      // 公司名称
-      data["Company"] && attrArr.push(data["Company"]);
-      // 公司行业
-      data["CompanyTrade"] && attrArr.push(data["CompanyTrade"]);
-      // 意向拼购方行业
-      data["GladBuyerTrade"] && attrArr.push(data["GladBuyerTrade"]);
-      // 成立时间
-      data["SetUpDate"] && attrArr.push(data["SetUpDate"]);
-      // 注册
-      data["IsRegArea"] && attrArr.push(data["IsRegArea"]);
-      // if (data["IsRegArea"] && data["IsRegArea"].Value) {
-      //   const obj = {
-      //     Text: "注册",
-      //     Value: data["IsRegArea"].Value ? "是" : "否"
-      //   };
-      //   attrArr.push(obj);
-      // }
-      // 本公司是否挂牌
-      data["IsCompanyList"] && attrArr.push(data["IsCompanyList"]);
-      // 是否装修
-      data["IsTrim"] && attrArr.push(data["IsTrim"]);
-      // 计划购买面积
-      data["PlanBuyArea"] && attrArr.push(data["PlanBuyArea"]);
-      // 购买预算
-      data["BuyBudget"] && attrArr.push(data["BuyBudget"]);
-      // 物业形式
-      data["PropertySort"] && attrArr.push(data["PropertySort"]);
-      // 物业类型
+      // 类型
       data["PropertyType"] && attrArr.push(data["PropertyType"]);
-      // 出租卡位
-      data["NeedOfficeNum"] && attrArr.push(data["NeedOfficeNum"]);
-      // 租赁到期时间
-      data["PlanBuyDate"] && attrArr.push(data["PlanBuyDate"]);
-      // 期限
-      data["RentTimeLimit"] && attrArr.push(data["RentTimeLimit"]);
-      // 价格区间
-      data["PropertyPrice1"] && attrArr.push(data["PropertyPrice1"]);
-      // 计划日期
-      data["PlanBuyDate"] && attrArr.push(data["PlanBuyDate"]);
+      // 性质
+      data["PropertySort"] && attrArr.push(data["PropertySort"]);
+      // 注册
+      if (data["IsRegArea"] && data["IsRegArea"].Value) {
+        const obj = {
+          Text: "注册",
+          Value: data["IsRegArea"].Value ? "是" : "否"
+        };
+        attrArr.push(obj);
+      }
+      // 楼层
+      data["NeedFloor"] && attrArr.push(data["NeedFloor"]);
+      // 面宽
+      data["NeedFaceWidth"] && attrArr.push(data["NeedFaceWidth"]);
+      // 进深
+      data["NeedFloorDepth"] && attrArr.push(data["NeedFloorDepth"]);
+      // 层高
+      data["NeedFloorHeight"] && attrArr.push(data["NeedFloorHeight"]);
+      // 经营行业
+      data["GladBuyerTrade"] && attrArr.push(data["GladBuyerTrade"]);
+      // 经营状态
+      data["RunStatus"] && attrArr.push(data["RunStatus"]);
+      // 装修
+      if (data["IsTrim"] && data["IsTrim"].Value) {
+        const obj = {
+          Text: "装修",
+          Value: data["IsTrim"].Value ? "是" : "否"
+        };
+        attrArr.push(obj);
+      }
+      // 分割
+      if (data["IsSubPack"] && data["IsSubPack"].Value) {
+        const obj = {
+          Text: "分割",
+          Value: data["IsSubPack"].Value ? "是" : "否"
+        };
+        attrArr.push(obj);
+      }
+      // 付款方式
+      data["PayType"] && attrArr.push(data["PayType"]);
+      // 起租期限
+      data["PlanRentDate"] && attrArr.push(data["PlanRentDate"]);
+      // 考虑容纳工位数
+      data["NeedStation"] && attrArr.push(data["NeedStation"]);
       this.attrArr = attrArr;
       console.log(this.attrArr, "this.attrArr");
     },

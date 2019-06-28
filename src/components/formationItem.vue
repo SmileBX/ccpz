@@ -35,7 +35,7 @@
         <div style="margin-bottom:16rpx;">
           <span class="name">{{item.NickName}}</span>
           <img src="/static/images/icons/v.jpg" class="icon_attestation" alt v-if="item.IsAUT*1">
-          <span class="lookAttestation">2小时前活跃</span>
+          <span class="lookAttestation">{{item.AddTime}}</span>
         </div>
         <p class="msgList">
           <span class="msgItem">{{item.LegalPerson}}</span>
