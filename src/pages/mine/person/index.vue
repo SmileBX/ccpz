@@ -464,14 +464,31 @@ export default {
         UserId:this.userId,
         Token:this.token,
         Type:0,
-        Id:this.id
+        Id:this.Id 
       }
       if(!this.IsCollection){
-        await post('User/AddCollections',params)
-        wx.showToast({title:'收藏成功'})
+        let res = await post('User/AddCollections',params)
+        if(res.code==0){
+           wx.showToast({title:'收藏成功'})
+        }else{
+          wx.showToast({
+            title:res.msg,
+            icon:"none"
+            })
+          return false
+        }
+       
       }else{
-        await post('User/ReCollections',params)
-        wx.showToast({title:'取消收藏成功'})
+        let res = await post('User/ReCollections',params)
+        if(res.code==0){
+           wx.showToast({title:'取消收藏成功'})
+        }else{
+          wx.showToast({
+            title:res.msg,
+            icon:"none"
+            })
+          return false
+        }
       }
       // const res = await post('User/AddCollections',params)
       this.IsCollection = !this.IsCollection

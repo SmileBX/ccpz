@@ -53,7 +53,7 @@
       </div>
       <div class="section radius8 bg_fff mt10 mb20">
         <!-- 邀请好友送积分 -->
-        <button style="padding:30rpx 20rpx;border:none;border-bottom:1px solid #e5e5e5;" open-type="share" plain>
+        <div style="padding:30rpx 20rpx;border-bottom:1px solid #e5e5e5;" @tap="gotoPage2(4)">
           <div class="inviteBox flex flexAlignCenter">
             <div class="flex1">
               <img src="/static/images/icons/invite.png" class="icon_invite" alt>邀请好友加入
@@ -61,7 +61,7 @@
             <span class="msg">有机会得600积分</span>
             <span class="icon-arrow arrow-right"></span>
           </div>
-        </button>
+        </div>
         <!-- 邀请好友送积分  end -->
         <div class="navBox">
           <ul class="navList li_25 center navList2">
@@ -170,7 +170,7 @@ export default {
   data() {
     return {
       menuArr:["/pages/member2/memberManage/main","/pages/member/serviceCardChange/main","/pages/member/integral/main","/pages/mine2/myVertical/main","/pages/mine2/myCoupon/main","/pages/member2/invoiceList/main","/pages/member2/feedback/main?type=2","/pages/member2/feedback/main?type=1","/pages/member2/feedback/main?type=3","/pages/member/help/main","/pages/member/contact/main"],
-      menuArr2:["/pages/mine2/account/main","/pages/mine2/myCollect/main","/pages/mine/publish/main","/pages/member/browse/main"],
+      menuArr2:["/pages/mine2/account/main","/pages/mine2/myCollect/main","/pages/mine/publish/main","/pages/member/browse/main","/pages/inviteFriends/main"],
       curPage: "",
       userId: "",
       token: "",
