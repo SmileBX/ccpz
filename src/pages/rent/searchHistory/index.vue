@@ -20,6 +20,7 @@
         <div class="tipsList border__tipsList bg_grey" v-if="hisList.length>0">
           <span v-for="(item,index) in hisList" :key="index" :class="{'active':hisTabIndex===index}"  @click="selectHistory(1,index,item)">{{item}}</span>
         </div>
+        <div class="noData center" style="padding:30rpx;margin-top:0;" v-if="isRequest && hisList.length===0">暂无数据</div>
       </div>
       <div class="item">
         <div class="section__hd">
@@ -28,6 +29,7 @@
         <div class="tipsList border__tipsList bg_grey"  v-if="hotList.length>0">
           <span v-for="(item,index) in hotList" :class="{'active':hotTabIndex===index}" :key="index" @click="selectHistory(2,index,item)">{{item}}</span>
         </div>
+        <div class="noData center" style="padding:30rpx;margin-top:0;" v-if="isRequest && hotList.length===0">暂无数据</div>
       </div>
     </div>
   </div>
@@ -44,7 +46,7 @@ export default {
       brandId:"",
       hotList:[],  //热门搜素
       hisList:[],  //历史搜索
-      hasData:false,
+      isRequest:false,
       hotTabIndex:"",
       hisTabIndex:"",
       keyWords:""
@@ -133,7 +135,7 @@ export default {
         BrandId:this.brandId
       },this.curPage).then(res => {
         if(res.code===0){
-          this.hasData = true;
+          this.isRequest = true;
           if(res.data.HisSearch.length>0){
             this.hisList = res.data.HisSearch;
           }
