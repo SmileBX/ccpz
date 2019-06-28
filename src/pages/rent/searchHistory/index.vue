@@ -43,7 +43,7 @@ export default {
       curPage:"",
       brandId:"",
       hotList:[],  //热门搜素
-      hisList:["对方","看过"],  //历史搜索
+      hisList:[],  //历史搜索
       hasData:false,
       hotTabIndex:"",
       hisTabIndex:"",
