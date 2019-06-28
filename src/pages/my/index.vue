@@ -218,12 +218,12 @@ export default {
     },
     gotoPerson(){
       wx.navigateTo({
-        url:"/pages/mine/person/main"
+        url:"/pages/mine/person/main?type=1"
       })
     },
     gotoSet(){
       wx.navigateTo({
-        url:"/pages/member/set/main?type=1"
+        url:"/pages/member/set/main"
       })
     },
     editInfo(){
