@@ -6,7 +6,7 @@
             <div class="box">
                 <div class="box__bd">
                    <img src="/static/images/icons/invite_img1.jpg" mode="widthFix" class="img_1" alt="">
-                   <div class="btn">立即邀请</div>
+                   <button class="btn" open-type="share" plain style="border:none">立即邀请</button>
                 </div>
             </div>
             <!-- 第二个框 -->
@@ -41,11 +41,11 @@
                     <div class="box__hd box__hd2"><span class="title">我的邀请战绩</span></div>
                     <ul class="gains flex center">
                         <li class="item flex1">
-                            <p class="num">0</p>
+                            <p class="num">{{num}}</p>
                             <p class="title">共邀请好友</p>
                         </li>
                         <li class="item flex1">
-                            <p class="num">0</p>
+                            <p class="num">{{score}}</p>
                             <p class="title">获得积分</p>
                         </li>
                     </ul>
@@ -56,20 +56,58 @@
     </div>
 </template>
 <script>
+import { post, valPhone, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
 export default {
     onLoad() {
       this.setBarTitle();
   },
-  onShow() {},
+  onShow() {
+    this.curPage = getCurrentPageUrlWithArgs();
+    this.userId = wx.getStorageSync("userId");
+    this.token = wx.getStorageSync("token");
+    this.curPage = getCurrentPageUrlWithArgs();
+    this.getShare()
+  },
   data() {
-    return {};
+    return {
+      curPage: "",
+      userId: "",
+      token: "",
+      ReferralCode:"",//邀请码
+      score:"",
+      num:""
+
+    };
   },
   methods: {
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "邀请好友"
       });
+    },
+    getShare(){
+        post('User/GetUserShareId',{
+            UserId: this.userId,
+            Token: this.token,
+        },this.curPage).then(res=>{
+            if(res.code==0){
+                this.ReferralCode = res.data.ReferralCode
+                this.score =  res.data.ShareScore
+                this.num = res.data.ShareNum
+            }
+        })
+    },
+  },
+  onShareAppMessage: function (res) {
+        if (res.from === 'button') {
+        // 来自页面内转发按钮
+        console.log(res.target,"___")
+        }
+        return {
+            title: '分享好友得积分',
+            imageUrl:'/static/images/icons/add.jpg',
+            path: '/pages/loginWay/main?ReferralCode='+this.ReferralCode
+        }
     }
-  }
 }
 </script>
