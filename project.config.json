@@ -43,7 +43,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 52,
+			"current": 60,
 			"list": [
 				{
 					"id": 0,
@@ -424,7 +424,7 @@
 					"scene": null
 				},
 				{
-					"id": 55,
+					"id": 54,
 					"name": "我的收藏",
 					"pathName": "pages/mine2/myCollect/main",
 					"query": "",
@@ -466,7 +466,7 @@
 					"scene": null
 				},
 				{
-					"id": -1,
+					"id": 60,
 					"name": "邀请好友页面",
 					"pathName": "pages/inviteFriends/main",
 					"query": "",
