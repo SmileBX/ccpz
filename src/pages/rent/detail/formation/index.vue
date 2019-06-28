@@ -50,25 +50,6 @@
               <div class="weui-cell__hd">{{item.Text}}</div>
               <div class="weui-cell__bd">{{item.Value}}</div>
             </div>
-            <!-- 活动频率 -->
-            <!-- <div class="weui-cell flex1" v-if="data.RingRate">
-              <div class="weui-cell__hd">{{data.RingRate.Text}}</div>
-              <div class="weui-cell__bd">{{data.RingRate.Value}}</div>
-            </div> -->
-            <!-- 成立时间 -->
-            <!-- <div class="weui-cell flex1" v-if="data.PlanBuyDate">
-              <div class="weui-cell__hd">{{data.PlanBuyDate.Text}}</div>
-              <div class="weui-cell__bd">{{data.PlanBuyDate.Value}}</div>
-            </div> 
-            <div class="weui-cell flex1" v-if="data.PlanBuyArea">
-              <div class="weui-cell__hd">{{data.PlanBuyArea.Text}}</div>
-              <div class="weui-cell__bd">{{data.PlanBuyArea.Value}}</div>
-            </div>-->
-            <!-- 计划人数 -->
-            <!-- <div class="weui-cell flex1" v-if="data.RingNum">
-              <div class="weui-cell__hd">{{data.RingNum.Text}}</div>
-              <div class="weui-cell__bd">{{data.RingNum.Value}}</div>
-            </div> -->
           </div>
 
         </div>
@@ -269,15 +250,13 @@ export default {
   onLoad() {
     this.attrArr=[]
     console.log("attrArr1", this.data);
-    Object.keys(this.data).map(key=>{
-        const attr = this.data[key]
-        key==='Founder'&&(this.attrArr.push(attr))
-        key==='PlanBuyDate'&&(this.attrArr.push(attr))
-        key==='RingRate'&&(this.attrArr.push(attr))
-        key==='PlanBuyArea'&&(this.attrArr.push(attr))
-        key==='RingNum'&&(this.attrArr.push(attr))
+        const data = this.data
+        data['Founder']&&(this.attrArr.push(data['Founder']))
+        data['PlanBuyDate']&&(this.attrArr.push(data['PlanBuyDate']))
+        data['RingRate']&&(this.attrArr.push(data['RingRate']))
+        data['PlanBuyArea']&&(this.attrArr.push(data['PlanBuyArea']))
+        data['RingNum']&&(this.attrArr.push(data['RingNum']))
 
-    })
     console.log("attrArr", this.attrArr);
   },
   methods: {
