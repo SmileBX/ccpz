@@ -26,6 +26,7 @@ export default {
       userId: "",
       token: "",
       OnlyCode:"",//兑换码
+      changeName:""
     }
   },
   onShow(){
@@ -52,12 +53,13 @@ export default {
           },this.curPage).then(res=>{
             console.log("兑换REs:",res)
             if(res.code == 0){
+              this.changeName = res.data.Name
               wx.showToast({
                 title:res.msg,
                 icon:"success",
                 duration:1500})
               setTimeout(()=>{
-                wx.navigateTo({url:"/pages/member/changeStatus/main"})
+                wx.navigateTo({url:"/pages/member/changeStatus/main?changeName="+this.changeName})
               },1500)
             }else{
               wx.showToast({
