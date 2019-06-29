@@ -23,7 +23,8 @@
         <div class="weui-cells noBorder__weui-cells column__weui-cells mt0">
           <div class="group flex">
             <!-- 公司名称 -->
-            <div class="weui-cell group-item" v-for="(item,index) in attrArr" :key="index">
+            <div class="weui-cell group-item" 
+              v-for="(item,index) in attrArr" :key="index" v-show="item.Value">
               <div class="weui-cell__hd">{{item.Text}}</div>
               <div class="weui-cell__bd">{{item.Value}}</div>
             </div>
@@ -197,6 +198,11 @@ export default {
       data["PlanRentDate"] && attrArr.push(data["PlanRentDate"]);
       // 考虑容纳工位数
       data["NeedStation"] && attrArr.push(data["NeedStation"]);
+      // 户型
+      data["NeedApartment"] && attrArr.push(data["NeedApartment"]);
+
+      // 接听时间段
+      data["RentTime"] && attrArr.push(data["RentTime"]);
       this.attrArr = attrArr;
       console.log(this.attrArr, "this.attrArr");
     },

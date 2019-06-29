@@ -1,6 +1,6 @@
 //API接口地址
-const host = 'http://ccapi.wtvxin.com/api/';
-const filePath = 'http://cc.wtvxin.com';
+const host = 'https://ccapi.wtvxin.com/api/';
+const filePath = 'https://cc.wtvxin.com';
 
 
 function formatNumber(n) {

@@ -25,7 +25,8 @@
         <div class="weui-cells noBorder__weui-cells column__weui-cells mt0">
           <div class="group flex">
             <!-- 公司名称 -->
-            <div class="weui-cell group-item" v-for="(item,index) in attrArr" :key="index">
+            <div class="weui-cell group-item" 
+              v-for="(item,index) in attrArr" :key="index" v-show="item.Value">
               <div class="weui-cell__hd">{{item.Text}}</div>
               <div class="weui-cell__bd">{{item.Value}}</div>
             </div>
@@ -157,6 +158,8 @@ export default {
       data["IsCompanyList"] && attrArr.push(data["IsCompanyList"]);
       // 是否装修
       data["IsTrim"] && attrArr.push(data["IsTrim"]);
+      // 总面积
+      data["AllArea"] && attrArr.push(data["AllArea"]);
       // 计划购买面积
       data["PlanBuyArea"] && attrArr.push(data["PlanBuyArea"]);
       // 购买预算
@@ -174,7 +177,7 @@ export default {
       // 价格区间
       data["PropertyPrice1"] && attrArr.push(data["PropertyPrice1"]);
       // 计划日期
-      data["PlanBuyDate"] && attrArr.push(data["PlanBuyDate"]);
+      // data["PlanBuyDate"] && attrArr.push(data["PlanBuyDate"]);
       this.attrArr = attrArr;
       console.log(this.attrArr, "this.attrArr");
     },
