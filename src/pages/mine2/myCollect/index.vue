@@ -55,29 +55,32 @@
       </div>
       <!-- 谁看过我 -->
       <div class="weui-cells readList mt0" v-if="tabIndex===1">
-        <van-swipe-cell :right-width="65" class="swipe-cell">
-          <van-cell-group>
-            <van-cell class="item">
-              <div class="weui-cell">
-                <img src="/static/images/of/tx.jpg" class="tx" alt>
-                <div class="weui-cell__bd text_l">
-                  <p>
-                    <span class="name">李刚</span>
-                    <img src="/static/images/icons/v.jpg" class="icon_attestation" alt>
-                  </p>
-                  <p class="msgList">
-                    <span class="msgItem">CEO</span>
-                    <span class="msgItem">上海某网络公司</span>
-                  </p>
+        <block  v-for="(item,key) in list" :key="key">
+          <van-swipe-cell :right-width="65" class="swipe-cell" async-close
+            @close="ReCollections($event,item.Id,key)">
+            <van-cell-group>
+              <van-cell class="item">
+                <div class="weui-cell">
+                  <img src="/static/images/of/tx.jpg" class="tx" alt>
+                  <div class="weui-cell__bd text_l">
+                    <p>
+                      <span class="name">{{item.Name}}</span>
+                      <img src="/static/images/icons/v.jpg" class="icon_attestation" alt>
+                    </p>
+                    <p class="msgList">
+                      <span class="msgItem">{{item.Company[0].Job}}</span>
+                      <span class="msgItem">{{item.Company[0].Name}}</span>
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </van-cell>
-          </van-cell-group>
-          <span
-            slot="right"
-            class="van-swipe-cell__right flex flexAlignCenter justifyContentCenter"
-          >删除</span>
-        </van-swipe-cell>
+              </van-cell>
+            </van-cell-group>
+            <span
+              slot="right"
+              class="van-swipe-cell__right flex flexAlignCenter justifyContentCenter"
+            >删除</span>
+          </van-swipe-cell>
+        </block>
       </div>
       <div class="noData center" style="padding:60rpx 30rpx;" v-if="list.length<1 && page===1">暂无数据</div>
       <div

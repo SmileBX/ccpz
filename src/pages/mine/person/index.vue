@@ -463,7 +463,7 @@ export default {
       const params = {
         UserId:this.userId,
         Token:this.token,
-        Type:0,
+        Type:1,
         Id:this.Id 
       }
       if(!this.IsCollection){

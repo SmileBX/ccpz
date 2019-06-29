@@ -246,16 +246,25 @@ function wx_login(code, iv, encryptedData) {
                     // }, 1500);
 
             } else if (res.data.meta.code === 2) {
+                let inviteCode = wx.getStorageSync("inviteCode");
                 wx.showToast({
                     title: res.data.meta.message + '!',
                     icon: 'none',
                     duration: 1500
                 })
-                setTimeout(() => {
-                    wx.redirectTo({
-                        url: '/pages/bindTel/main'
-                    })
-                }, 1500);
+                if(inviteCode !=='undefined' && inviteCode){
+                    setTimeout(() => {
+                        wx.redirectTo({
+                            url: '/pages/bindTel/main?inviteCode='+inviteCode
+                        })
+                    }, 1500);
+                }else{
+                    setTimeout(() => {
+                        wx.redirectTo({
+                            url: '/pages/bindTel/main'
+                        })
+                    }, 1500);
+                }
 
             } else {
                 wx.showToast({

@@ -11,7 +11,7 @@
           <input type="text" v-model="Code" class="weui-input flex1" placeholder="动态码">
         </div>
         <div class="line flex" v-if="inviteCode !=='' ">
-          <input type="text" :value="inviteCode" class="weui-input flex1">
+          <input type="text" :value="inviteCode" class="weui-input flex1" disabled>
         </div>
         <div class="line flex">
           <input type="password" v-model="Pwd" class="weui-input flex1" placeholder="请输入至少6位密码">
@@ -122,7 +122,8 @@ export default {
             mobile: that.Tel,
             password: that.Pwd,
             yzcode: that.Code,
-            userInfo: that.userInfo
+            userInfo: that.userInfo,
+            InviteCode:that.InviteCode
           },
           header: {
             "content-type": "application/json" // 默认值
