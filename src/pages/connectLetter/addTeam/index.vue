@@ -123,16 +123,12 @@ export default {
     },
     gotoAddNewTeam(id, name) {
       console.log("fsdfsdfsd__________");
-      if(this.isPmission){
-        wx.navigateTo({ url: "/pages/"+this.isPmission +"/main?groupName="+
-          name });
+      if(this.isPmission){//是否是从添加好友 页面过来
+        wx.navigateTo({ url: "/pages/"+this.isPmission +"/main? groupName="+name
+          });
       }else{
          wx.navigateTo({
-          url:
-            "/pages/connectLetter/addNewTeam/main?groupId=" +
-            id +
-            "&groupName=" +
-            name
+          url:"/pages/connectLetter/addNewTeam/main?groupId=" + id + "&groupName=" + name
         });
       }
      

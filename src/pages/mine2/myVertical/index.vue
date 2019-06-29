@@ -318,6 +318,9 @@ export default {
               setTimeout(() => {
                 that.userVerticalStatus = 3;
                 that.userReset = false;
+                wx.navigateTo({
+                  url:'/pages/VerticalStatus/main'
+                });
                 that.UserOwnerAuthInfo();
               },1500)
             }

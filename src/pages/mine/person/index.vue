@@ -2,14 +2,14 @@
   <div class="pageContent" v-if="hasData">
     <div class="storeDetail">
        <div class="pagePerson pall">
-          <p class="editinfo" @tap="editInfo" v-if="type==1">编辑</p>
+          <p class="editinfo" @tap="editInfo" v-if="type==1" style="color:#9A9A9A">编辑</p>
           <div class="legalInfo flex">
             <img :src="personInfo.Avatar" class="tx" alt style="border-radius:50%">
             <div class="info flex1">
               <div>
                 <span class="name" style="color:#1a1a1a">{{personInfo.Name}}</span>
                 <img src="/static/images/icons/v.jpg" class="icon_attestation" alt v-if="personInfo.IsAUT">
-                <span class="lookAttestation"><img src="/static/images/icons/attestationTag.png" class="icon_attestationTag" alt="" @tap="seeVertical">查看认证</span>
+                <span class="lookAttestation" @tap="seeVertical"><img src="/static/images/icons/attestationTag.png" class="icon_attestationTag" alt="">查看认证</span>
               </div>
               <p class="msgList">
                 <span class="msgItem font22" v-if="personInfo.Trade">{{personInfo.Trade}}</span>
@@ -17,7 +17,7 @@
                 <span class="msgItem font22" v-if="personInfo.WorkLife">{{personInfo.WorkLife}}</span>
                 <span class="msgItem font22" v-else>未透漏经验</span>
               </p>
-              <div class="msgList flex" v-for="(item,key) in companyInfo" :key="key">
+              <div class="msgList flex" v-for="(item,key) in companyInfo" :key="key" v-if="companyInfo.length>0">
                 <p class="msgList">
                   <span class="msgItem font22" v-if="item.Job">{{item.Job}}</span>
                   <span class="msgItem font22" v-else>未透漏职位</span>
@@ -33,7 +33,14 @@
                 <span class="attestationStatus color_white font22" v-if="item.IsAUT">
                   <span class="icon-gou"></span> 已认证
                 </span>
-                
+              </div>
+              <div class="msgList flex" v-if="companyInfo.length==0">
+                <p class="msgList">
+                  未透露公司
+                </p>
+                <span class="attestationStatus color_white font22" @tap="companyVertical">
+                  <span class="icon-gou"></span> 去认证
+                </span>
               </div>
             </div>
           </div>
@@ -329,13 +336,13 @@ export default {
     this.curPage = getCurrentPageUrlWithArgs();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
-    // this.type = this.$root.$mp.query.type
-    // if(this.$root.$mp.query.Id){  //进入他人主页传递的Id
-    //    this.Id = this.$root.$mp.query.Id
-    // }
-    console.log(this.type)
-    this.Id = 10394
-    this.type = 2
+    this.type = this.$root.$mp.query.type
+    if(this.$root.$mp.query.Id){  //进入他人主页传递的Id
+       this.Id = this.$root.$mp.query.Id
+    }
+    // console.log(this.type)
+    // this.Id = 10394
+    // this.type = 2
     this.companyInfo = []
     this.list = []
     this.hasData = false
@@ -401,8 +408,13 @@ export default {
               this.addFriendId = res.data.Footer.Value.IsAddFriend.FriendId
               this.conFriendId = res.data.Footer.Value.IsContact.FriendId
           }
-          
-          this.companyInfo.push(this.personInfo.CyList[0])
+         
+          if(res.data.CyList.length>1){
+            this.companyInfo.push(this.personInfo.CyList[0])
+           }else{
+             this.companyInfo = res.data.CyList
+           }
+         
           this.hasData = true
           console.log(this.companyInfo)
         }
@@ -410,7 +422,7 @@ export default {
     },
     //查看个人认证
     seeVertical(){
-      wx.navigateTo({url:"/pages/mine2/myVertical/main"})
+      wx.navigateTo({url:"/pages/mine2/myVertical/main?verticalType=1"})
     },
     //编辑公司信息
     editCompany(id){
@@ -509,6 +521,10 @@ export default {
         wx.navigateTo({url:"/pages/messages/addFre/main?FriendId="+this.addFriendId})
       }
     },
+    //认证公司
+    companyVertical(){
+      wx.navigateTo({url:'/pages/mine2/verticalCompany/main'})
+    }
     
 
   }

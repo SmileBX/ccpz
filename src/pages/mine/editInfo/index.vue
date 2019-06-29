@@ -20,7 +20,7 @@
         <div class="weui-cell__bd">
            <p class="txt">实名认证</p>
         </div>
-        <input type="text" placeholder="未认证" disabled v-model="IsAUT" @tap="goVertical(IsAUT)">
+        <input type="text" placeholder="未认证" disabled v-model="IsAUT" @tap="goVertical">
       </div>
       <div class="weui-cell" @click="showArea = true">
         <div class="weui-cell__bd">
@@ -218,6 +218,18 @@ export default {
             this.Avatar = res.data.Avatar
             // console.log(this.ShowBase,"2222")
           }
+            if(res.data.IsAUT==3){
+              this.IsAUT = '待审核'
+            }
+            if(res.data.IsAUT==2){
+              this.IsAUT = '认证失败'
+            }
+            if(res.data.IsAUT==1){
+             this.IsAUT = '已认证'
+            }
+            if(res.data.IsAUT==0){
+              this.IsAUT = '未认证'
+            }
            this.Name = res.data.Name
            this.Email = res.data.Email
            this.WeChatNum = res.data.WeChatNum
@@ -227,7 +239,7 @@ export default {
            this.WorkIdea = res.data.WorkIdea
            this.Trade = res.data.Trade
            this.Area = res.data.Area
-           this.IsAUT = res.data.IsAUT
+           
         }
       })
     },
@@ -397,8 +409,8 @@ export default {
     },
     //去认证
     goVertical(){
-      if(this.IsAUT==0){
-         wx.navigateTo({url:'/pages/mine/continuePerson/main?verticalType=1'})
+      if(this.IsAUT=='未认证'){
+         wx.navigateTo({url:'/pages/mine2/myVertical/main?verticalType=1'})
       }
     }
   }
