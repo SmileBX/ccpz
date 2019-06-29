@@ -7,7 +7,7 @@
           <span class="name" @click="goSelectCity">{{CityName}}</span>
           <span class="icon-arrow arrow-down"></span>
         </div>
-        <div class="searchBox flex1">
+        <div class="searchBox flex1" @click="showSearch = true">
           <div class="search">
             <img src="/static/images/icons/search.png" class="icon_search" alt>
             <span>搜索</span>
@@ -15,6 +15,23 @@
         </div>
       </div>
     </div>
+      <!-- 搜索导航 -->
+      <div class="position-fixed mask" v-show="showSearch" @clcik.self="showSearch = false;">
+        <div class="box">
+          <!-- 请选择要搜索的分类 -->
+          <div class="box-title">请选择要搜索的分类</div>
+          <ul class="navList li_25 center navList2 searchNav">
+            <li @click="goSearch(item.Id)" v-for="(item,index) in publishType" :key="index">
+              <div class="outside">
+                <div class="icon-img">
+                  <img :src="item.Img" alt>
+                </div>
+                <p class="title">{{item.Name}}</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
     <scroll-view class="indexPage" scroll-y>
       <!-- banner -->
       <div class="bannerBox" style="padding:0;margin-bottom:0;">
@@ -290,6 +307,7 @@ export default {
   data() {
     return {
       // cityName:"",
+      showSearch:false,//显示搜索的分类
       picList: [], //banner图
       newList: [], //头条消息
       publishType: [], //发布类型
@@ -611,13 +629,41 @@ export default {
           }
         }
       });
-    }
+    },
+    // 跳转搜索
+    goSearch(id){
+      wx.navigateTo({
+        url:`/pages/rent/searchHistory/main?brandId=${id}`
+      })
+      this.showSearch = false;
+    },
   },
 
   created() {}
 };
 </script>
 <style lang="scss" scoped>
+.position-fixed{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index:100;
+}
+.box{
+  width:94%;
+  height:330rpx;
+  background:#fff;
+  margin:300rpx auto 0;
+  border-radius:5rpx;
+}
+.box-title{
+  line-height:120rpx;
+  font-size:32rpx;
+  text-align:center;
+}
+.searchNav{
+}
 .section {
   background: #fff;
   margin-bottom: 20rpx;

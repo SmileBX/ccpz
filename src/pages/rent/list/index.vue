@@ -8,9 +8,10 @@
           <span class="icon-arrow arrow-down"></span>
         </div>
         <div class="searchBox flex1">
-          <div class="search" :class="{'flex':showSearch}" @click="keyWords='';showSearch=true">
+          <!-- <div class="search" :class="{'flex':showSearch}" @click="goSearch"> -->
+          <div class="search"  @click="goSearch">
             <img src="/static/images/icons/search.png" class="icon_search" alt>
-            <input
+            <!-- <input
               type="text"
               class="keyWords"
               v-if="showSearch"
@@ -19,8 +20,8 @@
               @confirm="getQueryRentList"
               v-model="keyWords"
               confirm-type="搜索"
-            >
-            <span v-else>{{keyWords}}</span>
+            > -->
+            <span>{{keyWords}}</span>
           </div>
         </div>
       </div>
@@ -411,6 +412,7 @@ export default {
   },
   onLoad() {
     this.type = this.$root.$mp.query.type || "";
+    this.keyWords = this.$root.$mp.query.keyWords || "搜索";
     this.setBarTitle();
     this.cityCode = this.CityCode;
   },
@@ -428,7 +430,6 @@ export default {
       this.twoTabIndex = 0;
       this.oneTabIndex = 0;
       this.isShade = false;
-      this.keyWords = "搜索";
       this.initAll();
       this.initDataList();
       this.getSubMenu();
@@ -996,7 +997,14 @@ export default {
       this.page += 1;
       console.log("这里是取消了更多的选项");
       this.getQueryRentList();
-    }
+    },
+    // 跳转搜索
+    goSearch(){
+      const keyWords = this.keyWords==='搜索'?'':this.keyWords;
+      wx.navigateTo({
+        url:`/pages/rent/searchHistory/main?brandId=${this.type}&keyWords=${keyWords}`
+      })
+    },
   },
   // 下拉刷新
   onPullDownRefresh() {

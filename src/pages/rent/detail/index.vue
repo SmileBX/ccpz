@@ -43,6 +43,7 @@ export default {
   components:{pinzu,formation,house,activity},
   data(){
     return {
+      title:'详情',
       id:'',
       type:0,
       userId:'',
@@ -70,7 +71,7 @@ export default {
   methods: {
     setBarTitle() {
       wx.setNavigationBarTitle({
-        title: "商铺详情"
+        title: this.title
       });
     },
     // 获取详情
@@ -84,6 +85,8 @@ export default {
       console.log(res,'请求成功')
       // 收藏
       this.IsCollection= res.data.IsCollection.Value
+      this.title = res.data.TypeName.Value;
+      this.setBarTitle();
       // 公司信息
       // 只有id不等于0时，展示
       if(res.data.CompanyInfo.Value.Id.Value){
