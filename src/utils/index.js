@@ -188,10 +188,10 @@ function wx_login(code, iv, encryptedData) {
             wx.hideLoading();
             console.log(res.data.meta, "res.meta.meta++++++++++++++++++++++++++++++++")
             if (res.data.meta.code === 0) {
-                wx.setStorageSync("openId", "");
-                wx.setStorageSync("unionid", "");
-                wx.setStorageSync("userId", res.data.meta.dic.UserId);
-                wx.setStorageSync("token", res.data.meta.dic.Token);
+                // wx.setStorageSync("openId", "");
+                // wx.setStorageSync("unionid", "");
+                // wx.setStorageSync("userId", res.data.meta.dic.UserId);
+                // wx.setStorageSync("token", res.data.meta.dic.Token);
                 let askUrl = wx.getStorageSync("askUrl");
                 if (askUrl !== "undefined" && askUrl) {
                     askUrl = askUrl.toString().replace(/\%3F/g, '?').replace(/\%3D/g, '=').replace(/\%26/g, '&');
@@ -247,12 +247,14 @@ function wx_login(code, iv, encryptedData) {
 
             } else if (res.data.meta.code === 2) {
                 let inviteCode = wx.getStorageSync("inviteCode");
+                console.log("}}}}}}}验证码",inviteCode)
                 wx.showToast({
                     title: res.data.meta.message + '!',
                     icon: 'none',
                     duration: 1500
                 })
                 if(inviteCode !=='undefined' && inviteCode){
+                    console.log("{{{{{{验证码",inviteCode)
                     setTimeout(() => {
                         wx.redirectTo({
                             url: '/pages/bindTel/main?inviteCode='+inviteCode

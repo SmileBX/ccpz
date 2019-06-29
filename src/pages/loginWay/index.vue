@@ -27,7 +27,8 @@ export default {
   onShow(){
     if(this.$root.$mp.query.inviteCode){
       this.inviteCode = this.$root.$mp.query.inviteCode
-      wx.setStorageSync('inviteCode',inviteCode);
+      wx.setStorageSync('inviteCode',this.inviteCode);
+      console.log("login:",this.inviteCode)
     }
     if (this.$root.$mp.query.askUrl) {
       let askUrl = this.$root.$mp.query.askUrl

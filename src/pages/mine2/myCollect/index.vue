@@ -53,7 +53,7 @@
           </van-swipe-cell>
         </block>
       </div>
-      <!-- 谁看过我 -->
+      <!-- 用户-->
       <div class="weui-cells readList mt0" v-if="tabIndex===1">
         <block  v-for="(item,key) in list" :key="key">
           <van-swipe-cell :right-width="65" class="swipe-cell" async-close
@@ -61,7 +61,7 @@
             <van-cell-group>
               <van-cell class="item">
                 <div class="weui-cell">
-                  <img src="/static/images/of/tx.jpg" class="tx" alt>
+                  <img :src="item.Avatar" class="tx" alt>
                   <div class="weui-cell__bd text_l">
                     <p>
                       <span class="name">{{item.Name}}</span>

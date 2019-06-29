@@ -44,6 +44,7 @@ export default {
     if(this.$root.$mp.query.inviteCode){
       this.inviteCode = this.$root.$mp.query.inviteCode;
     }
+    console.log("bindTel:",this.inviteCode)
   },
   data() {
     return {
