@@ -5,7 +5,7 @@
       <div class="searchBox flex">
           <div class="search flex flex1">
             <img src="/static/images/icons/search.png" class="icon_search" alt>
-            <input type="text" @input="changeKeyWords" confirm-type="search" @confirm="gotoList" class="flex1" :value="keyWords" placeholder="请输入您要搜索的关键词">
+            <input type="text" @input="changeKeyWords" confirm-type="search" @confirm="gotoList" class="flex1" v-model="keyWords" placeholder="请输入您要搜索的关键词">
             <img src="/static/images/icons/cancle.png"  class="icon-del" @tap="delKeyWords" alt="">
           </div>
           <span class="btnSearch" @tap="gotoList">搜索</span>
@@ -59,6 +59,7 @@ export default {
     this.curPage = getCurrentPageUrlWithArgs();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
+    this.keyWords = this.$root.$mp.query.keyWords ||''
     if(this.$root.$mp.query.brandId && this.$root.$mp.query.brandId !==""){
       this.brandId = this.$root.$mp.query.brandId;
       
@@ -106,7 +107,7 @@ export default {
      this.keyWords = '';
     },
     gotoList(){  //点击搜索的时候
-      if(trim(this.keyWords) !==""){
+      if(trim(this.keyWords)){
         //跳转到
         wx.redirectTo({
           url: `/pages/rent/list/main?type=${this.brandId}&keyWords=${this.keyWords}`
