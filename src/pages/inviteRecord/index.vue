@@ -4,85 +4,70 @@
           <div class="box__hd box__hd2">
             <span class="title">我的邀请记录</span>
           </div>
-          <div class="recordeList">
-              <div class="item flex flexAlignCenter">
+          <div class="recordeList" v-if="hasData==true">
+              <div class="item flex flexAlignCenter" v-for="(item,index) in shareList" :key="index">
                   <div class="flex1 flex flexAlignCenter">
-                      <img src="/static/images/icons/mingxi.jpg" class="tx" alt="">
+                      <img :src="item.Avatar" class="tx" alt="">
                       <div class="txtBox flex1">
-                          <p class="name ellipsis">AIYO</p>
-                          <p class="time">2019-05-28 18:20</p>
+                          <p class="name ellipsis">{{item.Name}}</p>
+                          <p class="time">{{item.AddTime}}</p>
                       </div>
-                      <p class="score"><span class="fh">+</span><span class="num">80</span>积分</p>
-                  </div>
-              </div>
-              <div class="item flex flexAlignCenter">
-                  <div class="flex1 flex flexAlignCenter">
-                      <img src="/static/images/icons/mingxi.jpg" class="tx" alt="">
-                      <div class="txtBox flex1">
-                          <p class="name ellipsis">AIYO</p>
-                          <p class="time">2019-05-28 18:20</p>
-                      </div>
-                      <p class="score"><span class="fh">+</span><span class="num">80</span>积分</p>
-                  </div>
-              </div>
-              <div class="item flex flexAlignCenter">
-                  <div class="flex1 flex flexAlignCenter">
-                      <img src="/static/images/icons/mingxi.jpg" class="tx" alt="">
-                      <div class="txtBox flex1">
-                          <p class="name ellipsis">AIYO</p>
-                          <p class="time">2019-05-28 18:20</p>
-                      </div>
-                      <p class="score"><span class="fh">+</span><span class="num">80</span>积分</p>
-                  </div>
-              </div>
-              <div class="item flex flexAlignCenter">
-                  <div class="flex1 flex flexAlignCenter">
-                      <img src="/static/images/icons/mingxi.jpg" class="tx" alt="">
-                      <div class="txtBox flex1">
-                          <p class="name ellipsis">AIYO</p>
-                          <p class="time">2019-05-28 18:20</p>
-                      </div>
-                      <p class="score"><span class="fh">+</span><span class="num">80</span>积分</p>
-                  </div>
-              </div>
-              <div class="item flex flexAlignCenter">
-                  <div class="flex1 flex flexAlignCenter">
-                      <img src="/static/images/icons/mingxi.jpg" class="tx" alt="">
-                      <div class="txtBox flex1">
-                          <p class="name ellipsis">AIYO</p>
-                          <p class="time">2019-05-28 18:20</p>
-                      </div>
-                      <p class="score"><span class="fh">+</span><span class="num">80</span>积分</p>
-                  </div>
-              </div>
-              <div class="item flex flexAlignCenter">
-                  <div class="flex1 flex flexAlignCenter">
-                      <img src="/static/images/icons/mingxi.jpg" class="tx" alt="">
-                      <div class="txtBox flex1">
-                          <p class="name ellipsis">AIYO</p>
-                          <p class="time">2019-05-28 18:20</p>
-                      </div>
-                      <p class="score"><span class="fh">+</span><span class="num">80</span>积分</p>
+                      <p class="score"><span class="fh">+</span><span class="num">{{item.Change }}</span>积分</p>
                   </div>
               </div>
           </div>
+          <p
+            style="text-align:center;font-size:30rpx;color:#666;padding:120rpx 20rpx 80rpx;"
+            v-if="hasData==false"
+            >暂无数据</p>
       </scroll-view>
+      
   </div>
 </template>
 <script>
+import { post, valPhone, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
 export default {
   onLoad() {
       this.setBarTitle();
   },
-  onShow() {},
+  onShow() {
+      this.curPage = getCurrentPageUrlWithArgs();
+        this.userId = wx.getStorageSync("userId");
+        this.token = wx.getStorageSync("token");
+        this.curPage = getCurrentPageUrlWithArgs();
+        this.getShareCord()
+  },
   data() {
-    return {};
+    return {
+        curPage: "",
+        userId: "",
+        token: "",
+        shareList:[],
+        hasData:false,
+    };
   },
   methods: {
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "邀请记录"
       });
+    },
+    getShareCord(){
+        post('User/ShareScoreList',{
+            UserId: this.userId,
+            Token: this.token,
+            Page:1
+        },this.curPage).then(res=>{
+            if(res.code==0){
+                if(res.count <= 0){
+                    this.hasData = false
+                }else{
+                     this.shareList = res.data
+                     this.hasData = true
+                }
+            }
+            console.log(this.hasData)
+        })
     }
   }
 };

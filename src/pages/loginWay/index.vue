@@ -19,7 +19,16 @@ import {Login } from "@/utils";
 export default {
   onLoad() {
   },
+  data(){
+    return {
+       inviteCode:""  //邀请码
+    }
+  },
   onShow(){
+    if(this.$root.$mp.query.inviteCode){
+      this.inviteCode = this.$root.$mp.query.inviteCode
+      wx.setStorageSync('inviteCode',inviteCode);
+    }
     if (this.$root.$mp.query.askUrl) {
       let askUrl = this.$root.$mp.query.askUrl
         .toString()

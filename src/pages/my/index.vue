@@ -231,18 +231,8 @@ export default {
         url:"/pages/mine/editInfo/main"
       })
     }
-    
-  },
-   onShareAppMessage: function (res) {
-    if (res.from === 'button') {
-      // 来自页面内转发按钮
-      console.log(res.target,"___")
-    }
-    return {
-      title: '分享好友得积分',
-      path: '/pages/my/main'
-    }
   }
+
 };
 </script>
 <style lang="scss" scoped>

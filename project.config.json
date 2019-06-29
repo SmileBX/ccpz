@@ -43,7 +43,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 60,
+			"current": 73,
 			"list": [
 				{
 					"id": 0,
@@ -553,6 +553,13 @@
 					"id": -1,
 					"name": "我的发布",
 					"pathName": "pages/mine/publish/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "绑定手机号",
+					"pathName": "pages/bindTel/main",
 					"query": "",
 					"scene": null
 				}
