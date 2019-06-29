@@ -26,7 +26,7 @@
               {{info.Name}}
             </p>
             <p class="msg"> {{info.VipEndTime}}到期</p>
-            <span class="weui-btn" @tap="gotoPage(2)">立即续费</span>
+            <span class="weui-btn" @tap="contuineMoney">立即续费</span>
           </div>
         </div>
       </div>
@@ -68,7 +68,7 @@
   </div>
 </template>
 <script>
-import { post, valPhone, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
+import { post, valPhone, toLogin, getCurrentPageUrlWithArgs ,formatTime} from "@/utils";
 export default {
   onLoad() {
     this.setBarTitle();
@@ -103,6 +103,23 @@ export default {
         wx.navigateTo({
           url:this.menuArr[index]
         })
+    },
+    //续费
+    contuineMoney(){
+      let date = new Date(formatTime(new Date()).split(" ")[0]).getTime()
+      let tt = new Date(this.info.VipEndTime).getTime()
+      if(date >= tt){
+        wx.navigateTo({
+          url:"pages/member2/buyFunction/main?type=3"
+        })
+      }else{
+        wx.showToast({
+          title:"您的会员正在使用中！",
+          icon:"none",
+          duration:1500
+        })
+      }
+      
     },
     QueryVipInfo(){
       post('/User/QueryVipInfo',{

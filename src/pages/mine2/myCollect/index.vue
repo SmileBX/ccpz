@@ -97,7 +97,7 @@ export default {
   onLoad() {
     this.setBarTitle();
   },
-  onShow() {
+  onShow() { 
     this.curPage = getCurrentPageUrlWithArgs();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");

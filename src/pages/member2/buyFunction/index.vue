@@ -198,9 +198,9 @@ export default {
     if(this.$root.$mp.query.publishId){
         this.publishId = this.$root.$mp.query.publishId
     }
-    this.getPrice() //获取置顶、刷新的单价
-    
-    
+    if(this.type == 1 || this.type == 2){
+       this.getPrice() //获取置顶、刷新的单价
+    }
   },
   components:{
     payPassword

@@ -229,7 +229,9 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">机构名称</div>
+                  <div class="form-cells-hd" v-if="PageId==43">机构名称</div>
+                  <div class="form-cells-hd" v-if="PageId==32">公司名称</div>
+                  <div class="form-cells-hd" v-if="PageId==33">团队名称</div>
                   <input
                     class="ipt"
                     type="text"
@@ -241,7 +243,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">机构面积</div>
+                  <div class="form-cells-hd">面积</div>
                   <input
                     class="ipt"
                     type="text"
