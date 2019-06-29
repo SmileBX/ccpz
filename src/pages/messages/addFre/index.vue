@@ -4,20 +4,20 @@
         <!--头像部分-->
           <div class="flex avatarhead">
               <div class="avatarbox">
-                  <img src="/static/images/of/ava.png" alt="" class="avatar">
+                  <img :src="userInfo.Avatar" alt="" class="avatar">
               </div>
               <div class="flex1">
-                  <p>哈哈哈哈</p>
-                  <p class="font_four">女 27岁 深圳</p>
+                  <p>{{userInfo.Name}}</p>
+                  <!-- <p class="font_four">女 27岁 深圳</p> -->
               </div>
           </div>
           <!--填写验证信息-->
           <div class="vertical flex flexColumn">
               <p class="font_four">填写验证信息</p>
-              <input type="text" v-model="verMsg" placeholder="我是..." class="flex1 yanz">
+              <input type="text" v-model.trim="verMsg" placeholder="我是..." class="flex1 yanz">
           </div>
       </div>
-      <div class="setclass">设置备注与分组</div>
+      <!-- <div class="setclass">设置备注与分组</div>
       <div class="bg_fff group boxSize">
           <div class="flex flexAlignCenter slide boxSize sign">
               <p>备注</p>
@@ -30,7 +30,7 @@
                   <span class="icon-arrow arrow-right"></span>
               </p>
           </div>
-      </div>
+      </div> -->
       <!--加好友-->
       <div class="btnSub addtop" @click="addFriend">加好友</div>
   </div>
@@ -44,6 +44,7 @@ export default {
       userId:'',
       token:'',
       FriendId:'16',
+      userInfo:{},
       lat:0,
       lng:0,
       verMsg:'',
@@ -64,11 +65,12 @@ export default {
     if(this.$root.$mp.query.groupName){
       this.specPlace = this.$root.$mp.query.groupName
     }
-    const res =getLocation()
+    getLocation().then(res=>{
     console.log(res)
     this.lat = res.latitude;
     this.lng=res.longitude;
-
+    })
+    this.getUser();
   },
 
   components: {
@@ -79,6 +81,15 @@ export default {
       wx.setNavigationBarTitle({
         title: "添加好友"
       });
+    },
+    async getUser(){
+      const res = await post('User/OtherHomePage',{
+          ShopId:this.FriendId,
+          UserId:this.userId,
+          Token:this.token
+      })
+      this.userInfo = res.data
+    console.log(this.userInfo,'userinfo')
     },
     initData(){
       this.verMsg ='';

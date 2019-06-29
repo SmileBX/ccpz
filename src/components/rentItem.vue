@@ -17,8 +17,8 @@
             <!-- <span class="price">￥{{item.PropertyPrice}}</span> -->
             <span class="price">{{item.PropertyPrice}} 元/月</span>
           </p>
-          <p class="msgList" v-if="item.FirstTags.length>0">
-            <span class="msgItem" v-for="(item2,index2) in item.FirstTags" :key="index2">{{item2}}</span>
+          <p class="msgList" v-if="item.FirstTagss&&item.FirstTagss.length>0">
+            <span class="msgItem" v-for="(item2,index2) in item.FirstTagss" :key="index2">{{item2}}</span>
           </p>
           <p class="tipsList" v-if="item.SecondTags.length>0">
             <span v-for="(item3,index3) in item.SecondTags" :key="index3" v-if="index3<3">{{item3}}</span>
@@ -40,20 +40,22 @@ export default {
   data() {
     return {};
   },
-  mounted() {
+  onLoad() {
     console.log("列表item", this.list);
           // *********************拼租
           this.list.map(item => {
             if (item.FirstTags) {
-              this.$set(item, "FirstTags", item.FirstTags.split("|"));
+              this.$set(item, "FirstTagss", item.FirstTags.split("|"));
             } else {
-              this.$set(item, "FirstTags", []);
+              this.$set(item, "FirstTagss", []);
             }
+    console.log("列表item", item.FirstTagss);
             if (item.SecondTags) {
               this.$set(item, "SecondTags", item.SecondTags.split("|"));
             } else {
               this.$set(item, "SecondTags", []);
             }
+    console.log("列表item", item.SecondTags);
           });
           // **************
   },

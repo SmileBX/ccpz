@@ -7,7 +7,7 @@
     <activity v-if="type==23" :data="data" @checkLocation="checkLocation" @goUserCenter="goUserCenter"></activity>
     <house v-if="type==24" :data="data" @checkLocation="checkLocation" @goUserCenter="goUserCenter"></house>
     <!-- 底部 -->
-    <div class="ftBtn">
+    <div class="ftBtn" v-if="!data.Footer.IsHide">
       <div class="inner fixed bm0 flex">
         <div class="iconGroup flex flexAlignCenter">
           <div class="item flex1" @click="onReport">
@@ -15,14 +15,14 @@
             <p>举报</p>
           </div>
           <div class="item flex1" @click="onIsCollection">
-            <img v-if="!IsCollection" src="/static/images/icons/shoucang.png" alt>
+            <img v-if="!Footer.IsCollection" src="/static/images/icons/shoucang.png" alt>
             <img v-else src="/static/images/icons/shoucang-action.png" alt>
             <p>收藏</p>
           </div>
         </div>
         <div class="btns flex1 flex center">
-          <div class="btn flex1 bg_ff952e color_fff" @click="contant">极速联系</div>
-          <div class="btn flex1 bg_ed3435 color_fff" v-if="data.IsAddFriend&&data.IsAddFriend.Value==1" @click="addFre">加好友</div>
+          <div class="btn flex1 bg_ff952e color_fff" v-if="Footer.IsContact&&Footer.IsContact.Value==1" @click="contant">极速联系</div>
+          <div class="btn flex1 bg_ed3435 color_fff" v-if="Footer.IsAddFriend&&Footer.IsAddFriend.Value==1" @click="addFre">加好友</div>
         </div>
       </div>
     </div>
@@ -51,6 +51,7 @@ export default {
       IsCollection:false,
       showData:false,
       data:{},
+      Footer:{}
     }
   },
   onLoad() {
@@ -83,10 +84,15 @@ export default {
         Id:this.id
       })
       console.log(res,'请求成功')
-      // 收藏
-      this.IsCollection= res.data.IsCollection.Value
+      // 头部标题
       this.title = res.data.TypeName.Value;
       this.setBarTitle();
+      // debugger;
+      // 底部
+      this.Footer = res.data.Footer.Value;
+      const Footer = res.data.Footer.Value;
+      // 收藏
+      // this.IsCollection= Footer.IsCollection.Value
       // 公司信息
       // 只有id不等于0时，展示
       if(res.data.CompanyInfo.Value.Id.Value){
@@ -124,7 +130,7 @@ export default {
         Type:0,
         Id:this.id
       }
-      if(!this.IsCollection){
+      if(!this.Footer.IsCollection){
         await post('User/AddCollections',params)
         wx.showToast({title:'收藏成功'})
       }else{
@@ -132,16 +138,16 @@ export default {
         wx.showToast({title:'取消收藏成功'})
       }
       // const res = await post('User/AddCollections',params)
-      this.IsCollection = !this.IsCollection
+      this.Footer.IsCollection = !this.Footer.IsCollection
     },
     // 举报
     onReport(){
-
+        wx.navigateTo({url:'/pages/mine2/report/main'})
     },
     //添加好友
     addFre(){
-      if(this.data.IsAddFriend.Value){
-        wx.navigateTo({url:'/pages/messages/addFre/main?FriendId='+this.data.IsAddFriend.FriendId})
+      if(this.Footer.IsAddFriend.Value){
+        wx.navigateTo({url:'/pages/messages/addFre/main?FriendId='+this.Footer.IsAddFriend.FriendId})
       }else{
         wx.showToast({
           title:'请先开通会员!',
@@ -151,8 +157,8 @@ export default {
     },
     // 联系
     contant(){
-      if(this.data.IsContact.Value){
-        wx.navigateTo({url:'/pages/messages/chatRoom/main?FriendId='+this.data.IsContact.FriendId})
+      if(this.Footer.IsContact.Value){
+        wx.navigateTo({url:'/pages/messages/chatRoom/main?FriendId='+this.Footer.IsContact.FriendId})
       }else{
         wx.showToast({
           title:'请先开通会员!',

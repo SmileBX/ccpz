@@ -337,7 +337,7 @@ export default {
           title: "房源"
         }
       ], //为您推荐中的品牌id;拼租 = 21,组建 = 22,拼活动 = 23,房源 = 24,
-      menuTab: 0, //为您推荐中的tab选中
+      menuTab: -1, //为您推荐中的tab选中
       page: 1,
       ggaoList: [], //广告位
       ggaoPic: [], //为您推荐上面的广告
@@ -354,8 +354,8 @@ export default {
     this.token = wx.getStorageSync("token");
     location(this).then(res => {
       this.cityCode = res.CityCode;
-      this.getQueryRentList(24, 2, 20); //热门商铺
-      this.getQueryRentList(21, 3, 20); //为您推荐
+      this.getQueryRentList(24, 2, 20,0); //热门商铺
+      this.getQueryRentList(21, 3, 20,0); //为您推荐
     });
     this.initData();
     if (wx.getStorageSync("showGiftCount") !== "") {
@@ -572,11 +572,9 @@ export default {
       });
     },
     shiftMenu(index, id) {
-      //切换为您推荐中的选项
-      this.menuTab = index;
 
       console.log("切换的" + id);
-      this.getQueryRentList(parseInt(id), 3, 20);
+      this.getQueryRentList(parseInt(id), 3, 20,index);
     },
     gotoMoreList() {
       //点击为您推荐中的加载更多的时候，跳转到相对应的列表中去
@@ -592,7 +590,7 @@ export default {
         url: `/pages/rent/detail/main?type=${type}&id=${id}`
       });
     },
-    getQueryRentList(brandId, hotType, pageSize) {
+    getQueryRentList(brandId, hotType, pageSize,index) {
       let that = this;
       //获取发布列表
       post(
@@ -627,6 +625,9 @@ export default {
               that.recomendList = res.data;
             }
           }
+          
+        //切换为您推荐中的选项
+        index!==undefined&&(this.menuTab = index)
         }
       });
     },
