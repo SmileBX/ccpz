@@ -21,17 +21,15 @@
       </div>
       <!-- 公司简介 -->
       <div class="comAbout pt15">
-        <!-- 商铺详情的 -->
+        <!-- 属性 -->
         <div class="weui-cells noBorder__weui-cells column__weui-cells mt0">
           <div class="group flex">
-            <!-- 公司名称 -->
-            <div class="weui-cell group-item" v-for="(item,index) in attrArr" :key="index">
+            <div class="weui-cell group-item" v-for="(item,index) in attrArr" :key="index" v-show="item.Value">
               <div class="weui-cell__hd">{{item.Text}}</div>
               <div class="weui-cell__bd">{{item.Value}}</div>
             </div>
           </div>
         </div>
-        <!-- 商铺详情的  end -->
         <div class="about">
            <!-- 公司简介 -->
           <div class="item" v-if="data.Synopsis&&data.Synopsis.Value">
@@ -142,6 +140,8 @@ export default {
       data["CompanyTrade"] && attrArr.push(data["CompanyTrade"]);
       // 拼活动公司行业/主业
       data["GladBuyerTrade"] && attrArr.push(data["GladBuyerTrade"]);
+      // 活动区域
+      data["GladBuyArea"] && attrArr.push(data["GladBuyArea"]);
       // 本公司人数
       data["PlanAllNum"] && attrArr.push(data["PlanAllNum"]);
       // 拼活动公司人数
@@ -161,6 +161,8 @@ export default {
       data["StartEndTime"] && attrArr.push(data["StartEndTime"]);
       // 学历结构
       data["EducationLvl"] && attrArr.push(data["EducationLvl"]);
+      // 年龄层次
+      data["AgeLevel"] && attrArr.push(data["AgeLevel"]);
       
       this.attrArr = attrArr;
       console.log(this.attrArr, "this.attrArr");

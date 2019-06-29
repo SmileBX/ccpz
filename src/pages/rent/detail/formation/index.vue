@@ -25,11 +25,11 @@
                   <span class="icon-gou" v-if="data.CompanyInfo.Value.IsAUT.Value"></span> 已认证
                 </span>
               </p>
-              <p class="msgList flex-center">
+              <!-- <p class="msgList flex-center">
                 <span class="msgItem" v-if="data.GladBuyerTrade&&data.GladBuyerTrade.Value">{{data.GladBuyerTrade.Value}}</span>
                 <span class="msgItem" v-if="data.RingType">{{data.RingType.Value}}</span>
                 <span class="msgItem">计划投资{{data.BuyBudget.Value}}万</span>
-              </p>
+              </p> -->
               <p class="slogan">{{data.Title.Value}}</p>
             </div>
           </div>
@@ -46,7 +46,8 @@
           <!-- 机构名称、类型 -->
           <div class="group flex" style="flex-flow:row wrap">
             <!-- 名称 -->
-            <div class="weui-cell flex1" style="flex:1 0 auto;width:300rpx;" v-for="(item,index) in attrArr" :key="index">
+            <div class="weui-cell flex1" style="flex:1 0 auto;width:300rpx;" 
+              v-for="(item,index) in attrArr" :key="index" v-show="item.Value">
               <div class="weui-cell__hd">{{item.Text}}</div>
               <div class="weui-cell__bd">{{item.Value}}</div>
             </div>
@@ -256,6 +257,8 @@ export default {
         data['RingRate']&&(this.attrArr.push(data['RingRate']))
         data['PlanBuyArea']&&(this.attrArr.push(data['PlanBuyArea']))
         data['RingNum']&&(this.attrArr.push(data['RingNum']))
+        data['RingType']&&(this.attrArr.push(data['RingType']))
+        data['BuyBudget']&&(this.attrArr.push(data['BuyBudget']))
 
     console.log("attrArr", this.attrArr);
   },
