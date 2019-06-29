@@ -106,7 +106,7 @@ export default {
         return {
             title: '分享好友得积分',
             imageUrl:'/static/images/icons/121.jpg',
-            path: '/pages/loginWay/main?ReferralCode='+this.ReferralCode
+            path: '/pages/loginWay/main?inviteCode='+this.ReferralCode
         }
     }
 }

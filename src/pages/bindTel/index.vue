@@ -124,7 +124,7 @@ export default {
             password: that.Pwd,
             yzcode: that.Code,
             userInfo: that.userInfo,
-            InviteCode:that.InviteCode
+            InviteCode:that.inviteCode
           },
           header: {
             "content-type": "application/json" // 默认值
