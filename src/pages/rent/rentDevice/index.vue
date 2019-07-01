@@ -1109,7 +1109,11 @@
         </scroll-view>
     </div> 
     <!--时间插件-->
-    <van-action-sheet :show="showDate" @close="showDate=false" @select="showDate=false">
+    <div class="shade bottom__shade" v-show="showDate">
+      <div class="mask" @tap="showDate = false"></div>
+      <div class="shadeContent">
+        <div class="shade__bd">
+    <!-- <van-action-sheet :show="showDate" @close="showDate=false" @select="showDate=false"> -->
         <van-datetime-picker
         type="date"
         :value="currentDate"
@@ -1119,12 +1123,22 @@
         title="请选择时间"
         style="z-index:888!important"
         />
-    </van-action-sheet> 
+    <!-- </van-action-sheet>  -->
+            </div>
+        </div>
+    </div>
     <!--行业插件--> 
-    <van-popup :show="showTrade" position="bottom" :overlay="true" @close="showTrade = false">
+    <div class="shade bottom__shade" v-show="showTrade">
+      <div class="mask" @tap="showTrade = false"></div>
+      <div class="shadeContent">
+        <div class="shade__bd">
+    <!-- <van-popup :show="showTrade" position="bottom" :overlay="true" @close="showTrade = false"> -->
         <van-picker  show-toolbar title="请选择行业" @confirm="onConfirm"
           @cancel="showTrade = false" :columns="columns" @change="onChange($event)"/>
-    </van-popup>
+    <!-- </van-popup> -->
+           </div>
+        </div>
+    </div>  
     <!--地区插件--> 
     <div class="shade bottom__shade" v-if="isShowAddr">
       <div class="mask"></div>

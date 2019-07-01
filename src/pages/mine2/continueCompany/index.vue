@@ -154,10 +154,9 @@
           <!-- <van-popup :show="areaStatus" position="bottom"> -->
           <van-area :area-list="areaList" :value="areaValue" @confirm="confirmBirthArr" @change="changeArr($event)" :columns-num="2" title="籍贯" />
           <!-- </van-popup> -->
+              </div>
+            </div>
         </div>
-      </div>
-    </div>
-    
     <!-- 选择籍贯弹窗  end -->
   </div>
 </template>
