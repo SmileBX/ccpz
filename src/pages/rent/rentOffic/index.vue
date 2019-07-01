@@ -1545,11 +1545,13 @@ export default {
         {Id:1,Name:"小学",active:true},{Id:2,Name:"中学"},{Id:3,Name:"高中"},{Id:4,Name:"中专"},{Id:5,Name:"大专"},{Id:6,Name:"本科"},{Id:7,Name:"硕士"},{Id:8,Name:"MBA"},
       ],
       ShowTime:false,//
+      mm:0//页面跳转的次数
 
     };
     
   },
   onLoad() {
+    this.mm = 0
     this.setBarTitle();
   },
   onShow(){
@@ -1572,7 +1574,14 @@ export default {
     this.deviceTip = ''
     // this.PageId = this.$root.$mp.query.PageId
     console.log("TypeId",this.TypeId)
-    this.GetPublishItems()
+    console.log(this.mm,"{{{{{{{{{{{{{{{{{{{{{")
+    if(this.mm>=1){
+      wx.switchTab({
+        url:"/pages/my/main"
+      })
+    }else{
+      this.GetPublishItems()
+    }
   },
   components: {},
    methods: {
@@ -2113,17 +2122,23 @@ export default {
             icon:'none',
           })
           if(res.code==6){
+              if(this.mm<1){
               setTimeout(() => {
                 wx.navigateTo({
                   url: "/pages/mine2/myVertical/main?url=rentDevice"
                 });
+                this.mm ++
               }, 1500);
+            }
           }else if(res.code==5){
+              if(this.mm<1){
               setTimeout(() => {
                 wx.navigateTo({
                   url: "/pages/mine2/verticalCompany/main?url=rentDevice"
                 });
+                this.mm ++
               }, 1500);
+            }
           }
         }
       })

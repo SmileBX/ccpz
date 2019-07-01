@@ -1259,11 +1259,13 @@ export default {
       ],
       deviceTip:"",//添加自定义
       ShowTime:"",//展示时分秒
+      mm:0//页面跳转的次数
      
 
     };
   },
   onLoad() {
+    this.mm = 0
     this.setBarTitle();
   },
   onShow(){
@@ -1273,9 +1275,18 @@ export default {
     this.TypeId = this.$root.$mp.query.TypeId;
     this.PageId = this.$root.$mp.query.PageId;
     console.log("TypeId",this.TypeId);
-   console.log("PageId",this.PageId);
+    console.log("PageId",this.PageId);
     this.initData()
-    this.GetPublishItems()
+    console.log(this.mm,"{{{{{{{{{{{{{{{{{{{{{")
+    if(this.mm>=1){
+      wx.switchTab({
+        url:"/pages/my/main"
+      })
+    }else{
+      this.GetPublishItems()
+    }
+   
+    
   },
   components: {},
   methods: {
@@ -1690,17 +1701,23 @@ export default {
             icon:'none',
           })
           if(res.code==6){
+            if(this.mm<1){
               setTimeout(() => {
                 wx.navigateTo({
                   url: "/pages/mine2/myVertical/main?url=rentDevice"
                 });
+                this.mm ++
               }, 1500);
+            }
           }else if(res.code==5){
+            if(this.mm<1){
               setTimeout(() => {
                 wx.navigateTo({
                   url: "/pages/mine2/verticalCompany/main?url=rentDevice"
                 });
+                this.mm ++
               }, 1500);
+            }
           }
         }
       })
