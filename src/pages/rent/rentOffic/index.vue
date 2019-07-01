@@ -1572,9 +1572,8 @@ export default {
     this.tradeList = {},//行业列表
     this.tradeListBox = [],//行业列表
     this.deviceTip = ''
-    // this.PageId = this.$root.$mp.query.PageId
-    console.log("TypeId",this.TypeId)
-    console.log(this.mm,"{{{{{{{{{{{{{{{{{{{{{")
+    this.PageId = this.$root.$mp.query.PageId
+    console.log("PageId｛｝｛｝",this.PageId)
     if(this.mm>=1){
       wx.switchTab({
         url:"/pages/my/main"
@@ -2048,7 +2047,7 @@ export default {
         if(res.code==0){
             //已经认证了 获取信息 发布信息
           this.BrandId = res.data.BrandId
-          this.PageId = res.data.PageId
+          // this.PageId = res.data.PageId
           this.initData()
           that.detailInfo = res.data;
           if(res.data.arealist.length>0){
