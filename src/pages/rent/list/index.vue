@@ -315,6 +315,7 @@
 <script>
 import { post, toLogin, getCurrentPageUrlWithArgs, trim } from "@/utils";
 import { mapState } from "vuex";
+import location from "@/utils/location";
 import rentItem from "@/components/rentItem.vue";
 import houseItem from "@/components/houseItem.vue";
 import activityItem from "@/components/activityItem.vue";
@@ -414,6 +415,7 @@ export default {
     this.type = this.$root.$mp.query.type || "";
     this.keyWords = this.$root.$mp.query.keyWords || "搜索";
     this.setBarTitle();
+    this.CityCode||location(this)
     this.cityCode = this.CityCode;
   },
   onShow() {

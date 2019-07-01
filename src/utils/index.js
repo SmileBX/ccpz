@@ -344,6 +344,7 @@ export function getLocation() {
         wx.getLocation({
             type: 'gcj02',
             success(res) {
+                console.log(res)
                 resolve(res)
             },
             fail(err) {
