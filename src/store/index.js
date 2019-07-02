@@ -17,7 +17,11 @@ const store = new Vuex.Store({
             Denomination:""//优惠券面值
 
         },
-        InvoiceId:"",//发票Id
+        InvoiceInfo:{
+            InvoiceId:"",//发票Id
+            InvoiceHeaderName:"",//发票抬头
+        },
+        
         cardId: "",
         selectCard: {
             url: '',
@@ -86,6 +90,10 @@ const store = new Vuex.Store({
         //选择优惠券
         setSelectCoupon(state,params){
             state.CouponInfo = params
+        },
+        //选择发票
+        setSelectInvoice(state,params){
+            state.InvoiceInfo = params
         }
 
     }

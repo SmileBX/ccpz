@@ -114,7 +114,10 @@
         <div class="weui-cell" @tap="goToPage(1)">
           <div class="weui-cell__hd">发票</div>
           <div class="weui-cell__bd text_r">
-            <p class="txt">
+            <p class="txt color_ff952e" v-if="InvoiceHeaderName.length>0">
+              {{InvoiceHeaderName}}
+            </p>
+            <p class="txt" v-else>
               <span class="color_ff952e">电子普通发票</span>（会员服务-个人）
             </p>
           </div>
@@ -175,6 +178,8 @@ import payPassword from '@/components/payPassword.vue'
 export default {
   onLoad() {
     this.setBarTitle();
+    this.initData()
+
   },
   onShow() {
     this.userId = wx.getStorageSync("userId");
@@ -189,8 +194,10 @@ export default {
     this.aa = 1
     this.CouponId = this.$store.state.CouponInfo.CouponId
     this.Denomination = this.$store.state.CouponInfo.Denomination
-    console.log( this.Denomination,this.CouponId," this.Denomination")
-    this.InvoiceId = this.$store.state.InvoiceId
+    this.InvoiceId = this.$store.state.InvoiceInfo.InvoiceId
+    this.InvoiceHeaderName = this.$store.state.InvoiceInfo.InvoiceHeaderName
+    console.log( this.InvoiceHeaderName,this.CouponId," this.InvoiceHeaderName")
+    
     if(this.$root.$mp.query.publishId){ //发布的Id
         this.publishId = this.$root.$mp.query.publishId
     }
@@ -220,6 +227,7 @@ export default {
       Password:"",//支付密码
       NeedMoney:0,//应付金额
       InvoiceId:0,//发票Id
+      InvoiceHeaderName:"",//发票抬头
       CouponId:0,  //优惠券ID
       Denomination:"",//优惠券面额
       publishId:0,//发布Id
@@ -246,11 +254,16 @@ export default {
       this.Password = ''
       this.cardBrand = '请选择'
       this.NeedMoney = 0
-      this.CouponId = 0
-      this.Denomination = ''
-      this.InvoiceId = 0
       this.Id = 0
+      this.$store.commit("setSelectCoupon",{
+        CouponId:0,
+        Denomination:''
+      })
+      this.$store.commit("setSelectInvoice",{
+        InvoiceId:0,
+        InvoiceHeaderName:''
 
+      })
     },
     getMemberInfo(){
       post('User/GetMemberInfo',{

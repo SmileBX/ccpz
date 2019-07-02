@@ -83,6 +83,7 @@ export default {
     //选择发票 --必传发票种类 个人/公司    路径
     choseInvoice(i){
       const InvoiceId = this.list[i].Id
+      const InvoiceHeaderName = this.list[i].HeaderName
       let typeId = 0
       if(this.list[i].InvoiceTitlestr=='公司'){
           typeId=0
@@ -97,7 +98,11 @@ export default {
         })
       }else{
           // wx.navigateTo({url:"/pages/"+this.pramas+"/main?InvoiceId="+InvoiceId})
-          this.$store.commit("update",{InvoiceId})
+          let InvoiceInfo={
+              InvoiceId:InvoiceId,
+              InvoiceHeaderName:InvoiceHeaderName
+          }
+          this.$store.commit("update",{InvoiceInfo})
           wx.navigateBack()
         }
     },
