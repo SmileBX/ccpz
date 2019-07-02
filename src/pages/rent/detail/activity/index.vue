@@ -1,8 +1,15 @@
 <template>
   <div class="storeDetail">
     <div class="section pb20">
-      <div class="swiper">
-        <img src="/static/images/of/storeDetail.jpg" style="width:100%;height:400rpx;" alt>
+      <div class="banner" >
+        <swiper class="swiper" circular @change="bannerChange">
+          <block v-for="(item,index) in data.PicList.Value" :key="index" >
+            <swiper-item>
+              <img :src="item.PicUrl" style="width:100%;height:400rpx;" alt>
+            </swiper-item>
+          </block>
+        </swiper>
+        <div class="dot" v-if="data.PicList.Value.length>0">{{bannerIndex}}/{{data.PicList.Value.length}}</div>
       </div>
       <div class="shortInfo">
         <h2 class="name">{{data.Title.Value}}</h2>
@@ -123,6 +130,7 @@ export default {
     return {
       // 属性
       attrArr: [],
+      bannerIndex:1,
       };
   },
   onLoad() {
@@ -181,6 +189,11 @@ export default {
       //     })
       //   })
       // }
+    },
+    // banner切换时
+    bannerChange(e){
+      console.log(e.mp.detail.current,this.bannerIndex)
+      this.bannerIndex = e.mp.detail.current +1
     }
   }
 };

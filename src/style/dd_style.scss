@@ -1106,11 +1106,6 @@ page {
     margin-right: 10rpx;
 }
 
-// 广告图
-.swiper img {
-    width: 100%;
-    display: block;
-}
 
 //tipsList
 .tipsList {
@@ -1324,7 +1319,8 @@ page {
     display: inline-block;
     vertical-align: top;
     width: 394rpx;
-    margin-right: 16rpx;
+    // margin-right: 16rpx;
+    margin-right: 20rpx;
     &:last-child {
         margin-right: 30rpx;
     }
@@ -1484,7 +1480,27 @@ page {
     }
 }
 
-
+// 广告图
+.swiper img {
+    width: 100%;
+    display: block;
+}
+.banner{
+    position:relative;
+    .dot{
+        position:absolute;
+        left:30rpx;
+        bottom:60rpx;
+        color:#fff;
+        background:rgba(0, 0, 0, .4);
+        border-radius:20rpx;
+        width:60rpx;
+        height:35rpx;
+        line-height:35rpx;
+        text-align:center;
+        font-size:20rpx;
+    }
+}
 /*********************商铺详情************/
 
 .storeDetail {
@@ -1498,7 +1514,8 @@ page {
     }
     .shortInfo {
         margin: 0 30rpx;
-        margin-top: -80rpx;
+        // margin-top: -80rpx;
+        margin-top: -50rpx;
         background: #fff;
         position: relative;
         z-index: 3;
