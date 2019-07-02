@@ -650,6 +650,7 @@ export default {
   background: rgba(255, 149, 46, 0.6);
   color: #fff;
   position: absolute;
+  z-index: 3;
   left: 0;
   top: 0;
   padding: 2rpx 10rpx;
