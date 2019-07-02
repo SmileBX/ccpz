@@ -114,6 +114,7 @@ export default {
     this.status = 1;
     this.notData = false;
     this.page = 1;
+    this.data = []
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.money = this.$root.$mp.query.money
