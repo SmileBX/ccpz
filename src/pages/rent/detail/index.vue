@@ -2,10 +2,10 @@
   <div class="pageContent" v-if="showData">
     <!-- 详情 -->
     <!--  -->
-    <pinzu v-if="type==21" :data="data" @checkLocation="checkLocation" @goUserCenter="goUserCenter"></pinzu>
-    <formation v-if="type==22" :data="data" @checkLocation="checkLocation" @goUserCenter="goUserCenter"></formation>
-    <activity v-if="type==23" :data="data" @checkLocation="checkLocation" @goUserCenter="goUserCenter"></activity>
-    <house v-if="type==24" :data="data" @checkLocation="checkLocation" @goUserCenter="goUserCenter"></house>
+    <pinzu v-if="type==21" :data="data" @checkLocation="checkLocation" @goUserCenter="goUserCenter" @previewImg="previewImg"></pinzu>
+    <formation v-if="type==22" :data="data" @checkLocation="checkLocation" @goUserCenter="goUserCenter" @previewImg="previewImg"></formation>
+    <activity v-if="type==23" :data="data" @checkLocation="checkLocation" @goUserCenter="goUserCenter" @previewImg="previewImg"></activity>
+    <house v-if="type==24" :data="data" @checkLocation="checkLocation" @goUserCenter="goUserCenter" @previewImg="previewImg"></house>
     <!-- 底部 -->
     <div class="ftBtn" v-if="!data.Footer.IsHide">
       <div class="inner fixed bm0 flex">
@@ -52,11 +52,13 @@ export default {
       data:{},
       Footer:{},
       IsCollection:false, //收藏
+      previewImgArr:[],//预览图片
     }
   },
   onLoad() {
     this.setBarTitle();
     console.log('this.$root.$mp.query.id',this.$root.$mp.query.id)
+    this.previewImgArr=[];
     if(this.$root.$mp.query.id){
       this.id = this.$root.$mp.query.id
     }
@@ -186,6 +188,18 @@ export default {
           })
         })
       }
+    },
+    // 预览图片
+    previewImg(index) {
+      if (this.previewImgArr.length < 1) {
+        this.data.PicList.Value.map(item => {
+          this.previewImgArr.push(item.PicUrl);
+        });
+      }
+      wx.previewImage({
+        urls: this.previewImgArr,
+        current: this.previewImgArr[index]
+      });
     }
   }
 };

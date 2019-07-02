@@ -1,7 +1,7 @@
 <template>
   <div class="storeDetail">
     <div class="section pb20">
-      <div class="banner" >
+      <div class="banner" @click="$emit('previewImg',bannerIndex-1)">
         <swiper class="swiper" circular @change="bannerChange">
           <block v-for="(item,index) in data.PicList.Value" :key="index" >
             <swiper-item>
