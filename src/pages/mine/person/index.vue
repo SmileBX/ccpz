@@ -401,6 +401,7 @@ export default {
               this.$set(res.data,"TagsResKnow",res.data.TagsResKnow.splice(1))
           }
           this.personInfo = res.data
+          this.hasData = true
           if(this.type==2){
               this.IsCollection = res.data.Footer.Value.IsCollection.Value
               this.IsAddFriend = res.data.Footer.Value.IsAddFriend.Value
@@ -408,14 +409,12 @@ export default {
               this.addFriendId = res.data.Footer.Value.IsAddFriend.FriendId
               this.conFriendId = res.data.Footer.Value.IsContact.FriendId
           }
-         
+          console.log(res.data.CyList.length,"+++++++++++++++++")
           if(res.data.CyList.length>1){
             this.companyInfo.push(this.personInfo.CyList[0])
            }else{
              this.companyInfo = res.data.CyList
            }
-         
-          this.hasData = true
           console.log(this.companyInfo)
         }
       })
