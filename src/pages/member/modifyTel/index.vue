@@ -43,6 +43,7 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
+    this.initData()
     if (toLogin(this.curPage)) {
       this.GetMemberMobile();
     }
@@ -63,6 +64,12 @@ export default {
     };
   },
   methods: {
+    initData(){
+      this.tel =  ""  
+      this.mobile =  ""
+      this.code =  ""
+      this.codeMsg =  "获取验证码"
+    },
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "修改手机号"

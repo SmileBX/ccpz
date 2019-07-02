@@ -145,17 +145,25 @@ export default {
       })
     },
     payCharge(){
-      post('Recharge/WechatApplet_AddRecharge',{
-          UserId:this.userId,
-          Token:this.token,
-          RechargeAmount:this.amount
-      },this.curPage).then(res=>{
-        console.log("Res",res)
-        if(res.code==0){
-            const JsParam = JSON.parse(res.data.JsParam)
-            this.payMoney(JsParam)
-        }
-      })
+      if(this.amount>0){
+        post('Recharge/WechatApplet_AddRecharge',{
+            UserId:this.userId,
+            Token:this.token,
+            RechargeAmount:this.amount
+        },this.curPage).then(res=>{
+          console.log("Res",res)
+          if(res.code==0){
+              const JsParam = JSON.parse(res.data.JsParam)
+              this.payMoney(JsParam)
+          }
+        })
+      }else{
+        wx.showToast({
+          title:"充值金额不能小于0",
+          icon:"none",
+          duration:1500
+        })
+      }
     },
     payMoney(JsParam){
       wx.requestPayment({

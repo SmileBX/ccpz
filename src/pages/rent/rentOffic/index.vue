@@ -2115,29 +2115,30 @@ export default {
 
         }else{
             //没有认证 先去认证  code=5 企业认证  code=6个人认证
-            wx.showToast({
-            title:res.msg,
-            duration:1500,
-            icon:'none',
-          })
-          if(res.code==6){
-              if(this.mm<1){
+          if(res.code==6 && this.mm<1){
+              wx.showToast({
+                title:res.msg,
+                duration:1500,
+                icon:'none',
+              })
               setTimeout(() => {
                 wx.navigateTo({
                   url: "/pages/mine2/myVertical/main?url=rentDevice"
                 });
                 this.mm ++
               }, 1500);
-            }
-          }else if(res.code==5){
-              if(this.mm<1){
+          }else if(res.code==5 && this.mm<1){
+              wx.showToast({
+                title:res.msg,
+                duration:1500,
+                icon:'none',
+              })
               setTimeout(() => {
                 wx.navigateTo({
                   url: "/pages/mine2/verticalCompany/main?url=rentDevice"
                 });
                 this.mm ++
               }, 1500);
-            }
           }
         }
       })

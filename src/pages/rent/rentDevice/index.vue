@@ -1698,29 +1698,34 @@ export default {
             if(res.code==6 && this.mm<1){
               wx.showToast({
                 title:res.msg,
+                duration:1500,
                 icon:'none',
-                duration:2000,
-              
+                success:()=>{
+                  setTimeout(() => {
+                    wx.navigateTo({
+                      url: "/pages/mine2/myVertical/main?url=rentDevice"
+                    });
+                    this.mm ++
+                  }, 1500);
+                }
               })
-              setTimeout(() => {
-                wx.navigateTo({
-                  url: "/pages/mine2/myVertical/main?url=rentDevice"
-                });
-                this.mm ++
-              }, 1500);
+              
           }else if(res.code==5 && this.mm<1){
             wx.showToast({
               title:res.msg,
+              duration:1500,
               icon:'none',
-              duration:2000,
+              success:()=>{
+                setTimeout(() => {
+                  wx.navigateTo({
+                    url: "/pages/mine2/verticalCompany/main?url=rentDevice"
+                  });
+                  this.mm ++
+                }, 1500);
+              }
             
             })
-            setTimeout(() => {
-              wx.navigateTo({
-                url: "/pages/mine2/verticalCompany/main?url=rentDevice"
-              });
-              this.mm ++
-            }, 1500);
+            
           }
         }
       })

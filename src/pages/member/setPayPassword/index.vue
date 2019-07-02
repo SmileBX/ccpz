@@ -49,6 +49,7 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
+    this.initData()
     if(toLogin(this.curPage)){
       this.GetMemberMobile();
     }
@@ -70,6 +71,12 @@ export default {
     };
   },
   methods: {
+    initData(){
+      this.tel =  ""  //获取到的当前的手机号
+      this.pwd =  ""
+      this.pwd2 =  ""
+      this.code =  ""
+    },
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "设置支付密码"
