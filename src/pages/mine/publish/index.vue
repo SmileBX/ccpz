@@ -45,8 +45,8 @@
                     >
                     <div class="pictrueAll">
                       <span class="isTopTag" v-if="item.IsTop && item.IsRefresh">已置顶刷新</span>
-                      <span class="isTopTag" v-if="item.IsTop">已置顶</span>
-                      <span class="isTopTag" v-if="item.IsRefresh">已刷新</span>
+                      <span class="isTopTag" v-if="item.IsTop&&!item.IsRefresh">已置顶</span>
+                      <span class="isTopTag" v-if="item.IsRefresh&&!item.IsTop">已刷新</span>
                       <span class="isTopTag" v-if="item.Status!==1">{{item.Status===0?'待审核':item.Status===2?'审核失败':''}}</span>
                       <div class="pictrue img">
                         <img :src="item.PicNo" alt>
@@ -104,10 +104,9 @@
                   >
                     <span
                       class="isTopTag zujian__isTopTag"
-                      v-if="item.IsTop !=='' && item.IsRefresh !==''"
-                    >已置顶刷新</span>
-                    <span class="isTopTag zujian__isTopTag" v-if="item.IsTop !==''">已置顶</span>
-                    <span class="isTopTag zujian__isTopTag" v-if="item.IsRefresh !==''">已刷新</span>
+                      v-if="item.IsTop&& item.IsRefresh">已置顶刷新</span>
+                    <span class="isTopTag zujian__isTopTag" v-if="item.IsTop&&!item.IsRefresh">已置顶</span>
+                    <span class="isTopTag zujian__isTopTag" v-if="item.IsRefresh&&!item.IsTop">已刷新</span>
                       <span class="isTopTag" v-if="item.Status!==1">{{item.Status===0?'待审核':item.Status===2?'审核失败':''}}</span>
                     <input
                       type="checkbox"
@@ -176,9 +175,9 @@
                       v-if="showEdit"
                     >
                     <div class="pictrueAll">
-                      <span class="isTopTag" v-if="item.IsTop !=='' && item.IsRefresh !==''">已置顶刷新</span>
-                      <span class="isTopTag" v-if="item.IsTop !==''">已置顶</span>
-                      <span class="isTopTag" v-if="item.IsRefresh !==''">已刷新</span>
+                      <span class="isTopTag" v-if="item.IsTop && item.IsRefresh">已置顶刷新</span>
+                      <span class="isTopTag" v-if="item.IsTop&&!item.IsRefresh">已置顶</span>
+                      <span class="isTopTag" v-if="item.IsRefresh&&!item.IsTop">已刷新</span>
                       <span class="isTopTag" v-if="item.Status!==1">{{item.Status===0?'待审核':item.Status===2?'审核失败':''}}</span>
                       <div class="pictrue img">
                         <img :src="item.PicNo" alt>
@@ -235,9 +234,9 @@
                       v-if="showEdit"
                     >
                     <div class="pictrueAll">
-                      <span class="isTopTag" v-if="item.IsTop !=='' && item.IsRefresh !==''">已置顶刷新</span>
-                      <span class="isTopTag" v-if="item.IsTop !==''">已置顶</span>
-                      <span class="isTopTag" v-if="item.IsRefresh !==''">已刷新</span>
+                      <span class="isTopTag" v-if="item.IsTop && item.IsRefresh">已置顶刷新</span>
+                      <span class="isTopTag" v-if="item.IsTop&&!item.IsRefresh">已置顶</span>
+                      <span class="isTopTag" v-if="item.IsRefresh&&!item.IsTop">已刷新</span>
                       <span class="isTopTag" v-if="item.Status!==1">{{item.Status===0?'待审核':item.Status===2?'审核失败':''}}</span>
                       <div class="pictrue img">
                         <img :src="item.PicNo" alt>
@@ -341,6 +340,8 @@ export default {
     this.curPage = getCurrentPageUrlWithArgs();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
+    this.init();
+    this.initData();
     this.setBarTitle();
     this.getMyPublish(0);
   },
@@ -357,6 +358,27 @@ export default {
       wx.setNavigationBarTitle({
         title: "我的发布"
       });
+    },
+    // 进入页面时初始化数据
+    init(){
+      this.tabindex=0;
+      this.BrandId = 21;
+      this.pinzuList={
+        selectedIndex: "",
+        data: []
+      }; //拼租
+      this.zujianList= {
+        selectedIndex: "",
+        data: []
+      } //组建
+      this.huodongList={
+        selectedIndex: "",
+        data: []
+      } //活动
+      this.fangList={
+        selectedIndex: "",
+        data: []
+      } //房源
     },
     initData() {
       this.isRequest = false;

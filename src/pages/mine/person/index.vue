@@ -32,11 +32,9 @@
                   <span > 切换</span>
                 </span>
                 <span class="attestationStatus color_white font22" v-if="item.IsAUT">
-                  <span class="icon-gou"></span> 已认证
+                  <span class="icon-gou"></span> {{item.IsAUT}}
                 </span>
-              </div>
-              </block>
-              <div class="msgList flex" v-if="companyInfo.length==0">
+                <div class="msgList flex" v-if="companyInfo.length==0">
                 <p class="msgList">
                   未透露公司
                 </p>
@@ -44,6 +42,8 @@
                   <span class="icon-gou"></span> 去认证
                 </span>
               </div>
+              </div>
+              </block>
             </div>
           </div>
         </div>
@@ -87,7 +87,7 @@
           <div class="line flex flexColumn">
             <div class="flex justifyContentBetween"> 
                 <h3 class="tagTile">资源标签</h3>
-                <p class="fontColor99" @tap="gotoPage(0)" v-if="type==1">编辑
+                <p class="fontColor99" @tap="gotoPage(0)" v-if="type!=2">编辑
                   <span class="icon-arrow arrow-right"></span>
                 </p>
                 <!-- v-if="personInfo.TagsResGood[0] && personInfo.TagsResKnow[0]" -->
@@ -119,7 +119,7 @@
           <div class="line flex flexColumn">
             <div class="flex justifyContentBetween"> 
                 <h3 class="tagTile">能力标签</h3>
-                <p class="fontColor99" @tap="gotoPage(1)" v-if="type==1">编辑
+                <p class="fontColor99" @tap="gotoPage(1)" v-if="type!=2">编辑
                   <span class="icon-arrow arrow-right"></span>
                 </p>
                 <!-- v-if="personInfo.TagsCapGood[0] && personInfo.TagsCapKnow[0]" -->
@@ -162,7 +162,7 @@
                     </p>
                 </div>
             </div>
-            <p class="fontColor99" @tap="editEdcu(1,item.Id)" v-if="type==1">编辑
+            <p class="fontColor99" @tap="editEdcu(1,item.Id)" v-if="type!=2">编辑
               <span class="icon-arrow arrow-right"></span>
             </p>
           </div>
@@ -190,7 +190,7 @@
                     </p>
                 </div>
               </div>
-              <p class="fontColor99" @tap="editEdcu(2,item.Id)" v-if="type==1">编辑
+              <p class="fontColor99" @tap="editEdcu(2,item.Id)" v-if="type!=2">编辑
                 <span class="icon-arrow arrow-right"></span>
               </p>
           </div>
@@ -369,20 +369,21 @@ export default {
       wx.navigateTo({url:this.menuAr[index]})
     },
     getMyHomePage(){
+      console.log(this.type)
       let objUrl = ''
       let pramas = {}
-      if(this.type==1){
-        objUrl = 'User/MyHomePage'
-        pramas = {
-          UserId: this.userId,
-          Token: this.token,
-        }
-      }else{
+      if(this.type==2){
         objUrl = 'User/OtherHomePage'
         pramas = {
           UserId: this.userId,
           Token: this.token,
           ShopId :this.Id
+        }
+      }else{
+        objUrl = 'User/MyHomePage'
+        pramas = {
+          UserId: this.userId,
+          Token: this.token,
         }
       }
       post(objUrl,pramas,this.curPage).then(res=>{
@@ -532,6 +533,12 @@ export default {
     }
     
 
+  },
+  onUnload(){
+    wx.reLaunch({
+      url:"/pages/my/main"
+    })
+    console.log("KKKKKKKKKKKKKKK")
   }
 };
 </script>

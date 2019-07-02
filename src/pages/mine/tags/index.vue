@@ -81,6 +81,7 @@ export default {
       wx.navigateTo({
         url:"/pages/mine/editMenTags/main?typeTips="+this.type+"&flag="+this.flag
       })
+     
 
       
     }

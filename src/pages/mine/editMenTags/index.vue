@@ -18,7 +18,7 @@
             <div> 
                 <div class="tagTile2">{{tag2}}</div>
                 <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentStart flex1 flexAlignCenter" style="margin-top:20rpx">
-                  <span v-for="(item,nindex) in needList" :key="nindex" v-if="needList">{{item}} x</span>
+                  <span v-for="(item,nindex) in needList" :key="nindex" v-if="needList" @tap="delTag2(nindex)">{{item}} x</span>
                   <span class="AddTag" @tap="addTagDetail(2)">+ 添加</span>
                 </div>
             </div>
@@ -196,15 +196,18 @@ export default {
           })
         }
         setTimeout(()=>{
-          wx.redirectTo({url:"/pages/mine/person/main"})
+          wx.navigateTo({url:"/pages/mine/person/main"})
         },1500)
       })
     },
     //删除标签
     delTag(i){
       this.goodList.splice(i,1)
+    },
+    //删除标签
+    delTag2(i){
+      this.needList.splice(i,1)
     }
-    
     
   }
 };

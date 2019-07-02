@@ -83,7 +83,11 @@
         <img :src="data.ShopInfo.Value.Avatar.Value" class="tx" alt @click="$emit('goUserCenter')">
         <div class="info flex1">
           <p class="name">{{data.ShopInfo.Value.Name.Value}}</p>
-          <p class="serviceTime">{{data.ShopInfo.Value.Job.Value}}</p>
+          <div class="flex serviceTime">
+            <p class="serviceTime">{{data.ShopInfo.Value.Job.Value}}</p> 
+            &nbsp;|&nbsp;
+            <p class="serviceTime">{{data.ShopInfo.Value.WorkLife.Value}}</p>
+          </div>
         </div>
         <!-- <img src="/static/images/icons/con_tel.jpg" class="icon_tel" alt> -->
       </div>
