@@ -17,7 +17,8 @@
                 <span class="msgItem font22" v-if="personInfo.WorkLife">{{personInfo.WorkLife}}</span>
                 <span class="msgItem font22" v-else>未透漏经验</span>
               </p>
-              <div class="msgList flex" v-for="(item,key) in companyInfo" :key="key" v-if="companyInfo.length>0">
+              <block v-if="companyInfo.length>0">
+              <div class="msgList flex" v-for="(item,key) in companyInfo" :key="key">
                 <p class="msgList">
                   <span class="msgItem font22" v-if="item.Job">{{item.Job}}</span>
                   <span class="msgItem font22" v-else>未透漏职位</span>
@@ -34,6 +35,7 @@
                   <span class="icon-gou"></span> 已认证
                 </span>
               </div>
+              </block>
               <div class="msgList flex" v-if="companyInfo.length==0">
                 <p class="msgList">
                   未透露公司
@@ -45,7 +47,8 @@
             </div>
           </div>
         </div>
-        <div class="weui-cells noBorder__weui-cells column__weui-cells" style="margin-bottom:20rpx" v-if="type==2" v-for="(item,skey) in companyInfo" :key="skey">
+        <block v-if="type==2">
+        <div class="weui-cells noBorder__weui-cells column__weui-cells" style="margin-bottom:20rpx" v-for="(item,skey) in companyInfo" :key="skey">
             <div class="group flex justifyContentBetween">
               <div class="weui-cell">
                 <div class="weui-cell__hd">成立日期</div>
@@ -78,6 +81,7 @@
               </div>
             </div>
         </div>
+        </block>
       <!-- 标签-->
       <div class="tagBox pd15 bg_fff">
           <div class="line flex flexColumn">
@@ -403,13 +407,15 @@ export default {
           this.personInfo = res.data
           this.hasData = true
           if(this.type==2){
+            var arr = Object.keys(res.data.Footer.Value);
+            if(arr.length > 0){
               this.IsCollection = res.data.Footer.Value.IsCollection.Value
               this.IsAddFriend = res.data.Footer.Value.IsAddFriend.Value
               this.IsContact = res.data.Footer.Value.IsContact.Value
               this.addFriendId = res.data.Footer.Value.IsAddFriend.FriendId
               this.conFriendId = res.data.Footer.Value.IsContact.FriendId
+            }
           }
-          console.log(res.data.CyList.length,"+++++++++++++++++")
           if(res.data.CyList.length>1){
             this.companyInfo.push(this.personInfo.CyList[0])
            }else{

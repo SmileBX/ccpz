@@ -54,6 +54,16 @@ const store = new Vuex.Store({
             Email: "",
             Trade:"",
             AvatarwBase:"",
+        },
+        userCompany:{//新增企业认证第一步保存数据
+            Name: "",
+            RegNum: "",
+            LegalPerson: "",
+            Idcard: "",
+            IdcardPositive: "",
+            IdcardNegative: "",
+            BusinessLicense: "",
+            OtherSeniority: ""
         }
     },
     mutations: {

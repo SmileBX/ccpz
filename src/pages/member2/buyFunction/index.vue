@@ -351,7 +351,7 @@ export default {
         return false
     },
     //支付
-    payMoney(){
+    payMoney(){console.log("*********",this.type)
       if(this.type==3 && this.Id==0){
           this.toastTip("请选择卡类型!")
           return false
@@ -370,7 +370,7 @@ export default {
       }
     },
     getWxPay(){
-      console.log("___________")
+      console.log("___________",this.type)
       let objUrl = ''
       let pramas = {}
       if(this.type==3){
@@ -397,7 +397,7 @@ export default {
           CouponId:this.CouponId
         }
       }
-
+console.log("___________",objUrl)
       post(objUrl, pramas,this.curPage).then(res=>{
         console.log(res)
         if(res.code==0){

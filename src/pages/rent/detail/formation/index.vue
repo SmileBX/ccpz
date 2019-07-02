@@ -153,7 +153,7 @@
                 class="item"
                 v-for="(item,index) in data.PicList.Value"
                 :key="index"
-                @click="previewImg(index)"
+                @click="$emit('previewImg',index)"
               >
                 <div class="outside">
                   <div class="pictrueAll">
@@ -258,7 +258,6 @@ export default {
       //   onInit: initChart
       attrArr: [],
       showPartnerStatus: -1,
-      previewImgArr: []
     };
   },
   onLoad() {
@@ -289,18 +288,6 @@ export default {
     checkLocation() {
       this.$emit("checkLocation");
     },
-    // 预览图片
-    previewImg(index) {
-      if (this.previewImgArr.length < 1) {
-        this.data.PicList.Value.map(item => {
-          this.previewImgArr.push(item.PicUrl);
-        });
-      }
-      wx.previewImage({
-        urls: this.previewImgArr,
-        current: this.previewImgArr[index]
-      });
-    }
   }
 };
 </script>
