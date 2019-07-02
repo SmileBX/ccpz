@@ -6,7 +6,7 @@
     <div class="box">
       <div class="header">
         请输入支付密码
-        <div class="close" @click="close">×</div>
+        <div class="close" @click.stop="close">×</div>
       </div>
 
       <div class="bodys flex-content" @click="onFocusflag">
@@ -47,6 +47,7 @@ export default {
     },
     // 关闭
     close(){
+      console.log(this.showStatus)
       this.$emit('update:showStatus',false)
     },
     // 输入密码
@@ -72,6 +73,7 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
+  z-index:99;
   height: 100vh;
   width: 100%;
   overflow:hidden;

@@ -15,7 +15,7 @@
             <p>举报</p>
           </div>
           <div class="item flex1" @click="onIsCollection">
-            <img v-if="!Footer.IsCollection" src="/static/images/icons/shoucang.png" alt>
+            <img v-if="!IsCollection" src="/static/images/icons/shoucang.png" alt>
             <img v-else src="/static/images/icons/shoucang-action.png" alt>
             <p>收藏</p>
           </div>
@@ -48,10 +48,10 @@ export default {
       type:0,
       userId:'',
       token:'',
-      IsCollection:false,
       showData:false,
       data:{},
-      Footer:{}
+      Footer:{},
+      IsCollection:false, //收藏
     }
   },
   onLoad() {
@@ -90,10 +90,11 @@ export default {
       this.setBarTitle();
       // debugger;
       // 底部
-      this.Footer = res.data.Footer.Value;
-      const Footer = res.data.Footer.Value;
-      // 收藏
-      // this.IsCollection= Footer.IsCollection.Value
+      if(!res.data.Footer.IsHide){
+        this.Footer = res.data.Footer.Value;
+        const Footer = res.data.Footer.Value;
+        this.IsCollection = Boolean(Footer.IsCollection.Value);
+      }
       // 公司信息
       // 只有id不等于0时，展示
       if(res.data.CompanyInfo.Value.Id.Value){
@@ -131,14 +132,14 @@ export default {
         Type:0,
         Id:this.id
       }
-      if(!this.Footer.IsCollection){
+      if(!this.IsCollection){
         await post('User/AddCollections',params,this.curPage)
         wx.showToast({title:'收藏成功'})
       }else{
         await post('User/ReCollections',params,this.curPage)
         wx.showToast({title:'取消收藏成功'})
       }
-      this.Footer.IsCollection = !this.Footer.IsCollection
+      this.IsCollection = !this.IsCollection
     },
     // 举报
     onReport(){

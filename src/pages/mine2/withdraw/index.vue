@@ -30,7 +30,7 @@
   </div>
 </template>
 <script>
-// import { post, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
+import { post, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
 export default {
   onLoad() {
     this.setBarTitle();

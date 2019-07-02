@@ -131,6 +131,7 @@ export default {
       if (this.notData) {
         return false;
       }
+      this.page===1&&(this.data=[])
       const res = await post("User/CouponList", {
         UserId: this.userId,
         Token: this.token,
