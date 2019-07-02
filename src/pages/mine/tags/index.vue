@@ -78,9 +78,10 @@ export default {
       })
       const _choseList = JSON.stringify(choseList)
       wx.setStorageSync("choseList",_choseList)
-      wx.reLaunch({
+      wx.navigateTo({
         url:"/pages/mine/editMenTags/main?typeTips="+this.type+"&flag="+this.flag
       })
+     
 
       
     }
