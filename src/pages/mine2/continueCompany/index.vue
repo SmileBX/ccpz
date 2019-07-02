@@ -45,11 +45,11 @@
         </div>
       </div>
     </div>
-    <div class="pall bg_fff">
+    <div class="pall bg_fff" v-if="showtextarea">
       <p style="margin-bottom:10rpx;">公司简介</p>
       <textarea name id cols="30" rows="10" v-model="companyIntro" placeholder="请输入公司简介"></textarea>
     </div>
-    <div class="pall bg_fff">
+    <div class="pall bg_fff" v-if="showtextarea">
       <p style="margin-bottom:10rpx;">公司理念</p>
       <textarea name id cols="30" rows="10" v-model="companyCulture" placeholder="请输入公司理念"></textarea>
     </div>
@@ -141,18 +141,18 @@
       <div class="mask" @tap="cancle(1)"></div>
       <div class="shadeContent">
         <div class="shade__bd">
-          <van-datetime-picker show-toolbar title="成立日期" @cancel="closeDate" @confirm="confirmDate" @change="changeDate($event)"  :value="currentDate" :min-date="minDate" :max-date="maxDate" type="date"/>
+          <van-datetime-picker show-toolbar title="成立日期" @cancel="cancle(1)" @confirm="confirmDate" @change="changeDate($event)"  :value="currentDate" :min-date="minDate" :max-date="maxDate" type="date"/>
         </div>
       </div>
     </div>
     <!-- 选择成立日期  end -->
     <!-- 选择籍贯弹窗 -->
     <div class="shade bottom__shade" v-show="areaStatus">
-      <div class="mask" @tap="cancle(2)"></div>
+      <div class="mask" @tap="closearea"></div>
       <div class="shadeContent">
         <div class="shade__bd">
           <!-- <van-popup :show="areaStatus" position="bottom"> -->
-          <van-area :area-list="areaList" :value="areaValue" @confirm="confirmBirthArr" @change="changeArr($event)" :columns-num="2" title="籍贯" />
+          <van-area :area-list="areaList" :value="areaValue" @cancel="closearea" @confirm="confirmBirthArr" @change="changeArr($event)" :columns-num="2" title="籍贯" />
           <!-- </van-popup> -->
               </div>
             </div>
@@ -184,7 +184,7 @@ export default {
       userId: "",
       token: "",
       curPage: "",
-      showShade: [false,false],
+      showShade: [false,false,false],
       tradeList: {}, //行业数据
       columns: [],  //选择行业弹窗需要传入的数据
       id: "",
@@ -210,12 +210,14 @@ export default {
       minDate: new Date().setFullYear(1600,0,1),
       areaValue:"",
       areaStatus:false,
+      showtextarea:true,//显示文本域，层级太高隐藏
     };
   },
   methods: {
     onAreaStatus(){
       
-      this.areaStatus = !this.areaStatus;
+      this.areaStatus = true;
+      this.showtextarea=false;
       console.log("再次打开的时候areaValue:"+this.areaValue);
       console.log(this.areaStatus,'areaStatus')
     },
@@ -227,16 +229,17 @@ export default {
     showSelect(index) {
       //弹窗是否显示
       this.$set(this.showShade, index, true);
+      this.showtextarea=false;
     },
     cancle(index) {
       //弹窗的取消
       this.$set(this.showShade, index, false);
+      this.showtextarea=true;
     },
-    sureSelect(index) {
-      if (index == 0) {
-        //选择行业
-      }
-      this.$set(this.showShade, index, false);
+    //关闭籍贯
+    closearea(){
+      this.areaStatus=false;
+      this.showtextarea=true;
     },
     onChange(event) {
       //选择行业
@@ -252,9 +255,11 @@ export default {
       this.$set(this.columns[0], "defaultIndex", index[0]);
       this.$set(this.columns[1], "values", this.tradeList[value[0]]);
       this.$set(this.columns[1], "defaultIndex", index[1]);
+      this.showtextarea=true;
     },
     onCancel() {
       this.$set(this.showShade, 0, false);
+      this.showtextarea=true;
     },
     changeDate(e){  //选择成立日期
       
@@ -269,7 +274,7 @@ export default {
        this.setUpDate = year+"-"+month+"-"+day
       this.currentDate = dd.getTime();
       this.$set(this.showShade, 1, false);
-      
+      this.showtextarea=true;
     },
     changeArr(e){
 
@@ -285,6 +290,7 @@ export default {
       this.nativePlace = str;
       this.areaStatus = false;
       this.areaValue = arr[arr.length-1].code;
+      this.showtextarea=false;
       console.log("code:"+this.areaValue);
     },
     valOther() {
@@ -386,7 +392,39 @@ export default {
         if(this.companyPic.length>0){
            companyPic = await this.base64Img(this.companyPic);
         }
-        this.UserBusinessAuthNext(JSON.stringify(companyPic));
+        // this.UserBusinessAuthNext(JSON.stringify(companyPic));
+        let that=this
+        var Name = this.$store.state.userCompany.Name
+        var RegNum = this.$store.state.userCompany.RegNum
+        var LegalPerson = this.$store.state.userCompany.LegalPerson
+        var Idcard = this.$store.state.userCompany.Idcard
+        var IdcardPositive = this.$store.state.userCompany.IdcardPositive
+        var IdcardNegative = this.$store.state.userCompany.IdcardNegative
+        var BusinessLicense = this.$store.state.userCompany.BusinessLicense
+        var OtherSeniority = this.$store.state.userCompany.OtherSeniority
+        post(
+          "User/UserBusinessAuth",
+          {
+            UserId: that.userId,
+            Token: that.token,
+            Company: {
+              Name: Name,
+              RegNum: RegNum,
+              LegalPerson: LegalPerson,
+              Idcard: Idcard,
+              IdcardPositive: IdcardPositive,
+              IdcardNegative: IdcardNegative,
+              BusinessLicense: BusinessLicense,
+              OtherSeniority: OtherSeniority
+            }
+          },
+          that.curPage
+        ).then(res => {
+          if (res.code === 0) {
+            that.id=res.data.Id;
+            that.UserBusinessAuthNext(JSON.stringify(companyPic));
+          }
+        });
       }
     },
     UserBusinessAuthNext(companyPic) {
@@ -422,9 +460,14 @@ export default {
           wx.showToast({
             title: "提交成功!",
             icon: "none",
-            duration: 1500
+            duration: 1500,
+            success:function(){
+              setTimeout(() => {
+               wx.navigateBack()
+              },1500)
+            }
           });
-          wx.navigateBack()
+
         }
       });
     },

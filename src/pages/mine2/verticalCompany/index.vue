@@ -131,6 +131,7 @@ import { pathToBase64 } from "@/utils/image-tools";
 export default {
   onLoad() {
     this.setBarTitle();
+    this.initData()
   },
   onShow() {
     this.userId = wx.getStorageSync("userId");
@@ -172,6 +173,10 @@ export default {
       this.regNum = ""; //企业注册号,
       this.legalPerson =""; //法人
       this.idCard = ""; //法人身份证号
+      this.idCardPositive = "", //身份证正面
+      this.idCardNegative = "", //身份证反面
+      this.businessLicense = "", //营业执照
+      this.otherSeniority = "" //其他资质
     },
     valOther() {
       //认证的校验
@@ -299,7 +304,22 @@ export default {
         if(this.id && this.id !==""){
           this.UserBusinessAuthEdit(idcardPositive,idcardNegative,businessLicense,otherSeniority);
         }else{
-           this.UserBusinessAuth(idcardPositive,idcardNegative,businessLicense,otherSeniority);
+          //  this.UserBusinessAuth(idcardPositive,idcardNegative,businessLicense,otherSeniority);
+           const userCompany={
+            Name: this.name,
+            RegNum: this.regNum,
+            LegalPerson: this.legalPerson,
+            Idcard: this.idCard,
+            IdcardPositive: idcardPositive,
+            IdcardNegative: idcardNegative,
+            BusinessLicense: businessLicense,
+            OtherSeniority: otherSeniority
+          }
+          console.log(userCompany)
+          this.$store.commit('update',{userCompany})
+          wx.redirectTo({
+            url: '/pages/mine2/continueCompany/main'
+          })
         }
         
       }

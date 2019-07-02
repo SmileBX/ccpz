@@ -168,14 +168,18 @@ export default {
   },
   onLoad() {
     this.setBarTitle();
-   
-  },
-  onShow(){
     this.curPage = getCurrentPageUrlWithArgs();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
-    this.initData()
+    this.initData();
     this.getPerson()
+  },
+  onShow(){
+    // this.curPage = getCurrentPageUrlWithArgs();
+    // this.userId = wx.getStorageSync("userId");
+    // this.token = wx.getStorageSync("token");
+    // this.initData();
+    // this.getPerson()
     console.log(this.AvatarwBase.length,"_______")
     
   },
@@ -186,7 +190,7 @@ export default {
       });
     },
     initData(){
-      console.log(this.ShowBase,"333333333")
+      console.log(this.ShowBase,"333333333");
       // console.log(this.$store.state.personInfo,"this.$store.state.personInfo")
       if(this.AvatarwBase.length==0){
         this.Avatar = this.$store.state.personInfo.Avatar
@@ -202,7 +206,7 @@ export default {
       this.Contacts = this.$store.state.personInfo.Contacts
       this.ContactsTel = this.$store.state.personInfo.ContactsTel
       this.WorkIdea = this.$store.state.personInfo.WorkIdea
-      this.AvatarwBase = this.$store.state.personInfo.WorkIdea
+      // this.AvatarwBase = this.$store.state.personInfo.WorkIdea
       this.columns = []
      
     },
