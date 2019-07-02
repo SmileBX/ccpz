@@ -53,6 +53,7 @@ export default {
       Area:"",//地区 格式：'1级,2级'
       Trade:"", //行业 格式：'1级,2级'
       WorkLife:"",//年限
+      Job:"",//职位
       WorkIdea:"", //理念
       WeChatNum:"", //微信号
       Contacts:"",
@@ -70,6 +71,7 @@ export default {
     this.token = wx.getStorageSync("token");
     this.Avatar = this.$store.state.personInfo.Avatar
     this.Name = this.$store.state.personInfo.Name
+    this.Job = this.$store.state.personInfo.Job
     this.Area = this.$store.state.personInfo.Area
     this.Trade = this.$store.state.personInfo.Trade
     this.WorkLife = this.$store.state.personInfo.WorkLife
@@ -89,6 +91,7 @@ export default {
     initData(){
       this.Avatar = ""
       this.Name = ""
+      this.Job = ""
       this.Area = ""
       this.Trade = ""
       this.WorkLife = ""
@@ -101,6 +104,7 @@ export default {
       const personInfo = {
           Avatar: this.Avatar,
           Name:  this.Name,
+          Job:  this.Job,
           Area:  this.Area,
           WorkLife: this.WorkLife,
           WorkIdea:  this.WorkIdea,
@@ -152,6 +156,7 @@ export default {
           Token: this.token,
           Avatar: this.AvatarwBase,
           Name: this.Name,
+          Job: this.Job,
           Area: this.Area,
           WorkLife: this.WorkLife,
           WeChatNum: this.WeChatNum,
