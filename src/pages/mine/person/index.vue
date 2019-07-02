@@ -404,8 +404,8 @@ export default {
           if( res.data.TagsResKnow[0].length<=0){
               this.$set(res.data,"TagsResKnow",res.data.TagsResKnow.splice(1))
           }
-          this.personInfo = res.data;
-          console.log(res.data.Footer.Value)
+          this.personInfo = res.data
+          this.hasData = true
           if(this.type==2){
             var arr = Object.keys(res.data.Footer.Value);
             if(arr.length > 0){
@@ -421,8 +421,6 @@ export default {
            }else{
              this.companyInfo = res.data.CyList
            }
-         
-          this.hasData = true
           console.log(this.companyInfo)
         }
       })

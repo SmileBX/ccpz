@@ -145,7 +145,7 @@ export default {
     async submitPatic(){
       // console.log(this.Avatar,"///////////////")
       // let _Avatar = await this.base64Img(this.Avatar)
-      console.log(this.AvatarwBase,"**************")
+      // console.log(this.AvatarwBase,"**************")
       if(this.valOther()){
         post('User/UpdateMemberInfo',{
           UserId: this.userId,

@@ -8,8 +8,8 @@
         <div class="info flex1">
           <p class="mt10">
             <span class="name">{{personInfo.Name}}</span>
-            <img src="/static/images/icons/v2.png" class="icon_attestation" alt="">
-            <img src="/static/images/icons/attestationTag2.png" class="icon_attestationTag" alt="">
+            <img src="/static/images/icons/v2.png" v-if="personInfo.IsVip" class="icon_attestation" alt="">
+            <img src="/static/images/icons/attestationTag2.png" v-if="personInfo.IsAUT" class="icon_attestationTag" alt="">
           </p>
         </div>
       </div>

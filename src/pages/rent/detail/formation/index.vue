@@ -5,17 +5,22 @@
         <!-- 个人信息 -->
         <div class="shortInfo1 userInfo">
           <div class="legalInfo flex">
-            <img :src="data.ShopInfo.Value.Avatar.Value" class="tx" alt @click="$emit('goUserCenter')">
+            <img
+              :src="data.ShopInfo.Value.Avatar.Value"
+              class="tx"
+              alt
+              @click="$emit('goUserCenter')"
+            />
             <div class="info flex1">
               <div style="margin-bottom:16rpx;" class="flex-center">
                 <span class="name">{{data.ShopInfo.Value.Name.Value}}</span>
-                <img src="/static/images/icons/v.png" mode="aspectFit" class="icon_attestation" alt>
+                <img src="/static/images/icons/v.png" mode="aspectFit" class="icon_attestation" alt />
                 <span class="lookAttestation">
                   <img
                     src="/static/images/icons/attestationTag.png"
                     class="icon_attestationTag"
                     alt
-                  >查看认证
+                  />查看认证
                 </span>
               </div>
               <p class="msgList flex-center">
@@ -29,14 +34,14 @@
                 <span class="msgItem" v-if="data.GladBuyerTrade&&data.GladBuyerTrade.Value">{{data.GladBuyerTrade.Value}}</span>
                 <span class="msgItem" v-if="data.RingType">{{data.RingType.Value}}</span>
                 <span class="msgItem">计划投资{{data.BuyBudget.Value}}万</span>
-              </p> -->
+              </p>-->
               <p class="slogan">{{data.Title.Value}}</p>
             </div>
           </div>
           <div class="lat flex-center">
             <div class="left">{{data.AddTime.Value}}</div>
             <div class="right flex-center">
-              <img src="/static/images/icons/lat.png" alt>
+              <img src="/static/images/icons/lat.png" alt />
               {{data.GladBuyArea.Value}}
             </div>
           </div>
@@ -46,13 +51,17 @@
           <!-- 机构名称、类型 -->
           <div class="group flex" style="flex-flow:row wrap">
             <!-- 名称 -->
-            <div class="weui-cell flex1" style="flex:1 0 auto;width:300rpx;" 
-              v-for="(item,index) in attrArr" :key="index" v-show="item.Value">
+            <div
+              class="weui-cell flex1"
+              style="flex:1 0 auto;width:300rpx;"
+              v-for="(item,index) in attrArr"
+              :key="index"
+              v-show="item.Value"
+            >
               <div class="weui-cell__hd">{{item.Text}}</div>
               <div class="weui-cell__bd">{{item.Value}}</div>
             </div>
           </div>
-
         </div>
         <!-- 公司简介 -->
         <div class="section">
@@ -100,7 +109,7 @@
       <div class="section pd15" v-if="false">
         <h3 class="title detail__title">教育经历</h3>
         <div class="line flex experience__line">
-          <img src="/static/images/icons/jiaoyujl.jpg" class="icon_experience" alt>
+          <img src="/static/images/icons/jiaoyujl.jpg" class="icon_experience" alt />
           <div class="conBox">
             <h3 class="title detail__title">九江学院</h3>
             <p class="msgList">
@@ -115,7 +124,7 @@
       <div class="section pd15" v-if="false">
         <h3 class="title detail__title">工作经历</h3>
         <div class="line flex experience__line">
-          <img src="/static/images/icons/gongzuojl.jpg" class="icon_experience" alt>
+          <img src="/static/images/icons/gongzuojl.jpg" class="icon_experience" alt />
           <div class="conBox">
             <h3 class="title detail__title">深圳市松大科技有限公司</h3>
             <p class="msgList">
@@ -135,15 +144,20 @@
       </div>
       <!-- 公司理念  end -->
       <!-- 公司图片 -->
-      <div class="section" v-if="data.PicList&&data.PicList.length>0">
+      <div class="section" v-if="data.PicList&&data.PicList.Value.length>0">
         <h3 class="title detail__title pd15">公司图片</h3>
         <div class="con" style="padding-left:30rpx;padding-bottom:60rpx;">
           <scroll-view class="storeNowrap" scroll-x>
             <ul class="column storeList">
-              <li class="item" v-for="(item,index) in data.PicList" :key="index">
+              <li
+                class="item"
+                v-for="(item,index) in data.PicList.Value"
+                :key="index"
+                @click="previewImg(index)"
+              >
                 <div class="outside">
                   <div class="pictrueAll">
-                    <img :src="item.Pic" alt>
+                    <img :src="item.PicUrl" alt />
                   </div>
                 </div>
               </li>
@@ -160,7 +174,7 @@
               <p class="address">{{data.CompanyAddr.Value}}</p>
               <p class="space">{{data.CompanyDoorNum.Value}}</p>
             </div>
-            <img src="/static/images/icons/map.jpg" class="map" @click="checkLocation" alt>
+            <img src="/static/images/icons/map.jpg" class="map" @click="checkLocation" alt />
           </div>
         </div>
       </div>
@@ -217,9 +231,7 @@
                       <div class="weui-cell__hd">职位描述</div>
                     </div>
                     <div class="weui-cell">
-                      <div
-                        class="weui-cell__bd"
-                      >{{item.Value.PartDesc.Value}}</div>
+                      <div class="weui-cell__bd">{{item.Value.PartDesc.Value}}</div>
                     </div>
                   </div>
                 </div>
@@ -244,21 +256,22 @@ export default {
     return {
       //   echarts,
       //   onInit: initChart
-      attrArr:[],
-      showPartnerStatus:-1,
+      attrArr: [],
+      showPartnerStatus: -1,
+      previewImgArr: []
     };
   },
   onLoad() {
-    this.attrArr=[]
+    this.attrArr = [];
     console.log("attrArr1", this.data);
-        const data = this.data
-        data['Founder']&&(this.attrArr.push(data['Founder']))
-        data['PlanBuyDate']&&(this.attrArr.push(data['PlanBuyDate']))
-        data['RingRate']&&(this.attrArr.push(data['RingRate']))
-        data['PlanBuyArea']&&(this.attrArr.push(data['PlanBuyArea']))
-        data['RingNum']&&(this.attrArr.push(data['RingNum']))
-        data['RingType']&&(this.attrArr.push(data['RingType']))
-        data['BuyBudget']&&(this.attrArr.push(data['BuyBudget']))
+    const data = this.data;
+    data["Founder"] && this.attrArr.push(data["Founder"]);
+    data["PlanBuyDate"] && this.attrArr.push(data["PlanBuyDate"]);
+    data["RingRate"] && this.attrArr.push(data["RingRate"]);
+    data["PlanBuyArea"] && this.attrArr.push(data["PlanBuyArea"]);
+    data["RingNum"] && this.attrArr.push(data["RingNum"]);
+    data["RingType"] && this.attrArr.push(data["RingType"]);
+    data["BuyBudget"] && this.attrArr.push(data["BuyBudget"]);
 
     console.log("attrArr", this.attrArr);
   },
@@ -269,12 +282,24 @@ export default {
       });
     },
     // 显示隐藏职位信息
-    showPartner(index){
+    showPartner(index) {
       this.showPartnerStatus = index;
     },
     // 查看地理位置
     checkLocation() {
       this.$emit("checkLocation");
+    },
+    // 预览图片
+    previewImg(index) {
+      if (this.previewImgArr.length < 1) {
+        this.data.PicList.Value.map(item => {
+          this.previewImgArr.push(item.PicUrl);
+        });
+      }
+      wx.previewImage({
+        urls: this.previewImgArr,
+        current: this.previewImgArr[index]
+      });
     }
   }
 };
@@ -371,5 +396,8 @@ export default {
       }
     }
   }
+}
+.pictrueAll img {
+  border-radius: 8rpx;
 }
 </style>

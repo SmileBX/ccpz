@@ -44,9 +44,10 @@
                       v-if="showEdit"
                     >
                     <div class="pictrueAll">
-                      <span class="isTopTag" v-if="item.IsTop !=='' && item.IsRefresh !==''">已置顶刷新</span>
-                      <span class="isTopTag" v-if="item.IsTop !==''">已置顶</span>
-                      <span class="isTopTag" v-if="item.IsRefresh !==''">已刷新</span>
+                      <span class="isTopTag" v-if="item.IsTop && item.IsRefresh">已置顶刷新</span>
+                      <span class="isTopTag" v-if="item.IsTop">已置顶</span>
+                      <span class="isTopTag" v-if="item.IsRefresh">已刷新</span>
+                      <span class="isTopTag" v-if="item.Status!==1">{{item.Status===0?'待审核':item.Status===2?'审核失败':''}}</span>
                       <div class="pictrue img">
                         <img :src="item.PicNo" alt>
                       </div>
@@ -107,6 +108,7 @@
                     >已置顶刷新</span>
                     <span class="isTopTag zujian__isTopTag" v-if="item.IsTop !==''">已置顶</span>
                     <span class="isTopTag zujian__isTopTag" v-if="item.IsRefresh !==''">已刷新</span>
+                      <span class="isTopTag" v-if="item.Status!==1">{{item.Status===0?'待审核':item.Status===2?'审核失败':''}}</span>
                     <input
                       type="checkbox"
                       class="checkbox-cart"
@@ -177,6 +179,7 @@
                       <span class="isTopTag" v-if="item.IsTop !=='' && item.IsRefresh !==''">已置顶刷新</span>
                       <span class="isTopTag" v-if="item.IsTop !==''">已置顶</span>
                       <span class="isTopTag" v-if="item.IsRefresh !==''">已刷新</span>
+                      <span class="isTopTag" v-if="item.Status!==1">{{item.Status===0?'待审核':item.Status===2?'审核失败':''}}</span>
                       <div class="pictrue img">
                         <img :src="item.PicNo" alt>
                       </div>
@@ -235,6 +238,7 @@
                       <span class="isTopTag" v-if="item.IsTop !=='' && item.IsRefresh !==''">已置顶刷新</span>
                       <span class="isTopTag" v-if="item.IsTop !==''">已置顶</span>
                       <span class="isTopTag" v-if="item.IsRefresh !==''">已刷新</span>
+                      <span class="isTopTag" v-if="item.Status!==1">{{item.Status===0?'待审核':item.Status===2?'审核失败':''}}</span>
                       <div class="pictrue img">
                         <img :src="item.PicNo" alt>
                       </div>

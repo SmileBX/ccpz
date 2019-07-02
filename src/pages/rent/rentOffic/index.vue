@@ -1573,7 +1573,7 @@ export default {
     this.tradeListBox = [],//行业列表
     this.deviceTip = ''
     this.PageId = this.$root.$mp.query.PageId
-    console.log("PageId｛｝｛｝",this.PageId)
+    console.log("PageId}}}",this.PageId)
     if(this.mm>=1){
       wx.switchTab({
         url:"/pages/my/main"
@@ -2187,7 +2187,7 @@ export default {
       for(let i = 0;i < arr.length;i++){
         const res = await pathToBase64(arr[i]);
         base64Arr.push({
-          picUrl:res
+          PicUrl:res
         })
       }
       return base64Arr
@@ -2319,6 +2319,7 @@ export default {
         }
       }
       if(this.PageId==41){
+        console.log(this.IsSubPack,"this.IsSubPack__")
         if (this.IsRegArea=='') {
           this.toastTip("请选择可否注册!") 
           return false;
@@ -2541,7 +2542,7 @@ export default {
         }
       }
       if(that.PageId == 42){
-          GoodsInfo = {
+        GoodsInfo = {
           Title:that.Title,
           CompanyAddr:that.CompanyAddr,
           CompanyDoorNum:that.CompanyDoorNum,
@@ -2568,7 +2569,7 @@ export default {
         }
       }
       if(that.PageId == 41){
-          GoodsInfo = {
+        GoodsInfo = {
           Title:that.Title,
           CompanyAddr:that.CompanyAddr,
           CompanyDoorNum:that.CompanyDoorNum,
@@ -2593,7 +2594,7 @@ export default {
         }
       }
       if(that.PageId == 37){
-          GoodsInfo = {
+        GoodsInfo = {
           Title:that.Title,
           CompanyAddr:that.CompanyAddr,
           CompanyDoorNum:that.CompanyDoorNum,
@@ -2734,14 +2735,15 @@ export default {
             _PartnerList.push(infoTips)
         }
       }
-      console.log("++++++")
+      console.log(GoodsInfo,"+++++++++++")
       if(that.valOther()){
-          if(that.PageId == 42 || that.PageId == 43){
+          if(that.PageId == 42 || that.PageId == 43 || that.PageId == 41){
             for(let i in that.Devicelist){
               if(that.Devicelist[i].active){
                 that.ServiceName+=that.Devicelist[i].Name+","
               }
             }
+            GoodsInfo.ServiceName = that.ServiceName
           console.log("that.ServiceName:",that.ServiceName)
           }
           console.log("_____")
@@ -2763,9 +2765,9 @@ export default {
               GoodsInfo:GoodsInfo
            }
           }
-          console.log(pramas,"pramas")
+          // console.log(pramas,"pramas")
           that.submitAll(pramas)
-          // hat.submitAll(JSON.stringify(PicList),GoodsInfo)
+          // that.submitAll(JSON.stringify(PicList),GoodsInfo)
         
       }
     },
@@ -2834,9 +2836,25 @@ export default {
       this.PayType = ''
       this.IsTrim = ''
       this.IsTrimMsg = ''
+      this.IsSubPack = ''
+      this.IsSubPackMsg = ''
+      this.IsRegArea = ''
+      this.IsRegAreaMsg = ''
       this.NeedStation = ''
       this.NeedApartment = ''
       this.RunStatus = ''
+      this.PlanRentDate = ''
+      this.ServiceName = ''
+      this.Devicelist = []
+      this.Devicelist1 = [
+        {Id:1,Name:"宽带",active:false},{Id:2,Name:"床"},{Id:3,Name:"衣柜"},{Id:4,Name:"沙发"},{Id:5,Name:"停车位"},{Id:6,Name:"自定义+"},
+      ]
+      this.Devicelist2 = [
+        {Id:1,Name:"网络/电话",active:false},{Id:2,Name:"会议室"},{Id:3,Name:"电梯"},{Id:4,Name:"空调"},{Id:5,Name:"卡位"},{Id:6,Name:"阳台"},{Id:7,Name:"自定义+"}
+      ]
+      this.Devicelist3 = [
+        {Id:1,Name:"网络/电话",active:false},{Id:2,Name:"排污"},{Id:3,Name:"可明火"},{Id:4,Name:"管煤"},{Id:5,Name:"停车位"},{Id:6,Name:"自定义+"},
+      ]
 
     }
     

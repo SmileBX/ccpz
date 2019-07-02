@@ -56,7 +56,7 @@
     <div class="buyInfo" v-if="type==3">
       <div class="buyMemberInfo">
         <div class="perInfo level__perInfo flex flexAlignCenter">
-          <img src="/static/images/icons/tx.jpg" class="tx" alt>
+          <img :src="avatar" class="tx" alt>
           <div class="info flex1">
             <p class="name">
               {{mobile}}
@@ -114,7 +114,10 @@
         <div class="weui-cell" @tap="goToPage(1)">
           <div class="weui-cell__hd">发票</div>
           <div class="weui-cell__bd text_r">
-            <p class="txt">
+            <p class="txt color_ff952e" v-if="InvoiceHeaderName.length>0">
+              {{InvoiceHeaderName}}
+            </p>
+            <p class="txt" v-else>
               <span class="color_ff952e">电子普通发票</span>（会员服务-个人）
             </p>
           </div>
@@ -175,27 +178,27 @@ import payPassword from '@/components/payPassword.vue'
 export default {
   onLoad() {
     this.setBarTitle();
+    this.initData()
+
   },
   onShow() {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
-    this.mobile = wx.getStorageSync("mobile");
+    this.getMemberInfo()
     this.type = this.$root.$mp.query.type
+    console.log(this.type,"type")
     // this.type = 1
-    this.cardBrand = "请选择"
     this.num = 1
-    this.statu = 1
+    this.statu = 0
     this.aa = 1
-    if(this.$root.$mp.query.Denomination){
-      this.CouponId = this.$root.$mp.query.CouponId
-      this.Denomination = this.$root.$mp.query.Denomination
-      console.log( this.Denomination,this.CouponId," this.Denomination")
-    }
-    if(this.$root.$mp.query.InvoiceId){
-        this.InvoiceId = this.$root.$mp.query.InvoiceId
-    }
-    if(this.$root.$mp.query.publishId){
+    this.CouponId = this.$store.state.CouponInfo.CouponId
+    this.Denomination = this.$store.state.CouponInfo.Denomination
+    this.InvoiceId = this.$store.state.InvoiceInfo.InvoiceId
+    this.InvoiceHeaderName = this.$store.state.InvoiceInfo.InvoiceHeaderName
+    console.log( this.InvoiceHeaderName,this.CouponId," this.InvoiceHeaderName")
+    
+    if(this.$root.$mp.query.publishId){ //发布的Id
         this.publishId = this.$root.$mp.query.publishId
     }
     if(this.type == 1 || this.type == 2){
@@ -214,6 +217,7 @@ export default {
       curPage:"",
       cHeight: "",
       mobile:"",
+      avatar:"",
       isShowMask:false,
       list:[],
       statu:0,
@@ -223,6 +227,7 @@ export default {
       Password:"",//支付密码
       NeedMoney:0,//应付金额
       InvoiceId:0,//发票Id
+      InvoiceHeaderName:"",//发票抬头
       CouponId:0,  //优惠券ID
       Denomination:"",//优惠券面额
       publishId:0,//发布Id
@@ -244,6 +249,32 @@ export default {
       wx.setNavigationBarTitle({
         title: "结算台"
       });
+    },
+    initData(){
+      this.Password = ''
+      this.cardBrand = '请选择'
+      this.NeedMoney = 0
+      this.Id = 0
+      this.$store.commit("setSelectCoupon",{
+        CouponId:0,
+        Denomination:''
+      })
+      this.$store.commit("setSelectInvoice",{
+        InvoiceId:0,
+        InvoiceHeaderName:''
+
+      })
+    },
+    getMemberInfo(){
+      post('User/GetMemberInfo',{
+        UserId: this.userId,
+        Token: this.token,
+      },this.curPage).then(res=>{
+        if(res.code==0){
+          this.mobile = res.data.ContactsTel
+          this.avatar = res.data.Avatar
+        }
+      })
     },
     choseCard(){
       this.isShowMask = true
@@ -289,11 +320,11 @@ export default {
     goToPage(index){
       if(index==0){
         wx.navigateTo({
-          url:"/pages/mine2/myCoupon/main?money="+this.NeedMoney+"&url=member2/buyFunction"
+          url:"/pages/mine2/myCoupon/main?money="+this.NeedMoney
         })
       }else if(index==1){
         wx.navigateTo({
-          url:"/pages/member2/invoiceList/main?invoiceType=1&url=member2/buyFunction"
+          url:"/pages/member2/invoiceList/main?invoiceType=1"
         })
       }
     },
@@ -383,6 +414,7 @@ console.log("___________",objUrl)
         signType: 'MD5',
         paySign:JsParam.paySign,
         success: (res)=>{ 
+          this.initData()
           wx.navigateTo({url:"/pages/member2/memberManage/main"})
         }
       })
@@ -425,8 +457,10 @@ console.log("___________",objUrl)
           })
           this.showPayPawStatus = false
           setTimeout(res=>{
+            this.initData()
             wx.navigateTo({url:"/pages/member2/memberManage/main"})
           },1500)
+          
         }
     }
   }
