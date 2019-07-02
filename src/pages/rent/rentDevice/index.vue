@@ -1109,7 +1109,11 @@
         </scroll-view>
     </div> 
     <!--时间插件-->
-    <van-action-sheet :show="showDate" @close="showDate=false" @select="showDate=false">
+    <div class="shade bottom__shade" v-show="showDate">
+      <div class="mask" @tap="showDate = false"></div>
+      <div class="shadeContent">
+        <div class="shade__bd">
+    <!-- <van-action-sheet :show="showDate" @close="showDate=false" @select="showDate=false"> -->
         <van-datetime-picker
         type="date"
         :value="currentDate"
@@ -1119,12 +1123,22 @@
         title="请选择时间"
         style="z-index:888!important"
         />
-    </van-action-sheet> 
+    <!-- </van-action-sheet>  -->
+            </div>
+        </div>
+    </div>
     <!--行业插件--> 
-    <van-popup :show="showTrade" position="bottom" :overlay="true" @close="showTrade = false">
+    <div class="shade bottom__shade" v-show="showTrade">
+      <div class="mask" @tap="showTrade = false"></div>
+      <div class="shadeContent">
+        <div class="shade__bd">
+    <!-- <van-popup :show="showTrade" position="bottom" :overlay="true" @close="showTrade = false"> -->
         <van-picker  show-toolbar title="请选择行业" @confirm="onConfirm"
           @cancel="showTrade = false" :columns="columns" @change="onChange($event)"/>
-    </van-popup>
+    <!-- </van-popup> -->
+           </div>
+        </div>
+    </div>  
     <!--地区插件--> 
     <div class="shade bottom__shade" v-if="isShowAddr">
       <div class="mask"></div>
@@ -1245,11 +1259,13 @@ export default {
       ],
       deviceTip:"",//添加自定义
       ShowTime:"",//展示时分秒
+      mm:0//页面跳转的次数
      
 
     };
   },
   onLoad() {
+    this.mm = 0
     this.setBarTitle();
   },
   onShow(){
@@ -1259,9 +1275,18 @@ export default {
     this.TypeId = this.$root.$mp.query.TypeId;
     this.PageId = this.$root.$mp.query.PageId;
     console.log("TypeId",this.TypeId);
-   console.log("PageId",this.PageId);
+    console.log("PageId",this.PageId);
     this.initData()
-    this.GetPublishItems()
+    console.log(this.mm,"{{{{{{{{{{{{{{{{{{{{{")
+    if(this.mm>=1){
+      wx.switchTab({
+        url:"/pages/my/main"
+      })
+    }else{
+      this.GetPublishItems()
+    }
+   
+    
   },
   components: {},
   methods: {
@@ -1670,23 +1695,37 @@ export default {
 
         }else{
             //没有认证 先去认证  code=5 企业认证  code=6个人认证
+            if(res.code==6 && this.mm<1){
+              wx.showToast({
+                title:res.msg,
+                duration:1500,
+                icon:'none',
+                success:()=>{
+                  setTimeout(() => {
+                    wx.navigateTo({
+                      url: "/pages/mine2/myVertical/main?url=rentDevice"
+                    });
+                    this.mm ++
+                  }, 1500);
+                }
+              })
+              
+          }else if(res.code==5 && this.mm<1){
             wx.showToast({
-            title:res.msg,
-            duration:1500,
-            icon:'none',
-          })
-          if(res.code==6){
-              setTimeout(() => {
-                wx.navigateTo({
-                  url: "/pages/mine2/myVertical/main?url=rentDevice"
-                });
-              }, 1500);
-          }else if(res.code==5){
-              setTimeout(() => {
-                wx.navigateTo({
-                  url: "/pages/mine2/verticalCompany/main?url=rentDevice"
-                });
-              }, 1500);
+              title:res.msg,
+              duration:1500,
+              icon:'none',
+              success:()=>{
+                setTimeout(() => {
+                  wx.navigateTo({
+                    url: "/pages/mine2/verticalCompany/main?url=rentDevice"
+                  });
+                  this.mm ++
+                }, 1500);
+              }
+            
+            })
+            
           }
         }
       })

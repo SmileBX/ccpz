@@ -285,7 +285,7 @@ function wx_login(code, iv, encryptedData) {
             })
         },
         complete: function() {
-            wx.hideLoading();
+            // wx.hideLoading();
         }
     })
 }

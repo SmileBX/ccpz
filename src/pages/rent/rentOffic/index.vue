@@ -1350,7 +1350,11 @@
       </scroll-view>
     </div> 
     <!--时间插件-->
-    <van-action-sheet :show="showDate" @close="showDate=false" @select="showDate=false">
+    <div class="shade bottom__shade" v-show="showDate">
+      <div class="mask" @tap="showDate = false"></div>
+      <div class="shadeContent">
+        <div class="shade__bd">
+    <!-- <van-action-sheet :show="showDate" @close="showDate=false" @select="showDate=false"> -->
         <van-datetime-picker
         type="date"
         :value="currentDate"
@@ -1360,12 +1364,22 @@
         title="请选择时间"
         style="z-index:888!important"
         />
-    </van-action-sheet> 
-    <!--行业插件--> 
-    <van-popup :show="showTrade" position="bottom" :overlay="true" @close="showTrade = false">
+    <!-- </van-action-sheet>  -->
+            </div>
+        </div>
+    </div>
+    <!--行业插件-->
+    <div class="shade bottom__shade" v-show="showTrade">
+      <div class="mask" @tap="showTrade = false"></div>
+      <div class="shadeContent">
+        <div class="shade__bd">
+    <!-- <van-popup :show="showTrade" position="bottom" :overlay="true" @close="showTrade = false"> -->
         <van-picker  show-toolbar title="请选择行业" @confirm="onConfirm"
           @cancel="showTrade = false" :columns="columns" @change="onChange($event)"/>
-    </van-popup>
+    <!-- </van-popup> -->
+              </div>
+        </div>
+    </div>  
     <!--地区插件--> 
     <div class="shade bottom__shade" v-if="isShowAddr">
       <div class="mask"></div>
@@ -1531,11 +1545,13 @@ export default {
         {Id:1,Name:"小学",active:true},{Id:2,Name:"中学"},{Id:3,Name:"高中"},{Id:4,Name:"中专"},{Id:5,Name:"大专"},{Id:6,Name:"本科"},{Id:7,Name:"硕士"},{Id:8,Name:"MBA"},
       ],
       ShowTime:false,//
+      mm:0//页面跳转的次数
 
     };
     
   },
   onLoad() {
+    this.mm = 0
     this.setBarTitle();
   },
   onShow(){
@@ -1556,9 +1572,15 @@ export default {
     this.tradeList = {},//行业列表
     this.tradeListBox = [],//行业列表
     this.deviceTip = ''
-    // this.PageId = this.$root.$mp.query.PageId
-    console.log("TypeId",this.TypeId)
-    this.GetPublishItems()
+    this.PageId = this.$root.$mp.query.PageId
+    console.log("PageId｛｝｛｝",this.PageId)
+    if(this.mm>=1){
+      wx.switchTab({
+        url:"/pages/my/main"
+      })
+    }else{
+      this.GetPublishItems()
+    }
   },
   components: {},
    methods: {
@@ -2025,7 +2047,7 @@ export default {
         if(res.code==0){
             //已经认证了 获取信息 发布信息
           this.BrandId = res.data.BrandId
-          this.PageId = res.data.PageId
+          // this.PageId = res.data.PageId
           this.initData()
           that.detailInfo = res.data;
           if(res.data.arealist.length>0){
@@ -2093,22 +2115,29 @@ export default {
 
         }else{
             //没有认证 先去认证  code=5 企业认证  code=6个人认证
-            wx.showToast({
-            title:res.msg,
-            duration:1500,
-            icon:'none',
-          })
-          if(res.code==6){
+          if(res.code==6 && this.mm<1){
+              wx.showToast({
+                title:res.msg,
+                duration:1500,
+                icon:'none',
+              })
               setTimeout(() => {
                 wx.navigateTo({
                   url: "/pages/mine2/myVertical/main?url=rentDevice"
                 });
+                this.mm ++
               }, 1500);
-          }else if(res.code==5){
+          }else if(res.code==5 && this.mm<1){
+              wx.showToast({
+                title:res.msg,
+                duration:1500,
+                icon:'none',
+              })
               setTimeout(() => {
                 wx.navigateTo({
                   url: "/pages/mine2/verticalCompany/main?url=rentDevice"
                 });
+                this.mm ++
               }, 1500);
           }
         }

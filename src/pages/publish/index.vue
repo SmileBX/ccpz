@@ -100,7 +100,7 @@ export default {
           })
       }else{  //直接发布
           wx.navigateTo({
-            url: '/pages/rent/rentOffic/main?TypeId='+id
+            url: '/pages/rent/rentOffic/main?TypeId='+id+"&PageId="+pid
           })
       }
     },

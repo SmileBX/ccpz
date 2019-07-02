@@ -119,6 +119,7 @@
                 "addCard/main",
                 "addCard2/main",
                 "addCard3/main",
+                "chooseBank/main",
                 "editExperience/main"
             ]
         },
