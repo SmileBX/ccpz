@@ -43,6 +43,12 @@
         </div>
         <input type="text" placeholder="请选择" disabled v-model="Name"  >
       </div>
+      <div class="weui-cell">
+        <div class="weui-cell__bd">
+           <p class="txt">职位</p>
+        </div>
+        <input type="text" placeholder="请输入" v-model="Job">
+      </div>
        <!--公司-->
       <div class="weui-cell" v-if="Company">
         <div class="weui-cell__bd">
@@ -154,6 +160,7 @@ export default {
       Avatar:"",
       ShowBase:false,//上传头像不从默认获取
       Name:"", //昵称
+      Job:'',//职位
       Area:"",//地区 格式：'1级,2级'
       Trade:"", //行业 格式：'1级,2级'
       WorkLife:"",//年限
@@ -189,6 +196,7 @@ export default {
       //   // console.log(this.Avatar,"11111111111")
       // }
       this.Name = this.$store.state.personInfo.Name
+      this.Job = this.$store.state.personInfo.Job
       this.Area = this.$store.state.personInfo.Area
       this.Trade = this.$store.state.personInfo.Trade
       this.WorkLife = this.$store.state.personInfo.WorkLife
@@ -226,6 +234,7 @@ export default {
               this.IsAUT = '未认证'
             }
            this.Name = res.data.Name
+           this.Job = res.data.Job
            this.Email = res.data.Email
            this.WeChatNum = res.data.WeChatNum
            this.Contacts = res.data.Contacts
@@ -380,6 +389,7 @@ export default {
       const personInfo = {
           Avatar: this.Avatar,
           Name:  this.Name,
+          Job:  this.Job,
           Area:  this.Area,
           WorkLife: this.WorkLife,
           WorkIdea:  this.WorkIdea,
