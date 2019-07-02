@@ -176,7 +176,7 @@ export default {
     this.token = wx.getStorageSync("token");
     this.initData()
     this.getPerson()
-    console.log(this.AvatarwBase.length,"_______")
+    
     
   },
   methods: {
@@ -188,11 +188,11 @@ export default {
     initData(){
       console.log(this.ShowBase,"333333333")
       // console.log(this.$store.state.personInfo,"this.$store.state.personInfo")
-      if(this.AvatarwBase.length==0){
-        this.Avatar = this.$store.state.personInfo.Avatar
-        // console.log(this.Avatar,"11111111111")
-      }
-      
+      this.ShowBase = false
+      // if(this.ShowBase){
+      //   this.Avatar = this.$store.state.personInfo.Avatar
+      //   // console.log(this.Avatar,"11111111111")
+      // }
       this.Name = this.$store.state.personInfo.Name
       this.Area = this.$store.state.personInfo.Area
       this.Trade = this.$store.state.personInfo.Trade
@@ -202,7 +202,7 @@ export default {
       this.Contacts = this.$store.state.personInfo.Contacts
       this.ContactsTel = this.$store.state.personInfo.ContactsTel
       this.WorkIdea = this.$store.state.personInfo.WorkIdea
-      this.AvatarwBase = this.$store.state.personInfo.WorkIdea
+      // this.AvatarwBase = this.$store.state.personInfo.AvatarwBase
       this.columns = []
      
     },
@@ -214,9 +214,9 @@ export default {
       },this.curPage).then(res=>{
         if(res.code==0){
           console.log(res)
-          if(this.AvatarwBase.length==0){
+          if(!this.ShowBase){
             this.Avatar = res.data.Avatar
-            // console.log(this.ShowBase,"2222")
+            console.log(this.ShowBase,"2222")
           }
             if(res.data.IsAUT==3){
               this.IsAUT = '待审核'
@@ -256,14 +256,15 @@ export default {
         success: (res) =>{
           // tempFilePath可以作为img标签的src属性显示图片
           this.Avatar = res.tempFilePaths[0]
-          // console.log(this.Avatar,"选择头像")
+          this.ShowBase = true
+          console.log(this.ShowBase,"选择头像")
           wx.getFileSystemManager().readFile({
               filePath: this.Avatar, //选择图片返回的相对路径
               encoding: "base64", //编码格式
               success: res => {
                 //成功的回调
                 this.AvatarwBase = "data:image/png;base64," + res.data.toString();
-              //  console.log(this.AvatarwBase, "选择图像的路径");
+                console.log(this.AvatarwBase.length, "选择图像的路径");
               }
             });
         }

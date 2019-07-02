@@ -96,7 +96,9 @@ export default {
           duration:1500
         })
       }else{
-          wx.navigateTo({url:"/pages/"+this.pramas+"/main?InvoiceId="+InvoiceId})
+          // wx.navigateTo({url:"/pages/"+this.pramas+"/main?InvoiceId="+InvoiceId})
+          this.$store.commit("update",{InvoiceId})
+          wx.navigateBack()
         }
     },
     getInvoiceList() {  //获取发票列表

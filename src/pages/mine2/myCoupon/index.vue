@@ -117,7 +117,6 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.money = this.$root.$mp.query.money
-    this.pramas = this.$root.$mp.query.url
     console.log(this.money,this.pramas,"___")
     this.getData();
   },
@@ -160,9 +159,14 @@ export default {
       const Denomination = this.data[i].Denomination
       if(this.status == 1){  //可使用且满足使用条件
         if(this.money>=_MeetConditions){
-          wx.navigateTo({
-            url:"/pages/"+this.pramas+"/main?CouponId="+CouponId+"&Denomination="+Denomination
+          // wx.navigateTo({
+          //   url:"/pages/"+this.pramas+"/main?CouponId="+CouponId+"&Denomination="+Denomination
+          // })
+          this.$store.commit("setSelectCoupon",{
+            CouponId:CouponId,//优惠券ID
+            Denomination:Denomination//优惠券面值
           })
+          wx.navigateBack()
         }else{
           wx.showToast({
             title:`商品金额要达到${_MeetConditions}才可以使用`,

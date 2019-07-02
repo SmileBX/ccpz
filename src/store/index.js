@@ -12,6 +12,12 @@ const store = new Vuex.Store({
         lng:'',
         lat:'',
         Wallet:0,
+        CouponInfo:{
+            CouponId:"",//优惠券ID
+            Denomination:""//优惠券面值
+
+        },
+        InvoiceId:"",//发票Id
         cardId: "",
         selectCard: {
             url: '',
@@ -76,6 +82,10 @@ const store = new Vuex.Store({
         // 设置选择我的银行卡
         setSelectMyCard(state, params) {
             state.selectMyCard = params;
+        },
+        //选择优惠券
+        setSelectCoupon(state,params){
+            state.CouponInfo = params
         }
 
     }

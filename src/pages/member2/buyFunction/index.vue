@@ -56,7 +56,7 @@
     <div class="buyInfo" v-if="type==3">
       <div class="buyMemberInfo">
         <div class="perInfo level__perInfo flex flexAlignCenter">
-          <img src="/static/images/icons/tx.jpg" class="tx" alt>
+          <img :src="avatar" class="tx" alt>
           <div class="info flex1">
             <p class="name">
               {{mobile}}
@@ -180,22 +180,18 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
-    this.mobile = wx.getStorageSync("mobile");
+    this.getMemberInfo()
     this.type = this.$root.$mp.query.type
+    console.log(this.type,"type")
     // this.type = 1
-    this.cardBrand = "请选择"
     this.num = 1
-    this.statu = 1
+    this.statu = 0
     this.aa = 1
-    if(this.$root.$mp.query.Denomination){
-      this.CouponId = this.$root.$mp.query.CouponId
-      this.Denomination = this.$root.$mp.query.Denomination
-      console.log( this.Denomination,this.CouponId," this.Denomination")
-    }
-    if(this.$root.$mp.query.InvoiceId){
-        this.InvoiceId = this.$root.$mp.query.InvoiceId
-    }
-    if(this.$root.$mp.query.publishId){
+    this.CouponId = this.$store.state.CouponInfo.CouponId
+    this.Denomination = this.$store.state.CouponInfo.Denomination
+    console.log( this.Denomination,this.CouponId," this.Denomination")
+    this.InvoiceId = this.$store.state.InvoiceId
+    if(this.$root.$mp.query.publishId){ //发布的Id
         this.publishId = this.$root.$mp.query.publishId
     }
     if(this.type == 1 || this.type == 2){
@@ -214,6 +210,7 @@ export default {
       curPage:"",
       cHeight: "",
       mobile:"",
+      avatar:"",
       isShowMask:false,
       list:[],
       statu:0,
@@ -244,6 +241,27 @@ export default {
       wx.setNavigationBarTitle({
         title: "结算台"
       });
+    },
+    initData(){
+      this.Password = ''
+      this.cardBrand = '请选择'
+      this.NeedMoney = 0
+      this.CouponId = 0
+      this.Denomination = ''
+      this.InvoiceId = 0
+      this.Id = 0
+
+    },
+    getMemberInfo(){
+      post('User/GetMemberInfo',{
+        UserId: this.userId,
+        Token: this.token,
+      },this.curPage).then(res=>{
+        if(res.code==0){
+          this.mobile = res.data.ContactsTel
+          this.avatar = res.data.Avatar
+        }
+      })
     },
     choseCard(){
       this.isShowMask = true
@@ -289,11 +307,11 @@ export default {
     goToPage(index){
       if(index==0){
         wx.navigateTo({
-          url:"/pages/mine2/myCoupon/main?money="+this.NeedMoney+"&url=member2/buyFunction"
+          url:"/pages/mine2/myCoupon/main?money="+this.NeedMoney
         })
       }else if(index==1){
         wx.navigateTo({
-          url:"/pages/member2/invoiceList/main?invoiceType=1&url=member2/buyFunction"
+          url:"/pages/member2/invoiceList/main?invoiceType=1"
         })
       }
     },
@@ -383,6 +401,7 @@ export default {
         signType: 'MD5',
         paySign:JsParam.paySign,
         success: (res)=>{ 
+          this.initData()
           wx.navigateTo({url:"/pages/member2/memberManage/main"})
         }
       })
@@ -425,8 +444,10 @@ export default {
           })
           this.showPayPawStatus = false
           setTimeout(res=>{
+            this.initData()
             wx.navigateTo({url:"/pages/member2/memberManage/main"})
           },1500)
+          
         }
     }
   }
