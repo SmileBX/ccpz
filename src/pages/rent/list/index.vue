@@ -520,7 +520,7 @@ export default {
       let that = this;
       post("Goods/GetTypeL1", {
         BrandId: that.type
-      }).then(res => {
+      },this.curPage).then(res => {
         if (res.code === 0 && res.data.length > 0) {
           that.oneTypeList = res.data;
           if (res.data[0].PageId === 0) {
@@ -542,7 +542,7 @@ export default {
       let that = this;
       post("Goods/GetTypeL2", {
         TypeId: that.oneId
-      }).then(res => {
+      },this.curPage).then(res => {
         if (res.code === 0 && res.data.length > 0) {
           that.twoTypeList = res.data;
           that.pageId = res.data[0].PageId;

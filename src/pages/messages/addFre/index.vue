@@ -8,7 +8,7 @@
               </div>
               <div class="flex1">
                   <p>{{userInfo.Name}}</p>
-                  <!-- <p class="font_four">女 27岁 深圳</p> -->
+                  <p class="font_four" v-if="userInfo.Area">{{userInfo.Area}}</p>
               </div>
           </div>
           <!--填写验证信息-->
@@ -83,8 +83,8 @@ export default {
       });
     },
     async getUser(){
-      const res = await post('User/OtherHomePage',{
-          ShopId:this.FriendId,
+      const res = await post('User/GetAddfriendInfo',{
+          FriendId:this.FriendId,
           UserId:this.userId,
           Token:this.token
       })
@@ -105,9 +105,12 @@ export default {
         Lng:this.lng
       })
       if(res.code==0){
-      wx.showToast({
-        title:'发送成功!'
-      })
+        wx.showToast({
+          title:'发送成功!等待好友验证'
+        })
+        setTimeout(()=>{
+          wx.navigateBack()
+        },1500)
       }
     },
     //选择分组

@@ -33,7 +33,7 @@
 // 组建 = 22,
 // 拼活动 = 23,
 // 房源 = 24,
-import {post} from '@/utils/index'
+import {post,getCurrentPageUrlWithArgs} from '@/utils/index'
 import {getAddressLocation} from '@/utils/location'
 import pinzu from './pinzu/index.vue'
 import formation from './formation/index.vue'
@@ -67,6 +67,7 @@ export default {
   onShow(){
     this.userId = wx.getStorageSync('userId')
     this.token = wx.getStorageSync('token')
+    this.curPage = getCurrentPageUrlWithArgs();
     this.getData();
   },
   methods: {
@@ -82,7 +83,7 @@ export default {
         UserId:this.userId,
         Token:this.token,
         Id:this.id
-      })
+      },this.curPage)
       console.log(res,'请求成功')
       // 头部标题
       this.title = res.data.TypeName.Value;
@@ -131,13 +132,12 @@ export default {
         Id:this.id
       }
       if(!this.Footer.IsCollection){
-        await post('User/AddCollections',params)
+        await post('User/AddCollections',params,this.curPage)
         wx.showToast({title:'收藏成功'})
       }else{
-        await post('User/ReCollections',params)
+        await post('User/ReCollections',params,this.curPage)
         wx.showToast({title:'取消收藏成功'})
       }
-      // const res = await post('User/AddCollections',params)
       this.Footer.IsCollection = !this.Footer.IsCollection
     },
     // 举报
