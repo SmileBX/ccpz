@@ -21,7 +21,7 @@
       </div>
     </div>
     <div style="padding:80rpx 30rpx;">
-      <div class="weui-btn btn-active fill">退出登录</div>
+      <div class="weui-btn btn-active fill" @click="logout">退出登录</div>
     </div>
     
   </div>
@@ -40,6 +40,26 @@ export default {
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "设置"
+      });
+    },
+    //退出登录
+		logout(){
+      wx.setStorageSync("token", ""); //保存的令牌 accessToken
+      wx.setStorageSync("userId", ""); //保存用户Id到本地缓存
+      wx.setStorageSync("unionid", ""); 
+      wx.setStorageSync("openId", ""); 
+      wx.setStorageSync("userInfo", "");
+      wx.showToast({
+        title: "已退出登录",
+        icon: "none",
+        duration: 2000,
+        success: function() {
+          setTimeout(function() {
+            wx.switchTab({
+            url: "/pages/index/main"
+            });
+          }, 2000);
+        }
       });
     },
     gotoPage(index){
