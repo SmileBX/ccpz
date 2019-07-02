@@ -349,6 +349,8 @@ export default {
     this.setBarTitle();
   },
   onShow() {
+    this.menuTab = -1;
+    this.recomendList = [];
     this.curPage = getCurrentPageUrlWithArgs();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");

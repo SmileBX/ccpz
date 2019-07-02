@@ -17,6 +17,7 @@
               <img
                 class="sendImg"
                 mode="widthFix"
+                :onload="scrollBottom()"
                 v-if="msg.Pic"
                 :src="msg.Pic"
                 alt
@@ -42,6 +43,7 @@
               <img
                 class="sendImg"
                 mode="widthFix"
+                :onload="scrollBottom()"
                 v-if="msg.Pic"
                 :src="msg.Pic"
                 alt
@@ -192,9 +194,6 @@ export default {
       emotionArr: []
     };
   },
-  onShow() {
-    this.curPage = getCurrentPageUrlWithArgs();
-  },
   onLoad() {
     console.log(this.emotionList,'emotionList');
     this.setBarTitle();
@@ -208,6 +207,9 @@ export default {
     this.FriendId = this.$root.$mp.query.FriendId;
     this.getMessageType();
     this.getFriendMessage();
+  },
+  onShow() {
+    this.curPage = getCurrentPageUrlWithArgs();
   },
   onReady() {},
   components: {},
@@ -306,7 +308,7 @@ export default {
         Pic: imgBase,
         Lat: lat,
         Lng: lng
-      });
+      },this.curPage);
       if (res.code * 1 === 0) {
         this.sendInfo = "";
         this.getFriendMessage();
