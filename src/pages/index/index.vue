@@ -459,7 +459,7 @@ export default {
     goTo(n) {
       if (n == 1) {
         //头条消息headLineList
-        wx.navigateTo({ url: "/pages/messages/headLineList/main?url=index" });
+        wx.navigateTo({ url: "/pages/messages/headLineList/main?type=1" });
       }
       if (n == 2) {
         //跳转到房源并带参数

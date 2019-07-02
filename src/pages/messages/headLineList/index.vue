@@ -31,23 +31,32 @@ export default {
       page:1,
       pageSize:12,
       isData:false,
+      type:""
     }
   },
 
   onLoad() {
-      this.setBarTitle();
+      
   },
   onShow(){
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
+    this.type = this.$root.$mp.query.type
     this.isData = false;
     this.list=[]
+    this.setBarTitle();
     this.getNewsList()
   },
   methods: {
     setBarTitle() {
+      let title = ''
+      if(this.type == 1){
+        title = "成成头条"
+      }else{
+        title = "系统通知"
+      }
       wx.setNavigationBarTitle({
-        title: "成成头条"
+        title: title
       });
     },
     //获取头条

@@ -367,18 +367,18 @@ export default {
     getMyHomePage(){
       let objUrl = ''
       let pramas = {}
-      if(this.type==1){
-        objUrl = 'User/MyHomePage'
-        pramas = {
-          UserId: this.userId,
-          Token: this.token,
-        }
-      }else{
+      if(this.type==2){
         objUrl = 'User/OtherHomePage'
         pramas = {
           UserId: this.userId,
           Token: this.token,
           ShopId :this.Id
+        }
+      }else{
+        objUrl = 'User/MyHomePage'
+        pramas = {
+          UserId: this.userId,
+          Token: this.token,
         }
       }
       post(objUrl,pramas,this.curPage).then(res=>{
