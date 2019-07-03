@@ -21,7 +21,7 @@
             class="swipe-cell"
           >
             <van-cell-group>
-              <van-cell class="item">
+              <van-cell class="item" @click="goDetail(item)">
                 <div class="outside">
                   <div class="pictrueAll">
                     <div class="pictrue img">
@@ -59,7 +59,7 @@
           <van-swipe-cell :right-width="65" class="swipe-cell" async-close
             @close="ReCollections($event,item.Id,key)">
             <van-cell-group>
-              <van-cell class="item">
+              <van-cell class="item" @click="goUserCenter(item.ShopId)">
                 <div class="weui-cell">
                   <img :src="item.Avatar" class="tx" alt>
                   <div class="weui-cell__bd text_l">
@@ -204,6 +204,16 @@ export default {
         this.page++;
         this.MemberCollections();
       }
+    },
+    // 跳转到个人中心
+    goUserCenter(ShopId){
+      wx.navigateTo({
+        url: `/pages/mine/person/main?type=2&Id=${ShopId}`
+      });
+    },
+    // 跳转详情
+    goDetail(item){
+      wx.navigateTo({ url: `/pages/rent/detail/main?id=${item.ProId}&type=${item.BrandId}`});
     }
   }
 };
