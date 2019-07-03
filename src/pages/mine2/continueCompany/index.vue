@@ -293,6 +293,19 @@ export default {
       this.showtextarea=false;
       console.log("code:"+this.areaValue);
     },
+    initdata(){
+      this.trade="";
+      this.job="";
+      this.setUpDate="";
+      this.staffSize="";
+      this.contactsTel="";
+      this.officeAddr="";
+      this.companyPic=[];
+      this.companyIntro="";
+      this.companyCulture="";
+      this.nativePlace="";
+      this.officeArea="";
+    },
     valOther() {
       //认证的校验
       if (trim(this.trade) == "") {
@@ -393,38 +406,46 @@ export default {
            companyPic = await this.base64Img(this.companyPic);
         }
         // this.UserBusinessAuthNext(JSON.stringify(companyPic));
-        let that=this
-        var Name = this.$store.state.userCompany.Name
-        var RegNum = this.$store.state.userCompany.RegNum
-        var LegalPerson = this.$store.state.userCompany.LegalPerson
-        var Idcard = this.$store.state.userCompany.Idcard
-        var IdcardPositive = this.$store.state.userCompany.IdcardPositive
-        var IdcardNegative = this.$store.state.userCompany.IdcardNegative
-        var BusinessLicense = this.$store.state.userCompany.BusinessLicense
-        var OtherSeniority = this.$store.state.userCompany.OtherSeniority
-        post(
-          "User/UserBusinessAuth",
-          {
-            UserId: that.userId,
-            Token: that.token,
-            Company: {
-              Name: Name,
-              RegNum: RegNum,
-              LegalPerson: LegalPerson,
-              Idcard: Idcard,
-              IdcardPositive: IdcardPositive,
-              IdcardNegative: IdcardNegative,
-              BusinessLicense: BusinessLicense,
-              OtherSeniority: OtherSeniority
+        
+        if(this.$root.$mp.query.id !=="" && this.$root.$mp.query.id){
+          this.id = this.$root.$mp.query.id;
+          this.UserBusinessAuthNext(JSON.stringify(companyPic));
+        }else{
+          //提交第一步
+          let that=this
+          var Name = this.$store.state.userCompany.Name
+          var RegNum = this.$store.state.userCompany.RegNum
+          var LegalPerson = this.$store.state.userCompany.LegalPerson
+          var Idcard = this.$store.state.userCompany.Idcard
+          var IdcardPositive = this.$store.state.userCompany.IdcardPositive
+          var IdcardNegative = this.$store.state.userCompany.IdcardNegative
+          var BusinessLicense = this.$store.state.userCompany.BusinessLicense
+          var OtherSeniority = this.$store.state.userCompany.OtherSeniority
+          post(
+            "User/UserBusinessAuth",
+            {
+              UserId: that.userId,
+              Token: that.token,
+              Company: {
+                Name: Name,
+                RegNum: RegNum,
+                LegalPerson: LegalPerson,
+                Idcard: Idcard,
+                IdcardPositive: IdcardPositive,
+                IdcardNegative: IdcardNegative,
+                BusinessLicense: BusinessLicense,
+                OtherSeniority: OtherSeniority
+              }
+            },
+            that.curPage
+          ).then(res => {
+            if (res.code === 0) {
+              that.id=res.data.Id;
+              that.UserBusinessAuthNext(JSON.stringify(companyPic));
             }
-          },
-          that.curPage
-        ).then(res => {
-          if (res.code === 0) {
-            that.id=res.data.Id;
-            that.UserBusinessAuthNext(JSON.stringify(companyPic));
-          }
-        });
+          });
+        }
+        
       }
     },
     UserBusinessAuthNext(companyPic) {
@@ -463,7 +484,8 @@ export default {
             duration: 1500,
             success:function(){
               setTimeout(() => {
-               wx.navigateBack()
+                that.initdata();
+                wx.navigateBack();
               },1500)
             }
           });
