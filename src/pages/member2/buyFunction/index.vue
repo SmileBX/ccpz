@@ -320,11 +320,11 @@ export default {
     goToPage(index){
       if(index==0){
         wx.navigateTo({
-          url:"/pages/mine2/myCoupon/main?money="+this.NeedMoney
+          url:"/pages/mine2/myCoupon/main?money="+this.NeedMoney+"&url=member2/buyFunction"
         })
       }else if(index==1){
         wx.navigateTo({
-          url:"/pages/member2/invoiceList/main?invoiceType=1"
+          url:"/pages/member2/invoiceList/main?invoiceType=1&url=member2/buyFunction"
         })
       }
     },
