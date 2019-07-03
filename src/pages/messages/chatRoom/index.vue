@@ -220,6 +220,28 @@ export default {
         title: "对话框"
       });
     },
+    // 判断是否会员
+    async isVip(){
+      const res =await post('User/QueryVipInfo',{
+        UserId:this.userId,
+        Token:this.token
+      })
+      const data = res.data;
+      // 没开通会员
+      if(!data.IsVip){
+        wx.showModal({
+          title:'开通会员',
+          content:'此功能需要开通会员，是否跳转开通会员页面?',
+          confirmColor:'#ff952e',
+          cancelColor:'#999',
+          success(res){
+            if (res.confirm) {
+              wx.navigateTo({url:'/pages/member2/buyFunction/main?type=3'})
+            }
+          }
+        })
+      }
+    },
     initData() {
       this.showBtn = false;
       this.showMessage = false;

@@ -21,8 +21,8 @@
           </div>
         </div>
         <div class="btns flex1 flex center">
-          <div class="btn flex1 bg_ff952e color_fff" v-if="Footer.IsContact&&Footer.IsContact.Value==1" @click="contant">极速联系</div>
-          <div class="btn flex1 bg_ed3435 color_fff" v-if="Footer.IsAddFriend&&Footer.IsAddFriend.Value==1" @click="addFre">加好友</div>
+          <div class="btn flex1 bg_ff952e color_fff" v-if="Footer.IsContact&&Footer.IsContact.Value==1" @click="isVip(contant)">极速联系</div>
+          <div class="btn flex1 bg_ed3435 color_fff" v-if="Footer.IsAddFriend&&Footer.IsAddFriend.Value==1" @click="isVip(addFre)">加好友</div>
         </div>
       </div>
     </div>
@@ -147,15 +147,60 @@ export default {
     onReport(){
         wx.navigateTo({url:'/pages/mine2/report/main'})
     },
+    // 判断是否会员
+    async isVip(btn){
+      let status = true;
+      const res =await post('User/QueryVipInfo',{
+        UserId:this.userId,
+        Token:this.token
+      })
+      const data = res.data;
+      // 没开通会员
+      if(!data.IsVip){
+        status = false;
+        wx.showModal({
+          title:'开通会员',
+          content:'此功能需要开通会员，是否跳转开通会员页面?',
+          confirmColor:'#ff952e',
+          cancelColor:'#999',
+          success(res){
+            if (res.confirm) {
+              wx.navigateTo({url:'/pages/member2/buyFunction/main?type=3'})
+            }
+          }
+        })
+      }
+      if(!status){return false;}
+      if(btn==='addFre'){
+        this.addFre();
+      }else{
+        this.contant();
+      }
+    },
     //添加好友
     addFre(){
-      if(this.Footer.IsAddFriend.Value){
-        wx.navigateTo({url:'/pages/messages/addFre/main?FriendId='+this.Footer.IsAddFriend.FriendId})
-      }else{
-        wx.showToast({
-          title:'请先开通会员!',
-          icon:'none'
+      // 有会员，有次数限制，且次数小于1
+      if(data.IsVip&&data.IsGetNum===1&&data.GetNum<1){
+        wx.showModal({
+          title:'开通会员',
+          content:'您购买的次卡次数已用完，请重新购买',
+          confirmColor:'#ff952e',
+          cancelColor:'#999',
+          success(res){
+            if (res.confirm) {
+              wx.navigateTo({url:'/pages/member2/buyFunction/main?type=3'})
+            }
+          }
         })
+      }else{
+        if(this.Footer.IsAddFriend.Value){
+          wx.navigateTo({url:'/pages/messages/addFre/main?FriendId='+this.Footer.IsAddFriend.FriendId})
+        }else{
+          wx.showToast({
+            title:'请先开通会员!',
+            icon:'none'
+          })
+        }
       }
     },
     // 联系
