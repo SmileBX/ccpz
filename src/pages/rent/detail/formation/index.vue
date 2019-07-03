@@ -180,50 +180,56 @@
       </div>
 
       <!-- 人员需求 -->
-      <div class="section pd15" v-if="data.PartnerList&&data.PartnerList.length>0">
+      <div class="section pd15" v-if="data.PartnerList&&PartnerList.length>0">
         <h3 class="title detail__title">人员需求</h3>
         <div class="con">
           <div class="post mt10">
-            <div class="item" v-for="(item,index) in data.PartnerList" :key="index">
-              <div class="item__hd flex selectIpt" v-show="showPartnerStatus !== index">
-                <span class="label">职位名称</span>
-                <div class="info flex1">{{item.Value.JobTitle.Value}}</div>
-                <span class="twoArrow twoArrow-down" @click="showPartner(index)"></span>
+            <div class="item" v-for="(item,index) in PartnerList" :key="index">
+              <div class="item__hd flex selectIpt" v-show="!item.status">
+                <span class="label">{{item.JobTitle.Text}}</span>
+                <div class="info flex1">{{item.JobTitle.Value}}</div>
+                <span class="twoArrow twoArrow-down" @click="item.status = true"></span>
               </div>
-              <div class="item__bd" v-show="showPartnerStatus === index">
-                <div class="twoArrowBox" @click="showPartner(-1)">
+              <div class="item__bd" v-show="item.status">
+                <div class="twoArrowBox" @click="item.status = false">
                   <span class="twoArrow twoArrow-up"></span>
                 </div>
 
                 <div class="weui-cells noBorder__weui-cells column__weui-cells mt0">
                   <div class="group flex">
                     <div class="weui-cell flex1">
-                      <div class="weui-cell__hd">职位名称</div>
-                      <div class="weui-cell__bd">{{item.Value.JobTitle.Value}}</div>
+                      <div class="weui-cell__hd">{{item.JobTitle.Text}}</div>
+                      <div class="weui-cell__bd">{{item.JobTitle.Value}}</div>
                     </div>
                     <div class="weui-cell flex1">
-                      <div class="weui-cell__hd">经验要求</div>
-                      <div class="weui-cell__bd">{{item.Value.Experience.Value}}</div>
-                    </div>
-                  </div>
-                  <div class="group flex">
-                    <div class="weui-cell flex1">
-                      <div class="weui-cell__hd">最低学历</div>
-                      <div class="weui-cell__bd">{{item.Value.Degree.Value}}</div>
-                    </div>
-                    <div class="weui-cell flex1">
-                      <div class="weui-cell__hd">合伙待遇</div>
-                      <div class="weui-cell__bd">{{item.Value.Treatment.Value}}</div>
+                      <div class="weui-cell__hd">{{item.Experience.Text}}</div>
+                      <div class="weui-cell__bd">{{item.Experience.Value}}</div>
                     </div>
                   </div>
                   <div class="group flex">
                     <div class="weui-cell flex1">
-                      <div class="weui-cell__hd">工作性质</div>
-                      <div class="weui-cell__bd">{{item.Value.JobType.Value}}</div>
+                      <div class="weui-cell__hd">{{item.Degree.Text}}</div>
+                      <div class="weui-cell__bd">{{item.Degree.Value}}</div>
                     </div>
                     <div class="weui-cell flex1">
-                      <div class="weui-cell__hd">工作时间</div>
-                      <div class="weui-cell__bd">{{item.Value.WorkTime.Value}}</div>
+                      <div class="weui-cell__hd">{{item.WorkTime.Text}}</div>
+                      <div class="weui-cell__bd">{{item.WorkTime.Value}}</div>
+                    </div>
+                  </div>
+                  <div class="group flex" v-if="item.JobType&&item.Treatment">
+                    <div class="weui-cell flex1">
+                      <div class="weui-cell__hd">{{item.JobType.Text}}</div>
+                      <div class="weui-cell__bd">{{item.JobType.Value}}</div>
+                    </div>
+                    <div class="weui-cell flex1">
+                      <div class="weui-cell__hd">{{item.Treatment.Text}}</div>
+                      <div class="weui-cell__bd">{{item.Treatment.Value}}</div>
+                    </div>
+                  </div>
+                  <div class="group flex" v-if="item.JobSex">
+                    <div class="weui-cell flex1">
+                      <div class="weui-cell__hd">{{item.JobSex.Text}}</div>
+                      <div class="weui-cell__bd">{{item.JobSex.Value}}</div>
                     </div>
                   </div>
                   <div class="group">
@@ -231,7 +237,7 @@
                       <div class="weui-cell__hd">职位描述</div>
                     </div>
                     <div class="weui-cell">
-                      <div class="weui-cell__bd">{{item.Value.PartDesc.Value}}</div>
+                      <div class="weui-cell__bd">{{item.PartDesc.Value}}</div>
                     </div>
                   </div>
                 </div>
@@ -258,6 +264,7 @@ export default {
       //   onInit: initChart
       attrArr: [],
       showPartnerStatus: -1,
+      PartnerList:[],
     };
   },
   onLoad() {
@@ -271,8 +278,24 @@ export default {
     data["RingNum"] && this.attrArr.push(data["RingNum"]);
     data["RingType"] && this.attrArr.push(data["RingType"]);
     data["BuyBudget"] && this.attrArr.push(data["BuyBudget"]);
-
-    console.log("attrArr", this.attrArr);
+    const PartnerList = []
+    data.PartnerList.map(item=>{
+      const value = item.Value
+      PartnerList.push({
+        IsClose:item.IsClose,
+        status:false,
+        JobTitle:value.JobTitle||{},
+        JobSex:value.JobSex||{},
+        Experience:value.Experience||{},
+        Degree:value.Degree||{},
+        PartDesc:value.PartDesc||{},
+        WorkTime:value.WorkTime||{},
+        JobType:value.JobType||{},
+        Treatment:value.Treatment||{}
+      })
+    })
+    this.PartnerList = PartnerList;
+    console.log("partnerList", this.PartnerList);
   },
   methods: {
     setBarTitle() {

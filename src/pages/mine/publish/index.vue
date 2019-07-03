@@ -337,43 +337,22 @@ export default {
     };
   },
   onLoad() {
+      this.setBarTitle();
+      this.tabindex=0;
+      this.BrandId = 21;
+  },
+  onShow(){
     this.curPage = getCurrentPageUrlWithArgs();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
-    this.init();
     this.initData();
-    this.setBarTitle();
-    this.getMyPublish(0);
-  },
-  onShow(){
-
+    this.getMyPublish();
   },
   methods: {
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "我的发布"
       });
-    },
-    // 进入页面时初始化数据
-    init(){
-      this.tabindex=0;
-      this.BrandId = 21;
-      this.pinzuList={
-        selectedIndex: "",
-        data: []
-      }; //拼租
-      this.zujianList= {
-        selectedIndex: "",
-        data: []
-      } //组建
-      this.huodongList={
-        selectedIndex: "",
-        data: []
-      } //活动
-      this.fangList={
-        selectedIndex: "",
-        data: []
-      } //房源
     },
     initData() {
       this.isRequest = false;
@@ -404,7 +383,7 @@ export default {
       this.tabindex = index;
       this.BrandId = id;
       this.initData();
-      this.getMyPublish(index);
+      this.getMyPublish();
     },
     setshowEdit(type) {
       this.showEdit = !this.showEdit;
@@ -531,7 +510,8 @@ export default {
       });
     },
     //发布列表
-    getMyPublish(index) {
+    getMyPublish() {
+      const index = this.tabindex;
       post(
         "Goods/MyPublish",
         {
@@ -643,7 +623,7 @@ export default {
       //加载更多
       if (!this.isOver) {
         this.page++;
-        this.getMyPublish(this.tabindex);
+        this.getMyPublish();
       }
     }
   }
@@ -679,7 +659,8 @@ export default {
   font-size: 22rpx;
   line-height: 1.4;
   &.zujian__isTopTag {
-    left: 30rpx;
+    // left: 30rpx;
+    left: 0;
     top: 20rpx;
   }
 }
