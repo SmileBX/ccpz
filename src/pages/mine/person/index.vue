@@ -170,7 +170,7 @@
               <img src="/static/images/icons/add2.jpg" alt="" class="add_pic mrr2">
               <span>添加经历</span>
           </div>
-          <div class="flex flexAlignCenter justifyContentCenter mt15" v-if="type==2&&personInfo.WorkList.length<=0" @tap="AddExperience(2)">
+          <div class="flex flexAlignCenter justifyContentCenter mt15" v-if="type==2&&personInfo.WorkList.length<=0">
               <span>未添加经历</span>
           </div>
         </div>
@@ -198,7 +198,7 @@
               <img src="/static/images/icons/add2.jpg" alt="" class="add_pic mrr2">
               <span>添加经历</span>
           </div>
-          <div class="flex flexAlignCenter justifyContentCenter mt15" v-if="type==2&&personInfo.WorkList.length<=0" @tap="AddExperience(2)">
+          <div class="flex flexAlignCenter justifyContentCenter mt15" v-if="type==2&&personInfo.WorkList.length<=0">
               <span>未添加经历</span>
           </div>
         </div>

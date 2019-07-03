@@ -346,8 +346,13 @@ export default {
     this.getMyPublish(0);
   },
   onShow(){
-
+    this.BrandId= 21;
+    this.tabindex=0;
+    this.page = 1;
+    this.getMyPublish(0);
   },
+  components: {},
+
   methods: {
     setBarTitle() {
       wx.setNavigationBarTitle({
@@ -403,6 +408,7 @@ export default {
     selectIndex(index, id) {
       this.tabindex = index;
       this.BrandId = id;
+      this.page = 1;
       this.initData();
       this.getMyPublish(index);
     },
