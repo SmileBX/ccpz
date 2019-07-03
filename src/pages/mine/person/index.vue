@@ -270,7 +270,7 @@
     </div>
     
     <!-- 底部 -->
-    <div class="ftBtn" v-if="type==2">
+    <div class="ftBtn" v-if="type==2 && personInfo.Footer.IsHide==0">
       <div class="inner fixed bm0 flex">
         <div class="iconGroup flex flexAlignCenter">
           <div class="item flex1" @tap="onReport">
@@ -284,7 +284,7 @@
           </div>
         </div>
         <div class="btns flex1 flex center">
-          <div class="btn flex1 bg_ff952e color_fff" @tap="contant">极速联系</div>
+          <div class="btn flex1 bg_ff952e color_fff" @tap="contant" v-if="personInfo.Footer.Value.IsContact.Value==1">极速联系</div>
           <div class="btn flex1 bg_ed3435 color_fff"  @tap="addFre" v-if="IsAddFriend">加好友</div>
         </div>
       </div>
@@ -523,9 +523,39 @@ export default {
     },
     //加好友
     addFre(){
-      if(this.IsAddFriend){
-        wx.navigateTo({url:"/pages/messages/addFre/main?FriendId="+this.addFriendId})
-      }
+      post('User/QueryVipInfo',{
+          UserId: this.userId,
+          Token: this.token,
+      },this.curPage).then(res=>{
+        console.log(res)
+        if(res.code==0){
+          if(res.data.IsVip == 0){
+                //去往充值会员页面
+              wx.navigateTo({
+                url:"pages/member2/buyFunction/main?type=3"
+              })
+          }else if(res.data.IsVip == 1　&&　res.data.IsGetNum==0){
+             wx.navigateTo({url:"/pages/messages/addFre/main?FriendId="+this.addFriendId})
+          }else if(res.data.IsVip == 1　&&　res.data.IsGetNum==0 && res.data.GetNum){
+             wx.navigateTo({url:"/pages/messages/addFre/main?FriendId="+this.addFriendId})
+          }else if(res.data.IsVip==1&&res.data.IsGetNum==1&&res.data.GetNum<1){
+            wx.showModal({
+              title:"是否继续续费会员？",
+              content:"您的加好友次数已用完",
+              success (res) {
+                if (res.confirm) {
+                  wx.navigateTo({
+                    url:"pages/member2/buyFunction/main?type=3"
+                  })
+                } else if (res.cancel) {
+                  console.log('用户点击取消')
+                }
+              }
+            })
+          }
+
+        }
+      })
     },
     //认证公司
     companyVertical(){
@@ -538,7 +568,7 @@ export default {
     wx.reLaunch({
       url:"/pages/my/main"
     })
-    console.log("KKKKKKKKKKKKKKK")
+
   }
 };
 </script>
