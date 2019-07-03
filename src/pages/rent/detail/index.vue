@@ -21,8 +21,8 @@
           </div>
         </div>
         <div class="btns flex1 flex center">
-          <div class="btn flex1 bg_ff952e color_fff" v-if="Footer.IsContact&&Footer.IsContact.Value==1" @click="isVip(contant)">极速联系</div>
-          <div class="btn flex1 bg_ed3435 color_fff" v-if="Footer.IsAddFriend&&Footer.IsAddFriend.Value==1" @click="isVip(addFre)">加好友</div>
+          <div class="btn flex1 bg_ff952e color_fff" v-if="Footer.IsContact&&Footer.IsContact.Value==1" @click="isVip('contant')">极速联系</div>
+          <div class="btn flex1 bg_ed3435 color_fff" v-if="Footer.IsAddFriend&&Footer.IsAddFriend.Value==1" @click="isVip('addFre')">加好友</div>
         </div>
       </div>
     </div>
@@ -172,13 +172,7 @@ export default {
       }
       if(!status){return false;}
       if(btn==='addFre'){
-        this.addFre();
-      }else{
-        this.contant();
-      }
-    },
-    //添加好友
-    addFre(){
+        
       // 有会员，有次数限制，且次数小于1
       if(data.IsVip&&data.IsGetNum===1&&data.GetNum<1){
         wx.showModal({
@@ -193,6 +187,14 @@ export default {
           }
         })
       }else{
+        this.addFre();
+      }
+      }else{
+        this.contant();
+      }
+    },
+    //添加好友
+    addFre(){
         if(this.Footer.IsAddFriend.Value){
           wx.navigateTo({url:'/pages/messages/addFre/main?FriendId='+this.Footer.IsAddFriend.FriendId})
         }else{
@@ -201,7 +203,6 @@ export default {
             icon:'none'
           })
         }
-      }
     },
     // 联系
     contant(){
