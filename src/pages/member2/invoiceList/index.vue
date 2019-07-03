@@ -51,6 +51,7 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
+    this.pramas = ''
     if(this.$root.$mp.query.invoiceType && this.$root.$mp.query.invoiceType !==""){
         this.invoiceType = this.$root.$mp.query.invoiceType
     }
@@ -82,6 +83,7 @@ export default {
     },
     //选择发票 --必传发票种类 个人/公司    路径
     choseInvoice(i){
+      console.log(this.pramas)
       if(this.pramas){
           const InvoiceId = this.list[i].Id
           const InvoiceHeaderName = this.list[i].HeaderName

@@ -523,6 +523,16 @@ export default {
     },
     //加好友
     addFre(){
+      //IsVip,1-有会员卡 0-无会员卡
+      //GetNum, 可请求加好友。剩余次数
+      //IsGetNum, 1-有次数限制 0-无次数限制
+
+      //条件IsVip==1&&IsGetNum==0[可发送加好友请求]，
+      //条件IsVip==1&&IsGetNum==1&&GetNum>0[可发送加好友请求]，
+      //条件IsVip==1&&IsGetNum==1&&GetNum<1
+      //[需要弹出提示加好友次数用完了，
+      //续费会员卡或购买更高级会员卡，确定是否，跳转购买会员卡页面]，
+      //条件IsVip==0[需要弹出提示购买会员卡，确定是否，跳转购买会员卡页面]，
       post('User/QueryVipInfo',{
           UserId: this.userId,
           Token: this.token,
@@ -530,10 +540,17 @@ export default {
         console.log(res)
         if(res.code==0){
           if(res.data.IsVip == 0){
-                //去往充值会员页面
-              wx.navigateTo({
-                url:"pages/member2/buyFunction/main?type=3"
+              //去往充值会员页面
+              wx.showToast({
+                title:'请先开通会员!',
+                icon:'none',
+                duration:1500
               })
+              setTimeout(() => {
+                wx.navigateTo({
+                  url:"pages/member2/buyFunction/main?type=3"
+                })
+              }, 1500);
           }else if(res.data.IsVip == 1　&&　res.data.IsGetNum==0){
              wx.navigateTo({url:"/pages/messages/addFre/main?FriendId="+this.addFriendId})
           }else if(res.data.IsVip == 1　&&　res.data.IsGetNum==0 && res.data.GetNum){
