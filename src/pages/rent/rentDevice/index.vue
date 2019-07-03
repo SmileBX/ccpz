@@ -1774,7 +1774,7 @@ export default {
       for(let i = 0;i < arr.length;i++){
         const res = await pathToBase64(arr[i]);
         base27Arr.push({
-          picUrl:res
+          PicUrl:res
         })
       }
       return base27Arr

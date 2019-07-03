@@ -176,35 +176,6 @@
 import { post, valPhone, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
 import payPassword from '@/components/payPassword.vue'
 export default {
-  onLoad() {
-    this.setBarTitle();
-    this.initData()
-
-  },
-  onShow() {
-    this.userId = wx.getStorageSync("userId");
-    this.token = wx.getStorageSync("token");
-    this.curPage = getCurrentPageUrlWithArgs();
-    this.getMemberInfo()
-    this.type = this.$root.$mp.query.type
-    console.log(this.type,"type")
-    // this.type = 1
-    this.num = 1
-    this.statu = 0
-    this.aa = 1
-    this.CouponId = this.$store.state.CouponInfo.CouponId
-    this.Denomination = this.$store.state.CouponInfo.Denomination
-    this.InvoiceId = this.$store.state.InvoiceInfo.InvoiceId
-    this.InvoiceHeaderName = this.$store.state.InvoiceInfo.InvoiceHeaderName
-    console.log( this.InvoiceHeaderName,this.CouponId," this.InvoiceHeaderName")
-    
-    if(this.$root.$mp.query.publishId){ //发布的Id
-        this.publishId = this.$root.$mp.query.publishId
-    }
-    if(this.type == 1 || this.type == 2){
-       this.getPrice() //获取置顶、刷新的单价
-    }
-  },
   components:{
     payPassword
   },
@@ -244,6 +215,35 @@ export default {
       return this.NeedMoney -this.Denomination*1
     }
   },
+  onLoad() {
+    this.setBarTitle();
+    this.initData()
+
+  },
+  onShow() {
+    this.userId = wx.getStorageSync("userId");
+    this.token = wx.getStorageSync("token");
+    this.curPage = getCurrentPageUrlWithArgs();
+    this.getMemberInfo()
+    this.type = this.$root.$mp.query.type
+    console.log(this.type,"type")
+    // this.type = 1
+    this.num = 1
+    this.statu = 0
+    this.aa = 1
+    this.CouponId = this.$store.state.CouponInfo.CouponId
+    this.Denomination = this.$store.state.CouponInfo.Denomination
+    this.InvoiceId = this.$store.state.InvoiceInfo.InvoiceId
+    this.InvoiceHeaderName = this.$store.state.InvoiceInfo.InvoiceHeaderName
+    console.log( this.InvoiceHeaderName,this.CouponId," this.InvoiceHeaderName")
+    
+    if(this.$root.$mp.query.publishId){ //发布的Id
+        this.publishId = this.$root.$mp.query.publishId
+    }
+    if(this.type == 1 || this.type == 2){
+       this.getPrice() //获取置顶、刷新的单价
+    }
+  },
   methods: {
     setBarTitle() {
       wx.setNavigationBarTitle({
@@ -271,7 +271,7 @@ export default {
         Token: this.token,
       },this.curPage).then(res=>{
         if(res.code==0){
-          this.mobile = res.data.ContactsTel
+          this.mobile = res.data.Name
           this.avatar = res.data.Avatar
         }
       })
@@ -320,11 +320,11 @@ export default {
     goToPage(index){
       if(index==0){
         wx.navigateTo({
-          url:"/pages/mine2/myCoupon/main?money="+this.NeedMoney
+          url:"/pages/mine2/myCoupon/main?money="+this.NeedMoney+"&url=member2/buyFunction"
         })
       }else if(index==1){
         wx.navigateTo({
-          url:"/pages/member2/invoiceList/main?invoiceType=1"
+          url:"/pages/member2/invoiceList/main?invoiceType=1&url=member2/buyFunction"
         })
       }
     },
@@ -351,6 +351,7 @@ export default {
         return false
     },
     //支付
+    //置顶-1 刷新-2 开通会员-3
     payMoney(){console.log("*********",this.type)
       if(this.type==3 && this.Id==0){
           this.toastTip("请选择卡类型!")
@@ -415,7 +416,11 @@ console.log("___________",objUrl)
         paySign:JsParam.paySign,
         success: (res)=>{ 
           this.initData()
-          wx.navigateTo({url:"/pages/member2/memberManage/main"})
+          if(this.type===3){
+           wx.navigateTo({url:"/pages/member2/memberManage/main"})
+          }else{
+            wx.navigateBack()
+          }
         }
       })
     },
@@ -458,7 +463,11 @@ console.log("___________",objUrl)
           this.showPayPawStatus = false
           setTimeout(res=>{
             this.initData()
+            if(this.type===3){
             wx.navigateTo({url:"/pages/member2/memberManage/main"})
+            }else{
+              wx.navigateBack()
+            }
           },1500)
           
         }

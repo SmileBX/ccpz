@@ -51,6 +51,7 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
+    this.pramas = ''
     if(this.$root.$mp.query.invoiceType && this.$root.$mp.query.invoiceType !==""){
         this.invoiceType = this.$root.$mp.query.invoiceType
     }
@@ -82,28 +83,31 @@ export default {
     },
     //选择发票 --必传发票种类 个人/公司    路径
     choseInvoice(i){
-      const InvoiceId = this.list[i].Id
-      const InvoiceHeaderName = this.list[i].HeaderName
-      let typeId = 0
-      if(this.list[i].InvoiceTitlestr=='公司'){
-          typeId=0
-      }else{
-          typeId=1
-      }
-      if(this.invoiceType != typeId){
-        wx.showToast({
-          title:"请选择合适类型的发票",
-          icon:"none",
-          duration:1500
-        })
-      }else{
-          // wx.navigateTo({url:"/pages/"+this.pramas+"/main?InvoiceId="+InvoiceId})
-          let InvoiceInfo={
-              InvoiceId:InvoiceId,
-              InvoiceHeaderName:InvoiceHeaderName
+      console.log(this.pramas)
+      if(this.pramas){
+          const InvoiceId = this.list[i].Id
+          const InvoiceHeaderName = this.list[i].HeaderName
+          let typeId = 0
+          if(this.list[i].InvoiceTitlestr=='公司'){
+              typeId=0
+          }else{
+              typeId=1
           }
-          this.$store.commit("update",{InvoiceInfo})
-          wx.navigateBack()
+          if(this.invoiceType != typeId){
+            wx.showToast({
+              title:"请选择合适类型的发票",
+              icon:"none",
+              duration:1500
+            })
+          }else{
+              // wx.navigateTo({url:"/pages/"+this.pramas+"/main?InvoiceId="+InvoiceId})
+              let InvoiceInfo={
+                  InvoiceId:InvoiceId,
+                  InvoiceHeaderName:InvoiceHeaderName
+              }
+              this.$store.commit("update",{InvoiceInfo})
+              wx.navigateBack()
+          }
         }
     },
     getInvoiceList() {  //获取发票列表

@@ -270,7 +270,7 @@
     </div>
     
     <!-- 底部 -->
-    <div class="ftBtn" v-if="type==2">
+    <div class="ftBtn" v-if="type==2 && personInfo.Footer.IsHide==0">
       <div class="inner fixed bm0 flex">
         <div class="iconGroup flex flexAlignCenter">
           <div class="item flex1" @tap="onReport">
@@ -284,8 +284,8 @@
           </div>
         </div>
         <div class="btns flex1 flex center">
-          <div class="btn flex1 bg_ff952e color_fff" @tap="contant">极速联系</div>
-          <div class="btn flex1 bg_ed3435 color_fff"  @tap="addFre" v-if="IsAddFriend">加好友</div>
+          <div class="btn flex1 bg_ff952e color_fff" @tap="isVip('contant')" v-if="personInfo.Footer.Value.IsContact.Value==1">极速联系</div>
+          <div class="btn flex1 bg_ed3435 color_fff"  @tap="isVip('addFre')" v-if="IsAddFriend">加好友</div>
         </div>
       </div>
     </div>
@@ -515,6 +515,52 @@ export default {
     onReport(){
        wx.navigateTo({url:"/pages/mine2/report/main"})
     },
+    // 判断是否会员
+    async isVip(btn){
+      let status = true;
+      const res =await post('User/QueryVipInfo',{
+        UserId:this.userId,
+        Token:this.token
+      })
+      const data = res.data;
+      // 没开通会员
+      if(!data.IsVip){
+        status = false;
+        wx.showModal({
+          title:'开通会员',
+          content:'此功能需要开通会员，是否跳转开通会员页面?',
+          confirmColor:'#ff952e',
+          cancelColor:'#999',
+          success(res){
+            if (res.confirm) {
+              wx.navigateTo({url:'/pages/member2/buyFunction/main?type=3'})
+            }
+          }
+        })
+      }
+      if(!status){return false;}
+      if(btn==='addFre'){
+        
+      // 有会员，有次数限制，且次数小于1
+      if(data.IsVip&&data.IsGetNum===1&&data.GetNum<1){
+        wx.showModal({
+          title:'开通会员',
+          content:'您购买的次卡次数已用完，请重新购买',
+          confirmColor:'#ff952e',
+          cancelColor:'#999',
+          success(res){
+            if (res.confirm) {
+              wx.navigateTo({url:'/pages/member2/buyFunction/main?type=3'})
+            }
+          }
+        })
+      }else{
+        this.addFre();
+      }
+      }else{
+        this.contant();
+      }
+    },
     //极速联系
     contant(){
       if(this.IsContact){
@@ -523,9 +569,18 @@ export default {
     },
     //加好友
     addFre(){
-      if(this.IsAddFriend){
-        wx.navigateTo({url:"/pages/messages/addFre/main?FriendId="+this.addFriendId})
-      }
+      //IsVip,1-有会员卡 0-无会员卡
+      //GetNum, 可请求加好友。剩余次数
+      //IsGetNum, 1-有次数限制 0-无次数限制
+
+      //条件IsVip==1&&IsGetNum==0[可发送加好友请求]，
+      //条件IsVip==1&&IsGetNum==1&&GetNum>0[可发送加好友请求]，
+      //条件IsVip==1&&IsGetNum==1&&GetNum<1
+      //[需要弹出提示加好友次数用完了，
+      //续费会员卡或购买更高级会员卡，确定是否，跳转购买会员卡页面]，
+      //条件IsVip==0[需要弹出提示购买会员卡，确定是否，跳转购买会员卡页面]，
+      wx.navigateTo({url:"/pages/messages/addFre/main?FriendId="+this.addFriendId})
+     
     },
     //认证公司
     companyVertical(){
@@ -538,7 +593,7 @@ export default {
     wx.reLaunch({
       url:"/pages/my/main"
     })
-    console.log("KKKKKKKKKKKKKKK")
+
   }
 };
 </script>

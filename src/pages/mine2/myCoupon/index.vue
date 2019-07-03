@@ -115,9 +115,13 @@ export default {
     this.notData = false;
     this.page = 1;
     this.data = []
+    this.pramas = ''
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.money = this.$root.$mp.query.money
+    if(this.$root.$mp.query.url && this.$root.$mp.query.url !==""){
+        this.pramas = this.$root.$mp.query.url
+    }
     console.log(this.money,this.pramas,"___")
     this.getData();
   },
@@ -156,27 +160,29 @@ export default {
     },
     //选择优惠券--  Denomination,优惠券面额 MeetConditions,使用条件(例：满200元才能使用，值就是200)，0-无限制条件
     SelectCoupon(i){
-      const _MeetConditions = this.data[i].MeetConditions
-      const CouponId = this.data[i].Id
-      const Denomination = this.data[i].Denomination
-      if(this.status == 1){  //可使用且满足使用条件
-        if(this.money>=_MeetConditions){
-          // wx.navigateTo({
-          //   url:"/pages/"+this.pramas+"/main?CouponId="+CouponId+"&Denomination="+Denomination
-          // })
-          this.$store.commit("setSelectCoupon",{
-            CouponId:CouponId,//优惠券ID
-            Denomination:Denomination//优惠券面值
-          })
-          wx.navigateBack()
-        }else{
-          wx.showToast({
-            title:`商品金额要达到${_MeetConditions}才可以使用`,
-            icon:"none",
-            duration:1500
-          })
-        }
-        console.log(this.data[i])
+      if(this.pramas){
+          const _MeetConditions = this.data[i].MeetConditions
+          const CouponId = this.data[i].Id
+          const Denomination = this.data[i].Denomination
+          if(this.status == 1){  //可使用且满足使用条件
+            if(this.money>=_MeetConditions){
+              // wx.navigateTo({
+              //   url:"/pages/"+this.pramas+"/main?CouponId="+CouponId+"&Denomination="+Denomination
+              // })
+              this.$store.commit("setSelectCoupon",{
+                CouponId:CouponId,//优惠券ID
+                Denomination:Denomination//优惠券面值
+              })
+              wx.navigateBack()
+            }else{
+              wx.showToast({
+                title:`商品金额要达到${_MeetConditions}才可以使用`,
+                icon:"none",
+                duration:1500
+              })
+            }
+            console.log(this.data[i])
+          }
       }
       
     }
