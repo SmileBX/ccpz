@@ -161,6 +161,7 @@ export default {
       this.IntStart = ''
       this.IntEnd = ''
       this.tip = this.$root.$mp.query.tip
+      this.Id = ''
       if(this.tip==1){
         this.title="学校"
         this.subTitle='专业'
@@ -218,27 +219,6 @@ export default {
     chose(e){
         this.statu = e
     },
-    //选择时间
-    // onInput(e){
-    //     console.log(e,"时间")
-    //     const  date= new Date(e.mp.detail)
-    //     const year = date.getFullYear()
-    //     let month = date.getMonth()+1
-    //     let dd = date.getDate()
-    //     month.toString().length<2 ? (month= "0"+month) : month
-    //     dd.toString().length<2 ? (dd="0"+dd) : dd
-    //     // this.prolist[i].estimateTime = `${year}-${month}-${dd}`
-    //     // this.prolist[i].showDate = false
-    //     // console.log(this.estimateTime,"交付时间")
-    //     if(this.showDateTips){
-    //         this.IntEnd = `${year}-${month}-${dd}`
-    //     }else{
-    //         this.IntStart = `${year}-${month}-${dd}`
-    //     }
-    //     this.showDate = false
-    //     this.showDateTips = false
-    // },
-    
     //关闭弹框
     cancleMask(){
       this.isShowMask = false

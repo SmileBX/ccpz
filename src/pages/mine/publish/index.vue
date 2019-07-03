@@ -348,6 +348,8 @@ export default {
     this.initData();
     this.getMyPublish();
   },
+  components: {},
+
   methods: {
     setBarTitle() {
       wx.setNavigationBarTitle({
