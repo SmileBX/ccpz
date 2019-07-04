@@ -49,7 +49,7 @@
                       <span class="isTopTag" v-if="item.IsRefresh&&!item.IsTop">已刷新</span>
                       <span class="isTopTag" v-if="item.Status!==1">{{item.Status===0?'待审核':item.Status===2?'审核失败':''}}</span>
                       <div class="pictrue img">
-                        <img :src="item.PicNo" alt>
+                        <img :src="item.PicNo" alt mode="aspectFill">
                       </div>
                     </div>
                     <div class="txtBox flex1">
@@ -180,7 +180,7 @@
                       <span class="isTopTag" v-if="item.IsRefresh&&!item.IsTop">已刷新</span>
                       <span class="isTopTag" v-if="item.Status!==1">{{item.Status===0?'待审核':item.Status===2?'审核失败':''}}</span>
                       <div class="pictrue img">
-                        <img :src="item.PicNo" alt>
+                        <img :src="item.PicNo" alt mode="aspectFill">
                       </div>
                     </div>
                     <div class="txtBox flex1">
@@ -239,7 +239,7 @@
                       <span class="isTopTag" v-if="item.IsRefresh&&!item.IsTop">已刷新</span>
                       <span class="isTopTag" v-if="item.Status!==1">{{item.Status===0?'待审核':item.Status===2?'审核失败':''}}</span>
                       <div class="pictrue img">
-                        <img :src="item.PicNo" alt>
+                        <img :src="item.PicNo" alt mode="aspectFill">
                       </div>
                     </div>
                     <div class="txtBox flex1">

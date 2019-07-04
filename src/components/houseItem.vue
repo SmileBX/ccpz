@@ -5,7 +5,7 @@
     <div class="outside">
       <div class="pictrueAll">
         <div class="pictrue img">
-          <img :src="item.PicNo" alt>
+          <img :src="item.PicNo" alt mode="aspectFill">
         </div>
       </div>
       <div class="txtBox">

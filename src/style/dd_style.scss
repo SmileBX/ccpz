@@ -1481,8 +1481,13 @@ page {
 }
 
 // 广告图
+.swiper{
+    height:100%;
+    height:563rpx;
+}
 .swiper img {
     width: 100%;
+    height:563rpx;
     display: block;
 }
 .banner{

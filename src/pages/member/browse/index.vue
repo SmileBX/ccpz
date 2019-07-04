@@ -37,7 +37,7 @@
                 <div class="outside" @click.stop="gotoDetail(item.ProId,item.BrandId)">
                   <div class="pictrueAll">
                     <div class="pictrue img">
-                      <img :src="item.PicNo" alt>
+                      <img :src="item.PicNo" alt mode="aspectFill">
                     </div>
                   </div>
                   <div class="txtBox text_l">

@@ -140,7 +140,7 @@
                 >
                   <div class="outside">
                     <div class="pictrueAll">
-                      <img :src="item.PicNo" alt>
+                      <img :src="item.PicNo" alt mode="aspectFill">
                     </div>
                     <div class="txtBox">
                       <p class="title ellipsis">
@@ -820,5 +820,12 @@ export default {
   right: 0;
   top: -60rpx;
   z-index: 30;
+}
+.pictrueAll{
+  img{
+    width: 394rpx;
+    height: 295rpx;
+    border-radius:8rpx;
+  }
 }
 </style>

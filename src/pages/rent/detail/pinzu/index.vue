@@ -5,7 +5,7 @@
         <swiper class="swiper" circular @change="bannerChange">
           <block v-for="(item,index) in data.PicList.Value" :key="index" >
             <swiper-item>
-              <img :src="item.PicUrl" style="width:100%;height:400rpx;" alt>
+              <img :src="item.PicUrl" style="width:100%;" alt mode="aspectFill">
             </swiper-item>
           </block>
         </swiper>

@@ -14,7 +14,7 @@
             <div class="info flex1">
               <div style="margin-bottom:16rpx;" class="flex-center">
                 <span class="name">{{data.ShopInfo.Value.Name.Value}}</span>
-                <img src="/static/images/icons/v.png" mode="aspectFit" class="icon_attestation" alt />
+                <img src="/static/images/icons/v.png" mode="aspectFill" class="icon_attestation" alt />
                 <span class="lookAttestation">
                   <img
                     src="/static/images/icons/attestationTag.png"
@@ -157,7 +157,7 @@
               >
                 <div class="outside">
                   <div class="pictrueAll">
-                    <img :src="item.PicUrl" alt />
+                    <img :src="item.PicUrl" alt   mode="aspectFill"/>
                   </div>
                 </div>
               </li>
@@ -317,8 +317,8 @@ export default {
 <style lang="scss" scoped>
 .storeNowrap .storeList .item,
 .storeNowrap .storeList .pictrueAll img {
-  width: 200rpx !important;
-  height: 200rpx !important;
+  width: 270rpx !important;
+  height: 201rpx !important;
 }
 .group {
   padding: 0;
