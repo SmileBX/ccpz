@@ -40,8 +40,7 @@ export default {
   },
   onShow() {
     this.Wallet = this.$store.state.Wallet
-   
-    console.log("___________");
+    this.amount = ''
     console.log(this.$store.state.myCardInfo);
     this.bankCardId = this.$store.state.myCardInfo.id;
     this.bankLogo = this.$store.state.myCardInfo.bankLogo;
@@ -122,7 +121,7 @@ export default {
       }
       if (price > this.MaxWithdrawal) {
         wx.showToast({
-          title: `最低提现金额为${this.MaxWithdrawal}元!`,
+          title: `最高提现金额为${this.MaxWithdrawal}元!`,
           icon: "none",
           duration: 1500
         });

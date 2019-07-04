@@ -68,7 +68,10 @@ export default {
       this.tel =  ""  
       this.mobile =  ""
       this.code =  ""
-      this.codeMsg =  "获取验证码"
+      clearInterval(this.timer);
+      this.has_click = false;
+      this.timer = null;
+      this.codeMsg = "获取验证码";
     },
     setBarTitle() {
       wx.setNavigationBarTitle({
@@ -154,6 +157,10 @@ export default {
             icon: "none",
             duration: 1500,
             success:function(){
+              clearInterval(that.timer);
+              that.has_click = false;
+              that.timer = null;
+              that.codeMsg = "获取验证码";
               setTimeout(()=>{
                 wx.switchTab({
                 url: "/pages/my/main"
