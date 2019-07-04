@@ -59,7 +59,7 @@ export default {
                 icon:"success",
                 duration:1500})
               setTimeout(()=>{
-                wx.navigateTo({url:"/pages/member/changeStatus/main?changeName="+this.changeName})
+                wx.redirectTo({url:"/pages/member/changeStatus/main?changeName="+this.changeName})
               },1500)
             }else{
               wx.showToast({

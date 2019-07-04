@@ -943,7 +943,8 @@ export default {
       this.isShowDate = false;
     },
       //选择是或者否的时候
-    changeStatu(item,key, bol) {
+    changeStatu(item, bol) {
+      console.log(item,'item')
       //修改对应的选项
       if (bol) {
         this.$set(item, "Yes", 1);

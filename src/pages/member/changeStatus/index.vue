@@ -6,7 +6,7 @@
          <h2 class="statusTxt successTxt">兑换成功</h2>
          <p class="msg">恭喜您成功兑换&nbsp;会{{changeName}}</p>
       </div>
-      <div class="weui-btn btn-active fill">完成</div>
+      <div class="weui-btn btn-active fill" @click="comfirm">完成</div>
     </div>
   </div>
 </template>
@@ -28,6 +28,9 @@ export default {
       wx.setNavigationBarTitle({
         title: "服务卡兑换"
       });
+    },
+    comfirm(){
+      wx.redirectTo({url:'/pages/member2/memberManage/main'})
     }
   }
 };
