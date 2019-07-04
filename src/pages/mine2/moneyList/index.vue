@@ -60,21 +60,13 @@ export default {
     }
   },
   onLoad() {
-    
+    this.aa = 0
   },
   onShow(){
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
-    this.count = 0;
-    this.allPage = 0;
-    this.Page = 1
-    this.PageSize = 10
-    this.aa = 0
-    this.noDataIsShow = false;
-    this.isLoad = false;
-    this.isOved = false;
-    this.moneylist = []
+    this.initData()
     this.setBarTitle();
     this.getMoneyList()
   },
@@ -84,8 +76,19 @@ export default {
         title: "收支明细"
       });
     },
+    initData(){
+      this.count = 0;
+      this.allPage = 0;
+      this.Page = 1
+      this.PageSize = 10
+      this.noDataIsShow = false;
+      this.isLoad = false;
+      this.isOved = false;
+      this.moneylist = []
+    },
     tabMenu(id){
       this.aa = id
+      this.initData()
       this.getMoneyList()
     },
     getMoneyList(){
@@ -112,23 +115,22 @@ export default {
           }else{
             this.isLoad = false
           }
-          console.log("111111111111111")
           if (res.data.length > 0) {
             if (this.page === 1) {
               this.moneylist = [];
             }
             this.moneylist = this.moneylist.concat(res.data)
-            console.log("222222222222222222")
             res.data.map(item=>{
               let date= new Date(item.AddTime)
               let time = formatTime(date)
               item=Object.assign(item,{AddTime:time})
-              console.log(item.AddTime)
+              // console.log(item.AddTime)
               this.$set(item,"AddTime",time.split(' ')[0].split('/').join('-')+" "+time.split(' ')[1].split(':').splice(0,2).join(':'))
               
             })
           }
           console.log(this.moneylist,"this.moneylist ")
+          conosle.log(this.noDataIsShow,"this.noDataIsShow")
           
         }
       })
