@@ -197,7 +197,7 @@ export default {
       companyIntro: "",
       companyCulture: "",
       companyPic:[],
-      maxPicLen:9,
+      maxPicLen:6,
       isUploadBtn:true,
       contacts: "",
       contactsTel: "",

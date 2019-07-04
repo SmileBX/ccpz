@@ -1667,7 +1667,7 @@ export default {
           this.subTitle = '(旅游/拓展/生日会/联谊会/其他活动)'
         }
         if(this.PageId==43){
-          this.pageTitle = '组件机构表单'
+          this.pageTitle = '组建机构表单'
           this.subTitle = '(产业园/商会/协会/研究所/实验室/慈善会/其他)'
           this.introduce = "机构简介"
           this.introducePlaceholder = "请填写机构详细简介"
@@ -1705,7 +1705,7 @@ export default {
         }
         
         if(this.PageId==32){
-          this.pageTitle = '组件公司表单'
+          this.pageTitle = '组建企业表单'
           this.subTitle = '(将根据您的要求推荐优质候选人)'
           this.introduce = "企业简介"
           this.introducePlaceholder = "请填写企业详细简介"
@@ -1714,7 +1714,7 @@ export default {
           this.addrPlaceholder = "办公楼名称 如：如京基大厦"
         }
         if(this.PageId==33){
-          this.pageTitle = '组件团队表单'
+          this.pageTitle = '组建团队表单'
           this.subTitle = '(将根据您的要求推荐优质候选人)'
           this.introduce = "团队简介"
           this.introducePlaceholder = "请填写团队详细简介"
@@ -1723,7 +1723,7 @@ export default {
           this.addrPlaceholder = "办公楼名称 如：如京基大厦"
         }
         if(this.PageId==34){
-          this.pageTitle = '组件圈子表单'
+          this.pageTitle = '组建圈子表单'
           this.subTitle = '(将根据您的要求推荐优质候选人)'
           this.introduce = "圈子简介"
           this.introducePlaceholder = "请填写圈子详细简介"
