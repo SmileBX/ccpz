@@ -2269,7 +2269,7 @@ export default {
           this.toastTip("请输入户型!") 
           return false;
         }
-        if (this.IsTrim=='') {
+        if (this.IsTrimMsg=='') {
           this.toastTip("请选择是否装修!") 
           return false;
         }
@@ -2320,11 +2320,11 @@ export default {
       }
       if(this.PageId==41){
         console.log(this.IsSubPack,"this.IsSubPack__")
-        if (this.IsRegArea=='') {
+        if (this.IsRegAreaMsg=='') {
           this.toastTip("请选择可否注册!") 
           return false;
         }
-        if (this.IsSubPack=='') {
+        if (this.IsSubPackMsg=='') {
           this.toastTip("请选择可否分割!") 
           return false;
         }

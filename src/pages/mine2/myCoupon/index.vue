@@ -124,6 +124,10 @@ export default {
     }
     console.log(this.money,this.pramas,"___")
     this.getData();
+    this.$store.commit("setSelectCoupon",{
+      CouponId:'',//优惠券ID
+      Denomination:''//优惠券面值
+    })
   },
   methods: {
     setBarTitle() {
@@ -161,11 +165,14 @@ export default {
     //选择优惠券--  Denomination,优惠券面额 MeetConditions,使用条件(例：满200元才能使用，值就是200)，0-无限制条件
     SelectCoupon(i){
       if(this.pramas){
+         
           const _MeetConditions = this.data[i].MeetConditions
           const CouponId = this.data[i].Id
           const Denomination = this.data[i].Denomination
+          console.log(this.money,_MeetConditions,"}}}}}}}}}}}")
+          // console.log(parseInt(this.money)>=parseInt(_MeetConditions),"wwwwwwwwwwwwwwwwww")
           if(this.status == 1){  //可使用且满足使用条件
-            if(this.money>=_MeetConditions){
+            if(parseInt(this.money)>=parseInt(_MeetConditions)){
               // wx.navigateTo({
               //   url:"/pages/"+this.pramas+"/main?CouponId="+CouponId+"&Denomination="+Denomination
               // })

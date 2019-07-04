@@ -589,12 +589,12 @@ export default {
     
 
   },
-  onUnload(){
-    wx.reLaunch({
-      url:"/pages/my/main"
-    })
+  // onUnload(){
+  //   wx.reLaunch({
+  //     url:"/pages/my/main"
+  //   })
 
-  }
+  // }
 };
 </script>
 <style lang="scss" scoped>
