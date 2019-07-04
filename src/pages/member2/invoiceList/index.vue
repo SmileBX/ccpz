@@ -169,25 +169,35 @@ export default {
     },
     deleteBtn(index, id){
       let that = this;
-      post("About/Deleteinvoice",{
-        UserId: that.userId,
-          Token: that.token,
-          Id: id
-      },that.curPage).then(res => {
-         if (res.code === 0) {
-          wx.showToast({
-            title: "删除成功",
-            icon: "none",
-            duration: 1500,
-            success: function() {
-              that.list.splice(index, 1);
-              if(that.list.length===0){
-                that.hasDataList = false;
+      wx.showModal({
+        title:'确认删除',
+        content:'此操作将永久删除该发票信息！请确认',
+          confirmColor:'#ff952e',
+          cancelColor:'#999',
+        success(res){
+          if(res.confirm){
+            post("About/Deleteinvoice",{
+              UserId: that.userId,
+                Token: that.token,
+                Id: id
+            },that.curPage).then(res => {
+              if (res.code === 0) {
+                wx.showToast({
+                  title: "删除成功",
+                  icon: "none",
+                  duration: 1500,
+                  success: function() {
+                    that.list.splice(index, 1);
+                    if(that.list.length===0){
+                      that.hasDataList = false;
+                    }
+                  }
+                });
               }
-            }
-          });
+            });
+          }
         }
-      });
+      })
     },
     gotoAddInvoice(id) {
       console.log(id);

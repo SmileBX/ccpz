@@ -180,6 +180,8 @@ export default {
       wx.showModal({
         // title: '提示',
         content: "你确定要删除么？",
+          confirmColor:'#ff952e',
+          cancelColor:'#999',
         success(res) {
           if (res.confirm) {
             post(

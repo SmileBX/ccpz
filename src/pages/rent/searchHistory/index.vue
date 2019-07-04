@@ -119,6 +119,8 @@ export default {
       wx.showModal({
         // title: '提示',
         content: '您确定要清空搜索历史么？',
+          confirmColor:'#ff952e',
+          cancelColor:'#999',
         success (res) {
           if (res.confirm) {
             that.SearchClear();

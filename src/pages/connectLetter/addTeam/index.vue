@@ -19,10 +19,7 @@
         class="swipe-cell"
         v-for="(item,index) in list"
         :key="index"
-        
       >
-        <van-cell-group>
-          <van-cell>
             <div class="teamitem flexAlignCenter flex" @click="gotoAddNewTeam(item.Id,item.Name)">
               <block v-if="item.PicList.length===0">
                 <img src="/static/images/icons/ava_bg.jpg" class="avatar" style="width:86rpx;height:86rpx;margin-right:30rpx;" alt="">
@@ -62,8 +59,6 @@
                 <span class="icon-arrow arrow-right"></span>
               </div>
             </div>
-          </van-cell>
-        </van-cell-group>
         <span slot="right" class="van-swipe-cell__right" @click.stop="Delete(index,item.Id)">删除</span>
       </van-swipe-cell>
     </div>
@@ -92,6 +87,8 @@ export default {
     this.curPage = getCurrentPageUrlWithArgs();
     if(this.$root.$mp.query.url){
       this.isPmission = this.$root.$mp.query.url
+    }else{
+      this.isPmission=''
     }
     if (toLogin(this.curPage)) {
       this.GetFriendsGroup();
@@ -112,6 +109,8 @@ export default {
       let that = this;
       wx.showModal({
         title: "是否删除该分组？",
+          confirmColor:'#ff952e',
+          cancelColor:'#999',
         success(res) {
           if (res.confirm) {
             that.DelFriendsGroup(index,id);
@@ -122,7 +121,6 @@ export default {
       //点击删除按钮
     },
     gotoAddNewTeam(id, name) {
-      console.log("fsdfsdfsd__________");
       if(this.isPmission){//是否是从添加好友 页面过来
         wx.navigateTo({ url: "/pages/"+this.isPmission +"/main? groupName="+name
           });
@@ -135,6 +133,7 @@ export default {
     },
     GetFriendsGroup() {
       let that = this;
+      that.list=[]
       post(
         "User/GetFriendsGroup",
         {

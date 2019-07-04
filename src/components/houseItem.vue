@@ -43,8 +43,11 @@ export default {
 
     }
   },
-	mounted(){
-		console.log('列表item',this.list)
+	onLoad(){
+    console.log('列表item',this.list)
+    this.list.map(item=>{
+      item.ServiceName=item.ServiceName.split(',')
+    })
 	},
   methods: {
     toDetail(id) {

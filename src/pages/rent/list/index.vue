@@ -654,7 +654,10 @@ export default {
     //获取发布列表
     getQueryRentList() {
       let that = this;
-      that.page === 1 &&(that.hasDataList = false)
+          if (that.page === 1) {
+            that.dataList = [];
+            that.hasDataList = false
+          }
       if (that.hasDataList) return false;
       post(
         "Goods/QueryRentList",
@@ -676,9 +679,6 @@ export default {
         that.curPage
       ).then(res => {
         if (res.code === 0) {
-          if (that.page === 1) {
-            that.dataList = [];
-          }
           if (res.data.length < that.pageSize) {
             that.hasDataList = true;
           }
@@ -918,6 +918,7 @@ export default {
       this.goodsInfo[this.isShadeType] = Text==='不限'?'':Text
       filterItem.title = Text
       this.isShade = false;
+      this.page = 1;
       this.$set(filterItem, "selected", false);
       this.getQueryRentList();
     },
@@ -978,6 +979,7 @@ export default {
       // this.initArea();
       // this.initDataList();
       this.isShade = false;
+      this.page = 1;
       this.$set(filterItem, "selected", false);
       this.getQueryRentList();
     },

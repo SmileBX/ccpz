@@ -420,6 +420,8 @@ export default {
       let that = this;
       wx.showModal({
         title: "是否确定删除？",
+          confirmColor:'#ff952e',
+          cancelColor:'#999',
         success(res) {
           if (res.confirm) {
             that.DelMessageItem(GroupId, Id, index);

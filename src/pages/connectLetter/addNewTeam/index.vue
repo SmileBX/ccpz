@@ -131,7 +131,7 @@ export default {
         objUrl =
           "/pages/connectLetter/addMember/main?groupName=" + this.groupName;
       }
-      wx.navigateTo({ url: objUrl });
+      wx.redirectTo({ url: objUrl });
     },
     // onClose(clickPosition, instance) {
     //   switch (clickPosition) {
@@ -263,6 +263,8 @@ export default {
       let that = this;
       wx.showModal({
         title: "是否删除该分组中的成员？",
+          confirmColor:'#ff952e',
+          cancelColor:'#999',
         success(res) {
           if (res.confirm) {
             that.GroupRemoveFriends(id);

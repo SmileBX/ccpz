@@ -159,6 +159,8 @@ export default {
       wx.showModal({
         title: '解绑银行卡',
         content: '是否确定解绑？',
+          confirmColor:'#ff952e',
+          cancelColor:'#999',
         success: (res)=>{
           if (res.confirm) {
             this.confirmDelete(index, cardId)
