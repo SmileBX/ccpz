@@ -131,7 +131,7 @@ export default {
         objUrl =
           "/pages/connectLetter/addMember/main?groupName=" + this.groupName;
       }
-      wx.navigateTo({ url: objUrl });
+      wx.redirectTo({ url: objUrl });
     },
     // onClose(clickPosition, instance) {
     //   switch (clickPosition) {
