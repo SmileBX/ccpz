@@ -347,16 +347,19 @@ export default {
       });
     },
     //点击常用语，获取常用语列表
-    getMessage(id) {
+    getMessage(id,update) {
+      console.log('获取常用语')
       // this.initData();
       this.showBtn = false;
       this.isShowMask = false;
       this.showEmotion = false;
-      if (this.addId == id) {
-        this.showMessage = !this.showMessage;
-        return false;
-      } else {
-        this.showMessage = true;
+      if(!update){
+        if (this.addId == id) {
+          this.showMessage = !this.showMessage;
+          return false;
+        } else {
+          this.showMessage = true;
+        }
       }
       this.addId = id;
       post(
@@ -400,7 +403,7 @@ export default {
             duration: 1500,
             success: function() {
               that.isShowMask = false;
-              that.getMessage(that.addId);
+              that.getMessage(that.addId,true);
               console.log(that.messageList, "that.messageList");
               // that.messageList.reverse()
             }
@@ -553,7 +556,6 @@ export default {
         .select("#charRoom")
         .boundingClientRect(function(rect) {
           // 使页面滚动到底部
-          console.log(rect, "滚动到底部");
           wx.pageScrollTo({
             scrollTop: rect.height,
             duration: 100
