@@ -271,7 +271,7 @@ export default {
         Token: this.token,
       },this.curPage).then(res=>{
         if(res.code==0){
-          this.mobile = res.data.ContactsTel
+          this.mobile = res.data.Name
           this.avatar = res.data.Avatar
         }
       })

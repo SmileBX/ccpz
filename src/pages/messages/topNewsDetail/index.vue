@@ -61,7 +61,7 @@ export default {
   methods: {
     setBarTitle() {
       wx.setNavigationBarTitle({
-        title: "成成头条"
+        title: "系统通知"
       });
     },
     //获取头条消息详情

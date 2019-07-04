@@ -290,7 +290,7 @@ export default {
       this.nativePlace = str;
       this.areaStatus = false;
       this.areaValue = arr[arr.length-1].code;
-      this.showtextarea=false;
+      this.showtextarea=true;
       console.log("code:"+this.areaValue);
     },
     initdata(){
