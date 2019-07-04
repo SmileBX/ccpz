@@ -108,17 +108,11 @@ export default {
     contuineMoney(){
       let date = new Date(formatTime(new Date()).split(" ")[0]).getTime()
       let tt = new Date(this.info.VipEndTime).getTime()
-      if(date >= tt){
+      // if(date >= tt){
         wx.navigateTo({
-          url:"pages/member2/buyFunction/main?type=3"
+          url:"/pages/member2/buyFunction/main?type=3"
         })
-      }else{
-        wx.showToast({
-          title:"您的会员正在使用中！",
-          icon:"none",
-          duration:1500
-        })
-      }
+      // }
       
     },
     QueryVipInfo(){
