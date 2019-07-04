@@ -12,6 +12,8 @@ const store = new Vuex.Store({
         lng:'',
         lat:'',
         Wallet:0,
+        selectOneTags:[],
+        selectTwoTags:[],
         CouponInfo:{
             CouponId:"",//优惠券ID
             Denomination:""//优惠券面值

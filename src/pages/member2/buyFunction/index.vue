@@ -231,6 +231,7 @@ export default {
     this.num = 1
     this.statu = 0
     this.aa = 1
+    this.cardName = "",//当年的会员卡名称
     this.CouponId = this.$store.state.CouponInfo.CouponId
     this.Denomination = this.$store.state.CouponInfo.Denomination
     this.InvoiceId = this.$store.state.InvoiceInfo.InvoiceId
@@ -242,6 +243,9 @@ export default {
     }
     if(this.type == 1 || this.type == 2){
        this.getPrice() //获取置顶、刷新的单价
+    }
+    if(this.type == 3){
+      this.QueryVipInfo()
     }
   },
   methods: {
@@ -263,6 +267,19 @@ export default {
         InvoiceId:0,
         InvoiceHeaderName:''
 
+      })
+    },
+    QueryVipInfo(){
+      post('/User/QueryVipInfo',{
+          UserId: this.userId,
+          Token: this.token
+      },this.curPage).then(res=>{
+        console.log("res:",res)
+        if(res.code==0){
+          if(res.data.IsVip !==0){
+              this.cardName = res.data.gr.GradeName//精英会员3
+          }
+        }
       })
     },
     getMemberInfo(){
@@ -307,14 +324,25 @@ export default {
       })
     },
     chose(i){
-      console.log(i)
+      // console.log(i)
       this.statu = i
     },
     subConfirm(){
-      this.cardBrand = this.list[this.statu].Name
-      this.NeedMoney = this.list[this.statu].NeedMoney
-      this.Id = this.list[this.statu].Id
-      this.isShowMask = false
+      let _GradeName=this.list[this.statu].GradeName
+      console.log(_GradeName.slice(-1))
+      if(_GradeName.slice(-1)<this.cardName.slice(-1)){
+        wx.showToast({
+          title:'不能选择低于当前等级的会员卡哦！',
+          icon:"none",
+          duration:1500
+        })
+      }else{
+        this.cardBrand = this.list[this.statu].Name
+        this.NeedMoney = this.list[this.statu].NeedMoney
+        this.Id = this.list[this.statu].Id
+        this.isShowMask = false
+      }
+      
     },
     //去选择优惠券 开发票
     goToPage(index){

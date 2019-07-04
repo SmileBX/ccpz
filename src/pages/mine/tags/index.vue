@@ -18,28 +18,49 @@ export default {
     return {
       type:0, // 1-资源标签 2-能力标签
       taglist:[ ],
-      flag:""
+      flag:"",
+      curPage: "",
+      userId: "",
+      token: "",
+      onelist:[]
     }
   },
   onLoad() {
     this.setBarTitle();
   },
   onShow(){
+    wx.setStorageSync("choseList",'')
+    wx.setStorageSync("flag",'')
+    wx.setStorageSync("type",'')
+    this.onelist = []
     this.statu = ''
+    this.curPage = getCurrentPageUrlWithArgs();
+    this.userId = wx.getStorageSync("userId");
+    this.token = wx.getStorageSync("token");
     this.type=this.$root.$mp.query.typeTips
     this.flag =this.$root.$mp.query.flag
+    this.initData()
     if(this.type==2){
       this.getTagsCap()
     }
     if(this.type==1){
       this.getTagsRes()
     }
+    
+    
   },
   methods: {
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "标签管理"
       });
+    },
+    initData(){
+      const _selectOneTags = this.$store.state.selectOneTags
+      const _selectTwoTags = this.$store.state.selectTwoTags
+      console.log(_selectOneTags,_selectTwoTags,"{{{{{{{{{{{{{{")
+      this.onelist.push(..._selectOneTags,..._selectTwoTags)
+      // console.log(this.onelist,"_________")
     },
     getTagsCap(){
       post('Goods/GetTagsCap',{}).then(res=>{
@@ -48,7 +69,17 @@ export default {
             this.$set(res.data[i],"statu",false)
           }
           this.taglist = res.data
-          console.log(this.taglist)
+          // console.log(this.taglist,">>>>>>>>>>>")
+          for(let i=0;i<this.onelist.length;i++){
+            // console.log(this.onelist[i])
+            for(let j=0;j<this.taglist.length;j++){
+            // console.log(this.taglist[j].Name)
+              if(this.onelist[i] == this.taglist[j].Name){
+                  // console.log(this.taglist[j])
+                  this.$set(this.taglist[j],"statu",true)
+              }
+            }
+          }
         }
       })
     },
@@ -59,17 +90,44 @@ export default {
             this.$set(res.data[i],"statu",false)
           }
           this.taglist = res.data
-          console.log(this.taglist)
+          // console.log(this.taglist)
+          for(let i=0;i<this.onelist.length;i++){
+            // console.log(this.onelist[i])
+            for(let j=0;j<this.taglist.length;j++){
+            // console.log(this.taglist[j].Name)
+              if(this.onelist[i] == this.taglist[j].Name){
+                  // console.log(this.taglist[j])
+                  this.$set(this.taglist[j],"statu",true)
+              }
+            }
+          }
         }
       })
     },
+    //或许已经选择的标签
+    
     //选择标签
     choseTag(i){
-      this.$set(this.taglist[i],"statu",true)
+        let num = 0
+        for(let j=0;j<this.onelist.length;j++){
+          // console.log(this.onelist[j])
+          // console.log(this.taglist[i].Name!=this.onelist[j])
+          if(this.taglist[i].Name!=this.onelist[j]){
+            num++
+          }
+        }
+        // console.log(num)
+        if(num == this.onelist.length && num!=0){
+          if(this.taglist[i].statu){
+              this.$set(this.taglist[i],"statu",false)
+            }else{
+              this.$set(this.taglist[i],"statu",true)
+            }
+        }
     },
     //确定标签
     addTagsSubmit(){
-      console.log("___",this.taglist)
+      // console.log("___",this.taglist)
       let choseList = []
       this.taglist.map(item=>{
         if(item.statu){
@@ -78,9 +136,12 @@ export default {
       })
       const _choseList = JSON.stringify(choseList)
       wx.setStorageSync("choseList",_choseList)
-      wx.navigateTo({
-        url:"/pages/mine/editMenTags/main?typeTips="+this.type+"&flag="+this.flag
-      })
+      wx.setStorageSync("flag",this.flag)
+      wx.setStorageSync("type",this.type)
+      // wx.navigateTo({
+      //   url:"/pages/mine/editMenTags/main?typeTips="+this.type+"&flag="+this.flag
+      // })
+      wx.navigateBack()
      
 
       
