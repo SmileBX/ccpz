@@ -328,6 +328,8 @@ export default {
       wx.showModal({
         title:"是否删除该经历？",
         content:"删除后不可恢复",
+          confirmColor:'#ff952e',
+          cancelColor:'#999',
         success(res){
           if(res.confirm){
             post(objUrl,{

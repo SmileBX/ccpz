@@ -207,6 +207,8 @@ export default {
       //子组件点击删除好友的时候
       wx.showModal({
         title: "是否删除该好友？",
+          confirmColor:'#ff952e',
+          cancelColor:'#999',
         success(res) {
           if (res.confirm) {
             that.DelFriends(id, pIndex, index);

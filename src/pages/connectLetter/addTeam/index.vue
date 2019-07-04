@@ -112,6 +112,8 @@ export default {
       let that = this;
       wx.showModal({
         title: "是否删除该分组？",
+          confirmColor:'#ff952e',
+          cancelColor:'#999',
         success(res) {
           if (res.confirm) {
             that.DelFriendsGroup(index,id);

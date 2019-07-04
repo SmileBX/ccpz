@@ -484,6 +484,8 @@ export default {
       wx.showModal({
         // title: "提示",
         content: msg,
+          confirmColor:'#ff952e',
+          cancelColor:'#999',
         success(res) {
           if (res.confirm) {
             //跳转到对应的购买页面
@@ -502,6 +504,8 @@ export default {
       wx.showModal({
         // title: "提示",
         content: "您确定要删除该条数据么？",
+          confirmColor:'#ff952e',
+          cancelColor:'#999',
         success(res) {
           if (res.confirm) {
             //跳转到对应的购买页面
