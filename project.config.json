@@ -43,7 +43,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 73,
+			"current": 28,
 			"list": [
 				{
 					"id": 0,
@@ -242,10 +242,10 @@
 					"scene": null
 				},
 				{
-					"id": 25,
+					"id": 28,
 					"name": "个人信息-基本信息(个人信息)",
 					"pathName": "pages/mine/person/main",
-					"query": "",
+					"query": "type=0",
 					"scene": null
 				},
 				{

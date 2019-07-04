@@ -58,7 +58,7 @@ export default {
     initData(){
       const _selectOneTags = this.$store.state.selectOneTags
       const _selectTwoTags = this.$store.state.selectTwoTags
-      console.log(_selectOneTags,_selectTwoTags,"{{{{{{{{{{{{{{")
+      // console.log(_selectOneTags,_selectTwoTags,"{{{{{{{{{{{{{{")
       this.onelist.push(..._selectOneTags,..._selectTwoTags)
       // console.log(this.onelist,"_________")
     },
@@ -110,8 +110,6 @@ export default {
     choseTag(i){
         let num = 0
         for(let j=0;j<this.onelist.length;j++){
-          // console.log(this.onelist[j])
-          // console.log(this.taglist[i].Name!=this.onelist[j])
           if(this.taglist[i].Name!=this.onelist[j]){
             num++
           }
@@ -134,6 +132,17 @@ export default {
           choseList.push(item)
         }
       })
+      this.onelist.map((value)=>{
+        console.log("Tttttttt")
+        choseList.map((key,index)=>{
+          if(value==key.Name){
+              console.log(key,index,"**********")
+              choseList.splice(index,1)
+          }
+        })
+      })
+      
+      console.log(choseList,"}}}}}}}}}}}}}}}")
       const _choseList = JSON.stringify(choseList)
       wx.setStorageSync("choseList",_choseList)
       wx.setStorageSync("flag",this.flag)
@@ -141,6 +150,9 @@ export default {
       // wx.navigateTo({
       //   url:"/pages/mine/editMenTags/main?typeTips="+this.type+"&flag="+this.flag
       // })
+      // setTimeout(()=>{
+      //   wx.redirectTo({url:"/pages/mine/editMenTags/main"})
+      // },1500)
       wx.navigateBack()
      
 

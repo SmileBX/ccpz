@@ -76,6 +76,7 @@ export default {
       this.pwd =  ""
       this.pwd2 =  ""
       this.code =  ""
+      this.codeMsg =  "获取验证码"
     },
     setBarTitle() {
       wx.setNavigationBarTitle({

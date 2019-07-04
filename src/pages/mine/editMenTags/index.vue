@@ -88,7 +88,7 @@ export default {
       }else{
         this.type=this.$root.$mp.query.typeTips
       }
-      console.log(wx.getStorageSync("flag"),"wx.setStorageSync")
+      console.log(wx.getStorageSync("choseList"),"-*-*-*-*-*-*-*-*-*-")
       if(wx.getStorageSync("flag")){
         // console.log(this.$root.$mp.query.flag)
         let choseList = JSON.parse(wx.getStorageSync("choseList"))
@@ -99,31 +99,31 @@ export default {
         })
 
         if(wx.getStorageSync("flag")==1){
-          this.goodList = Object.assign(this.goodList,_choseList)
-          // this.goodList.push(..._choseList)
-          this.goodList.map((item,index)=>{
-            this.needList.map(key=>{
-              if(item==key){
-                  console.log(item,index,"**********")
-                  this.goodList.splice(index,1)
-              }
-            })
-          })
+          // this.goodList = Object.assign([],this.goodList,_choseList)
+          this.goodList.push(..._choseList)
+          // this.goodList.map((item,index)=>{
+          //   this.needList.map(key=>{
+          //     if(item==key){
+          //         console.log(item,index,"**********")
+          //         this.goodList.splice(index,1)
+          //     }
+          //   })
+          // })
           this.$store.commit("update",{
             selectOneTags:this.goodList
           })
         }else{
           console.log(" this.goodList:",this.goodList)
-          this.needList = Object.assign(this.needList,_choseList)
-          this.needList.map((item2,index2)=>{
-            this.goodList.map(key=>{
-              if(item2==key){
-                  console.log(item2,index2,"**********")
-                  this.needList.splice(index2,1)
-              }
-            })
-          })
-          // this.needList.push(..._choseList)
+          // this.needList = Object.assign([],this.needList,_choseList)
+          // this.needList.map((item2,index2)=>{
+          //   this.goodList.map(key=>{
+          //     if(item2==key){
+          //         console.log(item2,index2,"**********")
+          //         this.needList.splice(index2,1)
+          //     }
+          //   })
+          // })
+          this.needList.push(..._choseList)
           this.$store.commit("update",{
             selectTwoTags:this.needList
           })
@@ -234,7 +234,8 @@ export default {
           })
         }
         setTimeout(()=>{
-         wx.redirectTo({url:"/pages/mine/person/main"})
+        //  wx.redirectTo({url:"/pages/mine/person/main"})
+      wx.navigateBack()
         },1500)
       })
     },
