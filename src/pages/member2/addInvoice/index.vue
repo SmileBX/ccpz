@@ -47,7 +47,7 @@
         </div>
       </div>
       <!-- 以下是公司的 -->
-      <div class="weui-cell" v-if="invoiceType===2">
+      <!-- <div class="weui-cell" v-if="invoiceType===2">
         <div class="weui-cell__bd">
           <div class="title">需要增值税专用发票</div>
           <div class="msg">请先与公司财务确认需要开具的是专用发票</div>
@@ -55,9 +55,9 @@
         <div class="weui-cell__ft">
           <switch :checked="isOpen" @change="switchStatus" color="#ff952e"/>
         </div>
-      </div>
+      </div> -->
       <!-- 以下是公司的开具增值税专用发票的时候 -->
-      <div class="weui-cell" v-if="isOpen && invoiceType===2">
+      <div class="weui-cell" v-if="invoiceType===2">
         <div class="weui-cell__hd">
           <label class="weui-label">注册地址</label>
         </div>
@@ -65,7 +65,7 @@
           <input type="text" class="weui-input" v-model="regAddress" placeholder="请输入公司注册地址" >
         </div>
       </div>
-      <div class="weui-cell" v-if="isOpen && invoiceType===2">
+      <div class="weui-cell" v-if="invoiceType===2">
         <div class="weui-cell__hd">
           <label class="weui-label">公司电话</label>
         </div>
@@ -73,7 +73,7 @@
           <input type="text" class="weui-input" v-model="regCall" placeholder="请输入公司电话" >
         </div>
       </div>
-      <div class="weui-cell" v-if="isOpen && invoiceType===2">
+      <div class="weui-cell" v-if="invoiceType===2">
         <div class="weui-cell__hd">
           <label class="weui-label">开户银行</label>
         </div>
@@ -81,7 +81,7 @@
           <input type="text" class="weui-input" v-model="bankName" placeholder="请输入公司开户行名称">
         </div>
       </div>
-      <div class="weui-cell" v-if="isOpen && invoiceType===2">
+      <div class="weui-cell" v-if="invoiceType===2">
         <div class="weui-cell__hd">
           <label class="weui-label">银行账号</label>
         </div>
@@ -129,7 +129,7 @@ export default {
       isDefault: 1,
       invoiceType: 1, //1:个人；2：公司
       isOpen: false, //是否打开需要增值税专用发票
-      isVATExclusive: 0, //0:不需要专用发票；1：需要
+      isVATExclusive: 1, //0:不需要专用发票；1：需要
       userId: "",
       token: "",
       headerName: "", //抬头名称
