@@ -216,6 +216,14 @@ export default {
     }
   },
   onLoad() {
+    this.$store.commit("setSelectCoupon",{
+      CouponId:'',//优惠券ID
+      Denomination:''//优惠券面值
+    })
+     this.$store.commit("setSelectInvoice",{
+        InvoiceId:'',
+        InvoiceHeaderName:''
+      })
     this.setBarTitle();
     this.initData()
 
