@@ -57,6 +57,8 @@ export default {
   },
   onLoad() {
     this.setBarTitle();
+    this.userId = wx.getStorageSync('userId')
+    this.token = wx.getStorageSync('token')
     console.log('this.$root.$mp.query.id',this.$root.$mp.query.id)
     this.previewImgArr=[];
     if(this.$root.$mp.query.id){
@@ -65,12 +67,10 @@ export default {
     if(this.$root.$mp.query.type){
       this.type = this.$root.$mp.query.type
     }
-  },
-  onShow(){
-    this.userId = wx.getStorageSync('userId')
-    this.token = wx.getStorageSync('token')
     this.curPage = getCurrentPageUrlWithArgs();
     this.getData();
+  },
+  onShow(){
   },
   methods: {
     setBarTitle() {
@@ -90,7 +90,6 @@ export default {
       // 头部标题
       this.title = res.data.TypeName.Value;
       this.setBarTitle();
-      // debugger;
       // 底部
       if(!res.data.Footer.IsHide){
         this.Footer = res.data.Footer.Value;
@@ -247,7 +246,15 @@ export default {
         current: this.previewImgArr[index]
       });
     }
-  }
+  },
+  //下拉刷新
+  onPullDownRefresh: function () {
+    wx.stopPullDownRefresh();
+    this.userId = wx.getStorageSync('userId')
+    this.token = wx.getStorageSync('token')
+    this.previewImgArr=[];
+    this.getData();
+  },
 };
 </script>
 <style lang="scss" scoped>

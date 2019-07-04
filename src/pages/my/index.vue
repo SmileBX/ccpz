@@ -164,9 +164,6 @@
 import { post, valPhone, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
 //type:1:合作加盟；2：增值服务；3：意见反馈;这个是跳转到feedback需要传的
 export default {
-  onLoad() {
-    this.setBarTitle();
-  },
   data() {
     return {
       menuArr:["/pages/member2/memberManage/main","/pages/member/serviceCardChange/main","/pages/member/integral/main","/pages/mine2/myVertical/main","/pages/mine2/myCoupon/main","/pages/member2/invoiceList/main","/pages/member2/feedback/main?type=2","/pages/member2/feedback/main?type=1","/pages/member2/feedback/main?type=3","/pages/member/help/main","/pages/member/contact/main"],
@@ -177,7 +174,10 @@ export default {
       personInfo:{}
     }
   },
+  onLoad() {
+  },
   onShow(){
+    this.setBarTitle();
     this.bankId = this.$store.state.cardInfo.id;
     this.bankName = this.$store.state.cardInfo.bankName;
     this.curPage = getCurrentPageUrlWithArgs();
