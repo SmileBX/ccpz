@@ -62,7 +62,7 @@
           <label class="weui-label">注册地址</label>
         </div>
         <div class="weui-cell__bd">
-          <input type="text" class="weui-input" v-model="regAddress" placeholder="请输入公司注册地址" >
+          <input type="text" class="weui-input" v-model="regAddress" placeholder="选填" >
         </div>
       </div>
       <div class="weui-cell" v-if="invoiceType===2">
@@ -70,7 +70,7 @@
           <label class="weui-label">公司电话</label>
         </div>
         <div class="weui-cell__bd">
-          <input type="text" class="weui-input" v-model="regCall" placeholder="请输入公司电话" >
+          <input type="text" class="weui-input" v-model="regCall" placeholder="选填" >
         </div>
       </div>
       <div class="weui-cell" v-if="invoiceType===2">
@@ -78,7 +78,7 @@
           <label class="weui-label">开户银行</label>
         </div>
         <div class="weui-cell__bd">
-          <input type="text" class="weui-input" v-model="bankName" placeholder="请输入公司开户行名称">
+          <input type="text" class="weui-input" v-model="bankName" placeholder="选填">
         </div>
       </div>
       <div class="weui-cell" v-if="invoiceType===2">
@@ -86,7 +86,7 @@
           <label class="weui-label">银行账号</label>
         </div>
         <div class="weui-cell__bd">
-          <input type="text" class="weui-input" v-model="bankAccount" placeholder="请输入公司银行账号">
+          <input type="text" class="weui-input" v-model="bankAccount" placeholder="选填">
         </div>
       </div>
       <div class="weui-cell">
