@@ -1,15 +1,17 @@
 <template>
   <div class="page bg_fff borderTop">
     <!--通知列表-->
-    <div class="padwid">
-        <div class="flex avatarhead flexAlignCenter boxSize p2" v-for="(item,index) in noticeList" :key="index">
+    <div class="">
+      <div class="listBox" v-for="(noticeItem,noticeIndex) in noticeList" :key="noticeIndex">
+        <div class="timeLine">{{noticeItem.name}}</div>
+        <div class="flex flexAlignCenter boxSize p30 listItem" v-for="(item,index) in noticeItem.list" :key="index">
             <div class="avatarbox">
                 <img :src="item.Headimgurl" alt="" class="avatar">
             </div>
             <div class="flex flex1 flexAlignCenter">
                 <div class="flex flex1 flexColumn">
                     <span class="font32">{{item.NickName}}</span>
-                    <span class="font_four">请求添加你为好友</span>
+                    <span class="font_four">{{item.AuthInfo}}</span>
                 </div>
                 <div class="btnadd" v-if="item.Status==1">已添加</div>
                 <div class="btnadd" v-if="item.Status==2">已忽略</div>
@@ -19,6 +21,7 @@
                 </div>
             </div>
         </div>
+      </div>
     </div>
     <p
       style="text-align:center;font-size:30rpx;color:#666;padding:120rpx 20rpx 80rpx;"
@@ -44,6 +47,7 @@ export default {
       token:'',
       curPage:'',
       Page:1,
+      PageSize:100,
       noticeList:[],
       hasData:false,//是否有数据，
       isOved:false,//是否加载完了数据
@@ -82,13 +86,35 @@ export default {
           UserId: this.userId,
           Token: this.token,
           Page:this.Page,
+          PageSize:this.PageSize
       },this.curPage).then(res=>{
         console.log(res,"getNewPromise")
-        if(res.data>=0){
+        if(res.data.length===0){
             this.hasData = false
         }else{
             this.hasData = true
-            this.noticeList = res.data
+            let nameArr = []
+            res.data.map(item=>{
+              nameArr.push(item.AddTime)
+            })
+            // arr = Array.from(new Set(arr))//数组去重
+            nameArr = [...new Set(nameArr)]//数组去重
+            let listArr=[]
+            nameArr.map(item=>{
+              listArr.push({
+                name:item,
+                list:[]
+              })
+            })
+            res.data.map(item=>{
+              listArr.map(listItem=>{
+                if(item.AddTime===listItem.name){
+                  listItem.list.push(item)
+                }
+              })
+            })
+            console.log(listArr,'arr')
+            this.noticeList = listArr
         }
       })
     },
@@ -124,6 +150,7 @@ export default {
     // let app = getApp()
   },
   onPullDownRefresh() {
+    wx.stopPullDownRefresh();
     // 下拉刷新
      this.initData();
      this.getNewPromise()
@@ -137,3 +164,18 @@ export default {
   // }
 }
 </script>
+<style lang="scss" scoped>
+.p30{
+  padding:30rpx;
+}
+  .timeLine{
+    font-size:24rpx;
+    color:#999;
+    line-height:60rpx;
+    background:#f2f2f2;
+    padding:0 30rpx;
+  }
+  .listItem{
+    border-bottom:1rpx #ececec solid;
+  }
+</style>
