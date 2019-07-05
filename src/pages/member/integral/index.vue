@@ -110,12 +110,26 @@ export default {
     },
     // 输入密码后进行兑换
     async submit(password){
-      const res = await post('User/GodhScore',{
-        UserId:this.userId,
-        Token:this.token,
-        Id:this.exchangeId,
-        Password:password,
-      })
+      try{
+        const res = await post('User/GodhScore',{
+          UserId:this.userId,
+          Token:this.token,
+          Id:this.exchangeId,
+          Password:password,
+        })
+        if(res.code===0){
+          this.showPayPawStatus = false;
+          this.exchangeId =''
+          wx.showToast({
+            title:'兑换成功！'
+          })
+          setTimeout(()=>{
+            this.GetMemberScore();
+          },1500)
+        }
+      }catch(err){
+        
+      }
     }
   }
 };

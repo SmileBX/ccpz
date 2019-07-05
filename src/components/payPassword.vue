@@ -34,7 +34,6 @@ export default {
       };
   },
   onShow(){
-    console.log(this.password,"_____")
     this.password = '';
     this.focusflag = true;
   },
@@ -47,15 +46,13 @@ export default {
     },
     // 关闭
     close(){
-      console.log(this.showStatus)
       this.$emit('update:showStatus',false)
     },
     // 输入密码
     editPaw(e){
-      console.log(e.mp.detail)
-      console.log(this.password)
       if(this.password.length===6){
         this.$emit('success',this.password)
+        this.password=''
       }
     }
   }
