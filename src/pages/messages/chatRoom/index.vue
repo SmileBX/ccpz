@@ -208,6 +208,7 @@ export default {
     this.FriendId = this.$root.$mp.query.FriendId;
     this.getMessageType();
     this.getFriendMessage();
+    this.connectSocket();
   },
   onShow() {
     this.curPage = getCurrentPageUrlWithArgs();
@@ -253,37 +254,44 @@ export default {
       this.useText = "";
       this.SocketTask=null;
     },
-    //获取好友消息
-    getFriendMessage() {
+    async connectSocket(){
+    const that =this;
+      const ress = await post("User/GetWebSocketId",{
+          UserId: this.userId,
+          Token: this.token,
+          FriendId: this.FriendId * 1,
+        },
+        this.curPage
+      )
       wx.connectSocket({
-        url:`wss://ccapi.wtvxin.com/WebSocketServer.ashx?UserId=${this.userId}&Token=${this.token}&FriendId=${this.FriendId}`, 
+        url:`wss://ccapi.wtvxin.com/WebSocketServer.ashx?Signature=${ress.data.Signature}`, 
         data: 'data',
       header: {
         'content-type': 'application/json'
       },
       method: 'post',
         success(res){
-        console.log(res)
+          that.socket()
         },
         fail(err){
           console.log(err,'err')
         }
       })
-      // wx.connectSocket({
-      //   url: 'wss://example.qq.com',
-      //   header:{
-      //     'content-type': 'application/json'
-      //   },
-      //   protocols: ['protocol1'],
-      //   method:"GET"
-      // })
-      wx.onSocketOpen(function(res){
+    },
+    // 打开webSocket链接
+    socket(){
+      wx.onSocketOpen(res=>{
         console.log('open',res)
       })
       wx.onSocketError(error => {
           console.log('socket error:', error)
         })
-      return false;
+      wx.onSocketMessage(msg=>{
+          console.log('msg',msg)
+      })
+    },
+    //获取好友消息
+    getFriendMessage() {
       const that = this;
       post(
         "User/Readfriend_new",
@@ -357,6 +365,25 @@ export default {
       },this.curPage);
       if (res.code * 1 === 0) {
         this.sendInfo = "";
+        const _res = res.data;
+          wx.sendSocketMessage({
+            data:{
+              MsgType:3,
+              Id:_res.Id,
+              Info:sendInfo,
+              Pic:_res.Pic,
+              AddTime:_res.AddTime,
+              Lat:lat,
+              Lng:lng
+            },
+            success(sendRe){
+              console.log('sendRe',sendRe)
+            },
+            fail(sendErr){
+              console.error('sendErr',sendErr)
+            }
+          })
+        return false;
         this.getFriendMessage();
       }
     },
