@@ -191,7 +191,8 @@ export default {
       showEmotion: false, //显示表情
 
       emotionList:emotionList.emotionList,
-      emotionArr: []
+      emotionArr: [],
+      SocketTask:null,
     };
   },
   onLoad() {
@@ -250,16 +251,39 @@ export default {
       this.showEmotion = false;
       this.addId = "";
       this.useText = "";
+      this.SocketTask=null;
     },
     //获取好友消息
     getFriendMessage() {
+      wx.connectSocket({
+        url:`wss://ccapi.wtvxin.com/WebSocketServer.ashx?UserId=${this.userId}&Token=${this.token}&FriendId=${this.FriendId}`, 
+        data: 'data',
+      header: {
+        'content-type': 'application/json'
+      },
+      method: 'post',
+        success(res){
+        console.log(res)
+        },
+        fail(err){
+          console.log(err,'err')
+        }
+      })
       // wx.connectSocket({
-      //   url:'ws://ccapi.wtvxin.com/api/User/Readfriend_new'
+      //   url: 'wss://example.qq.com',
+      //   header:{
+      //     'content-type': 'application/json'
+      //   },
+      //   protocols: ['protocol1'],
+      //   method:"GET"
       // })
-      // wx.onSocketOpen((res)=>{
-      //   console.log(res)
-      // })
-      // return false;
+      wx.onSocketOpen(function(res){
+        console.log('open',res)
+      })
+      wx.onSocketError(error => {
+          console.log('socket error:', error)
+        })
+      return false;
       const that = this;
       post(
         "User/Readfriend_new",

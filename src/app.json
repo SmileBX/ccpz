@@ -59,7 +59,9 @@
                 "topNewsDetail/main",
                 "topNewsList/main",
                 "headLineList/main",
-                "headLineDetail/main"
+                "headLineDetail/main",
+                "messageList/main",
+                "messageDetail/main"
             ]
         },
         {
