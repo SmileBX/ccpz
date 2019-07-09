@@ -2,8 +2,9 @@
   <div
     class="page borderTop charRoom"
     id="charRoom"
-    :class="{'showMessage':showMessage,'showBtn':showBtn,'showEmotion':showEmotion}"
+    :class="showModule==='emotion'?'showEmotion':showModule==='message'?'showMessage':showModule==='imgage'?'showBtn':''"
   >
+    <!-- :class="{'showMessage':showModule,'showBtn':showBtn,'showEmotion':showEmotion}" -->
     <!--聊天列表-->
     <div class="padwid" @click="isShowMask=false">
       <div v-for="(msg,msgIndex) in chatStatu.info" :key="msgIndex">
@@ -66,6 +67,12 @@
         >{{item.Name}}</span>
       </div>
       <div class="inputbtn flex flexAlignCenter bg_fff">
+        <div class="blur flex1" 
+          v-if="showModule!=='input'" 
+          @click="onShowModule('input')"
+          :class="{'color888':!sendInfo}"
+          >{{sendInfo||'想对他说点什么呢？'}}
+        </div>
         <input
           type="text"
           placeholder="想对他说点什么呢？"
@@ -73,17 +80,19 @@
           v-model="sendInfo"
           confirm-type="send"
           confirm-hold
-          @focus="blurInput"
+          v-else
+          @blur="showModule=''"
+          :focus="showModule==='input'"
           @confirm="sendMessage"
           :cursor-spacing="10"
         />
         <div class="flex flexAlignCenter">
-          <img src="/static/images/icons/smile.jpg" alt class="logimg" @click="showEmotions" />
-          <img src="/static/images/icons/add.jpg" alt class="logimg" @click="showPicBtn" />
+          <img src="/static/images/icons/smile.jpg" alt class="logimg" @click="onShowModule('emotion')" />
+          <img src="/static/images/icons/add.jpg" alt class="logimg" @click="onShowModule('imgage')" />
         </div>
       </div>
       <!--按钮组-->
-      <div v-if="showBtn">
+      <div v-if="showModule==='imgage'">
         <div v-if="isshow" class="icon_box flex">
           <div class="flex flexAlignCenter flexColumn" @click="chosseImg('camera')">
             <img src="/static/images/icons/photo.jpg" alt class="icon_put" />
@@ -100,7 +109,7 @@
         </div>
       </div>
       <!--常用语-->
-      <ul class="messagelist" v-if="showMessage">
+      <ul class="messagelist" v-if="showModule==='message'">
         <scroll-view scroll-y @scrolltolower="loadMore" class="scroll_height">
           <van-swipe-cell
             :right-width="65"
@@ -128,7 +137,7 @@
         <li style="color:red" @click="isShowMask=true">添加常用语</li>
       </ul>
       <!-- 表情 -->
-      <div class="emotion" v-if="showEmotion">
+      <div class="emotion" v-if="showModule==='emotion'">
         <!-- <emotion @emotion="handleEmotionComment" :height="300" ></emotion> -->
 
         <scroll-view scroll-y class="emotion-pack-item">
@@ -177,7 +186,7 @@ export default {
       FriendId: "", //好友ID
       isshow: true,
       isShowMask: false, //是否展示遮罩层
-      showBtn: false, //展示图片组
+      showModule: '', //展示图片组；emotion：表情。message:常用语。imgage:照片
       showMessage: false, //展示常用列表
       messageType: [], //常用语分类
       messageList: [], //常用语列表
@@ -310,11 +319,11 @@ export default {
     },
     // socket断线重连
     renewConnectSocket() {
-      if (!this.socketStatus) {
-        setTimeout(() => {
-          this.connectSocket();
-        }, 3000);
-      }
+      // if (!this.socketStatus) {
+      //   setTimeout(() => {
+      //     this.connectSocket();
+      //   }, 3000);
+      // }
     },
     // 发送socket
     send(data) {
@@ -426,11 +435,17 @@ export default {
     // 输入框获取焦点
     blurInput(){
       // setTimeout(()=>{
-      // this.showBtn = false;
-      // this.isShowMask = false;
-      // this.showEmotion = false;
-      // this.showMessage = false;
+      this.showBtn = false;
+      this.isShowMask = false;
+      this.showEmotion = false;
+      this.showMessage = false;
       // },3000)
+    },
+    // 展示模块
+    onShowModule(val){
+      console.log(this.showModule,val,'val')
+      this.showModule===val?this.showModule = '':this.showModule = val
+      // this.scrollBottom();
     },
     // **************************常用语************************
     //获取常用语分类
@@ -446,15 +461,12 @@ export default {
     getMessage(id, update) {
       console.log("获取常用语");
       // this.initData();
-      this.showBtn = false;
-      this.isShowMask = false;
-      this.showEmotion = false;
       if (!update) {
         if (this.addId == id) {
-          this.showMessage = !this.showMessage;
+          this.onShowModule('message');
           return false;
         } else {
-          this.showMessage = true;
+          this.showModule = 'message';
         }
       }
       this.addId = id;
@@ -834,4 +846,14 @@ export default {
 .black {
   color: #333;
 }
+.blur{
+  border: 1rpx solid #f2f2f2;
+  padding: 10rpx 20rpx;
+  border-radius: 10rpx;
+  background: #f4f4f4;
+  height:58rpx;
+  line-height:58rpx;
+}
+.color888{
+  color:#888;}
 </style>
