@@ -81,8 +81,8 @@
           confirm-type="send"
           confirm-hold
           v-else
-          @blur="showModule=''"
-          :focus="showModule==='input'"
+          @blur="inputFocusStatus=false"
+          :focus="inputFocusStatus"
           @confirm="sendMessage"
           :cursor-spacing="10"
         />
@@ -201,7 +201,8 @@ export default {
 
       emotionList: emotionList.emotionList,
       emotionArr: [],
-      socketStatus: false //socket状态
+      socketStatus: false, //socket状态
+      inputFocusStatus:false,
     };
   },
   onLoad() {
@@ -446,6 +447,13 @@ export default {
       console.log(this.showModule,val,'val')
       this.showModule===val?this.showModule = '':this.showModule = val
       // this.scrollBottom();
+      setTimeout(()=>{
+        if(val==='input'){
+          this.inputFocusStatus = true;
+        }else{
+          this.inputFocusStatus = false;
+        }
+      },80)
     },
     // **************************常用语************************
     //获取常用语分类
