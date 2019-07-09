@@ -8,7 +8,7 @@
     <div class="padwid" @click="isShowMask=false">
       <div v-for="(msg,msgIndex) in chatStatu.info" :key="msgIndex">
         <div class="flex flexAlignCenter boxSize p2 justifyContentEnd plr20" v-if="msg.MsgId=='a'">
-          <div class="flex flexAlignEnd justifyContentEnd mrr2" >
+          <div class="flex flexAlignEnd justifyContentEnd mrr2">
             <!-- <span class="fontColor" @click="scrollBottom">已读</span> -->
             <div class="tagmsg cfff">
               <!-- <p v-if="msg.Info" class="boxSize">{{msg.Info}}</p> -->
@@ -22,17 +22,17 @@
                 :src="msg.Pic"
                 alt
                 @click="previewImg(msg.Pic)"
-              >
+              />
               <span class="sj rsj"></span>
             </div>
           </div>
           <div class="avatarbox mr0" v-if="chatStatu.a">
-            <img :src="chatStatu.a.Headimgurl" alt class="avatar">
+            <img :src="chatStatu.a.Headimgurl" alt class="avatar" />
           </div>
         </div>
         <div class="flex flexAlignCenter boxSize plr20 justifyContentStart" v-if="msg.MsgId=='b'">
           <div class="avatarbox mr0" v-if="chatStatu.b">
-            <img :src="chatStatu.b.Headimgurl" alt class="avatar">
+            <img :src="chatStatu.b.Headimgurl" alt class="avatar" />
           </div>
           <div class="flex flexAlignEnd mrl2">
             <!-- <span class="fontColor">已读</span> -->
@@ -48,7 +48,7 @@
                 :src="msg.Pic"
                 alt
                 @click="previewImg(msg.Pic)"
-              >
+              />
             </div>
           </div>
         </div>
@@ -73,23 +73,24 @@
           v-model="sendInfo"
           confirm-type="send"
           confirm-hold
+          @focus="blurInput"
           @confirm="sendMessage"
-          :cursor-spacing="100"
-        >
+          :cursor-spacing="10"
+        />
         <div class="flex flexAlignCenter">
-          <img src="/static/images/icons/smile.jpg" alt class="logimg" @click="showEmotions">
-          <img src="/static/images/icons/add.jpg" alt class="logimg" @click="showPicBtn">
+          <img src="/static/images/icons/smile.jpg" alt class="logimg" @click="showEmotions" />
+          <img src="/static/images/icons/add.jpg" alt class="logimg" @click="showPicBtn" />
         </div>
       </div>
       <!--按钮组-->
       <div v-if="showBtn">
         <div v-if="isshow" class="icon_box flex">
           <div class="flex flexAlignCenter flexColumn" @click="chosseImg('camera')">
-            <img src="/static/images/icons/photo.jpg" alt class="icon_put">
+            <img src="/static/images/icons/photo.jpg" alt class="icon_put" />
             <p class="fontColor">拍照</p>
           </div>
           <div class="flex flexAlignCenter flexColumn" @click="chosseImg('album')">
-            <img src="/static/images/icons/albrem.jpg" alt class="icon_put">
+            <img src="/static/images/icons/albrem.jpg" alt class="icon_put" />
             <p class="fontColor">相册</p>
           </div>
           <!-- <div class="flex flexAlignCenter flexColumn" @click="goLocation">
@@ -184,19 +185,18 @@ export default {
       useText: "", //新增的常用语
       chatStatu: {}, //聊天信息
       sendInfo: "", //发送消息的内容
-      socketTaskStatus: false,
       // 图片
       imgPathArr: [], //临时路径
       isTakePhoto: false, //是否开启拍照,
       showEmotion: false, //显示表情
 
-      emotionList:emotionList.emotionList,
+      emotionList: emotionList.emotionList,
       emotionArr: [],
-      SocketTask:null,
+      socketStatus: false //socket状态
     };
   },
   onLoad() {
-    console.log(this.emotionList,'emotionList');
+    console.log(this.emotionList, "emotionList");
     this.setBarTitle();
     this.initEmotion();
     this.curPage = getCurrentPageUrlWithArgs();
@@ -209,9 +209,11 @@ export default {
     this.FriendId = this.$root.$mp.query.FriendId;
     this.getMessageType();
     this.getFriendMessage();
+    this.connectSocket();
   },
   onShow() {
-    this.connectSocket();
+    this.userId = wx.getStorageSync("userId");
+    this.token = wx.getStorageSync("token");
   },
   onReady() {},
   components: {},
@@ -223,25 +225,25 @@ export default {
       });
     },
     // 判断是否会员
-    async isVip(){
-      const res =await post('User/QueryVipInfo',{
-        UserId:this.userId,
-        Token:this.token
-      })
+    async isVip() {
+      const res = await post("User/QueryVipInfo", {
+        UserId: this.userId,
+        Token: this.token
+      });
       const data = res.data;
       // 没开通会员
-      if(!data.IsVip){
+      if (!data.IsVip) {
         wx.showModal({
-          title:'开通会员',
-          content:'此功能需要开通会员，是否跳转开通会员页面?',
-          confirmColor:'#ff952e',
-          cancelColor:'#999',
-          success(res){
+          title: "开通会员",
+          content: "此功能需要开通会员，是否跳转开通会员页面?",
+          confirmColor: "#ff952e",
+          cancelColor: "#999",
+          success(res) {
             if (res.confirm) {
-              wx.navigateTo({url:'/pages/member2/buyFunction/main?type=3'})
+              wx.navigateTo({ url: "/pages/member2/buyFunction/main?type=3" });
             }
           }
-        })
+        });
       }
     },
     initData() {
@@ -252,96 +254,122 @@ export default {
       this.showEmotion = false;
       this.addId = "";
       this.useText = "";
-      this.SocketTask=null;
+      this.SocketTask = null;
     },
     // 打开webSocket链接
-    async connectSocket(){
-           wx.onSocketMessage(message => {
-            console.log('msg',message)
-            this.getFriendMessage();
-          })
-          wx.onSocketOpen(res=>{
-            console.log('open',res)
-            this.send({
-                MsgType:1,
-                TimeStamp:ress.data.TimeStamp,
-                SecretKey:ress.data.SecretKey
-              })
-          })
-          wx.onSocketError(error => {
-              console.log('socket error:', error)
-            })
-            wx.onSocketClose(close=>{
-              console.log('close',close)
-              this.connectSocket();
-            })
-    const that =this;
-      const ress = await post("User/GetWebSocketId",{
+    async connectSocket() {
+      const that = this;
+      const ress = await post(
+        "User/GetWebSocketId",
+        {
           UserId: this.userId,
           Token: this.token,
-          FriendId: this.FriendId * 1,
+          FriendId: this.FriendId * 1
         },
         this.curPage
-      )
+      );
       wx.connectSocket({
-        url:`wss://ccapi.wtvxin.com/WebSocketServer.ashx?Signature=${ress.data.Signature}`, 
-        success(){
-        },
-        fail(err){
-          console.log(err,'err')
+        url: `wss://ccapi.wtvxin.com/WebSocketServer.ashx?Signature=${
+          ress.data.Signature
+        }`
+      });
+      //code=99,是错误，也包过正常错误。
+      // code=1 发起登录、登录成功、
+      // code=2 发起退出、需要登录
+      // code=3 聊天
+      // code=0 服务反馈处理了。
+      wx.onSocketMessage(message => {
+        let msg = JSON.parse(message.data);
+        console.log("msg", msg);
+        if (msg.code !== 1 && msg.code !== 2) {
+          this.getFriendMessage();
+        } else {
+          this.socketStatus = false;
+          this.renewConnectSocket();
         }
-      })
+      });
+      wx.onSocketOpen(res => {
+        console.log("open", res);
+        this.socketStatus = true;
+        this.send({
+          MsgType: 1,
+          TimeStamp: ress.data.TimeStamp,
+          SecretKey: ress.data.SecretKey
+        });
+      });
+      wx.onSocketError(error => {
+        console.log("socket error:", error);
+        this.socketStatus = false;
+        this.renewConnectSocket();
+      });
+      wx.onSocketClose(close => {
+        console.log("close", close);
+        this.socketStatus = false;
+        this.renewConnectSocket();
+      });
+    },
+    // socket断线重连
+    renewConnectSocket() {
+      if (!this.socketStatus) {
+        setTimeout(() => {
+          this.connectSocket();
+        }, 3000);
+      }
     },
     // 发送socket
-    send(data){
-            console.log('send',JSON.stringify(data))
-      wx.sendSocketMessage({data:JSON.stringify(data)})
+    send(data) {
+      console.log("send", JSON.stringify(data));
+      wx.sendSocketMessage({ data: JSON.stringify(data) });
     },
     //获取好友消息
     getFriendMessage() {
       const that = this;
-      post(
-        "User/Readfriend_new",
-        {
+      wx.request({
+        url: "https://ccapi.wtvxin.com/api/User/Readfriend_new",
+        data: {
           UserId: this.userId,
           Token: this.token,
           FriendId: this.FriendId * 1,
           Page: 1
         },
-        this.curPage
-      ).then(res => {
-        if (res.code == 0) {
-          let info = [];
-          res.data.info.map(item => {
-            // 将匹配结果替换表情图片
-            item.Info = item.Info.replace(
-              /\[[\u4E00-\u9FA5]{1,3}\]/gi,
-              words => {
-                let word = words.replace(/\[|\]/gi, "");
-                let index = this.emotionList.indexOf(word);
-                if(index!== -1){ 
-                  return `<img style="width:25px;height:25px;" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" align="middle">`;
-                }else{
-                  return words
+        method: "POST",
+        success(_res) {
+          let res = _res.data;
+          console.log(res, "resss");
+          if (res.code == 0) {
+            let info = [];
+            res.data.info.map(item => {
+              // 将匹配结果替换表情图片
+              item.Info = item.Info.replace(
+                /\[[\u4E00-\u9FA5]{1,3}\]/gi,
+                words => {
+                  let word = words.replace(/\[|\]/gi, "");
+                  let index = that.emotionList.indexOf(word);
+                  if (index !== -1) {
+                    return `<img style="width:25px;height:25px;" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" align="middle">`;
+                  } else {
+                    return words;
+                  }
                 }
-               }
-            );
-            info.unshift(item);
-          });
-          console.log(info, "解析完的字符串");
-          res.data.info = info;
-          this.chatStatu = res.data;
-          this.scrollBottom();
+              );
+              info.unshift(item);
+            });
+            console.log(info, "解析完的字符串");
+            res.data.info = info;
+            that.chatStatu = res.data;
+            that.scrollBottom();
+          }
         }
       });
     },
     // 发送消息
     async sendMessage(data) {
-      // console.log(data, "发送消息");
       let sendInfo = "";
       let imgBase = "";
       let lat = 0;
       let lng = 0;
+      console.log(this.sendInfo, "发送消息");
+      if (data) {
         // 发送图片
         if (data.type === "img") {
           imgBase = data.data;
@@ -350,32 +378,59 @@ export default {
         else if (data.type === "map") {
           lat = data.data.latitude;
           lng = data.data.longitude;
-        }
-        // 普通消息
-        else {
+        } else {
+          console.log(this.sendInfo, "发送消息2");
+          if (!this.sendInfo) {
+            return false;
+          }
           sendInfo = this.sendInfo;
         }
-      const res = await post("User/Sendfriend_new", {
-        UserId: this.userId,
-        Token: this.token,
-        FriendId: this.FriendId * 1,
-        Info: sendInfo,
-        Pic: imgBase,
-        Lat: lat,
-        Lng: lng
-      },this.curPage);
-        this.sendInfo = "";
-        const _res = res.data;
-        const datas={
-              MsgType:3,
-              Id:_res.Id,
-              Info:sendInfo,
-              Pic:_res.Pic,
-              AddTime:_res.AddTime,
-              Lat:lat,
-              Lng:lng
-            }
-        this.send(datas);
+      }
+      // 普通消息
+      else {
+        console.log(this.sendInfo, "发送消息2");
+        if (!this.sendInfo) {
+          return false;
+        }
+        sendInfo = this.sendInfo;
+      }
+      const that = this;
+      wx.request({
+        url: "https://ccapi.wtvxin.com/api/User/Sendfriend_new",
+        data: {
+          UserId: this.userId,
+          Token: this.token,
+          FriendId: this.FriendId * 1,
+          Info: sendInfo,
+          Pic: imgBase,
+          Lat: lat,
+          Lng: lng
+        },
+        method: "POST",
+        success(res_) {
+          that.sendInfo = "";
+          const res = res_.data;
+          const _res = res.data;
+          that.send({
+            MsgType: 3,
+            Id: _res.Id,
+            Info: sendInfo,
+            Pic: _res.Pic,
+            AddTime: _res.AddTime,
+            Lat: lat,
+            Lng: lng
+          });
+        }
+      });
+    },
+    // 输入框获取焦点
+    blurInput(){
+      // setTimeout(()=>{
+      // this.showBtn = false;
+      // this.isShowMask = false;
+      // this.showEmotion = false;
+      // this.showMessage = false;
+      // },3000)
     },
     // **************************常用语************************
     //获取常用语分类
@@ -388,13 +443,13 @@ export default {
       });
     },
     //点击常用语，获取常用语列表
-    getMessage(id,update) {
-      console.log('获取常用语')
+    getMessage(id, update) {
+      console.log("获取常用语");
       // this.initData();
       this.showBtn = false;
       this.isShowMask = false;
       this.showEmotion = false;
-      if(!update){
+      if (!update) {
         if (this.addId == id) {
           this.showMessage = !this.showMessage;
           return false;
@@ -444,7 +499,7 @@ export default {
             duration: 1500,
             success: function() {
               that.isShowMask = false;
-              that.getMessage(that.addId,true);
+              that.getMessage(that.addId, true);
               console.log(that.messageList, "that.messageList");
               // that.messageList.reverse()
             }
@@ -464,8 +519,8 @@ export default {
       let that = this;
       wx.showModal({
         title: "是否确定删除？",
-          confirmColor:'#ff952e',
-          cancelColor:'#999',
+        confirmColor: "#ff952e",
+        cancelColor: "#999",
         success(res) {
           if (res.confirm) {
             that.DelMessageItem(GroupId, Id, index);
@@ -564,10 +619,9 @@ export default {
       this.isShowMask = false;
       this.showBtn = false;
       this.showEmotion = !this.showEmotion;
-
     },
     // 初始化表情
-    initEmotion(){
+    initEmotion() {
       const list = this.emotionList;
       let emotionArr = [];
       list.map((item, index) => {
@@ -591,19 +645,19 @@ export default {
     },
     // 滚动到底部
     scrollBottom() {
-      setTimeout(()=>{
-      wx
-        .createSelectorQuery()
-        .select("#charRoom")
-        .boundingClientRect(function(rect) {
-          // 使页面滚动到底部
-          wx.pageScrollTo({
-            scrollTop: rect.height,
-            duration: 100
-          });
-        })
-        .exec();
-      },500)
+      setTimeout(() => {
+        wx
+          .createSelectorQuery()
+          .select("#charRoom")
+          .boundingClientRect(function(rect) {
+            // 使页面滚动到底部
+            wx.pageScrollTo({
+              scrollTop: rect.height,
+              duration: 100
+            });
+          })
+          .exec();
+      }, 500);
     }
   },
   created() {
@@ -630,13 +684,13 @@ export default {
 .plr20 {
   padding: 20rpx !important;
 }
-.mrr2{
-  margin-right:6rpx!important;
-  width:80%;
+.mrr2 {
+  margin-right: 6rpx !important;
+  width: 80%;
 }
-.mrl2{
-  margin-left:6rpx!important;
-  width:80%;
+.mrl2 {
+  margin-left: 6rpx !important;
+  width: 80%;
 }
 .charRoom {
   padding-bottom: 180rpx;
@@ -748,10 +802,10 @@ export default {
 }
 .tagmsg {
   padding: 15rpx;
-  font-size:30rpx;
-  word-break:break-all;
+  font-size: 30rpx;
+  word-break: break-all;
   p {
-  word-break:break-all;
+    word-break: break-all;
   }
 }
 // 表情
@@ -768,17 +822,16 @@ export default {
   flex-flow: row wrap;
 }
 .emotion-box-line {
-  margin:10rpx;
-  img{
-    width:40rpx;
-    height:40rpx;
+  margin: 10rpx;
+  img {
+    width: 40rpx;
+    height: 40rpx;
   }
 }
-.cfff{
-  color:#fff;
+.cfff {
+  color: #fff;
 }
-.black{
-  color:#333;
+.black {
+  color: #333;
 }
-
 </style>
