@@ -270,12 +270,12 @@ export default {
           })
           wx.onSocketError(error => {
               console.log('socket error:', error)
-          })
-          wx.onSocketClose(close=>{
-            console.log('close',close)
-            this.connectSocket();
-          })
-      const that =this;
+            })
+            wx.onSocketClose(close=>{
+              console.log('close',close)
+              this.connectSocket();
+            })
+    const that =this;
       const ress = await post("User/GetWebSocketId",{
           UserId: this.userId,
           Token: this.token,
