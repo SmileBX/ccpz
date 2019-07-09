@@ -16,8 +16,8 @@
                 <div class="btnadd" v-if="item.Status==1">已添加</div>
                 <div class="btnadd" v-if="item.Status==2">已忽略</div>
                 <div class="ignoreBtn flex flexAlignCenter" v-if="item.Status==0">
-                    <span class="ignore boxSize" @click="dealPermission(index,2)">忽略</span>
-                    <span class="pass boxSize" @click="dealPermission(index,1)">通过</span>
+                    <span class="ignore boxSize" @click="dealPermission(item.Id,2)">忽略</span>
+                    <span class="pass boxSize" @click="dealPermission(item.Id,1)">通过</span>
                 </div>
             </div>
         </div>
@@ -119,12 +119,12 @@ export default {
       })
     },
     //处理好有请求
-    dealPermission(index,ReqStatus){
+    dealPermission(id,ReqStatus){
       //1:添加 2:忽略
         post('User/Confriend_req',{
           UserId: this.userId,
           Token: this.token,
-          ReqId:this.noticeList[index].Id,
+          ReqId:id,
           ReqStatus:ReqStatus
         },this.curPage).then(res=>{
             console.log(res,"处理好有请求")

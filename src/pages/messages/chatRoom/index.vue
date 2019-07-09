@@ -199,6 +199,7 @@ export default {
     console.log(this.emotionList,'emotionList');
     this.setBarTitle();
     this.initEmotion();
+    this.curPage = getCurrentPageUrlWithArgs();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.initData();
@@ -208,10 +209,9 @@ export default {
     this.FriendId = this.$root.$mp.query.FriendId;
     this.getMessageType();
     this.getFriendMessage();
-    this.connectSocket();
   },
   onShow() {
-    this.curPage = getCurrentPageUrlWithArgs();
+    this.connectSocket();
   },
   onReady() {},
   components: {},
@@ -254,7 +254,27 @@ export default {
       this.useText = "";
       this.SocketTask=null;
     },
+    // 打开webSocket链接
     async connectSocket(){
+           wx.onSocketMessage(message => {
+            console.log('msg',message)
+            this.getFriendMessage();
+          })
+          wx.onSocketOpen(res=>{
+            console.log('open',res)
+            this.send({
+                MsgType:1,
+                TimeStamp:ress.data.TimeStamp,
+                SecretKey:ress.data.SecretKey
+              })
+          })
+          wx.onSocketError(error => {
+              console.log('socket error:', error)
+            })
+            wx.onSocketClose(close=>{
+              console.log('close',close)
+              this.connectSocket();
+            })
     const that =this;
       const ress = await post("User/GetWebSocketId",{
           UserId: this.userId,
@@ -265,30 +285,17 @@ export default {
       )
       wx.connectSocket({
         url:`wss://ccapi.wtvxin.com/WebSocketServer.ashx?Signature=${ress.data.Signature}`, 
-        data: 'data',
-      header: {
-        'content-type': 'application/json'
-      },
-      method: 'post',
-        success(res){
-          that.socket()
+        success(){
         },
         fail(err){
           console.log(err,'err')
         }
       })
     },
-    // 打开webSocket链接
-    socket(){
-      wx.onSocketOpen(res=>{
-        console.log('open',res)
-      })
-      wx.onSocketError(error => {
-          console.log('socket error:', error)
-        })
-      wx.onSocketMessage(msg=>{
-          console.log('msg',msg)
-      })
+    // 发送socket
+    send(data){
+            console.log('send',JSON.stringify(data))
+      wx.sendSocketMessage({data:JSON.stringify(data)})
     },
     //获取好友消息
     getFriendMessage() {
@@ -330,12 +337,11 @@ export default {
     },
     // 发送消息
     async sendMessage(data) {
-      console.log(data, "发送消息");
+      // console.log(data, "发送消息");
       let sendInfo = "";
       let imgBase = "";
       let lat = 0;
       let lng = 0;
-      if (data) {
         // 发送图片
         if (data.type === "img") {
           imgBase = data.data;
@@ -349,11 +355,6 @@ export default {
         else {
           sendInfo = this.sendInfo;
         }
-      }
-      // 普通消息
-      else {
-        sendInfo = this.sendInfo;
-      }
       const res = await post("User/Sendfriend_new", {
         UserId: this.userId,
         Token: this.token,
@@ -363,11 +364,9 @@ export default {
         Lat: lat,
         Lng: lng
       },this.curPage);
-      if (res.code * 1 === 0) {
         this.sendInfo = "";
         const _res = res.data;
-          wx.sendSocketMessage({
-            data:{
+        const datas={
               MsgType:3,
               Id:_res.Id,
               Info:sendInfo,
@@ -375,17 +374,8 @@ export default {
               AddTime:_res.AddTime,
               Lat:lat,
               Lng:lng
-            },
-            success(sendRe){
-              console.log('sendRe',sendRe)
-            },
-            fail(sendErr){
-              console.error('sendErr',sendErr)
             }
-          })
-        return false;
-        this.getFriendMessage();
-      }
+        this.send(datas);
     },
     // **************************常用语************************
     //获取常用语分类
