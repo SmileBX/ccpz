@@ -64,9 +64,6 @@ export default {
     this.curPage = getCurrentPageUrlWithArgs();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
-    if(this.$root.$mp.query.ReportId){
-      this.ReportId = this.$root.$mp.query.ReportId
-    }
   },
   data() {
     return {
@@ -77,7 +74,6 @@ export default {
       picList: [],
       maxPicLen: 5,
       isUploadBtn: true,
-      ReportId:0,//被举报人的id
       selectReasonIndex: 0, //选择的举报原因的第几个
       reasonList: [
         {
@@ -234,8 +230,7 @@ export default {
           PicList: picList, //上传的图片集合
           Content: that.content, //输入的内容
           Type: 4, //类型；1：合作加盟；2：增值服务；3：意见反馈
-          MemberName: reason,//举报原因
-          ReportId:this.ReportId
+          MemberName: reason //举报原因
         },
         that.curPage
       ).then(res => {

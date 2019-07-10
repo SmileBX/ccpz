@@ -415,7 +415,7 @@ export default {
     },
     //去认证
     goVertical(){
-      if(this.IsAUT=='未认证' || this.IsAUT=='认证失败'){
+      if(this.IsAUT=='未认证'){
          wx.navigateTo({url:'/pages/mine2/myVertical/main?verticalType=1'})
       }
     }

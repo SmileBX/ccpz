@@ -95,7 +95,7 @@
         <div class="section__bd">
           <block v-if="ggaoList.length>0">
             <ul class="tuClumn clear">
-              <li v-for="(item,index) in ggaoList" @tap="gooutpage(item.Url)" :key="index">
+              <li v-for="(item,index) in ggaoList" @tap="gotoList(item.Id,item.Url)" :key="index">
                 <img :src="item.Pic" alt>
               </li>
             </ul>
@@ -172,7 +172,7 @@
       <div
         class="pd15 bg_fff"
         v-if="ggaoPic.length>0"
-        @tap="gooutpage(ggaoPic[0].Url)"
+        @tap="gotoList(ggaoPic[0].Id,ggaoPic[0].Url)"
       >
         <img :src="ggaoPic[0].Pic" class="radius10" mode="widthFix" alt>
       </div>
@@ -356,8 +356,8 @@ export default {
     this.token = wx.getStorageSync("token");
     location(this).then(res => {
       this.cityCode = res.CityCode;
-      this.getQueryRentList(24, 2, 5,0); //热门商铺
-      this.getQueryRentList(21, 3, 5,0); //为您推荐
+      this.getQueryRentList(24, 2, 20,0); //热门商铺
+      this.getQueryRentList(21, 3, 20,0); //为您推荐
     });
     this.initData();
     if (wx.getStorageSync("showGiftCount") !== "") {
@@ -396,12 +396,6 @@ export default {
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "首页"
-      });
-    },
-    //外部广告跳转
-    gooutpage(url){
-      wx.navigateTo({
-        url: "/pages/outpage/main?url=" + url
       });
     },
     gotoList(id, objUrl) {
@@ -582,7 +576,7 @@ export default {
     shiftMenu(index, id) {
 
       console.log("切换的" + id);
-      this.getQueryRentList(parseInt(id), 3, 5,index);
+      this.getQueryRentList(parseInt(id), 3, 20,index);
     },
     gotoMoreList() {
       //点击为您推荐中的加载更多的时候，跳转到相对应的列表中去
@@ -647,11 +641,7 @@ export default {
       this.showSearch = false;
     },
   },
-  //下拉刷新
-  onPullDownRefresh() {
-    this.initData()
-    wx.stopPullDownRefresh();
-  },
+
   created() {}
 };
 </script>
@@ -674,6 +664,8 @@ export default {
   line-height:120rpx;
   font-size:32rpx;
   text-align:center;
+}
+.searchNav{
 }
 .section {
   background: #fff;

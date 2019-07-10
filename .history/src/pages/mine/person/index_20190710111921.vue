@@ -416,7 +416,6 @@ export default {
               this.IsContact = res.data.Footer.Value.IsContact.Value
               this.addFriendId = res.data.Footer.Value.IsAddFriend.FriendId
               this.conFriendId = res.data.Footer.Value.IsContact.FriendId
-              this.ReportId = res.data.Footer.Value.IsReportId.Value
             }
           }
           if(res.data.CyList.length>1){
