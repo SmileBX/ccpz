@@ -641,11 +641,7 @@ export default {
       this.showSearch = false;
     },
   },
-  //下拉刷新
-  onPullDownRefresh() {
-    this.initData()
-    wx.stopPullDownRefresh();
-  },
+
   created() {}
 };
 </script>

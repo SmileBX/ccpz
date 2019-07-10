@@ -217,12 +217,7 @@ export default {
     goDetail(item){
       wx.navigateTo({ url: `/pages/rent/detail/main?id=${item.ProId}&type=${item.BrandId}`});
     }
-  },
-  //下拉刷新
-  onPullDownRefresh() {
-    this.initData()
-    wx.stopPullDownRefresh();
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>
