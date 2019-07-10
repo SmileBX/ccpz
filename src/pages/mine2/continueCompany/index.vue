@@ -399,7 +399,7 @@ export default {
       return base64Arr;
     },
     async btnSubmit() {
-      //提交下一步
+      //提交下.一.步
       if (this.valOther()) {
         let companyPic = [];
         if(this.companyPic.length>0){
