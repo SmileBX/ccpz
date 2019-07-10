@@ -149,11 +149,6 @@ export default {
       }
     },
   },
-  //下拉刷新
-  onPullDownRefresh() {
-    this.initData()
-    wx.stopPullDownRefresh();
-  },
 
 };
 </script>

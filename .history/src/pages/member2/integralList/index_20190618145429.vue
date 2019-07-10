@@ -136,12 +136,7 @@ export default {
         this.getScoreList();
       }
     }
-  },
-  //下拉刷新
-  onPullDownRefresh() {
-    this.initData()
-    wx.stopPullDownRefresh();
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>
