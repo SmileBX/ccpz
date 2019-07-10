@@ -70,8 +70,8 @@
         <div class="blur flex1" 
           v-if="showModule!=='input'" 
           @click="onShowModule('input')"
-          :class="sendInfo?'directionR':'color888'"
-          >{{sendInfo||'想对他说点什么呢？'}}&#x200E;
+          :class="sendInfoDiv?'directionR':'color888'"
+          >{{sendInfoDiv||'想对他说点什么呢？'}}&#x200E;
         </div>
         <input
           type="text"
@@ -192,6 +192,7 @@ export default {
       useText: "", //新增的常用语
       chatStatu: {}, //聊天信息
       sendInfo: "", //发送消息的内容
+      sendInfoDiv:'',//div展示的内容
       // 图片
       imgPathArr: [], //临时路径
       isTakePhoto: false, //是否开启拍照,
@@ -201,7 +202,8 @@ export default {
       socketStatus: false, //socket状态
       inputFocusStatus:false, //input对焦状态
       page:1,
-      pageSize:30,
+      pageSize:20,
+      
     };
   },
   onLoad() {
@@ -224,8 +226,45 @@ export default {
   },
   onReady() {},
   components: {},
-
+  watch:{
+    // 输入消息内容改变时
+    sendInfo(){ 
+      if(this.sendInfo.length<15){
+        this.sendInfoDiv = this.sendInfo
+        return false;
+      }
+      let maxLength = 33;
+      for(let i=1;i<this.sendInfo.length;i+=1){
+        const str = this.sendInfo.slice(-i);
+        let strLength = this.strlength(str)
+        if(strLength>maxLength){
+          this.sendInfoDiv = str
+          return false;
+      console.log(strLength,str)
+        }else if(strLength<maxLength){
+        this.sendInfoDiv = this.sendInfo
+      console.log(strLength,str)
+        }
+      }
+    }
+  },
   methods: {
+    // 返回字符串长度，中文2，英文1
+    strlength(str){
+      let len = 0;    
+    for (let i=0; i<str.length; i++) {    
+         const c = str.charCodeAt(i);   
+        //单字节加1   
+        if ((c >= 0x0001 && c <= 0x007e) || (0xff60<=c && c<=0xff9f)) {   
+          len++;   
+        }   
+        else {   
+          len+=2;   
+        }   
+     } 
+     
+    return len
+    },
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "对话框"
@@ -364,6 +403,7 @@ export default {
             res.data.info = info;
             that.chatStatu = res.data;
             if(scrollBottom==='scrollBottom'||res.data.info.length<that.pageSize){
+                  console.log("滚动了");
                 that.scrollBottom();
             }
           }else{
@@ -846,7 +886,7 @@ input{
   height:58rpx;
   line-height:58rpx;
   white-space:wrap;
-  width: 520rpx;
+  width: 480rpx;
 }
 .blur{
   border: 1rpx solid #f2f2f2;
@@ -855,12 +895,13 @@ input{
   background: #f4f4f4;
   height:58rpx;
   line-height:58rpx;
-  text-align:right;
-  width: 520rpx;
-  white-space:wrap;
+  text-align:left;
+  width: 500rpx;
+  overflow:hidden;
+  white-space:nowrap;
 }
 .directionR{
-  direction:rtl;//文字右对齐，隐藏左边
+  // direction:rtl;//文字右对齐，隐藏左边
 }
 .color888{
   color:#888;
