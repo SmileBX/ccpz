@@ -431,6 +431,7 @@ export default {
       this.goodsInfo={};
       this.twoTabIndex = 0;
       this.oneTabIndex = 0;
+      this.page = 1;
       this.isShade = false;
       this.initAll();
       this.initDataList();

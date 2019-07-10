@@ -70,7 +70,7 @@
         <div class="blur flex1" 
           v-if="showModule!=='input'" 
           @click="onShowModule('input')"
-          :class="{'color888':!sendInfo}"
+          :class="sendInfo?'directionR':'color888'"
           >{{sendInfo||'想对他说点什么呢？'}}
         </div>
         <input
@@ -81,7 +81,7 @@
           confirm-type="send"
           confirm-hold
           v-else
-          @blur="inputFocusStatus=false"
+          @blur="inputFocusStatus=false;showModule=''"
           :focus="inputFocusStatus"
           @confirm="sendMessage"
           :cursor-spacing="10"
@@ -209,20 +209,18 @@ export default {
     this.setBarTitle();
     this.initEmotion();
     this.curPage = getCurrentPageUrlWithArgs();
-    this.userId = wx.getStorageSync("userId");
-    this.token = wx.getStorageSync("token");
     this.initData();
     this.sendInfo = "";
     this.messageList = [];
     this.messageType = [];
     this.FriendId = this.$root.$mp.query.FriendId;
     this.getMessageType();
-    this.getFriendMessage('scrollBottom')
-    this.connectSocket();
   },
   onShow() {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
+    this.getFriendMessage('scrollBottom')
+    this.connectSocket();
   },
   onReady() {},
   components: {},
@@ -337,8 +335,8 @@ export default {
           UserId: this.userId,
           Token: this.token,
           FriendId: this.FriendId * 1,
-          Page: 1,
-          PageSize:30
+          Page: this.page,
+          PageSize:this.pageSize
         },
         method: "POST",
         success(_res) {
@@ -365,7 +363,7 @@ export default {
             console.log(info, "解析完的字符串");
             res.data.info = info;
             that.chatStatu = res.data;
-            if(scrollBottom==='scrollBottom'){
+            if(scrollBottom==='scrollBottom'||res.data.info.length<that.pageSize){
                 that.scrollBottom();
             }
           }
@@ -439,15 +437,17 @@ export default {
     // 展示模块
     onShowModule(val){
       console.log(this.showModule,val,'val')
+      // if(this.chatStatu.info.length>this.pageSize){
+        this.scrollBottom();
+      // }
       this.showModule===val?this.showModule = '':this.showModule = val
-      this.scrollBottom();
       setTimeout(()=>{
         if(val==='input'){
           this.inputFocusStatus = true;
         }else{
           this.inputFocusStatus = false;
         }
-      },80)
+      },150)
     },
     // **************************常用语************************
     //获取常用语分类
@@ -654,7 +654,7 @@ export default {
             // 使页面滚动到底部
             wx.pageScrollTo({
               scrollTop: rect.height,
-              duration: 100
+              duration: 0
             });
             console.log(rect.height,'height')
           })
@@ -848,7 +848,14 @@ input{
   background: #f4f4f4;
   height:58rpx;
   line-height:58rpx;
+  text-align:right;
+  width: 520rpx;
+  white-space:nowrap;
+}
+.directionR{
+  direction:rtl;//文字右对齐，隐藏左边
 }
 .color888{
-  color:#888;}
+  color:#888;
+  }
 </style>

@@ -497,8 +497,8 @@ export default {
         }
       });
     },
-    delectData(e, index, id) {
       //滑块的点击删除
+    delectData(e, index, id) {
       // e.mp.detail.instance.close()
       let that = this;
       wx.showModal({
@@ -605,21 +605,23 @@ export default {
             icon: "none",
             duration: 1500,
             success: () => {
-              setTimeout(() => {
-                if (this.tabindex === 0) {
-                  this.pinzuList.data.splice(index, 1);
-                }
-                if (this.tabindex === 1) {
-                  this.zujianList.data.splice(index, 1);
-                }
-                if (this.tabindex === 2) {
-                  this.huodongList.data.splice(index, 1);
-                }
-                if (this.tabindex === 3) {
-                  this.fangList.data.splice(index, 1);
-                }
-                e.mp.detail.instance.close();
-              }, 1500);
+              // 获取发布列表
+              this.getMyPublish();
+              // setTimeout(() => {
+              //   if (this.tabindex === 0) {
+              //     this.pinzuList.data.splice(index, 1);
+              //   }
+              //   if (this.tabindex === 1) {
+              //     this.zujianList.data.splice(index, 1);
+              //   }
+              //   if (this.tabindex === 2) {
+              //     this.huodongList.data.splice(index, 1);
+              //   }
+              //   if (this.tabindex === 3) {
+              //     this.fangList.data.splice(index, 1);
+              //   }
+              //   e.mp.detail.instance.close();
+              // }, 1500);
             }
           });
         }

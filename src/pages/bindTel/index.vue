@@ -114,6 +114,7 @@ export default {
     register() {
       let that = this;
       if (valPhone(that.Tel) && this.regResetPwdValOther()) {
+        wx.showLoading({title:'注册中...',mask:true})
         wx.request({
           url: host + "Login/BindOrRegister", //仅为示例，并非真实的接口地址
           method: "POST",
@@ -137,7 +138,7 @@ export default {
               wx.setStorageSync("userId", res.data.meta.dic.UserId);
               wx.setStorageSync("token", res.data.meta.dic.Token);
               wx.showToast({
-                title: "登录成功！",
+                title: "注册成功！",
                 icon: "success",
                 duration: 1500
               });
@@ -161,9 +162,6 @@ export default {
               icon: "none",
               duration: 1500
             });
-          },
-          complete: function() {
-            wx.hideLoading();
           }
         });
       }
