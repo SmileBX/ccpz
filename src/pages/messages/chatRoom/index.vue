@@ -93,7 +93,7 @@
       </div>
       <!--按钮组-->
       <div v-if="showModule==='imgage'">
-        <div v-if="isshow" class="icon_box flex">
+        <div class="icon_box flex">
           <div class="flex flexAlignCenter flexColumn" @click="chosseImg('camera')">
             <img src="/static/images/icons/photo.jpg" alt class="icon_put" />
             <p class="fontColor">拍照</p>
@@ -184,10 +184,8 @@ export default {
       token: "",
       curPage: "",
       FriendId: "", //好友ID
-      isshow: true,
       isShowMask: false, //是否展示遮罩层
       showModule: '', //展示图片组；emotion：表情。message:常用语。imgage:照片
-      showMessage: false, //展示常用列表
       messageType: [], //常用语分类
       messageList: [], //常用语列表
       addId: "", //添加常用语的标识
@@ -197,12 +195,13 @@ export default {
       // 图片
       imgPathArr: [], //临时路径
       isTakePhoto: false, //是否开启拍照,
-      showEmotion: false, //显示表情
 
       emotionList: emotionList.emotionList,
       emotionArr: [],
       socketStatus: false, //socket状态
-      inputFocusStatus:false,
+      inputFocusStatus:false, //input对焦状态
+      page:1,
+      pageSize:30,
     };
   },
   onLoad() {
@@ -218,7 +217,7 @@ export default {
     this.messageType = [];
     this.FriendId = this.$root.$mp.query.FriendId;
     this.getMessageType();
-    this.getFriendMessage();
+    this.getFriendMessage('scrollBottom')
     this.connectSocket();
   },
   onShow() {
@@ -257,14 +256,12 @@ export default {
       }
     },
     initData() {
-      this.showBtn = false;
-      this.showMessage = false;
       this.isShowMask = false;
       this.isTakePhoto = false;
-      this.showEmotion = false;
+      this.inputFocusStatus = false;
       this.addId = "";
       this.useText = "";
-      this.SocketTask = null;
+      this.showModule = "";
     },
     // 打开webSocket链接
     async connectSocket() {
@@ -332,7 +329,7 @@ export default {
       wx.sendSocketMessage({ data: JSON.stringify(data) });
     },
     //获取好友消息
-    getFriendMessage() {
+    getFriendMessage(scrollBottom) {
       const that = this;
       wx.request({
         url: "https://ccapi.wtvxin.com/api/User/Readfriend_new",
@@ -340,7 +337,8 @@ export default {
           UserId: this.userId,
           Token: this.token,
           FriendId: this.FriendId * 1,
-          Page: 1
+          Page: 1,
+          PageSize:30
         },
         method: "POST",
         success(_res) {
@@ -367,7 +365,9 @@ export default {
             console.log(info, "解析完的字符串");
             res.data.info = info;
             that.chatStatu = res.data;
-            that.scrollBottom();
+            if(scrollBottom==='scrollBottom'){
+                that.scrollBottom();
+            }
           }
         }
       });
@@ -421,6 +421,9 @@ export default {
           that.sendInfo = "";
           const res = res_.data;
           const _res = res.data;
+          // 发送成功收回输入框
+          // that.showModule==='input'&&(that.showModule = "")
+          // that.inputFocusStatus = false;
           that.send({
             MsgType: 3,
             Id: _res.Id,
@@ -433,20 +436,11 @@ export default {
         }
       });
     },
-    // 输入框获取焦点
-    blurInput(){
-      // setTimeout(()=>{
-      this.showBtn = false;
-      this.isShowMask = false;
-      this.showEmotion = false;
-      this.showMessage = false;
-      // },3000)
-    },
     // 展示模块
     onShowModule(val){
       console.log(this.showModule,val,'val')
       this.showModule===val?this.showModule = '':this.showModule = val
-      // this.scrollBottom();
+      this.scrollBottom();
       setTimeout(()=>{
         if(val==='input'){
           this.inputFocusStatus = true;
@@ -496,6 +490,7 @@ export default {
     // 常用语点击
     onClick(name) {
       this.sendInfo = name;
+      this.scrollBottom();
       this.sendMessage();
     },
     //保存常用语
@@ -578,13 +573,6 @@ export default {
     },
     // **************************常用语End************************
     //**************************拍照，图片************************** */
-    // 显示拍照
-    showPicBtn() {
-      this.showMessage = false;
-      this.isShowMask = false;
-      this.showEmotion = false;
-      this.showBtn = !this.showBtn;
-    },
     // 选择图片
     chosseImg(sourceType) {
       const that = this;
@@ -633,13 +621,6 @@ export default {
     //     }
     //   })
     // },
-    // 显示表情
-    showEmotions() {
-      this.showMessage = false;
-      this.isShowMask = false;
-      this.showBtn = false;
-      this.showEmotion = !this.showEmotion;
-    },
     // 初始化表情
     initEmotion() {
       const list = this.emotionList;
@@ -675,9 +656,10 @@ export default {
               scrollTop: rect.height,
               duration: 100
             });
+            console.log(rect.height,'height')
           })
           .exec();
-      }, 500);
+      }, 100);
     }
   },
   created() {
@@ -692,6 +674,11 @@ export default {
 // box-sizing:border-box;
 // padding-bottom:180rpx;
 // }
+input{
+  position:relative;
+  height:58rpx;
+  line-height:58rpx;
+}
 .showMessage {
   padding-bottom: 530rpx !important;
 }
