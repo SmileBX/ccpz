@@ -499,10 +499,10 @@ export default {
     },
       //滑块的点击删除
     delectData(e, index, id) {
-      // e.mp.detail.instance.close()
+      e.mp.detail.instance.close()
       let that = this;
       wx.showModal({
-        // title: "提示",
+        title: "删除确认",
         content: "您确定要删除该条数据么？",
           confirmColor:'#ff952e',
           cancelColor:'#999',
