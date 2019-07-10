@@ -71,7 +71,7 @@
           v-if="showModule!=='input'" 
           @click="onShowModule('input')"
           :class="sendInfo?'directionR':'color888'"
-          >{{sendInfo||'想对他说点什么呢？'}}
+          >{{sendInfo||'想对他说点什么呢？'}}&#x200E;
         </div>
         <input
           type="text"
