@@ -95,7 +95,7 @@
         <div class="section__bd">
           <block v-if="ggaoList.length>0">
             <ul class="tuClumn clear">
-              <li v-for="(item,index) in ggaoList" @tap="gotoList(item.Id,item.Url)" :key="index">
+              <li v-for="(item,index) in ggaoList" @tap="gooutpage(item.Url)" :key="index">
                 <img :src="item.Pic" alt>
               </li>
             </ul>
@@ -172,7 +172,7 @@
       <div
         class="swiper pd15 bg_fff"
         v-if="ggaoPic.length>0"
-        @tap="gotoList(ggaoPic[0].Id,ggaoPic[0].Url)"
+        @tap="gooutpage(ggaoPic[0].Url)"
       >
         <img :src="ggaoPic[0].Pic" class="radius10" mode="widthFix" alt>
       </div>
@@ -396,6 +396,12 @@ export default {
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "首页"
+      });
+    },
+    //外部广告跳转
+    gooutpage(url){
+      wx.navigateTo({
+        url: "/pages/outpage/main?url=" + url
       });
     },
     gotoList(id, objUrl) {
@@ -664,8 +670,6 @@ export default {
   line-height:120rpx;
   font-size:32rpx;
   text-align:center;
-}
-.searchNav{
 }
 .section {
   background: #fff;

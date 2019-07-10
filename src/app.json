@@ -12,8 +12,8 @@
         "pages/inviteRecord/main",
         "pages/VerticalStatus/main",
         "pages/city-select/main",
-        "pages/agreement/main"
-
+        "pages/agreement/main",
+        "pages/outpage/main"
     ],
     "window": {
         "backgroundTextStyle": "light",
