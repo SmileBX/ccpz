@@ -99,7 +99,7 @@ export default {
       userId: "",
       token: "",
       page: 1,
-      pageSize: 1,
+      pageSize: 12,
       status: 1,
       notData: false,
       data: [],

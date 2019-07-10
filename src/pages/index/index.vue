@@ -356,8 +356,8 @@ export default {
     this.token = wx.getStorageSync("token");
     location(this).then(res => {
       this.cityCode = res.CityCode;
-      this.getQueryRentList(24, 2, 20,0); //热门商铺
-      this.getQueryRentList(21, 3, 20,0); //为您推荐
+      this.getQueryRentList(24, 2, 5,0); //热门商铺
+      this.getQueryRentList(21, 3, 5,0); //为您推荐
     });
     this.initData();
     if (wx.getStorageSync("showGiftCount") !== "") {
@@ -576,7 +576,7 @@ export default {
     shiftMenu(index, id) {
 
       console.log("切换的" + id);
-      this.getQueryRentList(parseInt(id), 3, 20,index);
+      this.getQueryRentList(parseInt(id), 3, 5,index);
     },
     gotoMoreList() {
       //点击为您推荐中的加载更多的时候，跳转到相对应的列表中去

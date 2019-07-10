@@ -71,7 +71,7 @@
           v-if="showModule!=='input'" 
           @click="onShowModule('input')"
           :class="sendInfo?'directionR':'color888'"
-          >{{sendInfo||'想对他说点什么呢？'}}
+          >{{sendInfo||'想对他说点什么呢？'}}&#x200E;
         </div>
         <input
           type="text"
@@ -342,7 +342,7 @@ export default {
         success(_res) {
           let res = _res.data;
           console.log(res, "resss");
-          if (res.code == 0) {
+          if (res.code === 0) {
             let info = [];
             res.data.info.map(item => {
               // 将匹配结果替换表情图片
@@ -366,6 +366,11 @@ export default {
             if(scrollBottom==='scrollBottom'||res.data.info.length<that.pageSize){
                 that.scrollBottom();
             }
+          }else{
+            wx.showToast({title:res.msg,icon:'none'})
+            setTimeout(()=>{
+              wx.navigateBack();
+            },1500)
           }
         }
       });
@@ -674,11 +679,6 @@ export default {
 // box-sizing:border-box;
 // padding-bottom:180rpx;
 // }
-input{
-  position:relative;
-  height:58rpx;
-  line-height:58rpx;
-}
 .showMessage {
   padding-bottom: 530rpx !important;
 }
@@ -841,6 +841,13 @@ input{
 .black {
   color: #333;
 }
+input{
+  position:relative;
+  height:58rpx;
+  line-height:58rpx;
+  white-space:wrap;
+  width: 520rpx;
+}
 .blur{
   border: 1rpx solid #f2f2f2;
   padding: 10rpx 20rpx;
@@ -850,7 +857,7 @@ input{
   line-height:58rpx;
   text-align:right;
   width: 520rpx;
-  white-space:nowrap;
+  white-space:wrap;
 }
 .directionR{
   direction:rtl;//文字右对齐，隐藏左边
