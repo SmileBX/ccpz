@@ -333,7 +333,6 @@ export default {
       IsContact:false,//极速联系
       addFriendId:"",//好友Id
       conFriendId:"",//极速联系Id
-      ReportId:0,//举报他人的id
       menuAr:['/pages/mine/editMenTags/main?typeTips=1','/pages/mine/editMenTags/main?typeTips=2']
     }
   },
@@ -416,7 +415,6 @@ export default {
               this.IsContact = res.data.Footer.Value.IsContact.Value
               this.addFriendId = res.data.Footer.Value.IsAddFriend.FriendId
               this.conFriendId = res.data.Footer.Value.IsContact.FriendId
-              this.ReportId = res.data.Footer.Value.IsReportId.Value
             }
           }
           if(res.data.CyList.length>1){
@@ -515,7 +513,7 @@ export default {
     },
     //举报
     onReport(){
-       wx.navigateTo({url:"/pages/mine2/report/main?ReportId="+this.ReportId})
+       wx.navigateTo({url:"/pages/mine2/report/main"})
     },
     // 判断是否会员
     async isVip(btn){
