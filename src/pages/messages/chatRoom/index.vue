@@ -67,12 +67,12 @@
         >{{item.Name}}</span>
       </div>
       <div class="inputbtn flex flexAlignCenter bg_fff">
-        <div class="blur flex1" 
-          v-if="showModule!=='input'" 
+        <div
+          class="blur flex1"
+          v-if="showModule!=='input'"
           @click="onShowModule('input')"
-          :class="sendInfo?'directionR':'color888'"
-          >{{sendInfo||'想对他说点什么呢？'}}&#x200E;
-        </div>
+          :class="sendInfoDiv?'directionR':'color888'"
+        >{{sendInfoDiv||'想对他说点什么呢？'}}&#x200E;</div>
         <input
           type="text"
           placeholder="想对他说点什么呢？"
@@ -87,8 +87,18 @@
           :cursor-spacing="10"
         />
         <div class="flex flexAlignCenter">
-          <img src="/static/images/icons/smile.jpg" alt class="logimg" @click="onShowModule('emotion')" />
-          <img src="/static/images/icons/add.jpg" alt class="logimg" @click="onShowModule('imgage')" />
+          <img
+            src="/static/images/icons/smile.jpg"
+            alt
+            class="logimg"
+            @click="onShowModule('emotion')"
+          />
+          <img
+            src="/static/images/icons/add.jpg"
+            alt
+            class="logimg"
+            @click="onShowModule('imgage')"
+          />
         </div>
       </div>
       <!--按钮组-->
@@ -185,13 +195,14 @@ export default {
       curPage: "",
       FriendId: "", //好友ID
       isShowMask: false, //是否展示遮罩层
-      showModule: '', //展示图片组；emotion：表情。message:常用语。imgage:照片
+      showModule: "", //展示图片组；emotion：表情。message:常用语。imgage:照片
       messageType: [], //常用语分类
       messageList: [], //常用语列表
       addId: "", //添加常用语的标识
       useText: "", //新增的常用语
       chatStatu: {}, //聊天信息
       sendInfo: "", //发送消息的内容
+      sendInfoDiv: "", //div展示的内容
       // 图片
       imgPathArr: [], //临时路径
       isTakePhoto: false, //是否开启拍照,
@@ -199,9 +210,9 @@ export default {
       emotionList: emotionList.emotionList,
       emotionArr: [],
       socketStatus: false, //socket状态
-      inputFocusStatus:false, //input对焦状态
-      page:1,
-      pageSize:30,
+      inputFocusStatus: false, //input对焦状态
+      page: 1,
+      pageSize: 20
     };
   },
   onLoad() {
@@ -219,13 +230,49 @@ export default {
   onShow() {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
-    this.getFriendMessage('scrollBottom')
+    this.getFriendMessage("scrollBottom");
     this.connectSocket();
   },
   onReady() {},
   components: {},
-
+  watch: {
+    // 输入消息内容改变时
+    sendInfo() {
+      if (this.sendInfo.length < 15) {
+        this.sendInfoDiv = this.sendInfo;
+        return false;
+      }
+      let maxLength = 33;
+      for (let i = 1; i < this.sendInfo.length; i += 1) {
+        const str = this.sendInfo.slice(-i);
+        let strLength = this.strlength(str);
+        if (strLength > maxLength) {
+          this.sendInfoDiv = str;
+          return false;
+          console.log(strLength, str);
+        } else if (strLength < maxLength) {
+          this.sendInfoDiv = this.sendInfo;
+          console.log(strLength, str);
+        }
+      }
+    }
+  },
   methods: {
+    // 返回字符串长度，中文2，英文1
+    strlength(str) {
+      let len = 0;
+      for (let i = 0; i < str.length; i++) {
+        const c = str.charCodeAt(i);
+        //单字节加1
+        if ((c >= 0x0001 && c <= 0x007e) || (0xff60 <= c && c <= 0xff9f)) {
+          len++;
+        } else {
+          len += 2;
+        }
+      }
+
+      return len;
+    },
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "对话框"
@@ -336,7 +383,7 @@ export default {
           Token: this.token,
           FriendId: this.FriendId * 1,
           Page: this.page,
-          PageSize:this.pageSize
+          PageSize: this.pageSize
         },
         method: "POST",
         success(_res) {
@@ -363,14 +410,18 @@ export default {
             console.log(info, "解析完的字符串");
             res.data.info = info;
             that.chatStatu = res.data;
-            if(scrollBottom==='scrollBottom'||res.data.info.length<that.pageSize){
-                that.scrollBottom();
+            if (
+              scrollBottom === "scrollBottom" ||
+              res.data.info.length < that.pageSize
+            ) {
+              console.log("滚动了");
+              that.scrollBottom();
             }
-          }else{
-            wx.showToast({title:res.msg,icon:'none'})
-            setTimeout(()=>{
+          } else {
+            wx.showToast({ title: res.msg, icon: "none" });
+            setTimeout(() => {
               wx.navigateBack();
-            },1500)
+            }, 1500);
           }
         }
       });
@@ -440,19 +491,21 @@ export default {
       });
     },
     // 展示模块
-    onShowModule(val){
-      console.log(this.showModule,val,'val')
+    onShowModule(val) {
+      console.log(this.showModule, val, "val");
       // if(this.chatStatu.info.length>this.pageSize){
-        this.scrollBottom();
+      this.scrollBottom();
       // }
-      this.showModule===val?this.showModule = '':this.showModule = val
-      setTimeout(()=>{
-        if(val==='input'){
+      this.showModule === val
+        ? (this.showModule = "")
+        : (this.showModule = val);
+      setTimeout(() => {
+        if (val === "input") {
           this.inputFocusStatus = true;
-        }else{
+        } else {
           this.inputFocusStatus = false;
         }
-      },150)
+      }, 150);
     },
     // **************************常用语************************
     //获取常用语分类
@@ -470,10 +523,10 @@ export default {
       // this.initData();
       if (!update) {
         if (this.addId == id) {
-          this.onShowModule('message');
+          this.onShowModule("message");
           return false;
         } else {
-          this.showModule = 'message';
+          this.showModule = "message";
         }
       }
       this.addId = id;
@@ -661,11 +714,18 @@ export default {
               scrollTop: rect.height,
               duration: 0
             });
-            console.log(rect.height,'height')
+            console.log(rect.height, "height");
           })
           .exec();
       }, 100);
     }
+  },
+  //下拉刷新
+  onPullDownRefresh() {
+    this.initData();
+    this.page+=1;
+    this.getFriendMessage()
+    wx.stopPullDownRefresh();
   },
   created() {
     // let app = getApp()
@@ -841,28 +901,29 @@ export default {
 .black {
   color: #333;
 }
-input{
-  position:relative;
-  height:58rpx;
-  line-height:58rpx;
-  white-space:wrap;
-  width: 520rpx;
+input {
+  position: relative;
+  height: 58rpx;
+  line-height: 58rpx;
+  white-space: wrap;
+  width: 480rpx;
 }
-.blur{
+.blur {
   border: 1rpx solid #f2f2f2;
   padding: 10rpx 20rpx;
   border-radius: 10rpx;
   background: #f4f4f4;
-  height:58rpx;
-  line-height:58rpx;
-  text-align:right;
-  width: 520rpx;
-  white-space:wrap;
+  height: 58rpx;
+  line-height: 58rpx;
+  text-align: left;
+  width: 500rpx;
+  overflow: hidden;
+  white-space: nowrap;
 }
-.directionR{
-  direction:rtl;//文字右对齐，隐藏左边
+.directionR {
+  // direction:rtl;//文字右对齐，隐藏左边
 }
-.color888{
-  color:#888;
-  }
+.color888 {
+  color: #888;
+}
 </style>

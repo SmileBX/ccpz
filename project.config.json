@@ -245,7 +245,7 @@
 					"id": 28,
 					"name": "个人信息-基本信息(个人信息)",
 					"pathName": "pages/mine/person/main",
-					"query": "type=0",
+					"query": "type=2",
 					"scene": null
 				},
 				{
