@@ -25,20 +25,20 @@
                   <span class="msgItem font22" v-if="item.Name">{{item.Name}}</span>
                   <span class="msgItem font22" v-else>未透漏公司</span>
                 </p>
-                <span class="attestationStatus color_white font22 my_attion"  @tap="editCompany(item.Id)" v-if="type==1">
+                <span class="attestationStatus color_white font22"  @tap="editCompany(item.Id)" v-if="type==1">
                   <span> 编辑</span>
                 </span>
-                <span class="attestationStatus color_white font22 my_attion" @tap="changeCompany"  v-if="type==1">
+                <span class="attestationStatus color_white font22" @tap="changeCompany"  v-if="type==1">
                   <span > 切换</span>
                 </span>
-                <span class="attestationStatus color_white font22 my_attion" v-if="item.IsAUT">
+                <span class="attestationStatus color_white font22" v-if="item.IsAUT">
                   <span class="icon-gou"></span> {{item.IsAUT}}
                 </span>
                 <div class="msgList flex" v-if="companyInfo.length==0">
                 <p class="msgList">
                   未透露公司
                 </p>
-                <span class="attestationStatus color_white font22 my_attion " @tap="companyVertical">
+                <span class="attestationStatus color_white font22 my_attion" @tap="companyVertical">
                   <span class="icon-gou"></span> 去认证
                 </span>
               </div>
@@ -743,13 +743,13 @@ export default {
   align-items:center
 }
 .list_itt{
+  border:1px solid blue;
   margin-top:15rpx;
 }
 .my_attion{
-  height:26rpx!important;
-  line-height:26rpx!important;
-  padding:3rpx 10rpx 3rpx 5rpx!important;
-  margin-left:20rpx!important
+  height:26rpx;
+  line-height:26rpx;
+  padding:3rpx 10rpx 3rpx 8rpx
 }
  
 </style>
