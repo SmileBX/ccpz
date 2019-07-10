@@ -170,7 +170,7 @@
       </div>
       <!-- 广告图 -->
       <div
-        class="swiper pd15 bg_fff"
+        class="pd15 bg_fff"
         v-if="ggaoPic.length>0"
         @tap="gotoList(ggaoPic[0].Id,ggaoPic[0].Url)"
       >
