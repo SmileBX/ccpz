@@ -226,7 +226,6 @@ export default {
     this.page = 1;
     this.messageList = [];
       this.chatStatu = {};
-      this.chatList = [];
     this.messageType = [];
     this.FriendId = this.$root.$mp.query.FriendId;
     this.getMessageType();
@@ -338,6 +337,7 @@ export default {
         let msg = JSON.parse(message.data);
         console.log("msg", msg);
         if (msg.code !== 1 && msg.code !== 2) {
+          this.page=1
           this.getFriendMessage();
         } else {
           this.socketStatus = false;
@@ -413,7 +413,11 @@ export default {
             });
             console.log(info, "解析完的字符串");
             // res.data.info = info;
+      if(that.page===1){
+        that.chatList = info;
+      }else{
             that.chatList = info.concat(that.chatList);
+      }
             that.chatStatu = res.data;
             if (
               scrollBottom === "scrollBottom" ||
