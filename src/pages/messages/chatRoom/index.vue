@@ -7,7 +7,7 @@
     <!-- :class="{'showMessage':showModule,'showBtn':showBtn,'showEmotion':showEmotion}" -->
     <!--聊天列表-->
     <div class="padwid" @click="isShowMask=false">
-      <div v-for="(msg,msgIndex) in chatStatu.info" :key="msgIndex">
+      <div v-for="(msg,msgIndex) in chatList" :key="msgIndex">
         <div class="flex flexAlignCenter boxSize p2 justifyContentEnd plr20" v-if="msg.MsgId=='a'">
           <div class="flex flexAlignEnd justifyContentEnd mrr2">
             <!-- <span class="fontColor" @click="scrollBottom">已读</span> -->
@@ -15,10 +15,10 @@
               <!-- <p v-if="msg.Info" class="boxSize">{{msg.Info}}</p> -->
               <p v-if="msg.Info" class="boxSize" v-html="msg.Info"></p>
 
+                <!-- :onload="scrollBottom()" -->
               <img
                 class="sendImg"
                 mode="widthFix"
-                :onload="scrollBottom()"
                 v-if="msg.Pic"
                 :src="msg.Pic"
                 alt
@@ -41,10 +41,10 @@
               <span class="sj lsj"></span>
               <!-- <p v-if="msg.Info" class="boxSize" style="color:#1a1a1a">{{msg.Info}}</p> -->
               <p v-if="msg.Info" class="boxSize" v-html="msg.Info"></p>
+                <!-- :onload="scrollBottom()" -->
               <img
                 class="sendImg"
                 mode="widthFix"
-                :onload="scrollBottom()"
                 v-if="msg.Pic"
                 :src="msg.Pic"
                 alt
@@ -201,6 +201,7 @@ export default {
       addId: "", //添加常用语的标识
       useText: "", //新增的常用语
       chatStatu: {}, //聊天信息
+      chatList: [], //聊天列表
       sendInfo: "", //发送消息的内容
       sendInfoDiv: "", //div展示的内容
       // 图片
@@ -222,7 +223,10 @@ export default {
     this.curPage = getCurrentPageUrlWithArgs();
     this.initData();
     this.sendInfo = "";
+    this.page = 1;
     this.messageList = [];
+      this.chatStatu = {};
+      this.chatList = [];
     this.messageType = [];
     this.FriendId = this.$root.$mp.query.FriendId;
     this.getMessageType();
@@ -231,7 +235,7 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.getFriendMessage("scrollBottom");
-    this.connectSocket();
+    // this.connectSocket();
   },
   onReady() {},
   components: {},
@@ -258,6 +262,14 @@ export default {
     }
   },
   methods: {
+    initData() {
+      this.isShowMask = false;
+      this.isTakePhoto = false;
+      this.inputFocusStatus = false;
+      this.addId = "";
+      this.useText = "";
+      this.showModule = "";
+    },
     // 返回字符串长度，中文2，英文1
     strlength(str) {
       let len = 0;
@@ -299,14 +311,6 @@ export default {
           }
         });
       }
-    },
-    initData() {
-      this.isShowMask = false;
-      this.isTakePhoto = false;
-      this.inputFocusStatus = false;
-      this.addId = "";
-      this.useText = "";
-      this.showModule = "";
     },
     // 打开webSocket链接
     async connectSocket() {
@@ -408,11 +412,12 @@ export default {
               info.unshift(item);
             });
             console.log(info, "解析完的字符串");
-            res.data.info = info;
+            // res.data.info = info;
+            that.chatList = info.concat(that.chatList);
             that.chatStatu = res.data;
             if (
               scrollBottom === "scrollBottom" ||
-              res.data.info.length < that.pageSize
+              (res.data.info.length < that.pageSize&&that.page===1)
             ) {
               console.log("滚动了");
               that.scrollBottom();
@@ -714,7 +719,7 @@ export default {
               scrollTop: rect.height,
               duration: 0
             });
-            console.log(rect.height, "height");
+            console.log(rect.height, "height滚动了额");
           })
           .exec();
       }, 100);
