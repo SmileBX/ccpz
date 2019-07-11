@@ -175,7 +175,7 @@
         v-if="ggaoPic.length>0"
         @tap="gooutpage(ggaoPic[0].Url)"
       >
-        <img :src="ggaoPic[0].Pic" class="radius10" mode="widthFix" alt>
+        <img :src="ggaoPic[0].Pic" class="radius10 picImg" mode="widthFix" alt>
       </div>
       <!-- 为您推荐 -->
       <div class="section">
@@ -841,5 +841,8 @@ export default {
     height: 295rpx;
     border-radius:8rpx;
   }
+}
+.picImg{
+  width:100%;
 }
 </style>

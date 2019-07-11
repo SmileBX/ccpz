@@ -15,7 +15,7 @@
               <!-- <p v-if="msg.Info" class="boxSize">{{msg.Info}}</p> -->
               <p v-if="msg.Info" class="boxSize" v-html="msg.Info"></p>
 
-                <!-- :onload="scrollBottom()" -->
+              <!-- :onload="scrollBottom()" -->
               <img
                 class="sendImg"
                 mode="widthFix"
@@ -41,7 +41,7 @@
               <span class="sj lsj"></span>
               <!-- <p v-if="msg.Info" class="boxSize" style="color:#1a1a1a">{{msg.Info}}</p> -->
               <p v-if="msg.Info" class="boxSize" v-html="msg.Info"></p>
-                <!-- :onload="scrollBottom()" -->
+              <!-- :onload="scrollBottom()" -->
               <img
                 class="sendImg"
                 mode="widthFix"
@@ -225,7 +225,7 @@ export default {
     this.sendInfo = "";
     this.page = 1;
     this.messageList = [];
-      this.chatStatu = {};
+    this.chatStatu = {};
     this.messageType = [];
     this.FriendId = this.$root.$mp.query.FriendId;
     this.getMessageType();
@@ -233,10 +233,17 @@ export default {
   onShow() {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
-    this.getFriendMessage("scrollBottom");
-    this.connectSocket();
+    this.getFriendMessage("scrollBottom").then(() => {
+      this.connectSocket();
+    });
   },
-  onReady() {},
+  onUnload() {
+    wx.closeSocket({
+      success() {
+        console.log("关闭socket成功");
+      }
+    });
+  },
   components: {},
   watch: {
     // 输入消息内容改变时
@@ -337,7 +344,7 @@ export default {
         let msg = JSON.parse(message.data);
         console.log("msg", msg);
         if (msg.code !== 1 && msg.code !== 2) {
-          this.page=1
+          this.page = 1;
           this.getFriendMessage();
         } else {
           this.socketStatus = false;
@@ -356,13 +363,20 @@ export default {
       wx.onSocketError(error => {
         console.log("socket error:", error);
         this.socketStatus = false;
-        this.renewConnectSocket();
+        this.pageBack("连接已断开，请重试!");
       });
       wx.onSocketClose(close => {
         console.log("close", close);
         this.socketStatus = false;
-        this.renewConnectSocket();
+        // this.pageBack('连接已断开，请重试!');
       });
+    },
+    // 断开返回上一页
+    pageBack(msg) {
+      wx.showToast({ title: msg, icon: "none" });
+      setTimeout(() => {
+        wx.navigateBack();
+      }, 1500);
     },
     // socket断线重连
     renewConnectSocket() {
@@ -379,60 +393,64 @@ export default {
     },
     //获取好友消息
     getFriendMessage(scrollBottom) {
-      const that = this;
-      wx.request({
-        url: "https://ccapi.wtvxin.com/api/User/Readfriend_new",
-        data: {
-          UserId: this.userId,
-          Token: this.token,
-          FriendId: this.FriendId * 1,
-          Page: this.page,
-          PageSize: this.pageSize
-        },
-        method: "POST",
-        success(_res) {
-          let res = _res.data;
-          console.log(res, "resss");
-          if (res.code === 0) {
-            let info = [];
-            res.data.info.map(item => {
-              // 将匹配结果替换表情图片
-              item.Info = item.Info.replace(
-                /\[[\u4E00-\u9FA5]{1,3}\]/gi,
-                words => {
-                  let word = words.replace(/\[|\]/gi, "");
-                  let index = that.emotionList.indexOf(word);
-                  if (index !== -1) {
-                    return `<img style="width:25px;height:25px;" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" align="middle">`;
-                  } else {
-                    return words;
+      return new Promise((resolve, reject) => {
+        const that = this;
+        wx.request({
+          url: "https://ccapi.wtvxin.com/api/User/Readfriend_new",
+          data: {
+            UserId: this.userId,
+            Token: this.token,
+            FriendId: this.FriendId * 1,
+            Page: this.page,
+            PageSize: this.pageSize
+          },
+          method: "POST",
+          success(_res) {
+            let res = _res.data;
+            console.log(res, "resss");
+            if (res.code === 0) {
+              let info = [];
+              res.data.info.map(item => {
+                // 将匹配结果替换表情图片
+                item.Info = item.Info.replace(
+                  /\[[\u4E00-\u9FA5]{1,3}\]/gi,
+                  words => {
+                    let word = words.replace(/\[|\]/gi, "");
+                    let index = that.emotionList.indexOf(word);
+                    if (index !== -1) {
+                      return `<img style="width:25px;height:25px;" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif" align="middle">`;
+                    } else {
+                      return words;
+                    }
                   }
-                }
-              );
-              info.unshift(item);
-            });
-            console.log(info, "解析完的字符串");
-            // res.data.info = info;
-      if(that.page===1){
-        that.chatList = info;
-      }else{
-            that.chatList = info.concat(that.chatList);
-      }
-            that.chatStatu = res.data;
-            if (
-              scrollBottom === "scrollBottom" ||
-              (res.data.info.length < that.pageSize&&that.page===1)
-            ) {
-              console.log("滚动了");
-              that.scrollBottom();
+                );
+                info.unshift(item);
+              });
+              console.log(info, "解析完的字符串");
+              // res.data.info = info;
+              if (that.page === 1) {
+                that.chatList = info;
+              } else {
+                that.chatList = info.concat(that.chatList);
+              }
+              that.chatStatu = res.data;
+              if (
+                scrollBottom === "scrollBottom" ||
+                (res.data.info.length < that.pageSize && that.page === 1)
+              ) {
+                console.log("滚动了");
+                that.scrollBottom();
+              }
+              resolve();
+            } else {
+              wx.showToast({ title: res.msg, icon: "none" });
+              setTimeout(() => {
+                wx.navigateBack();
+              }, 1500);
+              reject();
             }
-          } else {
-            wx.showToast({ title: res.msg, icon: "none" });
-            setTimeout(() => {
-              wx.navigateBack();
-            }, 1500);
           }
-        }
+        });
       });
     },
     // 发送消息
@@ -732,8 +750,8 @@ export default {
   //下拉刷新
   onPullDownRefresh() {
     this.initData();
-    this.page+=1;
-    this.getFriendMessage()
+    this.page += 1;
+    this.getFriendMessage();
     wx.stopPullDownRefresh();
   },
   created() {
