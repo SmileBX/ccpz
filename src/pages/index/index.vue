@@ -171,7 +171,7 @@
       </div>
       <!-- 广告图 -->
       <div
-        class="pd15 bg_fff"
+        class="advimg bg_fff"
         v-if="ggaoPic.length>0"
         @tap="gooutpage(ggaoPic[0].Url)"
       >
@@ -851,5 +851,8 @@ export default {
 }
 .picImg{
   width:100%;
+}
+.advimg{
+  padding: 0 30rpx;
 }
 </style>
