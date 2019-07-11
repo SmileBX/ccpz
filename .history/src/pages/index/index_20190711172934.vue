@@ -97,7 +97,7 @@
         <div class="section__bd">
           <block v-if="ggaoList.length>0">
             <ul class="tuClumn clear">
-              <li v-for="(item,index) in ggaoList" @tap="gotoRouseDetail(item.Id)" :key="index">
+              <li v-for="(item,index) in ggaoList" @tap="gooutpage(item.Url)" :key="index">
                 <img :src="item.PicNo" alt>
               </li>
             </ul>
@@ -355,8 +355,7 @@ export default {
     this.token = wx.getStorageSync("token");
     location(this).then(res => {
       this.cityCode = res.CityCode;
-      this.getQueryRentList(23, 3, 3,0); //热门拼租
-      this.getQueryRentList(21, 3, 3,0); //人气活动
+      this.getQueryRentList(24, 2, 5,0); //热门商铺
       this.getQueryRentList(21, 3, 5,0); //为您推荐
     });
     this.initData();
@@ -615,6 +614,7 @@ export default {
       ).then(res => {
         if (res.code === 0) {
           if(pageSize == 3){ //热门拼租/人气活动
+            
             if (brandId === 23) {
               if (that.page === 1) {
                 that.hotStoreList = [];
@@ -633,15 +633,6 @@ export default {
                 that.ggaoList = res.data;
               }
             }
-          }
-          if(pageSize == 5){
-              if (that.page === 1) {
-                that.recomendList = [];
-              }
-              //为您推荐
-              if (res.data.length > 0) {
-                that.recomendList = res.data;
-              }
           }
           //切换为您推荐中的选项
           index!==undefined&&(this.menuTab = index)

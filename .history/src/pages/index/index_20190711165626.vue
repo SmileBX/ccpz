@@ -97,26 +97,29 @@
         <div class="section__bd">
           <block v-if="ggaoList.length>0">
             <ul class="tuClumn clear">
-              <li v-for="(item,index) in ggaoList" @tap="gotoRouseDetail(item.Id)" :key="index">
-                <img :src="item.PicNo" alt>
-              </li>
-            </ul>
-          </block>
-        </div>
-        <!-- <div class="section__bd">
-          <block v-if="ggaoList.length>0">
-            <ul class="tuClumn clear">
               <li v-for="(item,index) in ggaoList" @tap="gooutpage(item.Url)" :key="index">
                 <img :src="item.Pic" alt>
               </li>
             </ul>
           </block>
-        </div> -->
+          <!-- <block v-else>
+          <ul class="tuClumn clear">
+            <li @tap="gotoList(1)">
+              <img src="/static/images/icons/picMenu1.jpg" alt>
+            </li>
+            <li @tap="gotoList(2)">
+              <img src="/static/images/icons/picMenu2.jpg" alt>
+            </li>
+            <li @tap="gotoList(3)">
+              <img src="/static/images/icons/picMenu3.jpg" alt>
+            </li>
+          </ul>
+          </block>-->
+        </div>
       </div>
       <!-- 热门商铺2 -->
       <div class="section">
-        <!-- <div class="section__hd flex flexAlignCenter" @click="goTo(2)"> -->
-        <div class="section__hd flex flexAlignCenter" @click="goToList(23)">
+        <div class="section__hd flex flexAlignCenter" @click="goTo(2)">
           <div class="flex1">
             <p class="title">人气活动</p>
           </div>
@@ -355,8 +358,7 @@ export default {
     this.token = wx.getStorageSync("token");
     location(this).then(res => {
       this.cityCode = res.CityCode;
-      this.getQueryRentList(23, 3, 3,0); //热门拼租
-      this.getQueryRentList(21, 3, 3,0); //人气活动
+      this.getQueryRentList(24, 2, 5,0); //热门商铺
       this.getQueryRentList(21, 3, 5,0); //为您推荐
     });
     this.initData();
@@ -580,6 +582,7 @@ export default {
       });
     },
     shiftMenu(index, id) {
+
       console.log("切换的" + id);
       this.getQueryRentList(parseInt(id), 3, 5,index);
     },
@@ -614,62 +617,28 @@ export default {
         that.curPage
       ).then(res => {
         if (res.code === 0) {
-          if(pageSize == 3){ //热门拼租/人气活动
-            if (brandId === 23) {
-              if (that.page === 1) {
-                that.hotStoreList = [];
-              }
-              //人气活动
-              if (res.data.length > 0) {
-                that.hotStoreList = res.data;
-              }
+          if (hotType === 2) {
+            if (that.page === 1) {
+              that.hotStoreList = [];
             }
-            if (brandId === 21) {
-              if (that.page === 1) {
-                that.ggaoList = [];
-              }
-              //热门拼租
-              if (res.data.length > 0) {
-                that.ggaoList = res.data;
-              }
+            //热门商铺
+            if (res.data.length > 0) {
+              that.hotStoreList = res.data;
             }
           }
-          if(pageSize == 5){
-              if (that.page === 1) {
-                that.recomendList = [];
-              }
-              //为您推荐
-              if (res.data.length > 0) {
-                that.recomendList = res.data;
-              }
+          if (hotType === 3) {
+            if (that.page === 1) {
+              that.recomendList = [];
+            }
+            //为您推荐
+            if (res.data.length > 0) {
+              that.recomendList = res.data;
+            }
           }
-          //切换为您推荐中的选项
-          index!==undefined&&(this.menuTab = index)
-        }
-        // if (res.code === 0) {
-        //   if (hotType === 2) {
-        //     if (that.page === 1) {
-        //       that.hotStoreList = [];
-        //     }
-        //     //热门商铺
-        //     if (res.data.length > 0) {
-        //       that.hotStoreList = res.data;
-        //     }
-        //   }
-        //   if (hotType === 3) {
-        //     if (that.page === 1) {
-        //       that.recomendList = [];
-        //     }
-        //     //为您推荐
-        //     if (res.data.length > 0) {
-        //       that.recomendList = res.data;
-        //     }
-        //   }
           
-        //   //切换为您推荐中的选项
-        //   index!==undefined&&(this.menuTab = index)
-        // }
-
+        //切换为您推荐中的选项
+        index!==undefined&&(this.menuTab = index)
+        }
       });
     },
     // 跳转搜索

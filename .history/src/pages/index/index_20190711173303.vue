@@ -97,7 +97,7 @@
         <div class="section__bd">
           <block v-if="ggaoList.length>0">
             <ul class="tuClumn clear">
-              <li v-for="(item,index) in ggaoList" @tap="gotoRouseDetail(item.Id)" :key="index">
+              <li v-for="(item,index) in ggaoList" @tap="gooutpage(item.Url)" :key="index">
                 <img :src="item.PicNo" alt>
               </li>
             </ul>
@@ -633,15 +633,6 @@ export default {
                 that.ggaoList = res.data;
               }
             }
-          }
-          if(pageSize == 5){
-              if (that.page === 1) {
-                that.recomendList = [];
-              }
-              //为您推荐
-              if (res.data.length > 0) {
-                that.recomendList = res.data;
-              }
           }
           //切换为您推荐中的选项
           index!==undefined&&(this.menuTab = index)
