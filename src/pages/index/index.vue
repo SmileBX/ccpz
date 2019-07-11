@@ -667,6 +667,13 @@ export default {
 .mask{
   z-index:9;
 }
+.bannerBox{
+  .item{
+    img{
+      border-radius:8rpx;
+    }
+  }
+}
 .box{
   width:94%;
   height:330rpx;
