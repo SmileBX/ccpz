@@ -16,7 +16,8 @@
       </div>
     </div>
       <!-- 搜索导航 -->
-      <div class="position-fixed mask" v-show="showSearch" @clcik.self="showSearch = false;">
+      <div class="position-fixed" v-show="showSearch" >
+        <div class="mask" @click="showSearch = false;"></div>
         <div class="box">
           <!-- 请选择要搜索的分类 -->
           <div class="box-title">请选择要搜索的分类</div>
@@ -663,12 +664,17 @@ export default {
   width:100%;
   z-index:100;
 }
+.mask{
+  z-index:9;
+}
 .box{
   width:94%;
   height:330rpx;
   background:#fff;
   margin:300rpx auto 0;
   border-radius:5rpx;
+  position:relative;
+  z-index:10;
 }
 .box-title{
   line-height:120rpx;

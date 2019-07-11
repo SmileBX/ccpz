@@ -144,7 +144,8 @@ export default {
     },
     // 举报
     onReport(){
-        wx.navigateTo({url:'/pages/mine2/report/main'})
+        console.log(this.Footer.IsReportId)
+        wx.navigateTo({url:'/pages/mine2/report/main?ReportId='+this.Footer.IsReportId.Value})
     },
     // 判断是否会员
     async isVip(btn){

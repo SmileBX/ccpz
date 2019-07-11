@@ -1007,7 +1007,7 @@ export default {
     // 跳转搜索
     goSearch(){
       const keyWords = this.keyWords==='搜索'?'':this.keyWords;
-      wx.navigateTo({
+      wx.redirectTo({
         url:`/pages/rent/searchHistory/main?brandId=${this.type}&keyWords=${keyWords}`
       })
     },

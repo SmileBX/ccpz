@@ -24,7 +24,7 @@
       </div>
       <div class="item">
         <div class="section__hd">
-          <p class="title">热门搜素</p>
+          <p class="title">热门搜索</p>
         </div>
         <div class="tipsList border__tipsList bg_grey"  v-if="hotList.length>0">
           <span v-for="(item,index) in hotList" :class="{'active':hotTabIndex===index}" :key="index" @click="selectHistory(2,index,item)">{{item}}</span>
@@ -59,6 +59,7 @@ export default {
     this.curPage = getCurrentPageUrlWithArgs();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
+      this.hisTabIndex="";
     this.keyWords = this.$root.$mp.query.keyWords ||''
     if(this.$root.$mp.query.brandId && this.$root.$mp.query.brandId !==""){
       this.brandId = this.$root.$mp.query.brandId;
