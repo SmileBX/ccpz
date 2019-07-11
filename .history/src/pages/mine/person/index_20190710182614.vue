@@ -748,8 +748,7 @@ export default {
 .my_attion{
   height:26rpx!important;
   line-height:26rpx!important;
-  padding:3rpx 10rpx 3rpx 5rpx!important;
-  margin-left:20rpx!important
+  padding:3rpx 10rpx 3rpx 8rpx!important;
 }
  
 </style>

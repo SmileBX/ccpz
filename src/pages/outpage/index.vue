@@ -1,21 +1,21 @@
 <template>
   <div class="pageContent">
-      <web-view :src="url"></web-view>
+      <web-view :src="url" v-if="url"></web-view>
   </div>
 </template>
 <script>
 import { post, toLogin, getCurrentPageUrlWithArgs, trim } from "@/utils";
 export default {
-  onLoad() {
-    
-  },
-  onShow() {
-      this.url = this.$root.$mp.query.url;console.log(this.url)
-  },
   data() {
     return {
       url:""
     };
+  },
+  onLoad() {
+    this.url = this.$root.$mp.query.url;console.log(this.url)
+  },
+  onShow() {
+      this.url = this.$root.$mp.query.url;console.log(this.url)
   },
   methods: {
     setBarTitle() {
