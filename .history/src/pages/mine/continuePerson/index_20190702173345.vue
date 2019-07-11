@@ -1,8 +1,8 @@
 <template>
   <div class="pageContent">
     <div class="pall bg_fff borderTop">
-        <p style="margin-bottom:10rpx;">个人简介</p>
-        <textarea name="" id="" style="height:100rpx!important" cols="10" rows="2" maxlength="45" placeholder="请输入个人简介" v-model="WorkIdea"></textarea>
+        <p style="margin-bottom:10rpx;">创业理念</p>
+        <textarea name="" id="" cols="30" rows="10" placeholder="请输入创业理念" v-model="WorkIdea"></textarea>
     </div>
     <!--个人信息空-->
     <div class="weui-cells">

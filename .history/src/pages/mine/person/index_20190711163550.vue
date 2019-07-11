@@ -756,6 +756,10 @@ export default {
   padding:3rpx 10rpx 3rpx 5rpx!important;
   margin-left:20rpx!important
 }
-
+.txt_produce{
+  border:1px solid red;
+  height:100rpx;
+  
+}
  
 </style>

@@ -46,8 +46,7 @@
               </block>
               <p class="msgList list_itt">
                 <span class="msgItem font22">个人简介：</span>
-                <span class="msgItem2 font22" v-if="personInfo.WorkIdea">{{personInfo.WorkIdea}}</span>
-                <span class="msgItem2 font22" v-else>主人很懒...什么也没留下</span>
+                <span class="msgItem2 font22" >主人很懒...什么也没留下</span>
               </p>
             </div>
           </div>
@@ -78,13 +77,13 @@
                 <div class="weui-cell__bd" v-else>无</div>
               </div>
             </div>
-            <!-- <div class="group flex">
+            <div class="group flex">
               <div class="weui-cell flex1">
                 <div class="weui-cell__hd">办公地址</div>
                 <div class="weui-cell__bd" v-if="item.OfficeAddr">{{item.OfficeAddr}}</div>
                 <div class="weui-cell__bd" v-else>无</div>
               </div>
-            </div> -->
+            </div>
         </div>
         </block>
       <!-- 标签-->
@@ -756,6 +755,5 @@ export default {
   padding:3rpx 10rpx 3rpx 5rpx!important;
   margin-left:20rpx!important
 }
-
  
 </style>

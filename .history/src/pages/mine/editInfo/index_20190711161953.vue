@@ -81,10 +81,10 @@
         </div>
         <input type="text" placeholder="请选择" disabled v-model="Name"  >
       </div>
-      <!-- <div class="pall bg_fff">
+      <div class="pall bg_fff">
         <p style="margin-bottom:10rpx;">个人简介</p>
         <textarea name="" id="" cols="30" rows="10" placeholder="请输入个人简介"></textarea>
-      </div> -->
+    </div>
 
 
     </div>

@@ -81,10 +81,12 @@
         </div>
         <input type="text" placeholder="请选择" disabled v-model="Name"  >
       </div>
-      <!-- <div class="pall bg_fff">
-        <p style="margin-bottom:10rpx;">个人简介</p>
-        <textarea name="" id="" cols="30" rows="10" placeholder="请输入个人简介"></textarea>
-      </div> -->
+      <div class="weui-cell" @click="showArea2=true" v-if="!Company">
+        <div class="weui-cell__bd">
+           <p class="txt">一句话介绍</p>
+        </div>
+        <textarea type="text" placeholder="请输入"  v-model="WorkIdea"></textarea>
+      </div>
 
 
     </div>
@@ -168,7 +170,7 @@ export default {
       Area:"",//地区 格式：'1级,2级'
       Trade:"", //行业 格式：'1级,2级'
       WorkLife:"",//年限
-      WorkIdea:"", //个人简介
+      WorkIdea:"", //理念
       WeChatNum:"", //微信号
       Contacts:"",
       ContactsTel:"",
