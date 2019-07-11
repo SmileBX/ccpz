@@ -78,13 +78,13 @@
                 <div class="weui-cell__bd" v-else>无</div>
               </div>
             </div>
-            <div class="group flex">
+            <!-- <div class="group flex">
               <div class="weui-cell flex1">
                 <div class="weui-cell__hd">办公地址</div>
                 <div class="weui-cell__bd" v-if="item.OfficeAddr">{{item.OfficeAddr}}</div>
                 <div class="weui-cell__bd" v-else>无</div>
               </div>
-            </div>
+            </div> -->
         </div>
         </block>
       <!-- 标签-->

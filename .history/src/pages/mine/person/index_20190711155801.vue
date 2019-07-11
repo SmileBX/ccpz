@@ -18,37 +18,32 @@
                 <span class="msgItem font22" v-else>未透漏经验</span>
               </p>
               <block v-if="companyInfo.length>0">
-                <div class="msgList flex list_itt" v-for="(item,key) in companyInfo" :key="key">
-                  <p class="msgList">
-                    <span class="msgItem font22" v-if="item.Job">{{item.Job}}</span>
-                    <span class="msgItem font22" v-else>未透漏职位</span>
-                    <span class="msgItem font22" v-if="item.Name">{{item.Name}}</span>
-                    <span class="msgItem font22" v-else>未透漏公司</span>
-                  </p>
-                  <span class="attestationStatus color_white font22 my_attion"  @tap="editCompany(item.Id)" v-if="type==1">
-                    <span> 编辑</span>
-                  </span>
-                  <span class="attestationStatus color_white font22 my_attion" @tap="changeCompany"  v-if="type==1">
-                    <span > 切换</span>
-                  </span>
-                  <span class="attestationStatus color_white font22 my_attion" v-if="item.IsAUT">
-                    <span class="icon-gou"></span> {{item.IsAUT}}
-                  </span>
-                  <div class="msgList flex" v-if="companyInfo.length==0">
-                    <p class="msgList">
-                      未透露公司
-                    </p>
-                    <span class="attestationStatus color_white font22 my_attion " @tap="companyVertical">
-                      <span class="icon-gou"></span> 去认证
-                    </span>
-                  </div>
-                </div>
+              <div class="msgList flex list_itt" v-for="(item,key) in companyInfo" :key="key">
+                <p class="msgList">
+                  <span class="msgItem font22" v-if="item.Job">{{item.Job}}</span>
+                  <span class="msgItem font22" v-else>未透漏职位</span>
+                  <span class="msgItem font22" v-if="item.Name">{{item.Name}}</span>
+                  <span class="msgItem font22" v-else>未透漏公司</span>
+                </p>
+                <span class="attestationStatus color_white font22 my_attion"  @tap="editCompany(item.Id)" v-if="type==1">
+                  <span> 编辑</span>
+                </span>
+                <span class="attestationStatus color_white font22 my_attion" @tap="changeCompany"  v-if="type==1">
+                  <span > 切换</span>
+                </span>
+                <span class="attestationStatus color_white font22 my_attion" v-if="item.IsAUT">
+                  <span class="icon-gou"></span> {{item.IsAUT}}
+                </span>
+                <div class="msgList flex" v-if="companyInfo.length==0">
+                <p class="msgList">
+                  未透露公司
+                </p>
+                <span class="attestationStatus color_white font22 my_attion " @tap="companyVertical">
+                  <span class="icon-gou"></span> 去认证
+                </span>
+              </div>
+              </div>
               </block>
-              <p class="msgList list_itt">
-                <span class="msgItem font22">个人简介：</span>
-                <span class="msgItem2 font22" v-if="personInfo.WorkIdea">{{personInfo.WorkIdea}}</span>
-                <span class="msgItem2 font22" v-else>主人很懒...什么也没留下</span>
-              </p>
             </div>
           </div>
         </div>
@@ -622,7 +617,7 @@ export default {
   padding:0;
   font-size:24rpx;
 }
-.msgItem,.msgItem2{
+.msgItem{
   padding:0 4rpx;
   border-left: none;
   color:#9A9A9A
@@ -756,6 +751,5 @@ export default {
   padding:3rpx 10rpx 3rpx 5rpx!important;
   margin-left:20rpx!important
 }
-
  
 </style>

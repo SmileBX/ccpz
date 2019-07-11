@@ -2,14 +2,14 @@
   <div class="pageContent bg_fff mt10">
     <div class="content__hd">
       <h2 class="title">{{newsInfo.Title}}</h2>
-      <p class="text_r flex-center">
+      <!-- <p class="text_r flex-center">
         <span class="readNum flex-center" >
           <img src="/static/images/icons/time.jpg" alt class="read" style="margin-right:10rpx">{{newsInfo.Addtime}}
         </span>
         <span class="readNum flex-center" >
           <img src="/static/images/icons/read.png" style="margin-right:10rpx" alt class="read">{{newsInfo.Hits}}
         </span>
-      </p>
+      </p> -->
     </div>
     <div class="content__bd">
       <div class="dataHtml" v-html="newsInfo.Content">
@@ -20,14 +20,14 @@
         <p>成企业拼租小程序就很好，与其自己花时间的成本去对比，去衡量，还不如把这方面的烦恼交给成成企业拼租小程序，不仅你可以得到更加全面权威的对比，同时也能了解到写字楼租赁的行情，让你省时省力更省心。</p> 
         <img src="/static/images/of/news_b1.jpg" alt>-->
       </div>
-      <!-- <p class="text_r flex-center">
+      <p class="text_r flex-center">
         <span class="readNum flex-center" >
           <img src="/static/images/icons/time.jpg" alt class="read" style="margin-right:10rpx">{{newsInfo.Addtime}}
         </span>
         <span class="readNum flex-center" >
           <img src="/static/images/icons/read.png" style="margin-right:10rpx" alt class="read">{{newsInfo.Hits}}
         </span>
-      </p> -->
+      </p>
     </div>
   </div>
 </template>
