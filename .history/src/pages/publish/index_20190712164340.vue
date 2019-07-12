@@ -26,7 +26,6 @@
                 <p class="font32">{{title}}表单</p>
                 <p class="font_four" v-if="showId==22">寻找志同道合团队或个人，一起创业</p>
                 <p class="font_four" v-if="showId==23">寻找企业一起联谊做活动，资源整合</p>
-                <p class="font_four" v-if="showId==24">发布优质房源设备</p>
             </div>
         </div>
         <div class="weui-cells  ">

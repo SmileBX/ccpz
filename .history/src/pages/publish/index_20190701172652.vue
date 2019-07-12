@@ -24,9 +24,7 @@
             </div>
             <div>
                 <p class="font32">{{title}}表单</p>
-                <p class="font_four" v-if="showId==22">寻找志同道合团队或个人，一起创业</p>
-                <p class="font_four" v-if="showId==23">寻找企业一起联谊做活动，资源整合</p>
-                <p class="font_four" v-if="showId==24">发布优质房源设备</p>
+                <p class="font_four">寻找志同道合的团队或个人，资源共享重组</p>
             </div>
         </div>
         <div class="weui-cells  ">
@@ -53,8 +51,7 @@ export default {
       publishType:[],//发布类型
       pinzuList:[],//拼租类型
       isShowMask:false,//是否显示拼租分类弹层
-      imgurl:'',
-      showId:0
+      imgurl:''
     }
   },
   onLoad() {
@@ -82,7 +79,6 @@ export default {
     },
     gotosubMenu(id,i){
        this.isShowMask=true
-       this.showId = id
        this.title = this.publishType[i].Name
        this.imgurl = this.publishType[i].Img
       post('Goods/GetTypeL1',{

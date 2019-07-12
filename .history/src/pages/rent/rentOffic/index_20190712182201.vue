@@ -1930,11 +1930,6 @@ export default {
             // npm this.EducationLvl = this.list[i].Name
             this.PartnerList[n].Degree = this.list[this.statu].Name
         }
-        if(this.showTouchTreat){
-          console.log("this.list:",this.list)
-            // npm this.EducationLvl = this.list[i].Name
-            this.PartnerList[n].Treatment = this.list[this.statu].Name
-        }
         this.isShowMask = false
         this.showNoChange = false
         this.ShowTime = false
@@ -2167,8 +2162,8 @@ export default {
     },
     //选择待遇
     choseTreament(n){
-      console.log("111111111111111111111")
-      this.PartnerList[n].ShowWork = true
+      console.log(eeeee)
+      this.PartnerList[n].ShowTreatment = true
       let info = {}
       let i = 0
       this.detailInfo.Treatment.Value.map(item=>{
