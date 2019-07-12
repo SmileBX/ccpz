@@ -1338,7 +1338,7 @@ export default {
        this.isShowAddr = false
     },
     initData(){
-        // this.showDefaultCompany = false
+        this.showDefaultCompany = false
         this.isShowMask =false
         this.showNoChange = false
         this.showArea =false
