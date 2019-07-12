@@ -174,12 +174,23 @@ export default {
     if(this.verticalType==2){  //公司认证
       this.UserBusinessAuthInfo();
     }
+    if(this.$root.$mp.query.url){
+      this.showBtn = false
+    }else{
+      this.showBtn = true
+    }
     
   },
   methods: {
     setBarTitle() {
+      let text = ''
+      if(this.showBtn){
+        text = "我的认证"
+      }else{
+        text = "他的认证"
+      }
       wx.setNavigationBarTitle({
-        title: '我的认证'
+        title: text
       });
     },
     gotoAreement(){  //跳转到协议查看

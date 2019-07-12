@@ -114,7 +114,7 @@
           </div>
           </scroll-view>
           <!--底部按钮-->
-          <div class="ftBtn center" v-if="showBtn">
+          <div class="ftBtn center">
             <div class="inner" style=";width:auto;padding:30rpx;border-radius:0 0 16rpx 16rpx">
               <div class="btns">
                 <div class="btn color_fff bg_ff9325" style="border-radius:10rpx;" @tap="gotoAdd(-1)"><img src="/static/images/icons/add3.png" class="btn-add">认证新企业</div>
@@ -146,8 +146,7 @@ export default {
       idCard: "", //身份证号码
       idCardPositive: "", //身份证正面
       idCardNegative: "", //身份证反面
-      list: [],//企业认证列表(有各种状态的)
-      showBtn:true,//是否展示新企业按钮 查看他人认证不展示
+      list: [] //企业认证列表(有各种状态的)
     };
   },
   onLoad() {
@@ -179,7 +178,7 @@ export default {
   methods: {
     setBarTitle() {
       wx.setNavigationBarTitle({
-        title: '我的认证'
+        title: "我的认证"
       });
     },
     gotoAreement(){  //跳转到协议查看
