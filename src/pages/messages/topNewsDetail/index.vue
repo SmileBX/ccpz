@@ -44,6 +44,7 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
+    this.newsInfo={};
     if(this.$root.$mp.query.Id && this.$root.$mp.query.Id !==""){
       this.newsId = this.$root.$mp.query.Id;
     }
@@ -72,6 +73,7 @@ export default {
         Token: this.token
       }).then(res=>{
          if(res.code==0){
+           res.data.Content = res.data.Content.replace(/\<img/gi, '<img style="max-width:100%;height:auto" ')
            this.newsInfo = res.data
          }
       })
@@ -83,14 +85,14 @@ export default {
           Token: this.token,
           NoticeId:this.newsId  
       },this.curPage).then(res=>{
-        console.log(res.data.Memo,"通知详情")
         if(res.code==0){
            this.newsInfo = {
              Title:res.data.Title,
              PubTime:res.data.PubTime.split(" ")[0].split("-").join("."),
-             Content:res.data.Memo
+             Content:res.data.Memo.replace(/\<img/gi, '<img style="max-width:100%;height:auto" ')
            }
          }
+        console.log(this.newsInfo.Content,"通知详情")
       })
     }
   }
