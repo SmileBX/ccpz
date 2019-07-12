@@ -29,7 +29,8 @@
     <!-- ------------------------------- -->
     <div class="legalInfo flex" v-for="(item,index) in list" :key="index" @click="toDetail(item.Id)">
       <!-- 组建圈子才有的运动按钮 -->
-      <span class="motion" v-if="item.RingType">{{item.RingType}}</span>
+      <!-- <span class="motion" v-if="item.RingType||item.TypeName">{{item.RingType||item.TypeName}}</span> -->
+      <span class="motion" v-if="item.TypeName">{{item.TypeName}}</span>
       <img :src="item.Headimgurl" class="tx" alt>
       <div class="info flex1">
         <div style="margin-bottom:16rpx;">
@@ -51,7 +52,7 @@
         </p>
         <p class="slogan">{{item.Title}}</p>
         <div class="tipsList border__tipsList flex1 bg_grey" v-if="item.NeedJob">
-          <span v-for="(tab,tabIndex) in item.NeedJob" :key="tabIndex">{{tab}}</span>
+          <span v-for="(tab,tabIndex) in item.NeedJob" :key="tabIndex" v-show="tab">{{tab}}</span>
           <!-- <span>设计</span>
           <span>文员</span>
           <span>销售</span> -->
