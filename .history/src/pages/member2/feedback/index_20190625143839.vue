@@ -4,19 +4,13 @@
       <div class="form-cells-hd">选择服务</div>
       <checkbox-group class="checkboxGroup">
         <label class="check__label checkbox-cart" @tap="shiftCheckbox(1)">
-          <checkbox :checked="isCultivate===1" class="checkbox" />股权咨询培训
+          <checkbox :checked="isCultivate===1" class="checkbox" />股权培训
         </label>
         <label class="check__label checkbox-cart" @tap="shiftCheckbox(2)">
           <checkbox :checked="isEvaluate===1" class="checkbox" />资产评估
         </label>
         <label class="check__label checkbox-cart" @tap="shiftCheckbox(3)">
           <checkbox :checked="isGuide===1" class="checkbox" />拼租指导
-        </label>
-        <label class="check__label checkbox-cart" @tap="shiftCheckbox(4)">
-          <checkbox :checked="isCultivate===1" class="checkbox" />阿米巴咨询培训
-        </label>
-        <label class="check__label checkbox-cart" @tap="shiftCheckbox(5)">
-          <checkbox :checked="isCultivate===1" class="checkbox" />知识产权咨询培训
         </label>
       </checkbox-group>
     </div>
