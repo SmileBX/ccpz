@@ -909,12 +909,12 @@ page {
     display: -ms-flex;
     display: -o-flex;
     display: flex;
-    -webkit-box-align: center;
-    -webkit-align-items: center;
-    -moz-align-items: center;
-    -ms-align-items: center;
-    -o-align-items: center;
-    align-items: center;
+    // -webkit-box-align: center;
+    // -webkit-align-items: center;
+    // -moz-align-items: center;
+    // -ms-align-items: center;
+    // -o-align-items: center;
+    // align-items: center;
     position: relative;
 }
 
@@ -1209,7 +1209,7 @@ page {
 }
 
 .section__hd {
-    padding: 30rpx 30rpx 20rpx 30rpx;
+    padding: 20rpx 30rpx 20rpx 30rpx;
     .title {
         font-size: 34rpx;
         font-weight: 600;
@@ -1262,16 +1262,17 @@ page {
 }
 
 .tuClumn img {
-    height: 160rpx;
-    width: 280rpx;
+    height: 157rpx;
+    width: 226rpx;
     margin-bottom: 16rpx;
     margin-right: 16rpx;
+    border-radius: 16rpx;
     vertical-align: top;
 }
 
 .tuClumn li:first-child img {
-    height: 336rpx;
-    width: 394rpx;
+    height: 330rpx;
+    width: 440rpx;
 }
 
 // 热门商铺
@@ -1302,7 +1303,7 @@ page {
 
 .storeNowrapBox {
     padding-left: 30rpx;
-    padding-bottom: 30rpx;
+    padding-bottom: 20rpx;
 }
 
 .storeNowrap {
@@ -1320,7 +1321,7 @@ page {
     vertical-align: top;
     width: 394rpx;
     // margin-right: 16rpx;
-    margin-right: 20rpx;
+    margin-right: 15rpx;
     &:last-child {
         margin-right: 30rpx;
     }
@@ -1341,7 +1342,7 @@ page {
 
 //店铺的一行排列
 .storeList.levelPanel {
-    padding: 15rpx 0;
+    // padding: 15rpx 0;
     .item {
         margin-bottom: 0;
         .outside {
