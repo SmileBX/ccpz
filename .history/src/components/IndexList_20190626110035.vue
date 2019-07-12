@@ -106,7 +106,6 @@ export default {
     }
   },
   computed: {
-    //右侧字母组合
     indexList() {
       //console.log(this.data,"this.data")
       return this.data.map(group => {
@@ -114,16 +113,16 @@ export default {
       });
     }
   },
-  onShow() {
+  created() {
     this.listHeight = [];
     this.timer = null;
     this.scrollTimer = null;
-    console.log(this.data,'data')
-    if(this.data.length>0){
-    // setTimeout(() => {
+  },
+  mounted() {
+    //console.log(this.playerList,'playerList')
+    setTimeout(() => {
       this._calculateHeight();
-    // }, 2000);
-    }
+    }, 2000);
   },
   methods: {
     
@@ -136,29 +135,26 @@ export default {
         let item = list[i];
         var query = wx.createSelectorQuery();
         query
-          .select(".itemClient" + i)
+          .select(".itemClient" + i * 1)
           .boundingClientRect(rect => {
-            if(rect){
+      console.log("++++++++++++++++++++2",rect,i)
             height += rect.height;
             this.listHeight.push(height);
-            }
           })
           .exec();
       }
     },
     _onTouchStartIndex(index) {
-          this.scrollTop = this.listHeight[index];
       // console.log(index,this.listHeight,this.listHeight[index],"this.listHeight[index]")
-      // this.currentIndex = index;
-      // var query = wx.createSelectorQuery();
-      // query
-      //   .select("#scroll")
-      //   .boundingClientRect(rect => {
-      //     this.scrollTop = this.listHeight[index];
-      //   })
-      //   .exec();
+      this.currentIndex = index;
+      var query = wx.createSelectorQuery();
+      query
+        .select("#scroll")
+        .boundingClientRect(rect => {
+          this.scrollTop = this.listHeight[index];
+        })
+        .exec();
     },
-    //选择
     clickItem(e, item) {
       console.log(e);
       //console.log(666666666)
@@ -180,7 +176,7 @@ export default {
       this.scrollTimer = setTimeout(() => {
         // let scrollTop = this.$refs.indexWrap.scrollTop
         let scrollTop = e.mp.detail.scrollTop;
-        console.log(this.listHeight,"scrollTop")
+        //console.log(scrollTop,"scrollTop")
         // let scrollTop = this.scrollTopId
         const listHeight = this.listHeight;
         for (let i = 0; i < listHeight.length - 1; i++) {

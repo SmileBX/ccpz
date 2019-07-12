@@ -136,7 +136,6 @@ export default {
       });
     },
     gotoPerson(id){  //跳转到他人或者个人主页；type;1:个人；2：他人
-      console.log(id)
       wx.navigateTo({
         url: `/pages/mine/person/main?type=2&Id=${id}`
       });

@@ -48,7 +48,7 @@
         >
           <block v-for="(item,index) in picList" :key="index">
             <swiper-item class="item">
-              <img :src="item.Pic" alt @click="record(item.Id,item.Url)">
+              <img :src="item.Pic" alt @click="record(item.Id)">
               <!-- <image src="item" class="slide-image" width="355" height="150"> -->
             </swiper-item>
           </block>
@@ -169,7 +169,7 @@
       </div>
       <!-- 广告图 -->
       <div
-        class="advimg bg_fff"
+        class="pd15 bg_fff"
         v-if="ggaoPic.length>0"
         @tap="gooutpage(ggaoPic[0].Url)"
       >
@@ -398,15 +398,6 @@ export default {
         title: "首页"
       });
     },
-    //banner图跳转++后台获取点击广告的次数（记录）--userId token
-    record(id,url) {
-      post("Banner/BannerHits", {
-        Id: id
-      });
-      wx.navigateTo({
-        url: url
-      });
-    },
     //外部广告跳转
     gooutpage(url){
       wx.navigateTo({
@@ -452,6 +443,12 @@ export default {
             this.ggaoPic = res.data;
           }
         }
+      });
+    },
+    //后台获取点击广告的次数（记录）--userId token
+    record(id) {
+      post("Banner/BannerHits", {
+        Id: id
       });
     },
     //获取首页头条默认显示三条
@@ -705,7 +702,7 @@ export default {
 .bannerBox{
   .item{
     img{
-      border-radius:10rpx;
+      border-radius:8rpx;
     }
   }
 }
@@ -886,8 +883,5 @@ export default {
 }
 .picImg{
   width:100%;
-}
-.advimg{
-  padding: 0 30rpx;
 }
 </style>

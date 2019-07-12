@@ -4,11 +4,11 @@
       <h2 class="title">{{newsInfo.Title}}</h2>
       <p class="text_r flex-center">
         <span class="readNum flex-center" >
-          <img src="/static/images/icons/time.jpg" alt class="read" style="margin-right:10rpx">{{newsInfo.Addtime}}
+          <img src="/static/images/icons/time.jpg" alt class="read" style="margin-right:10rpx">{{newsInfo.PubTime}}
         </span>
-        <span class="readNum flex-center" >
+        <!-- <span class="readNum flex-center" >
           <img src="/static/images/icons/read.png" style="margin-right:10rpx" alt class="read">{{newsInfo.Hits}}
-        </span>
+        </span> -->
       </p>
     </div>
     <div class="content__bd">
@@ -20,14 +20,6 @@
         <p>成企业拼租小程序就很好，与其自己花时间的成本去对比，去衡量，还不如把这方面的烦恼交给成成企业拼租小程序，不仅你可以得到更加全面权威的对比，同时也能了解到写字楼租赁的行情，让你省时省力更省心。</p> 
         <img src="/static/images/of/news_b1.jpg" alt>-->
       </div>
-      <!-- <p class="text_r flex-center">
-        <span class="readNum flex-center" >
-          <img src="/static/images/icons/time.jpg" alt class="read" style="margin-right:10rpx">{{newsInfo.Addtime}}
-        </span>
-        <span class="readNum flex-center" >
-          <img src="/static/images/icons/read.png" style="margin-right:10rpx" alt class="read">{{newsInfo.Hits}}
-        </span>
-      </p> -->
     </div>
   </div>
 </template>
@@ -38,7 +30,6 @@ export default {
   data(){
     return {
       newsId:'',
-      param:'',
       userId:'',
       token:'',
       curPage:'',
@@ -52,39 +43,17 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
-    this.newsInfo={};
-    if(this.$root.$mp.query.Id && this.$root.$mp.query.Id !==""){
+    if(this.$root.$mp.query.Id){
       this.newsId = this.$root.$mp.query.Id;
     }
-    if(this.$root.$mp.query.url && this.$root.$mp.query.url!==""){
-       this.param = this.$root.$mp.query.url;
-    }
-    if(this.param == 'message'){ //获取通知详情
-      console.log('通知')
-        this.getNoticeDetail()
-    }else{
-         console.log('头条')
-        this.getNewsDetail() //获取头条详情
-    }
+    this.newsInfo={}
+    this.getNoticeDetail()
   },
   methods: {
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "系统通知"
       });
-    },
-    //获取头条消息详情
-    getNewsDetail(){
-      post('About/GetAbout',{
-        Id:this.newsId,
-        UserId:this.userId,
-        Token: this.token
-      }).then(res=>{
-         if(res.code==0){
-           res.data.Content = res.data.Content.replace(/\<img/gi, '<img style="max-width:100%;height:auto" ')
-           this.newsInfo = res.data
-         }
-      })
     },
     //通知详情
     getNoticeDetail(){
@@ -100,13 +69,15 @@ export default {
              Content:res.data.Memo.replace(/\<img/gi, '<img style="max-width:100%;height:auto" ')
            }
          }
-        console.log(this.newsInfo.Content,"通知详情")
       })
     }
   }
 };
 </script>
 <style lang="scss" scoped>
+.title{
+  font-size:32rpx;
+}
   .pageContent{
   background: #fff;
   font-size: 28rpx;
@@ -123,5 +94,9 @@ export default {
 }
 .text_r{
   justify-content:flex-end;
+}
+.read{
+  width:28rpx;
+  height:28rpx;
 }
 </style>

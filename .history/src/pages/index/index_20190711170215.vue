@@ -48,7 +48,7 @@
         >
           <block v-for="(item,index) in picList" :key="index">
             <swiper-item class="item">
-              <img :src="item.Pic" alt @click="record(item.Id,item.Url)">
+              <img :src="item.Pic" alt @click="record(item.Id)">
               <!-- <image src="item" class="slide-image" width="355" height="150"> -->
             </swiper-item>
           </block>
@@ -97,21 +97,25 @@
         <div class="section__bd">
           <block v-if="ggaoList.length>0">
             <ul class="tuClumn clear">
-              <li v-for="(item,index) in ggaoList" @tap="gotoRouseDetail(item.Id)" :key="index">
-                <img :src="item.PicNo" alt>
-              </li>
-            </ul>
-          </block>
-        </div>
-        <!-- <div class="section__bd">
-          <block v-if="ggaoList.length>0">
-            <ul class="tuClumn clear">
               <li v-for="(item,index) in ggaoList" @tap="gooutpage(item.Url)" :key="index">
                 <img :src="item.Pic" alt>
               </li>
             </ul>
           </block>
-        </div> -->
+          <!-- <block v-else>
+          <ul class="tuClumn clear">
+            <li @tap="gotoList(1)">
+              <img src="/static/images/icons/picMenu1.jpg" alt>
+            </li>
+            <li @tap="gotoList(2)">
+              <img src="/static/images/icons/picMenu2.jpg" alt>
+            </li>
+            <li @tap="gotoList(3)">
+              <img src="/static/images/icons/picMenu3.jpg" alt>
+            </li>
+          </ul>
+          </block>-->
+        </div>
       </div>
       <!-- 热门商铺2 -->
       <div class="section">
@@ -169,7 +173,7 @@
       </div>
       <!-- 广告图 -->
       <div
-        class="advimg bg_fff"
+        class="pd15 bg_fff"
         v-if="ggaoPic.length>0"
         @tap="gooutpage(ggaoPic[0].Url)"
       >
@@ -355,8 +359,7 @@ export default {
     this.token = wx.getStorageSync("token");
     location(this).then(res => {
       this.cityCode = res.CityCode;
-      this.getQueryRentList(23, 3, 3,0); //热门拼租
-      this.getQueryRentList(21, 3, 3,0); //人气活动
+      this.getQueryRentList(24, 2, 5,0); //热门商铺
       this.getQueryRentList(21, 3, 5,0); //为您推荐
     });
     this.initData();
@@ -396,15 +399,6 @@ export default {
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "首页"
-      });
-    },
-    //banner图跳转++后台获取点击广告的次数（记录）--userId token
-    record(id,url) {
-      post("Banner/BannerHits", {
-        Id: id
-      });
-      wx.navigateTo({
-        url: url
       });
     },
     //外部广告跳转
@@ -452,6 +446,12 @@ export default {
             this.ggaoPic = res.data;
           }
         }
+      });
+    },
+    //后台获取点击广告的次数（记录）--userId token
+    record(id) {
+      post("Banner/BannerHits", {
+        Id: id
       });
     },
     //获取首页头条默认显示三条
@@ -583,6 +583,7 @@ export default {
       });
     },
     shiftMenu(index, id) {
+
       console.log("切换的" + id);
       this.getQueryRentList(parseInt(id), 3, 5,index);
     },
@@ -617,62 +618,28 @@ export default {
         that.curPage
       ).then(res => {
         if (res.code === 0) {
-          if(pageSize == 3){ //热门拼租/人气活动
-            if (brandId === 23) {
-              if (that.page === 1) {
-                that.hotStoreList = [];
-              }
-              //人气活动
-              if (res.data.length > 0) {
-                that.hotStoreList = res.data;
-              }
+          if (hotType === 2) {
+            if (that.page === 1) {
+              that.hotStoreList = [];
             }
-            if (brandId === 21) {
-              if (that.page === 1) {
-                that.ggaoList = [];
-              }
-              //热门拼租
-              if (res.data.length > 0) {
-                that.ggaoList = res.data;
-              }
+            //热门商铺
+            if (res.data.length > 0) {
+              that.hotStoreList = res.data;
             }
           }
-          if(pageSize == 5){
-              if (that.page === 1) {
-                that.recomendList = [];
-              }
-              //为您推荐
-              if (res.data.length > 0) {
-                that.recomendList = res.data;
-              }
+          if (hotType === 3) {
+            if (that.page === 1) {
+              that.recomendList = [];
+            }
+            //为您推荐
+            if (res.data.length > 0) {
+              that.recomendList = res.data;
+            }
           }
-          //切换为您推荐中的选项
-          index!==undefined&&(this.menuTab = index)
-        }
-        // if (res.code === 0) {
-        //   if (hotType === 2) {
-        //     if (that.page === 1) {
-        //       that.hotStoreList = [];
-        //     }
-        //     //热门商铺
-        //     if (res.data.length > 0) {
-        //       that.hotStoreList = res.data;
-        //     }
-        //   }
-        //   if (hotType === 3) {
-        //     if (that.page === 1) {
-        //       that.recomendList = [];
-        //     }
-        //     //为您推荐
-        //     if (res.data.length > 0) {
-        //       that.recomendList = res.data;
-        //     }
-        //   }
           
-        //   //切换为您推荐中的选项
-        //   index!==undefined&&(this.menuTab = index)
-        // }
-
+        //切换为您推荐中的选项
+        index!==undefined&&(this.menuTab = index)
+        }
       });
     },
     // 跳转搜索
@@ -705,7 +672,7 @@ export default {
 .bannerBox{
   .item{
     img{
-      border-radius:10rpx;
+      border-radius:8rpx;
     }
   }
 }
@@ -886,8 +853,5 @@ export default {
 }
 .picImg{
   width:100%;
-}
-.advimg{
-  padding: 0 30rpx;
 }
 </style>

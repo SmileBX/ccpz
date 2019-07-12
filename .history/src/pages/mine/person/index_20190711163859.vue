@@ -9,7 +9,7 @@
               <div>
                 <span class="name" style="color:#1a1a1a">{{personInfo.Name}}</span>
                 <img src="/static/images/icons/v.png" class="icon_attestation" alt v-if="personInfo.IsAUT">
-                <span class="lookAttestation" @tap="seeVertical" v-if="type==1"><img src="/static/images/icons/attestationTag.png" class="icon_attestationTag" alt="">查看认证</span>
+                <span class="lookAttestation" @tap="seeVertical"><img src="/static/images/icons/attestationTag.png" class="icon_attestationTag" alt="">查看认证</span>
               </div>
               <p class="msgList list_itt">
                 <span class="msgItem font22" v-if="personInfo.Trade">{{personInfo.Trade}}</span>
@@ -78,13 +78,13 @@
                 <div class="weui-cell__bd" v-else>无</div>
               </div>
             </div>
-            <div class="group flex">
+            <!-- <div class="group flex">
               <div class="weui-cell flex1">
                 <div class="weui-cell__hd">办公地址</div>
                 <div class="weui-cell__bd" v-if="item.OfficeAddr">{{item.OfficeAddr}}</div>
                 <div class="weui-cell__bd" v-else>无</div>
               </div>
-            </div>
+            </div> -->
         </div>
         </block>
       <!-- 标签-->
@@ -156,7 +156,7 @@
       <div class="section" style="margin-top:20rpx">
         <div class="locationBox pd15">
           <h3 class="title detail__title fontBold">教育经历</h3>
-          <div class="flex justifyContentBetween addpaddingtop" v-for="(item,aindex) in personInfo.EduList" :key="aindex">
+          <div class="flex justifyContentBetween" v-for="(item,aindex) in personInfo.EduList" :key="aindex">
             <div class="flex">
                 <img src="/static/images/icons/jiaoyujl.jpg" alt="" class="addPro">
                 <div style="margin-left:30rpx">
@@ -184,7 +184,7 @@
       <div class="section" style="margin-top:20rpx">
         <div class="locationBox pd15">
           <h3 class="title detail__title fontBold">工作经历</h3>
-          <div class="flex justifyContentBetween addpaddingtop" v-for="(item,windex) in personInfo.WorkList" :key="windex">
+          <div class="flex justifyContentBetween" v-for="(item,windex) in personInfo.WorkList" :key="windex">
               <div class="flex">
                 <img src="/static/images/icons/gongzuojl.jpg" alt="" class="addPro">
                 <div style="margin-left:30rpx">
@@ -756,8 +756,6 @@ export default {
   padding:3rpx 10rpx 3rpx 5rpx!important;
   margin-left:20rpx!important
 }
-.addpaddingtop{
-  padding-top: 20rpx;
-}
 
+ 
 </style>
