@@ -156,7 +156,6 @@ export default {
         })
         .exec();
     },
-    //选择
     clickItem(e, item) {
       console.log(e);
       //console.log(666666666)
