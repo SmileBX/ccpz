@@ -162,7 +162,7 @@
               <span class="title">{{masktitle}}</span>
               <span class="color size" @click="subConfirm">确定</span>
         </div>
-        <scroll-view :scroll-y="true" style="height:480rpx;" class="showItem" @scrolltolower="loadMore">
+        <scroll-view :scroll-y="true" style="height:300rpx;" class="showItem" @scrolltolower="loadMore">
           <div v-for="(item,index) in list" :key="index">
               <p :class="{'itemactive':statu == index}" @click="chose(index)" style="margin-top:3rpx;">{{item.Name}}
               </p>
@@ -551,8 +551,8 @@ console.log("___________",objUrl)
 .maskType {
     background: #fff;
     width: 100%;
-    height: 600rpx;
-    padding: 30rpx 0;
+    // height: 600rpx;
+    // padding: 30rpx 0;
     bottom: 0!important;
     position: fixed;
     z-index: 999;

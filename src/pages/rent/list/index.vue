@@ -29,12 +29,12 @@
     <!-- tab切换 -->
     <div class="filterMenu pt15">
       <!-- 一级分类 -->
-      <ul class="tabList menu flex justifyContentBetween" v-if="oneTypeList.length>0">
+      <ul class="tabList menu flex" :class="{'mr-55':oneTypeList.length<3,'justifyContentBetween':oneTypeList.length>2}" v-if="oneTypeList.length>0">
         <li
           v-for="(item,index) in oneTypeList"
           :key="index"
           @click="shiftOneType(index,item.Id)"
-          :class="{'active':index===oneTabIndex}"
+          :class="{'active':index===oneTabIndex,'mr55':oneTypeList.length<3}"
         >
           <div class="item">{{item.Name}}</div>
         </li>
@@ -618,6 +618,12 @@ export default {
             _res.IsTrim.Yes= 0
             _res.IsTrim.No= 0
             params.IsTrim= _res.IsTrim
+          }
+          // 是否资质合作
+          if(_res.IsSenior){
+            _res.IsSenior.Yes= 0
+            _res.IsSenior.No= 0
+            params.IsSenior= _res.IsSenior
           }
           // 计划购买日期
           if(_res.PlanBuyDate){
