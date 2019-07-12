@@ -9,7 +9,7 @@
               <div>
                 <span class="name" style="color:#1a1a1a">{{personInfo.Name}}</span>
                 <img src="/static/images/icons/v.png" class="icon_attestation" alt v-if="personInfo.IsAUT">
-                <span class="lookAttestation" @tap="seeVertical" v-if="type==1"><img src="/static/images/icons/attestationTag.png" class="icon_attestationTag" alt="">查看认证</span>
+                <span class="lookAttestation" @tap="seeVertical"><img src="/static/images/icons/attestationTag.png" class="icon_attestationTag" alt="">查看认证</span>
               </div>
               <p class="msgList list_itt">
                 <span class="msgItem font22" v-if="personInfo.Trade">{{personInfo.Trade}}</span>
