@@ -106,7 +106,6 @@ export default {
     }
   },
   computed: {
-    //右侧字母组合
     indexList() {
       //console.log(this.data,"this.data")
       return this.data.map(group => {
@@ -156,7 +155,6 @@ export default {
         })
         .exec();
     },
-    //选择
     clickItem(e, item) {
       console.log(e);
       //console.log(666666666)
