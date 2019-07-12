@@ -111,14 +111,12 @@ export default {
         console.log(this.onelist.length,"this.onelist.length")
          console.log(i)
          if(this.onelist.length == 0){
-           //首次添加标签
            if(this.taglist[i].statu){
               this.$set(this.taglist[i],"statu",false)
             }else{
               this.$set(this.taglist[i],"statu",true)
             }
          }else{
-           //编辑增加标签
             let num = 0
             for(let j=0;j<this.onelist.length;j++){
               if(this.taglist[i].Name!=this.onelist[j]){
