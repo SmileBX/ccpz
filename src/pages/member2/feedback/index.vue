@@ -13,10 +13,10 @@
           <checkbox :checked="isGuide===1" class="checkbox" />拼租指导
         </label>
         <label class="check__label checkbox-cart" @tap="shiftCheckbox(4)">
-          <checkbox :checked="isCultivate===1" class="checkbox" />知识产权咨询培训
+          <checkbox :checked="IsIntellect===1" class="checkbox" />知识产权咨询培训
         </label>
         <label class="check__label checkbox-cart" @tap="shiftCheckbox(5)">
-          <checkbox :checked="isCultivate===1" class="checkbox" />阿米巴咨询培训
+          <checkbox :checked="IsAmiba===1" class="checkbox" />阿米巴咨询培训
         </label>
         
       </checkbox-group>
@@ -276,7 +276,7 @@ export default {
         Mobile:that.mobile,  //电话
         IsCultivate:that.isCultivate,  //股权培训
         IsEvaluate:that.isEvaluate,  //资产评估
-        IsGuide:that.isGuide   //拼租指导
+        IsGuide:that.isGuide,   //拼租指导
         IsIntellect:that.IsIntellect,
         IsAmiba:that.IsAmiba
 
