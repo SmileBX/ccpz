@@ -22,7 +22,6 @@
       <IndexList
         :data="playerList"
         :hasSetStar="true"
-        :hasData="hasData"
         @choose="onChoose"
         @btnDel="btnDelFriend"
         @setStar="btnSetStar"
@@ -45,8 +44,7 @@ export default {
       userId: "",
       token: "",
       inputName:'',
-      hasplayerList: false,
-      hasData:false
+      hasplayerList: false
     };
   },
   onLoad() {
@@ -138,7 +136,6 @@ export default {
           console.log("_________________");
           console.log(that.playerList);
           that.hasplayerList = true;
-          that.hasData = true
         }
       });
     },

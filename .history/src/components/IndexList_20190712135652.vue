@@ -1,5 +1,5 @@
 <template>
-  <div class="index-list" v-if="hasData">
+  <div class="index-list">
     <scroll-view
       scroll-y="true"
       class="moreHeight"
@@ -77,10 +77,6 @@ export default {
       }
     },
     hasSetStar:{
-      type: Boolean,
-      default: false
-    },
-    hasData:{
       type: Boolean,
       default: false
     },
