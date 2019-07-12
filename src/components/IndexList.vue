@@ -1,5 +1,5 @@
 <template>
-  <div class="index-list" v-if="hasData">
+  <div class="index-list">
     <scroll-view
       scroll-y="true"
       class="moreHeight"
@@ -80,10 +80,6 @@ export default {
       type: Boolean,
       default: false
     },
-    hasData:{
-      type: Boolean,
-      default: false
-    },
     useLazyLoad: {
       type: Boolean,
       default: false
@@ -118,16 +114,16 @@ export default {
       });
     }
   },
-  created() {
+  onShow() {
     this.listHeight = [];
     this.timer = null;
     this.scrollTimer = null;
-  },
-  mounted() {
-    //console.log(this.playerList,'playerList')
-    setTimeout(() => {
+    console.log(this.data,'data')
+    if(this.data.length>0){
+    // setTimeout(() => {
       this._calculateHeight();
-    }, 2000);
+    // }, 2000);
+    }
   },
   methods: {
     
@@ -140,25 +136,27 @@ export default {
         let item = list[i];
         var query = wx.createSelectorQuery();
         query
-          .select(".itemClient" + i * 1)
+          .select(".itemClient" + i)
           .boundingClientRect(rect => {
-      console.log("++++++++++++++++++++2",rect,i)
+            if(rect){
             height += rect.height;
             this.listHeight.push(height);
+            }
           })
           .exec();
       }
     },
     _onTouchStartIndex(index) {
-      // console.log(index,this.listHeight,this.listHeight[index],"this.listHeight[index]")
-      this.currentIndex = index;
-      var query = wx.createSelectorQuery();
-      query
-        .select("#scroll")
-        .boundingClientRect(rect => {
           this.scrollTop = this.listHeight[index];
-        })
-        .exec();
+      // console.log(index,this.listHeight,this.listHeight[index],"this.listHeight[index]")
+      // this.currentIndex = index;
+      // var query = wx.createSelectorQuery();
+      // query
+      //   .select("#scroll")
+      //   .boundingClientRect(rect => {
+      //     this.scrollTop = this.listHeight[index];
+      //   })
+      //   .exec();
     },
     //选择
     clickItem(e, item) {
@@ -182,7 +180,7 @@ export default {
       this.scrollTimer = setTimeout(() => {
         // let scrollTop = this.$refs.indexWrap.scrollTop
         let scrollTop = e.mp.detail.scrollTop;
-        console.log(scrollTop,"scrollTop")
+        console.log(this.listHeight,"scrollTop")
         // let scrollTop = this.scrollTopId
         const listHeight = this.listHeight;
         for (let i = 0; i < listHeight.length - 1; i++) {
