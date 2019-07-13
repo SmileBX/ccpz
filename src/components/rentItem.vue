@@ -68,6 +68,8 @@ export default {
   }
 };
 </script>
-<style lang="sass" scoped>
-
+<style lang="scss" scoped>
+.outside{
+  padding:15rpx 0 15rpx 30rpx!important;
+}
 </style>

@@ -10,6 +10,18 @@
         </li>
       </ul>
     </div>
+    <!-- 分类 -->
+    <div class="nav" v-if="tabIndex===0">
+      <div
+        class="nav-list"
+        :class="{'active':item.Id === navActiveId}"
+        v-for="(item,index) in nav"
+        :key="index"
+        @click="onClickNav(item.Id)"
+      >
+        <div class="nav-item">{{item.Name}}</div>
+      </div>
+    </div>
     <scroll-view class="filterContent bg_fff mt10" scroll-y="true">
       <!-- 信息 -->
       <div class="column levelPanel storeList" style="padding:0;" v-if="tabIndex===0">
@@ -25,7 +37,7 @@
                 <div class="outside">
                   <div class="pictrueAll">
                     <div class="pictrue img">
-                      <img :src="item.PicNo" alt>
+                      <img :src="item.PicNo" alt />
                     </div>
                   </div>
                   <div class="txtBox text_l">
@@ -55,17 +67,21 @@
       </div>
       <!-- 用户-->
       <div class="weui-cells readList mt0" v-if="tabIndex===1">
-        <block  v-for="(item,key) in list" :key="key">
-          <van-swipe-cell :right-width="65" class="swipe-cell" async-close
-            @close="ReCollections($event,item.Id,key)">
+        <block v-for="(item,key) in list" :key="key">
+          <van-swipe-cell
+            :right-width="65"
+            class="swipe-cell"
+            async-close
+            @close="ReCollections($event,item.Id,key)"
+          >
             <van-cell-group>
               <van-cell class="item" @click="goUserCenter(item.ShopId)">
                 <div class="weui-cell">
-                  <img :src="item.Avatar" class="tx" alt>
+                  <img :src="item.Avatar" class="tx" alt />
                   <div class="weui-cell__bd text_l">
                     <p>
                       <span class="name">{{item.Name}}</span>
-                      <img src="/static/images/icons/v.jpg" class="icon_attestation" alt>
+                      <img src="/static/images/icons/v.jpg" class="icon_attestation" alt />
                     </p>
                     <p class="msgList">
                       <span class="msgItem">{{item.Company[0].Job}}</span>
@@ -97,11 +113,11 @@ export default {
   onLoad() {
     this.setBarTitle();
   },
-  onShow() { 
+  onShow() {
     this.curPage = getCurrentPageUrlWithArgs();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
-    this.MemberCollections();
+    this.getNav();
   },
   data() {
     return {
@@ -111,6 +127,8 @@ export default {
       curPage: "",
       pageSize: 15,
       page: 1,
+      nav: [],
+      navActiveId: 0, //激活的分类
       list: [],
       isOver: false,
       hasDataList: false
@@ -122,30 +140,42 @@ export default {
         title: "我的收藏"
       });
     },
-    initData(){
+    // 获取分类
+    getNav() {
+      post("Goods/GetBrandList").then(res => {
+        this.nav = res.data;
+        this.navActiveId = res.data[0].Id;
+        this.MemberCollections();
+      });
+    },
+    initData() {
       this.page = 1;
       this.list = [];
       this.isOver = false;
-      this.hasDataList = false
+      this.hasDataList = false;
     },
     shiftTab(index) {
       this.tabIndex = parseInt(index);
       this.initData();
       this.MemberCollections();
     },
+    // 点击分类时
+    onClickNav(id){
+      this.navActiveId = id;
+      this.MemberCollections();
+    },
     MemberCollections() {
       let that = this;
-      post(
-        "User/MemberCollections",
-        {
-          UserId: that.userId,
-          Token: that.token,
-          PageSize: that.pageSize,
-          Page: that.page,
-          Type: that.tabIndex
-        },
-        that.curPage
-      ).then(res => {
+      const params = {
+          UserId: this.userId,
+          Token: this.token,
+          PageSize: this.pageSize,
+          Page: this.page,
+          Type: this.tabIndex
+      }
+      this.tabIndex===0&&(params.BrandId=this.navActiveId)
+      post("User/MemberCollections",params,that.curPage)
+        .then(res => {
         if (res.code === 0) {
           if (that.page === 1) {
             that.list = [];
@@ -166,8 +196,8 @@ export default {
       wx.showModal({
         // title: '提示',
         content: "你确定要取消收藏么？",
-          confirmColor:'#ff952e',
-          cancelColor:'#999',
+        confirmColor: "#ff952e",
+        cancelColor: "#999",
         success(res) {
           if (res.confirm) {
             post(
@@ -208,21 +238,23 @@ export default {
       }
     },
     // 跳转到个人中心
-    goUserCenter(ShopId){
+    goUserCenter(ShopId) {
       wx.navigateTo({
         url: `/pages/mine/person/main?type=2&Id=${ShopId}`
       });
     },
     // 跳转详情
-    goDetail(item){
-      wx.navigateTo({ url: `/pages/rent/detail/main?id=${item.ProId}&type=${item.BrandId}`});
+    goDetail(item) {
+      wx.navigateTo({
+        url: `/pages/rent/detail/main?id=${item.ProId}&type=${item.BrandId}`
+      });
     }
   },
   //下拉刷新
   onPullDownRefresh() {
-    this.initData()
+    this.initData();
     wx.stopPullDownRefresh();
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -287,6 +319,19 @@ export default {
       left: 30rpx;
       right: 0;
     }
+  }
+}
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30rpx;
+  line-height: 70rpx;
+  background: #fff;
+  border-top: 1rpx #e8e8e8 solid;
+  .active {
+    color: #ff952e;
+    border-bottom: #ff952e 4rpx solid;
   }
 }
 </style>
