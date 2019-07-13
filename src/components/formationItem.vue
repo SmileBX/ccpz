@@ -51,8 +51,8 @@
           <span class="msgItem">{{item.GladBuyArea}}</span>
         </p>
         <p class="slogan">{{item.Title}}</p>
-        <div class="tipsList border__tipsList flex1 bg_grey" v-if="item.NeedJob">
-          <span v-for="(tab,tabIndex) in item.NeedJob" :key="tabIndex" v-show="tab">{{tab}}</span>
+        <div class="tipsList border__tipsList flex1 bg_grey" v-if="item.NeedJob.length>0">
+          <span v-for="(tab,tabIndex) in item.NeedJob" :key="tabIndex" v-if="tab">{{tab}}</span>
           <!-- <span>设计</span>
           <span>文员</span>
           <span>销售</span> -->
@@ -91,5 +91,13 @@ export default {
   .tx{
     border-radius:50%;
   }
+}
+.icon-gou{
+  margin-top:6rpx;
+}
+.attestationStatus{
+  padding-bottom:3rpx;
+  padding-right:3rpx;
+  margin-top:-2rpx;
 }
 </style>
