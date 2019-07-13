@@ -1250,8 +1250,7 @@
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
-                <div class="item2-column" v-if="PageId==32 || PageId==33">
-                  <div class="form-cells-hd">合伙待遇</div>
+                <!-- <div class="form-cells-hd">合伙待遇</div>
                   <input
                     class="ipt"
                     type="text"
@@ -1261,7 +1260,7 @@
                     @tap="choseTreament(pindex)"
                     placeholder-style="color:#b5b5b5;"
                   >
-                </div>
+                </div> -->
               </div>
               <div class="form-cells-item">
                 <div class="">
@@ -1652,7 +1651,7 @@ export default {
     },
     initData(){
       this.isShowMask =false
-      // this.showDefaultCompany = false
+      this.showDefaultCompany = false
       this.showNoChange = false
       this.showArea =false
       this.showInput =false
@@ -1930,19 +1929,12 @@ export default {
             // npm this.EducationLvl = this.list[i].Name
             this.PartnerList[n].Degree = this.list[this.statu].Name
         }
-        if(this.showTouchTreat){
-          console.log("this.list:",this.list)
-            // npm this.EducationLvl = this.list[i].Name
-            this.PartnerList[n].Treatment = this.list[this.statu].Name
-        }
         this.isShowMask = false
         this.showNoChange = false
         this.ShowTime = false
         this.showInput = false
         this.PartnerList[n].ShowWork = false
-        this.PartnerList[n].ShowTreatment = false
         this.showTouchEducation = false
-         this.showTouchTreat = false
         this.statu = 0
         this.list = []
 
@@ -2167,8 +2159,7 @@ export default {
     },
     //选择待遇
     choseTreament(n){
-      console.log("111111111111111111111")
-      this.PartnerList[n].ShowWork = true
+      this.PartnerList[n].ShowTreatment = true
       let info = {}
       let i = 0
       this.detailInfo.Treatment.Value.map(item=>{

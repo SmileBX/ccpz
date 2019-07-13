@@ -1250,18 +1250,6 @@
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
-                <div class="item2-column" v-if="PageId==32 || PageId==33">
-                  <div class="form-cells-hd">合伙待遇</div>
-                  <input
-                    class="ipt"
-                    type="text"
-                    disabled
-                    placeholder="请选择"
-                    v-model="item.Treatment"
-                    @tap="choseTreament(pindex)"
-                    placeholder-style="color:#b5b5b5;"
-                  >
-                </div>
               </div>
               <div class="form-cells-item">
                 <div class="">
@@ -1277,20 +1265,20 @@
                   </div>
                 </div>
               </div>
-              <!-- <div class="form-cells-item" v-if="PageId==32 || PageId==33">
+              <div class="form-cells-item" v-if="PageId==32 || PageId==33">
                 <div class="">
                   <div class="form-cells-hd">合伙待遇</div>
                   <div class="form-cell-bd">
                     <input
                       class="ipt"
                       type="text"
-                      placeholder="请输入（股份、工资、奖金）"
+                      placeholder="请输入待遇"
                       v-model="item.Treatment"
                       placeholder-style="color:#b5b5b5;"
                     >
                   </div>
                 </div>
-              </div> -->
+              </div>
               <div class="addDetail bg_fff" v-if="PartnerList.length>1 && pindex !==PartnerList.length-1">
                 <div class="btn btn-add" @click="delOrder(pindex)">
                   删除职位
@@ -1505,7 +1493,6 @@ export default {
       PlanBuyArea:'', //计划购买面积--机构面积
       PartnerList:[],
       showTouchEducation:false,//组件要求学历标识
-      showTouchTreat:false,//待遇
       
       RentTimeLimit:"",//租赁期限
       ContentDetail:"",//办公室环境描述
@@ -1652,7 +1639,7 @@ export default {
     },
     initData(){
       this.isShowMask =false
-      // this.showDefaultCompany = false
+      this.showDefaultCompany = false
       this.showNoChange = false
       this.showArea =false
       this.showInput =false
@@ -1700,8 +1687,6 @@ export default {
                     WorkTime:'',    //工作时间、时间要求
                     PartDesc:'',    //职位描述、合伙描述
                     ShowWork:false,//学历要求
-                    ShowTreatment:false,//待遇
-
                 }
               ]
             }
@@ -1930,19 +1915,12 @@ export default {
             // npm this.EducationLvl = this.list[i].Name
             this.PartnerList[n].Degree = this.list[this.statu].Name
         }
-        if(this.showTouchTreat){
-          console.log("this.list:",this.list)
-            // npm this.EducationLvl = this.list[i].Name
-            this.PartnerList[n].Treatment = this.list[this.statu].Name
-        }
         this.isShowMask = false
         this.showNoChange = false
         this.ShowTime = false
         this.showInput = false
         this.PartnerList[n].ShowWork = false
-        this.PartnerList[n].ShowTreatment = false
         this.showTouchEducation = false
-         this.showTouchTreat = false
         this.statu = 0
         this.list = []
 
@@ -2164,22 +2142,6 @@ export default {
           }
         }
       })
-    },
-    //选择待遇
-    choseTreament(n){
-      console.log("111111111111111111111")
-      this.PartnerList[n].ShowWork = true
-      let info = {}
-      let i = 0
-      this.detailInfo.Treatment.Value.map(item=>{
-        info={
-          Id:i++,
-          Name:item.Value
-        }
-        this.list.push(info)
-      })
-      this.masktitle2 = '请选择合伙待遇'
-      this.showTouchTreat = true
     },
     onChange(event){  //选择行业
       const { picker, value, index } = event.mp.detail;

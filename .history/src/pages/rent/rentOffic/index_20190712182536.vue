@@ -1652,7 +1652,7 @@ export default {
     },
     initData(){
       this.isShowMask =false
-      // this.showDefaultCompany = false
+      this.showDefaultCompany = false
       this.showNoChange = false
       this.showArea =false
       this.showInput =false

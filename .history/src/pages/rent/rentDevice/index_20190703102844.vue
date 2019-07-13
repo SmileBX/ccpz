@@ -1338,7 +1338,7 @@ export default {
        this.isShowAddr = false
     },
     initData(){
-        // this.showDefaultCompany = false
+        this.showDefaultCompany = false
         this.isShowMask =false
         this.showNoChange = false
         this.showArea =false
@@ -1813,8 +1813,8 @@ export default {
             return false;
           }
       }
-      if(this.PageId == 25 ||　this.PageId ==26 || this.PageId ==28 || this.PageId == 27|| this.PageId == 31|| this.PageId == 29){ 
-          if (this.IsAllowOtherListMsg == '') {
+      if(this.PageId == 25 ||　this.PageId ==26 || this.PageId ==30 || this.PageId ==28 || this.PageId == 27){ 
+          if (this.IsAllowOtherList === '') {
             this.toastTip("请选择是否允许对方挂牌!")
             return false;
           }
@@ -1849,22 +1849,22 @@ export default {
         this.toastTip("请选择公司!")
         return false;
       }
-      if (this.IsStockCooperationMsg == '') {
+      if (this.IsStockCooperation === '') {
         this.toastTip("请选择是否合作!")
         return false;
       }
       if(this.PageId!=29){
-        if (this.IsSeniorMsg == '') {
+        if (this.IsSenior === '') {
             this.toastTip("请选择是否可用公司资质!")
             return false;
         }
-        if (this.IsSubPackMsg == '') {
+        if (this.IsSubPack === '') {
           this.toastTip("请选择是否业务分包!")
           return false;
         }
       }
       if(this.PageId==30 || this.PageId==26 || this.PageId==25 || this.PageId==27){
-        if (this.IsCompanyListMsg == '') {
+        if (this.IsCompanyList === '') {
           this.toastTip("请选择本公司是否挂牌!")
           return false;
         }
@@ -1885,7 +1885,7 @@ export default {
         }
       }
       if(this.PageId == 25 ||　this.PageId == 30){
-        if (this.IsTrimMsg == '') {
+        if (this.IsTrim === '') {
           this.toastTip("请选择是否装修!")
           return false;
         }
@@ -1909,7 +1909,7 @@ export default {
         }
       }
       if(this.PageId==25 ||this.PageId==27 ||this.PageId==30 || this.PageId==31){
-          if(this.IsRegAreaMsg == ''){
+          if(this.IsRegArea === ''){
             this.toastTip("请选择公司是否注册!")
             return false;
           }
