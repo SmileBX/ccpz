@@ -19,7 +19,7 @@
     "window": {
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#ffffff",
-        "navigationBarTitleText": "成成企业拼租",
+        "navigationBarTitleText": "成成快拼",
         "navigationBarTextStyle": "black"
     },
     "usingComponents": {
