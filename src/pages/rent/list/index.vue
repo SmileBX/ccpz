@@ -135,7 +135,7 @@
     </div>
     <!--行业分类  end-->
     <!-- 地区 -->
-    <div class="modal_mask" v-if="isShadeType == 'GladBuyArea' && filterItem.selected">
+    <!-- <div class="modal_mask" v-if="isShadeType == 'GladBuyArea' && filterItem.selected">
       <div class="scroll scroll_price">
         <div
           @click="selectDropDownList(filterItem,-2,'不限')"
@@ -144,10 +144,57 @@
           <p>不限</p>
         </div>
         <div
-          v-for="(item,index) in  filterItem.Value[0].Child"
+          v-for="(area,areaIndex) in  filterItem.Value"
+          :key="areaIndex"
+          @click="selectDropDownList(filterItem,areaIndex,area.Name)"
+          :class="{'active':filterItem.selectIndex===areaIndex}"
+        >
+          <p>{{area.Name}}</p>
+          <div class="areaItem-box">
+            <div
+              @click="selectDropDownList(filterItem,-2,'不限')"
+              :class="{'active':filterItem.selectIndex===-2}"
+            >
+              <p>不限</p>
+            </div>
+            <div class="areaItem" 
+              :class="{'active':filterItem.selectIndex===areaIndex}"
+              v-for="(item,index) in area.Child" :key="index"
+             >
+              <p>{{item.Name}}</p>
+            </div> 
+          </div>
+        </div>
+
+      </div>
+    </div> -->
+    <!-- ---------------------------- -->
+    <div
+      class="modal_mask flex second"
+      v-if="isShadeType == 'GladBuyArea' && filterItem.selected"
+     >
+      <div class="scroll flex1">
+        <div @click="selectAreaTab(1,{Child:[]},filterItem,-1)" :class="{'active':filterItem.selectIndex===-1}">
+          <p>不限</p>
+        </div>
+        <div
+          v-for="(item,index) in filterItem.Value"
           :key="index"
-          @click="selectDropDownList(filterItem,index,item.Name)"
           :class="{'active':filterItem.selectIndex===index}"
+          @click="selectAreaTab(1,item,filterItem,index)"
+        >
+          <p>{{item.Name}}</p>
+        </div>
+      </div>
+      <div class="scroll flex1" v-if="areaTwoList.length>0" style="border-left:1rpx solid #f2f2f2">
+        <div @click="selectAreaTab(2,{Name:''},filterItem,-1)" :class="{'active':areaTabIndex===-1}">
+          <p>不限</p>
+        </div>
+        <div
+          v-for="(item,index) in areaTwoList "
+          :key="index"
+          :class="{'active':areaTabIndex===index}"
+          @click="selectAreaTab(2,item,filterItem,index)"
         >
           <p>{{item.Name}}</p>
         </div>
@@ -354,6 +401,7 @@ export default {
       isShadeType: "", //类型弹窗
       isShade: false, //遮罩
       areaTabIndex: "", //地区的选中的active
+      areaTwoList:[], //二级城市选择的列表
       filterMenu: [
         {
           index: 0,
@@ -431,6 +479,7 @@ export default {
       this.goodsInfo={};
       this.twoTabIndex = 0;
       this.oneTabIndex = 0;
+      this.areaTwoList=[];
       this.page = 1;
       this.isShade = false;
       this.initAll();
@@ -810,21 +859,54 @@ export default {
       }
     },
     //********************** */选择地区*********************************
-    selectAreaTab(filterItem,index, name) {
-      this.areaTabIndex = index;
-      this.isShade = false;
-      // this.isShadeType = "";
-      this.$set(filterItem, "selected", false);
-      //清除不是地区选项的menu
-      // this.initTrade();
-      // this.initPrice();
-      // this.initMore();
-      // this.initDataList();
-      // 赛选条件对象
-      this.goodsInfo.GladBuyArea = name;
-      this.getQueryRentList();
-    },
+    // selectAreaTab(filterItem,index, name) {
+    //   this.areaTabIndex = index;
+    //   this.isShade = false;
+    //   // this.isShadeType = "";
+    //   this.$set(filterItem, "selected", false);
+    //   //清除不是地区选项的menu
+    //   // this.initTrade();
+    //   // this.initPrice();
+    //   // this.initMore();
+    //   // this.initDataList();
+    //   // 赛选条件对象
+    //   this.goodsInfo.GladBuyArea = name;
+    //   this.getQueryRentList();
+    // },
+    // ---------------------------
+    //   level--选择的层次
+    //   item -- 所点击的数据--1级为列表--二级为对象
+    //   filterItem -- 遍历的地区最大数组 filterItem.selectIndex--现在激活的值
+    //    index -- 选择的下标
+    selectAreaTab(level,item,filterItem,index){
+      console.log('areaList',level,item,filterItem,index)
+      // 选择第一级
+      if(level===1){
+        filterItem.selectIndex = index;
+        this.areaTabIndex = '';
+        this.goodsInfo.TownStr = '';
+        this.goodsInfo.GladBuyArea = item.Name||'';
+        // 赛选条件对象
+          this.areaTwoList = item.Child
+        if(item.Child.length<1||index===-1){
+          this.isShade = false;
+          this.isShadeType = "";
+          this.$set(filterItem, "selected", false)
+          this.getQueryRentList();
+        }
 
+      }else
+      // 选择第二级
+      if(level===2){
+        // 赛选条件对象
+        this.goodsInfo.TownStr = item.Name||'';
+        this.areaTabIndex = index;
+        this.isShade = false;
+        this.isShadeType = "";
+        this.$set(filterItem, "selected", false);
+        this.getQueryRentList();
+      }
+    },
     // **************************价格******************************************
     //选择价格
     selectPriceTab(index, item,filterItem) {

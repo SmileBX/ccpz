@@ -242,7 +242,6 @@ export default {
     //删除标签
     delTag(i){
       this.goodList.splice(i,1)
-      console.log(this.goodList,"this.goodList{{{{{{{")
     },
     //删除标签
     delTag2(i){
