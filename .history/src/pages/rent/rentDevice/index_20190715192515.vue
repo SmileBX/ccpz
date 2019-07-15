@@ -1323,20 +1323,10 @@ export default {
       }
     },
     onChangeAddr(event){  //选择的时候
+      console.log(event,"e")
+      console.log(this.columns2,"this.columns2-++++++++++++++")
       const { picker, value, index } = event.mp.detail;
-      var jiedaoindex=picker.getColumnIndex(1);
-      let arr3=[];
-      this.addressList[0].Child[jiedaoindex].Child.forEach(item3 => {
-        arr3.push(item3.Name)
-      })
-      this.addressList3=arr3;console.log(this.addressList3)
-      // picker.setColumnValues(2, this.addressList3);
-      this.columns2[2]=
-        {
-          values: this.addressList3,
-          className: 'column3',
-          defaultIndex: 0
-        }
+      // picker.setColumnValues(1, this.addressList2[value[0]]);
     },
     onConfirmAddr(event){
        const { index, value } = event.mp.detail;
@@ -1346,7 +1336,7 @@ export default {
       //  console.log(index);
       //  console.log(this.addressList[index[0]].Code);
        this.GladBuyArea = value.join(",");
-       this.GladBuyAreaId = this.addressList[index[0]].Child[index[1]].Child[index[2]].Code
+       this.GladBuyAreaId = this.addressList[index[0]].Child[index[1]].Code
        this.$set(this.columns2[1],'values',this.addressList2[value[0]]);
        this.$set(this.columns2[1],'defaultIndex',index[1]);
        console.log(" this.GladBuyAreaId:" ,this.GladBuyAreaId)

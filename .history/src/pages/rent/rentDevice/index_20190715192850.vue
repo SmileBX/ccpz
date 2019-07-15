@@ -1346,7 +1346,7 @@ export default {
       //  console.log(index);
       //  console.log(this.addressList[index[0]].Code);
        this.GladBuyArea = value.join(",");
-       this.GladBuyAreaId = this.addressList[index[0]].Child[index[1]].Child[index[2]].Code
+       this.GladBuyAreaId = this.addressList[index[0]].Child[index[1]].Child[index[2]]Code
        this.$set(this.columns2[1],'values',this.addressList2[value[0]]);
        this.$set(this.columns2[1],'defaultIndex',index[1]);
        console.log(" this.GladBuyAreaId:" ,this.GladBuyAreaId)
