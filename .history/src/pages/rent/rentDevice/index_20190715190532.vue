@@ -1322,10 +1322,8 @@ export default {
       }
     },
     onChangeAddr(event){  //选择的时候
-      console.log(event,"e")
-      console.log(this.columns2,"this.columns2-++++++++++++++")
       const { picker, value, index } = event.mp.detail;
-      // picker.setColumnValues(1, this.addressList2[value[0]]);
+      picker.setColumnValues(1, this.addressList2[value[0]]);
     },
     onConfirmAddr(event){
        const { index, value } = event.mp.detail;
@@ -1674,9 +1672,11 @@ export default {
                   arr2 = []
                   item2.Child.forEach(item3=>{
                     Object.keys(arr).map(key=>{
+                      console.log(key)
                       if(key == item2.Name){
                         arr2.push(item3.Name)
                       }
+                      // Object.keys(arr) = arr2
                       arr[item2.Name] = arr2
                       arr = Object.assign([],arr);
                     })
@@ -1713,7 +1713,6 @@ export default {
               )
               this.hasAddr = true,
               console.log(this.hasAddr)
-              console.log(this.columns2,"this.columns2----------")
             }
           }
              //行业的信息

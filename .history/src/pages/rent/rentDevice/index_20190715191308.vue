@@ -1325,7 +1325,7 @@ export default {
       console.log(event,"e")
       console.log(this.columns2,"this.columns2-++++++++++++++")
       const { picker, value, index } = event.mp.detail;
-      // picker.setColumnValues(1, this.addressList2[value[0]]);
+      picker.setColumnValues(2, this.addressList2[value[0]]);
     },
     onConfirmAddr(event){
        const { index, value } = event.mp.detail;
@@ -1677,6 +1677,7 @@ export default {
                       if(key == item2.Name){
                         arr2.push(item3.Name)
                       }
+                      
                       arr[item2.Name] = arr2
                       arr = Object.assign([],arr);
                     })
