@@ -1565,7 +1565,6 @@ export default {
   },
   onLoad() {
     this.mm = 0
-    this.showDefaultCompany = false
     this.setBarTitle();
     this.initData()
   },
@@ -2042,7 +2041,7 @@ export default {
       this.isShowMask = false
       this.showNoChange = false
       this.ShowTime = false
-      // this.showDefaultCompany = false
+      this.showDefaultCompany = false
       this.showInput = false
       this.list = []
       this.statu = 0
@@ -2053,7 +2052,7 @@ export default {
       this.PartnerList[n].ShowWork = false
       this.isShowMask = false
       this.showNoChange = false
-      // this.showDefaultCompany = false
+      this.showDefaultCompany = false
       this.ShowTime = false
       this.showInput = false
       this.list = []

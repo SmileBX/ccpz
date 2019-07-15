@@ -1266,7 +1266,6 @@ export default {
   },
   onLoad() {
     this.mm = 0
-    this.showDefaultCompany = false
     this.setBarTitle();
     this.initData()
   },
@@ -1605,7 +1604,7 @@ export default {
       this.isShowMask = false
       this.showNoChange = false
       this.showInput = false
-      // this.showDefaultCompany = false
+      this.showDefaultCompany = false
       this.statu = 0
       this.list = []
     },
@@ -1614,7 +1613,7 @@ export default {
       this.isShowMask = false
       this.showNoChange = false
       this.showInput = false
-      // this.showDefaultCompany = false
+      this.showDefaultCompany = false
       this.list = []
       this.statu = 0
     },
