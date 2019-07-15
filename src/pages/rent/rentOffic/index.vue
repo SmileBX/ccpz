@@ -1539,6 +1539,7 @@ export default {
       addDetailPlaceholder:"",//补
       addressList:[],//地区列表
       addressList2:{},
+      addressList3:[],
       isShowAddr:false,
       hasAddr:false,
       columns2:[],
@@ -1636,7 +1637,19 @@ export default {
     },
     onChangeAddr(event){  //选择的时候
       const { picker, value, index } = event.mp.detail;
-      picker.setColumnValues(1, this.addressList2[value[0]]);
+      var jiedaoindex=picker.getColumnIndex(1);
+      let arr3=[];
+      this.addressList[0].Child[jiedaoindex].Child.forEach(item3 => {
+        arr3.push(item3.Name)
+      })
+      this.addressList3=arr3;console.log(this.addressList3)
+      // picker.setColumnValues(2, this.addressList3);
+      this.columns2[2]=
+        {
+          values: this.addressList3,
+          className: 'column3',
+          defaultIndex: 0
+        }
     },
     onConfirmAddr(event){
        const { index, value } = event.mp.detail;
@@ -2084,9 +2097,13 @@ export default {
                   arr.push(item2.Name)
                 });
                 obj[item.Name] = arr;
-                this.addressList2 = Object.assign(this.addressList2,obj);
+                this.addressList2 = Object.assign(this.addressList2,obj);console.log("111111111",this.addressList2)
               })
-              
+              let arr3=[];
+              this.addressList[0].Child[0].Child.forEach(item3 => {
+                arr3.push(item3.Name)
+              })
+              this.addressList3=arr3;
               this.columns2.push(
                 {
                 values: Object.keys(this.addressList2),
@@ -2095,6 +2112,11 @@ export default {
                 {
                   values: this.addressList2[Object.keys(this.addressList2)[0]],
                   className: 'column2',
+                  defaultIndex: 0
+                },
+                {
+                  values: this.addressList3,
+                  className: 'column3',
                   defaultIndex: 0
                 }
               )

@@ -43,7 +43,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 28,
+			"current": 66,
 			"list": [
 				{
 					"id": 0,
@@ -508,7 +508,7 @@
 					"scene": null
 				},
 				{
-					"id": 67,
+					"id": 66,
 					"name": "拼租发布正式2",
 					"pathName": "pages/rent/rentOffic/main",
 					"query": "TypeId=60&PageId=40",
