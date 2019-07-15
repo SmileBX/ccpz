@@ -194,6 +194,7 @@ export default {
       token: "",
       curPage: "",
       FriendId: "", //好友ID
+      TempId:'',//临时联系id
       isShowMask: false, //是否展示遮罩层
       showModule: "", //展示图片组；emotion：表情。message:常用语。imgage:照片
       messageType: [], //常用语分类
@@ -228,6 +229,7 @@ export default {
     this.chatStatu = {};
     this.messageType = [];
     this.FriendId = this.$root.$mp.query.FriendId;
+    this.TempId = this.$root.$mp.query.TempId;
     this.getMessageType();
   },
   onShow() {
@@ -326,7 +328,8 @@ export default {
         {
           UserId: this.userId,
           Token: this.token,
-          FriendId: this.FriendId * 1
+          FriendId: this.FriendId * 1,
+          TempId:this.TempId*1
         },
         this.curPage
       );
@@ -401,6 +404,7 @@ export default {
             UserId: this.userId,
             Token: this.token,
             FriendId: this.FriendId * 1,
+            TempId:this.TempId*1,
             Page: this.page,
             PageSize: this.pageSize
           },
@@ -492,6 +496,7 @@ export default {
           UserId: this.userId,
           Token: this.token,
           FriendId: this.FriendId * 1,
+          TempId:this.TempId*1,
           Info: sendInfo,
           Pic: imgBase,
           Lat: lat,

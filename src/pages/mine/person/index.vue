@@ -103,7 +103,7 @@
                   <span v-for="(item,tindex) in personInfo.TagsResGood" :key="tindex">{{item}}</span>
                 </div>
                 <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentStart flex1" v-else>
-                  <span v-if="type==1">请添加</span>
+                  <span v-if="type==1" @tap="gotoPage(0)">请添加</span>
                   <span v-if="type==2">未添加</span>
                 </div>
             </div>
@@ -113,7 +113,7 @@
                   <span v-for="(item,pindex) in personInfo.TagsResKnow" :key="pindex">{{item}}</span>
                 </div>
                 <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentStart flex1" v-else>
-                  <span v-if="type==1">请添加</span>
+                  <span v-if="type==1" @tap="gotoPage(0)">请添加</span>
                   <span v-if="type==2">未添加</span>
                 </div>
             </div>
@@ -135,7 +135,7 @@
                   <span v-for="(item,cindex) in personInfo.TagsCapGood" :key="cindex">{{item}}</span>
                 </div>
                 <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentStart flex1" v-else>
-                  <span v-if="type==1">请添加</span>
+                  <span v-if="type==1" @tap="gotoPage(1)">请添加</span>
                   <span v-if="type==2">未添加</span>
                 </div>
             </div>
@@ -145,7 +145,7 @@
                   <span v-for="(item,sindex) in personInfo.TagsCapKnow" :key="sindex">{{item}}</span>
                 </div>
                 <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentStart flex1" v-else>
-                  <span v-if="type==1">请添加</span>
+                  <span v-if="type==1" @tap="gotoPage(1)">请添加</span>
                   <span v-if="type==2">未添加</span>
                 </div>
             </div>
@@ -289,7 +289,7 @@
           </div>
         </div>
         <div class="btns flex1 flex center">
-          <div class="btn flex1 bg_ff952e color_fff" @tap="isVip('contant')" v-if="personInfo.Footer.Value.IsContact.Value==1">极速联系</div>
+          <div class="btn flex1 bg_ff952e color_fff" @tap="isVip('contant')" >极速联系</div>
           <div class="btn flex1 bg_ed3435 color_fff"  @tap="isVip('addFre')" v-if="IsAddFriend">加好友</div>
         </div>
       </div>
@@ -420,7 +420,7 @@ export default {
               this.IsAddFriend = res.data.Footer.Value.IsAddFriend.Value
               this.IsContact = res.data.Footer.Value.IsContact.Value
               this.addFriendId = res.data.Footer.Value.IsAddFriend.FriendId
-              this.conFriendId = res.data.Footer.Value.IsContact.FriendId
+              this.conFriendId = res.data.Footer.Value.IsContact.TempId
               this.ReportId = res.data.Footer.Value.IsReportId.Value
             }
           }
@@ -570,9 +570,8 @@ export default {
     },
     //极速联系
     contant(){
-      if(this.IsContact){
-           wx.navigateTo({url:"/pages/messages/chatRoom/main?FriendId="+this.conFriendId})
-      }
+      wx.navigateTo({url:`/pages/messages/chatRoom/main?FriendId=${this.addFriendId}&TempId=${this.conFriendId}`})
+      
     },
     //加好友
     addFre(){

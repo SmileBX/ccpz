@@ -1813,7 +1813,7 @@ export default {
             return false;
           }
       }
-      if(this.PageId == 25 ||　this.PageId ==26 || this.PageId ==30 || this.PageId ==28 || this.PageId == 27){ 
+      if(this.PageId == 25 ||　this.PageId ==26 || this.PageId ==28 || this.PageId == 27|| this.PageId == 31|| this.PageId == 29){ 
           if (this.IsAllowOtherListMsg == '') {
             this.toastTip("请选择是否允许对方挂牌!")
             return false;

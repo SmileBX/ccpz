@@ -21,7 +21,7 @@
           </div>
         </div>
         <div class="btns flex1 flex center">
-          <div class="btn flex1 bg_ff952e color_fff" v-if="Footer.IsContact&&Footer.IsContact.Value==1" @click="isVip('contant')">极速联系</div>
+          <div class="btn flex1 bg_ff952e color_fff"  @click="isVip('contant')">极速联系</div>
           <div class="btn flex1 bg_ed3435 color_fff" v-if="Footer.IsAddFriend&&Footer.IsAddFriend.Value==1" @click="isVip('addFre')">加好友</div>
         </div>
       </div>
@@ -206,14 +206,8 @@ export default {
     },
     // 联系
     contant(){
-      if(this.Footer.IsContact.Value){
-        wx.navigateTo({url:'/pages/messages/chatRoom/main?FriendId='+this.Footer.IsContact.FriendId})
-      }else{
-        wx.showToast({
-          title:'请先开通会员!',
-          icon:'none'
-        })
-      }
+        const IsContact = this.Footer.IsContact
+        wx.navigateTo({url:`/pages/messages/chatRoom/main?FriendId=${IsContact.FriendId}&TempId=${IsContact.TempId}`})
     },
     // 跳转到个人中心
     goUserCenter(){
