@@ -1322,10 +1322,8 @@ export default {
       }
     },
     onChangeAddr(event){  //选择的时候
-      console.log(event,"e")
-      console.log(this.columns2,"this.columns2-++++++++++++++")
       const { picker, value, index } = event.mp.detail;
-      // picker.setColumnValues(1, this.addressList2[value[0]]);
+      picker.setColumnValues(1, this.addressList2[value[0]]);
     },
     onConfirmAddr(event){
        const { index, value } = event.mp.detail;
@@ -1669,16 +1667,17 @@ export default {
                 let arr =[];
                 let arr2 = []
                 item.Child.forEach(item2=>{
-                  // arr.push(item2.Name)
-                  arr[item2.Name] = []
+                  arr.push(item2.Name)
+                  // console.log(arr)
                   arr2 = []
                   item2.Child.forEach(item3=>{
-                    Object.keys(arr).map(key=>{
+                    arr.map(key=>{
+                      // console.log(key,"key")
                       if(key == item2.Name){
                         arr2.push(item3.Name)
                       }
+                      // Object.keys(arr) = arr2
                       arr[item2.Name] = arr2
-                      arr = Object.assign([],arr);
                     })
                   })
                   
@@ -1691,9 +1690,11 @@ export default {
               let _list = this.addressList2
               // _list = _list.splice(0,10)
               // console.log(_list.splice(0,10))
-              console.log(_list,"///////////////////")
+              console.log(_list)
               // console.log(this.addressList2)
               console.log(_list[Object.keys(_list)[0]][Object.keys(_list[Object.keys(_list)[0]])[0]],"this.addressList2////")
+              console.log([Object.values(_Add)],"=========")
+              console.log([Object.keys(_list)],"___________")
 
               this.columns2.push(
                 {
@@ -1701,19 +1702,18 @@ export default {
                 className: "column1"
                 },
                 {
-                  values: Object.keys(this.addressList2[Object.keys(this.addressList2)[0]]),
+                  values: this.addressList2[Object.keys(this.addressList2)[0]],
                   className: 'column2',
                   defaultIndex: 0
                 },
                 {
-                  values:this.addressList2[Object.keys(this.addressList2)[0]][Object.keys(this.addressList2[Object.keys(this.addressList2)[0]])[0]],
+                  values:this.addressList2[Object.keys(this.addressList2)[0]],
                   className: 'column3',
                   defaultIndex: 0
                 },
               )
               this.hasAddr = true,
               console.log(this.hasAddr)
-              console.log(this.columns2,"this.columns2----------")
             }
           }
              //行业的信息

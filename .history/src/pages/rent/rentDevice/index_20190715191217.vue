@@ -1677,6 +1677,7 @@ export default {
                       if(key == item2.Name){
                         arr2.push(item3.Name)
                       }
+                      
                       arr[item2.Name] = arr2
                       arr = Object.assign([],arr);
                     })
