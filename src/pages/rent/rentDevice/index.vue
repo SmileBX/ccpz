@@ -1250,11 +1250,7 @@ export default {
       addDetailPlaceholder:"",//补
       addressList:[],//地区列表
       addressList2:{},
-<<<<<<< HEAD
       addressList3:[],//街道数组
-=======
-      addressList3:[],
->>>>>>> b898451b7eae874fc11b4b4f06da6dfb741de215
       isShowAddr:false,
       hasAddr:false,
       columns2:[],
@@ -1711,11 +1707,7 @@ export default {
               )
               this.hasAddr = true,
               console.log(this.hasAddr)
-<<<<<<< HEAD
               console.log(this.addressList2,"this.addressList2----------")
-=======
-              }
->>>>>>> b898451b7eae874fc11b4b4f06da6dfb741de215
             }
           
              //行业的信息
@@ -1751,8 +1743,6 @@ export default {
                 this.CompanyId = res.data.CompanyList[0].Id
                 console.log(this.Company,"this.companyName")
             }
-          
-
         }else{
             //没有认证 先去认证  code=5 企业认证  code=6个人认证
             if(res.code==6 && this.mm<1){
@@ -1769,23 +1759,21 @@ export default {
                   }, 1500);
                 }
               })
-              
-          }else if(res.code==5 && this.mm<1){
-            wx.showToast({
-              title:res.msg,
-              duration:1500,
-              icon:'none',
-              success:()=>{
-                setTimeout(() => {
-                  wx.navigateTo({
-                    url: "/pages/mine2/verticalCompany/main?url=rentDevice"
-                  });
-                  this.mm ++
-                }, 1500);
-              }
-            
-            })
-            
+            }else if(res.code==5 && this.mm<1){
+              wx.showToast({
+                title:res.msg,
+                duration:1500,
+                icon:'none',
+                success:()=>{
+                  setTimeout(() => {
+                    wx.navigateTo({
+                      url: "/pages/mine2/verticalCompany/main?url=rentDevice"
+                    });
+                    this.mm ++
+                  }, 1500);
+                }
+              })
+            }
           }
         }
       })
