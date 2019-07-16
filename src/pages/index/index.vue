@@ -344,8 +344,22 @@ export default {
       recomendList: [] //为您推荐的列表
     };
   },
+  watch:{
+    CityName(){
+          this.cityCode = this.CityCode;
+          this.CityName = this.CityName;
+          this.getList();
+    },
+  },
+  computed: {
+    ...mapState(["CityName","CityCode"])
+  },
   onLoad() {
     this.setBarTitle();
+    location(this).then(res => {
+      this.cityCode = res.CityCode;
+      this.getList();
+    });
   },
   onShow() {
     this.menuTab = -1;
@@ -353,12 +367,6 @@ export default {
     this.curPage = getCurrentPageUrlWithArgs();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
-    location(this).then(res => {
-      this.cityCode = res.CityCode;
-      this.getQueryRentList(23, 3, 3,0); //热门拼租
-      this.getQueryRentList(21, 3, 3,0); //人气活动
-      this.getQueryRentList(21, 3, 5,0); //为您推荐
-    });
     this.initData();
     if (wx.getStorageSync("showGiftCount") !== "") {
       this.showGiftCount = wx.getStorageSync("showGiftCount");
@@ -374,9 +382,6 @@ export default {
     // .then(res=>{
     //   this.GetCityCode(this.CityName);
     // });
-  },
-  computed: {
-    ...mapState(["CityName"])
   },
   components: {
     rentItem,
@@ -397,6 +402,12 @@ export default {
       wx.setNavigationBarTitle({
         title: "首页"
       });
+    },
+    // 获取分类列表
+    getList(){
+      this.getQueryRentList(23, 3, 3,0); //热门拼租
+      this.getQueryRentList(21, 3, 3,0); //人气活动
+      this.getQueryRentList(21, 3, 5,0); //为您推荐
     },
     //banner图跳转++后台获取点击广告的次数（记录）--userId token
     record(id,url) {
