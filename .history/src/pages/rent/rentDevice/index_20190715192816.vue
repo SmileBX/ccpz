@@ -1250,11 +1250,7 @@ export default {
       addDetailPlaceholder:"",//补
       addressList:[],//地区列表
       addressList2:{},
-<<<<<<< HEAD
-      addressList3:[],//街道数组
-=======
       addressList3:[],
->>>>>>> b898451b7eae874fc11b4b4f06da6dfb741de215
       isShowAddr:false,
       hasAddr:false,
       columns2:[],
@@ -1328,59 +1324,32 @@ export default {
     },
     onChangeAddr(event){  //选择的时候
       const { picker, value, index } = event.mp.detail;
-      var quindex=picker.getColumnIndex(0);
       var jiedaoindex=picker.getColumnIndex(1);
       let arr3=[];
-      this.addressList[quindex].Child[jiedaoindex].Child.forEach(item3 => {
+      this.addressList[0].Child[jiedaoindex].Child.forEach(item3 => {
         arr3.push(item3.Name)
       })
       this.addressList3=arr3;console.log(this.addressList3)
       // picker.setColumnValues(2, this.addressList3);
-      this.columns2=[
+      this.columns2[2]=
         {
-          values: Object.keys(this.addressList2),
-          className: "column1"
-          },
-          {
-            values: this.addressList2[Object.keys(this.addressList2)[quindex]],
-            className: 'column2',
-            defaultIndex: 0
-          },
-          {
-            values: this.addressList3,
-            className: 'column3',
-            defaultIndex: 0
-          }
-      ]
+          values: this.addressList3,
+          className: 'column3',
+          defaultIndex: 0
+        }
     },
     onConfirmAddr(event){
        const { index, value } = event.mp.detail;
        console.log(event)
+       let str = '';
+      // console.log(this.addressList[index[0]].Child[index[1]].Code);
+      //  console.log(index);
+      //  console.log(this.addressList[index[0]].Code);
        this.GladBuyArea = value.join(",");
-       this.GladBuyAreaId = this.addressList[index[0]].Child[index[1]].Child[index[2]].Code
-       let arr3=[];
-      this.addressList[0].Child[0].Child.forEach(item3 => {
-        arr3.push(item3.Name)
-      })
-      this.addressList3=arr3;console.log(this.addressList3)
-      //确定后重置数组
-      this.columns2=[
-        {
-          values: Object.keys(this.addressList2),
-          className: "column1"
-          },
-          {
-            values: this.addressList2[Object.keys(this.addressList2)[0]],
-            className: 'column2',
-            defaultIndex: 0
-          },
-          {
-            values: this.addressList3,
-            className: 'column3',
-            defaultIndex: 0
-          }
-      ]
-      console.log(" this.GladBuyAreaId:" ,this.GladBuyAreaId)
+       this.GladBuyAreaId = this.addressList[index[0]].Child[index[1]].Code
+       this.$set(this.columns2[1],'values',this.addressList2[value[0]]);
+       this.$set(this.columns2[1],'defaultIndex',index[1]);
+       console.log(" this.GladBuyAreaId:" ,this.GladBuyAreaId)
        this.isShowAddr = false
     },
     initData(){
@@ -1677,6 +1646,33 @@ export default {
           this.columns = []
           that.detailInfo = res.data;
           if(res.data.arealist.length>0){
+            // {
+            // this.addressList = res.data.arealist
+            //  this.addressList.forEach(item => {
+            //     let obj = {};
+            //     let arr =[];
+            //     item.Child.forEach(item2=>{
+            //       arr.push(item2.Name)
+            //     });
+            //     obj[item.Name] = arr;
+            //     this.addressList2 = Object.assign(this.addressList2,obj);
+            //   })
+            //   console.log(this.addressList2,"this.addressList2////")
+            //   this.columns2.push(
+            //     {
+            //     values: Object.keys(this.addressList2),
+            //     className: "column1"
+            //     },
+            //     {
+            //       values: this.addressList2[Object.keys(this.addressList2)[0]],
+            //       className: 'column2',
+            //       defaultIndex: 0
+            //     },
+            //   )
+            //   this.hasAddr = true,
+            //   console.log(this.hasAddr)
+            // }
+            console.log(this.addressList )
             {
               this.addressList = res.data.arealist
              this.addressList.forEach(item => {
@@ -1711,11 +1707,7 @@ export default {
               )
               this.hasAddr = true,
               console.log(this.hasAddr)
-<<<<<<< HEAD
-              console.log(this.addressList2,"this.addressList2----------")
-=======
               }
->>>>>>> b898451b7eae874fc11b4b4f06da6dfb741de215
             }
           
              //行业的信息

@@ -605,6 +605,7 @@ export default {
       //获取对应发布筛选
     GetFilterQuery() {
       let that = this;
+      this.TownStr = '';
       post(
         "Goods/GetFilterQuery",
         {
@@ -617,6 +618,8 @@ export default {
       ).then(res => {
         if (res.code === 0 && Object.keys(res.data).length > 0) {
           this.filterMenu=[];
+          this.areaTwoList=[];
+          this.areaTabIndex = '';
           const _res = res.data;
           // 行业
           this.filterMenuPush(_res,'GladBuyerTrade','行业')
@@ -730,6 +733,7 @@ export default {
           MinPrice: that.minPrice,
           MaxPrice: that.maxPrice,
           KeyWords: this.keyWords === "搜索" ? "" : this.keyWords,
+          TownStr:this.TownStr||'',
           GoodsInfo: this.goodsInfo
         },
         that.curPage
@@ -880,11 +884,12 @@ export default {
     //    index -- 选择的下标
     selectAreaTab(level,item,filterItem,index){
       console.log('areaList',level,item,filterItem,index)
+      this.page = 1;
       // 选择第一级
       if(level===1){
         filterItem.selectIndex = index;
         this.areaTabIndex = '';
-        this.goodsInfo.TownStr = '';
+        this.TownStr = '';
         this.goodsInfo.GladBuyArea = item.Name||'';
         // 赛选条件对象
           this.areaTwoList = item.Child
@@ -899,7 +904,7 @@ export default {
       // 选择第二级
       if(level===2){
         // 赛选条件对象
-        this.goodsInfo.TownStr = item.Name||'';
+        this.TownStr = item.Name||'';
         this.areaTabIndex = index;
         this.isShade = false;
         this.isShadeType = "";

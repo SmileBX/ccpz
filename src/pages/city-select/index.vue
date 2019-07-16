@@ -167,11 +167,11 @@ export default {
       const CityName =e.currentTarget.dataset.city
         console.log('CityName',CityName)
       //  const res = new this.getCityCode(CityName,this)
-      const res =this.getCityCode(CityName,this,2)
+      this.getCityCode(CityName,this,2)
       .then(res=>{
         console.log('prototype',res)
         // this.update({ CityName});
-        console.log('name1',this.$store.state.CityName)
+        console.log('name1*1-4',this.$store.state.CityName)
         this.scrollTopId=""  //清空
         this.scrollTopId= 'currentcity'
         this.searchlist=[]
