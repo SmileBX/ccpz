@@ -358,12 +358,12 @@ export default {
     this.setBarTitle();
     location(this).then(res => {
       this.cityCode = res.CityCode;
+      this.menuTab = -1;
+      this.recomendList = [];
       this.getList();
     });
   },
   onShow() {
-    this.menuTab = -1;
-    this.recomendList = [];
     this.curPage = getCurrentPageUrlWithArgs();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");

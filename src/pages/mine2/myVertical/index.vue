@@ -73,7 +73,7 @@
               <input type="checkbox" :checked="agreen" @click="agreen=!agreen" class="checkbox-cart">
               <p>
                 <span>已阅读并同意</span>
-                <span class="fontColor99" @tap="gotoAreement">《成成企业拼租认证服务协议》</span>
+                <span class="fontColor99" @tap="gotoAreement">《成成快拼认证服务协议》</span>
               </p>
             </div>
             <div class="ftBtn center">
