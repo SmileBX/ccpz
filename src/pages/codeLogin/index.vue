@@ -45,15 +45,16 @@ export default {
   overflow: hidden;
 }
 .logo {
-  width: 466rpx;
-  height: 100rpx;
+  width: 366rpx;
+  height: 366rpx;
+  border-radius:50%;
   display: block;
   margin: 0 auto;
   margin-bottom: 80rpx;
 }
 .LoginBox{
   border-top:1px solid #f2f2f2;
-  padding:206rpx 70rpx 70rpx; 
+  padding:150rpx 70rpx 70rpx; 
 }
 .from .line{
   border-bottom: 1px solid #f2f2f2;

@@ -85,7 +85,7 @@ export default {
   padding:60rpx 30rpx;
 }
 .about .logo{
-  width: 70%;
+  width: 60%;
   margin:20rpx auto;
 }
 .about .info{
