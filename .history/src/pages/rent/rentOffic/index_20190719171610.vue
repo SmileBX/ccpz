@@ -1300,14 +1300,14 @@
               </div>
               
               <!--职位弹层-->
-              <div class="mask" v-if="item.ShowWork" @tap="cancle2(pindex)"></div>
+              <div class="mask" v-if="item.ShowWork" :class="showNoChange?'noParActive':''"  @tap="cancle2(pindex)"></div>
               <div class="maskType boxSize" v-if="item.ShowWork" style="left:0">
                   <div class="flex">
                       <span class="size" @tap="cancle2(pindex)">取消</span>
                       <span class="title">{{masktitle2}}</span>
                       <span class="color size" @tap="subConfirm2(pindex)">确定</span>
                   </div>
-                  <scroll-view :scroll-y="true"  style="height:480rpx;" class="showItem">
+                  <scroll-view :scroll-y="true" :style="showNoChange?'height:200rpx':''" style="height:480rpx;"  class="showItem">
                       <div v-for="(item,index) in list" :key="index">
                           <p :class="{'itemactive':statu == index}" @tap="chose(index)" style="margin-top:3rpx;">{{item.Name}}
                           </p>
@@ -1965,7 +1965,7 @@ export default {
         this.statu = e
     },
     subConfirm2(n){
-      console.log(this.showTouchTreat,"this.showTouchTreat")
+      console.log(n)
       console.log(this.PartnerList)
         if(this.showTouchEducation){
           console.log("this.list:",this.list)
@@ -1988,7 +1988,7 @@ export default {
         this.PartnerList[n].ShowTreatment = false
         this.showTouchEducation = false
         this.showTouchTreat = false
-        this.showJobType = false
+        this.showshowJobType = false
         this.statu = 0
         this.list = []
 

@@ -1965,7 +1965,7 @@ export default {
         this.statu = e
     },
     subConfirm2(n){
-      console.log(this.showTouchTreat,"this.showTouchTreat")
+      console.log(n)
       console.log(this.PartnerList)
         if(this.showTouchEducation){
           console.log("this.list:",this.list)
@@ -1988,7 +1988,7 @@ export default {
         this.PartnerList[n].ShowTreatment = false
         this.showTouchEducation = false
         this.showTouchTreat = false
-        this.showJobType = false
+        this.showshowJobType = false
         this.statu = 0
         this.list = []
 

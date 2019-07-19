@@ -1221,11 +1221,12 @@
                   <input
                     class="ipt"
                     type="text"
+                    disabled
                     placeholder="请输入"
                     v-model="item.Degree"
+                    @tap="touchEducation(pindex)"
                     placeholder-style="color:#b5b5b5;"
                   >
-                  <!-- disabled @tap="touchEducation(pindex)"-->
                 </div>
               </div>
               <div class="form-cells-item form-cells-item2">
@@ -1256,12 +1257,11 @@
                   <input
                     class="ipt"
                     type="text"
-                    disabled
                     placeholder="请选择"
                     v-model="item.Treatment"
-                    @tap="choseTreament(pindex)"
                     placeholder-style="color:#b5b5b5;"
                   >
+                   <!--disabled @tap="choseTreament(pindex)" -->
                 </div>
                 
               </div>
@@ -1300,14 +1300,14 @@
               </div>
               
               <!--职位弹层-->
-              <div class="mask" v-if="item.ShowWork" @tap="cancle2(pindex)"></div>
+              <div class="mask" v-if="item.ShowWork" :class="showNoChange?'noParActive':''"  @tap="cancle2(pindex)"></div>
               <div class="maskType boxSize" v-if="item.ShowWork" style="left:0">
                   <div class="flex">
                       <span class="size" @tap="cancle2(pindex)">取消</span>
                       <span class="title">{{masktitle2}}</span>
                       <span class="color size" @tap="subConfirm2(pindex)">确定</span>
                   </div>
-                  <scroll-view :scroll-y="true"  style="height:480rpx;" class="showItem">
+                  <scroll-view :scroll-y="true" :style="showNoChange?'height:200rpx':''" style="height:480rpx;"  class="showItem">
                       <div v-for="(item,index) in list" :key="index">
                           <p :class="{'itemactive':statu == index}" @tap="chose(index)" style="margin-top:3rpx;">{{item.Name}}
                           </p>
@@ -1508,7 +1508,6 @@ export default {
       PartnerList:[],
       showTouchEducation:false,//组件要求学历标识
       showTouchTreat:false,//待遇
-      showJobType:false,
       
       RentTimeLimit:"",//租赁期限
       ContentDetail:"",//办公室环境描述
@@ -1916,7 +1915,10 @@ export default {
         }else{
           this.PlanStartTime = `${year}-${month}-${dd}`;
           this.PlanBuyDate = `${year}-${month}-${dd}`;
+          
+
         }
+        
         this.showDate = false
         this.timeFlag = false
         
@@ -1965,7 +1967,7 @@ export default {
         this.statu = e
     },
     subConfirm2(n){
-      console.log(this.showTouchTreat,"this.showTouchTreat")
+      console.log(n)
       console.log(this.PartnerList)
         if(this.showTouchEducation){
           console.log("this.list:",this.list)
@@ -1977,9 +1979,6 @@ export default {
             // npm this.EducationLvl = this.list[i].Name
             this.PartnerList[n].Treatment = this.list[this.statu].Name
         }
-        if(this.showJobType){
-          this.PartnerList[n].JobType = this.list[this.statu].Name
-        }
         this.isShowMask = false
         this.showNoChange = false
         this.ShowTime = false
@@ -1987,8 +1986,7 @@ export default {
         this.PartnerList[n].ShowWork = false
         this.PartnerList[n].ShowTreatment = false
         this.showTouchEducation = false
-        this.showTouchTreat = false
-        this.showJobType = false
+         this.showTouchTreat = false
         this.statu = 0
         this.list = []
 
@@ -2224,10 +2222,6 @@ export default {
     getJobType(n){
       this.PartnerList[n].ShowWork = true
       this.masktitle2 = '请选择工作类型'
-      this.showJobType = true
-      this.list = [
-        {Id:1,Name:'全职'},{Id:2,Name:'兼职'}
-      ]
     },
     //选择待遇
     choseTreament(n){

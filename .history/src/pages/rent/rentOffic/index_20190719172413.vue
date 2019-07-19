@@ -1988,7 +1988,7 @@ export default {
         this.PartnerList[n].ShowTreatment = false
         this.showTouchEducation = false
         this.showTouchTreat = false
-        this.showJobType = false
+        this.showshowJobType = false
         this.statu = 0
         this.list = []
 
