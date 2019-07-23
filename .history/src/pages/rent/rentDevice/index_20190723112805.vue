@@ -1811,18 +1811,16 @@ export default {
                 wx.showModal({
                     title:'请先认证才可以发布',
                     content:'是否跳转到认证页面',
-                    success:(result)=>{
-                      if (result.confirm) {
+                    success:()=>{
+                      if (res.confirm) {
                          setTimeout(() => {
                           wx.navigateTo({
                             url: "/pages/mine2/myVertical/main?url=rentDevice"
                           });
                           this.mm ++
                     }, 1500);
-                        } else if (result.cancel) {
-                          wx.switchTab({
-                            url:"/pages/my/main"
-                          })
+                        } else if (res.cancel) {
+                          console.log('用户点击取消')
                         }
                     }
                   })
@@ -1848,18 +1846,16 @@ export default {
                 wx.showModal({
                     title:'请先认证才可以发布',
                     content:'是否跳转到认证页面',
-                    success:(result)=>{
-                      if (result.confirm) {
+                    success:()=>{
+                      if (res.confirm) {
                          setTimeout(() => {
                           wx.navigateTo({
                             url: "/pages/mine2/verticalCompany/main?url=rentDevice"
                           });
                           this.mm ++
                     }, 1500);
-                        } else if (result.cancel) {
-                          wx.switchTab({
-                            url:"/pages/my/main"
-                          })
+                        } else if (res.cancel) {
+                          console.log('用户点击取消')
                         }
                     }
                   })

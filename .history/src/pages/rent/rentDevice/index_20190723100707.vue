@@ -1286,7 +1286,6 @@ export default {
      
 
     };
-    
   },
   onLoad() {
     this.mm = 0
@@ -1304,13 +1303,13 @@ export default {
     console.log("PageId",this.PageId);
     this.initData()
     // console.log(this.mm,"{{{{{{{{{{{{{{{{{{{{{")
-    // if(this.mm>=1){
-    //   wx.switchTab({
-    //     url:"/pages/my/main"
-    //   })
-    // }else{
+    if(this.mm>=1){
+      wx.switchTab({
+        url:"/pages/my/main"
+      })
+    }else{
       this.GetPublishItems()
-    // }
+    }
    
     
   },
@@ -1332,39 +1331,25 @@ export default {
     },
 
     addDeviceNum(e){
-      // console.log(this.Devicelist,"PPPPPPPPPP")
-      let num = 0
-      this.Devicelist.map(item=>{
-        if(item.active){
-          num++
-        }
-      })
       if(this.Devicelist[e].Name=="自定义+"){
-        if(num<=10){
-          this.isShowMask = true
-          this.showNoChange = true
-          this.showInput=true
-          this.masktitle = '请输入自定义的内容'
-        }else{
-          wx.showToast({
-            title:"最多添加10组哦~",
-            icon:"none"
-          })
-        }
+        this.isShowMask = true
+        this.showNoChange = true
+        this.showInput=true
+        this.masktitle = '请输入自定义的内容'
       }else{
+        let num = 0
+        num++
+        if(num>10){
+          console.log("超过啦")
+        }else{
           if(this.Devicelist[e].active){
             this.$set(this.Devicelist[e],"active",false)
           }else{
-              if(num>10){
-                wx.showToast({
-                  title:"最多添加10组哦~",
-                  icon:"none"
-                })
-              }else{
-                  this.$set(this.Devicelist[e],"active",true)
-              }
-            
+            this.$set(this.Devicelist[e],"active",true)
           }
+        }
+       
+        
       }
     },
     onChangeAddr(event){  //选择的时候
@@ -1767,18 +1752,18 @@ export default {
               });
               obj[item.Name] = objArr;
               that.tradeList = Object.assign(that.tradeList,obj);
-              }),
-              that.columns.push(
-                  {
-                  values: Object.keys(that.tradeList),
-                  className: "column1"
-                  },
-                  {
-                    values: that.tradeList[Object.keys(that.tradeList)[0]],
-                    className: 'column2',
-                    defaultIndex: 0
-                  }
-                )
+            }),
+            that.columns.push(
+                {
+                values: Object.keys(that.tradeList),
+                className: "column1"
+                },
+                {
+                  values: that.tradeList[Object.keys(that.tradeList)[0]],
+                  className: 'column2',
+                  defaultIndex: 0
+                }
+              )
             }
             //公司的信息
             if(res.data.CompanyList.length>1){
@@ -1789,83 +1774,38 @@ export default {
                 this.CompanyId = res.data.CompanyList[0].Id
                 console.log(this.Company,"this.companyName")
             }
-          }
         }else{
             //没有认证 先去认证  code=5 企业认证  code=6个人认证
-            if(res.code==6){
-              if(this.mm<1){
-                wx.showToast({
-                  title:res.msg,
-                  duration:1500,
-                  icon:'none',
-                  success:()=>{
-                    setTimeout(() => {
-                      wx.navigateTo({
-                        url: "/pages/mine2/myVertical/main?url=rentDevice"
-                      });
-                      this.mm ++
-                    }, 1500);
-                  }
-                })
-              }else{
-                wx.showModal({
-                    title:'请先认证才可以发布',
-                    content:'是否跳转到认证页面',
-                    success:(result)=>{
-                      if (result.confirm) {
-                         setTimeout(() => {
-                          wx.navigateTo({
-                            url: "/pages/mine2/myVertical/main?url=rentDevice"
-                          });
-                          this.mm ++
-                    }, 1500);
-                        } else if (result.cancel) {
-                          wx.switchTab({
-                            url:"/pages/my/main"
-                          })
-                        }
-                    }
-                  })
-              }
-              
-            }else if(res.code==5){
-              console.log(this.mm,"mmmmmmmm")
-              if(this.mm<1){
-                wx.showToast({
-                  title:res.msg,
-                  duration:1500,
-                  icon:'none',
-                  success:()=>{
-                    setTimeout(() => {
-                      wx.navigateTo({
-                        url: "/pages/mine2/verticalCompany/main?url=rentDevice"
-                      });
-                      this.mm ++
-                    }, 1500);
-                  }
-                })
-              }else{
-                wx.showModal({
-                    title:'请先认证才可以发布',
-                    content:'是否跳转到认证页面',
-                    success:(result)=>{
-                      if (result.confirm) {
-                         setTimeout(() => {
-                          wx.navigateTo({
-                            url: "/pages/mine2/verticalCompany/main?url=rentDevice"
-                          });
-                          this.mm ++
-                    }, 1500);
-                        } else if (result.cancel) {
-                          wx.switchTab({
-                            url:"/pages/my/main"
-                          })
-                        }
-                    }
-                  })
-              }
-              
+            if(res.code==6 && this.mm<1){
+              wx.showToast({
+                title:res.msg,
+                duration:1500,
+                icon:'none',
+                success:()=>{
+                  setTimeout(() => {
+                    wx.navigateTo({
+                      url: "/pages/mine2/myVertical/main?url=rentDevice"
+                    });
+                    this.mm ++
+                  }, 1500);
+                }
+              })
+            }else if(res.code==5 && this.mm<1){
+              wx.showToast({
+                title:res.msg,
+                duration:1500,
+                icon:'none',
+                success:()=>{
+                  setTimeout(() => {
+                    wx.navigateTo({
+                      url: "/pages/mine2/verticalCompany/main?url=rentDevice"
+                    });
+                    this.mm ++
+                  }, 1500);
+                }
+              })
             }
+          }
         }
       })
     },

@@ -1304,13 +1304,13 @@ export default {
     console.log("PageId",this.PageId);
     this.initData()
     // console.log(this.mm,"{{{{{{{{{{{{{{{{{{{{{")
-    // if(this.mm>=1){
-    //   wx.switchTab({
-    //     url:"/pages/my/main"
-    //   })
-    // }else{
+    if(this.mm>=1){
+      wx.switchTab({
+        url:"/pages/my/main"
+      })
+    }else{
       this.GetPublishItems()
-    // }
+    }
    
     
   },
@@ -1811,25 +1811,22 @@ export default {
                 wx.showModal({
                     title:'请先认证才可以发布',
                     content:'是否跳转到认证页面',
-                    success:(result)=>{
-                      if (result.confirm) {
+                    success:()=>{
+                      if (res.confirm) {
                          setTimeout(() => {
                           wx.navigateTo({
                             url: "/pages/mine2/myVertical/main?url=rentDevice"
                           });
                           this.mm ++
                     }, 1500);
-                        } else if (result.cancel) {
-                          wx.switchTab({
-                            url:"/pages/my/main"
-                          })
+                        } else if (res.cancel) {
+                          console.log('用户点击取消')
                         }
                     }
                   })
               }
               
             }else if(res.code==5){
-              console.log(this.mm,"mmmmmmmm")
               if(this.mm<1){
                 wx.showToast({
                   title:res.msg,
@@ -1848,18 +1845,16 @@ export default {
                 wx.showModal({
                     title:'请先认证才可以发布',
                     content:'是否跳转到认证页面',
-                    success:(result)=>{
-                      if (result.confirm) {
+                    success:()=>{
+                      if (res.confirm) {
                          setTimeout(() => {
                           wx.navigateTo({
                             url: "/pages/mine2/verticalCompany/main?url=rentDevice"
                           });
                           this.mm ++
                     }, 1500);
-                        } else if (result.cancel) {
-                          wx.switchTab({
-                            url:"/pages/my/main"
-                          })
+                        } else if (res.cancel) {
+                          console.log('用户点击取消')
                         }
                     }
                   })
