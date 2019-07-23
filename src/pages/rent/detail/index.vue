@@ -112,13 +112,13 @@ export default {
         // 实缴资本
         Company["RealCapital"] && CompanyInfo.push(Company["RealCapital"]);
         // 社会信用代码
-        Company["RegNum"] && CompanyInfo.push(Company["RegNum"]);
+        // Company["RegNum"] && CompanyInfo.push(Company["RegNum"]);
         // 营业执照上传
-        Company["BusinessLicense"] && CompanyInfo.push(Company["BusinessLicense"]);
+        // Company["BusinessLicense"] && CompanyInfo.push(Company["BusinessLicense"]);
         // 其他资质证书上传
-        Company["OtherSeniority"] && CompanyInfo.push(Company["OtherSeniority"]);
+        // Company["OtherSeniority"] && CompanyInfo.push(Company["OtherSeniority"]);
         // 官网
-        Company["OfficialWebsite"] && CompanyInfo.push(Company["OfficialWebsite"]);
+        // Company["OfficialWebsite"] && CompanyInfo.push(Company["OfficialWebsite"]);
         res.data.CompanyInfos =CompanyInfo
       }
       this.data = res.data
