@@ -943,7 +943,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">月租金</div>
+                  <div class="form-cells-hd">日租金</div>
                   <div class="flex flexAlignCenter justifyContentCenter">
                       <input
                         class="ipt flex2"

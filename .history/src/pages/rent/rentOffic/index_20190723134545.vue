@@ -88,7 +88,7 @@
                   <div class="form-cells-hd">活动价格</div>
                   <input
                     class="ipt"
-                    type="number"
+                    type="text"
                     placeholder="请输入"
                     v-model="PropertyPrice"
                     placeholder-style="color:#b5b5b5;"
@@ -217,7 +217,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd" style="position:relative;">面积（&nbsp;m<span style="position:absolute;font-size:18rpx">2</span>&nbsp;&nbsp;）</div>
+                  <div class="form-cells-hd">面积</div>
                   <input
                     class="ipt"
                     type="text"
@@ -252,7 +252,7 @@
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
-                <!-- <div class="item2-column">
+                <div class="item2-column">
                   <div class="form-cells-hd" v-if="PageId==43">机构名称</div>
                   <div class="form-cells-hd" v-if="PageId==32">公司名称</div>
                   <div class="form-cells-hd" v-if="PageId==33">团队名称</div>
@@ -263,7 +263,7 @@
                     v-model="Founder"
                     placeholder-style="color:#b5b5b5;"
                   >
-                </div> -->
+                </div>
               </div>
           </div>
           <div v-if="PageId==34">
@@ -367,7 +367,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd" style="position:relative;">面积（&nbsp;m<span style="position:absolute;font-size:18rpx">2</span>&nbsp;&nbsp;）</div>
+                  <div class="form-cells-hd">面积</div>
                   <input
                     class="ipt"
                     type="text"
@@ -479,7 +479,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">转让费</div>
+                  <div class="form-cells-hd">租金/转让费</div>
                   <input
                     class="ipt"
                     type="text"
@@ -491,10 +491,10 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">月租金（元）</div>
+                  <div class="form-cells-hd">日租金</div>
                   <input
                     class="ipt"
-                    type="number"
+                    type="text"
                     placeholder="请输入"
                     v-model="DeviceRent"
                     placeholder-style="color:#b5b5b5;"
@@ -541,7 +541,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd" style="position:relative;">面积（&nbsp;m<span style="position:absolute;font-size:18rpx">2</span>&nbsp;&nbsp;）</div>
+                  <div class="form-cells-hd">面积</div>
                   <input
                     class="ipt"
                     type="text"
@@ -631,10 +631,10 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">租金（元）</div>
+                  <div class="form-cells-hd">租金</div>
                   <input
                     class="ipt"
-                    type="number"
+                    type="text"
                     placeholder="请输入"
                     v-model="PropertyPrice"
                     placeholder-style="color:#b5b5b5;"
@@ -697,7 +697,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd" style="position:relative;">面积（&nbsp;m<span style="position:absolute;font-size:18rpx">2</span>&nbsp;&nbsp;）</div>
+                  <div class="form-cells-hd">面积</div>
                   <input
                     class="ipt"
                     type="text"
@@ -743,10 +743,10 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">租金（元）</div>
+                  <div class="form-cells-hd">租金</div>
                   <input
                     class="ipt"
-                    type="number"
+                    type="text"
                     placeholder="请输入"
                     v-model="PropertyPrice"
                     placeholder-style="color:#b5b5b5;"
@@ -755,10 +755,10 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">月租金（元）</div>
+                  <div class="form-cells-hd">日租金</div>
                   <input
                     class="ipt"
-                    type="number"
+                    type="text"
                     placeholder="请输入"
                     v-model="DeviceRent"
                     placeholder-style="color:#b5b5b5;"
@@ -781,7 +781,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd" style="position:relative;">面积（&nbsp;m<span style="position:absolute;font-size:18rpx">2</span>&nbsp;&nbsp;）</div>
+                  <div class="form-cells-hd">面积</div>
                   <input
                     class="ipt"
                     type="text"
@@ -831,7 +831,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd" style="position:relative;">面积（&nbsp;m<span style="position:absolute;font-size:18rpx">2</span>&nbsp;&nbsp;）</div>
+                  <div class="form-cells-hd">面积</div>
                   <input
                     class="ipt"
                     type="text"
@@ -945,10 +945,10 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">租金（元）</div>
+                  <div class="form-cells-hd">租金</div>
                   <input
                     class="ipt"
-                    type="number"
+                    type="text"
                     placeholder="请输入"
                     v-model="PropertyPrice"
                     placeholder-style="color:#b5b5b5;"
@@ -983,7 +983,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd" style="position:relative;">面积（&nbsp;m<span style="position:absolute;font-size:18rpx">2</span>&nbsp;&nbsp;）</div>
+                  <div class="form-cells-hd">面积</div>
                   <input
                     class="ipt"
                     type="text"
@@ -1075,16 +1075,16 @@
               </div>
           </div>
           <!--组件公司名称-->
-          <div class="form-cells-item" v-if="PageId==43|| PageId==32 ||PageId==33">
+          <div class="form-cells-item">
             <div class="">
                   <div class="form-cells-hd" v-if="PageId==43">机构名称</div>
-                  <div class="form-cells-hd" v-if="PageId==32">企业名称</div>
+                  <div class="form-cells-hd" v-if="PageId==32">公司名称</div>
                   <div class="form-cells-hd" v-if="PageId==33">团队名称</div>
               <div class="form-cell-bd">
                 <input
                     class="ipt"
                     type="text"
-                    placeholder="请输入名称"
+                    placeholder="请输入"
                     v-model="Founder"
                     placeholder-style="color:#b5b5b5;"
                   >
@@ -1667,37 +1667,17 @@ export default {
         this.showDate = true
     },
     addDeviceNum(e){
-      let num = 0
-      this.Devicelist.map(item=>{
-        if(item.active){
-          num++
-        }
-      })
       if(this.Devicelist[e].Name=="自定义+"){
-        if(num<=10){
-          this.isShowMask = true
-          this.showNoChange = true
-          this.showInput=true
-          console.log(this.showInput,"showInput")
-          this.masktitle = '请输入自定义的内容'
-        }else{
-          wx.showToast({
-            title:"最多添加10组哦~",
-            icon:"none"
-          })
-        }
+        this.isShowMask = true
+        this.showNoChange = true
+        this.showInput=true
+        console.log(this.showInput,"showInput")
+        this.masktitle = '请输入自定义的内容'
       }else{
         if(this.Devicelist[e].active){
           this.$set(this.Devicelist[e],"active",false)
         }else{
-          if(num>10){
-              wx.showToast({
-                title:"最多添加10组哦~",
-                icon:"none"
-              })
-            }else{
-                this.$set(this.Devicelist[e],"active",true)
-            }
+          this.$set(this.Devicelist[e],"active",true)
         }
       }
     },

@@ -309,7 +309,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">所需面积(m²)</div>
+                  <div class="form-cells-hd">所需面积</div>
                   <input
                     class="ipt"
                     type="text"
@@ -422,7 +422,7 @@
                   <div class="form-cells-hd">设备租金</div>
                   <input
                       class="ipt"
-                      type="number"
+                      type="text"
                       placeholder="请输入"
                       v-model="PropertyPrice"
                      placeholder-style="color:#b5b5b5;"
@@ -641,7 +641,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">总面积(m²)</div>
+                  <div class="form-cells-hd">总面积</div>
                   <input
                       class="ipt"
                       type="text"
@@ -653,7 +653,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">出租面积(m²)</div>
+                  <div class="form-cells-hd">出租面积</div>
                   <input
                       class="ipt"
                       type="text"
@@ -777,7 +777,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">总面积(m²)</div>
+                  <div class="form-cells-hd">总面积</div>
                   <input
                     class="ipt"
                     type="text"
@@ -787,7 +787,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">出租面积(m²)</div>
+                  <div class="form-cells-hd">出租面积</div>
                   <input
                     class="ipt"
                     type="text"
@@ -916,7 +916,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">面积(m²)</div>
+                  <div class="form-cells-hd">面积</div>
                   <input
                     class="ipt"
                     type="text"
@@ -927,7 +927,7 @@
                 <div class="item2-column">
                   <div class="form-cells-hd">租金</div>
                   <div class="flex flexAlignCenter justifyContentCenter">
-                      <input class="ipt" type="number"  placeholder="请填写" placeholder-style="color:#b5b5b5;">元/m <span class="sup">2</span> 
+                      <input class="ipt" type="text"  placeholder="请填写" placeholder-style="color:#b5b5b5;">元/m <span class="sup">2</span> 
                   </div>
                 </div>
               </div>
@@ -943,11 +943,11 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">月租金</div>
+                  <div class="form-cells-hd">日租金</div>
                   <div class="flex flexAlignCenter justifyContentCenter">
                       <input
                         class="ipt flex2"
-                        type="number"
+                        type="text"
                         placeholder="请选择"
                         placeholder-style="color:#b5b5b5;"
                         style="padding:0"
@@ -1799,15 +1799,14 @@ export default {
                   duration:1500,
                   icon:'none',
                   success:()=>{
-                    
+                    setTimeout(() => {
+                      wx.navigateTo({
+                        url: "/pages/mine2/myVertical/main?url=rentDevice"
+                      });
+                      this.mm ++
+                    }, 1500);
                   }
                 })
-                setTimeout(() => {
-                  wx.navigateTo({
-                    url: "/pages/mine2/myVertical/main?url=rentDevice"
-                  });
-                  this.mm ++
-                }, 1500);
               }else{
                 wx.showModal({
                     title:'请先认证才可以发布',
@@ -1836,6 +1835,9 @@ export default {
                   title:res.msg,
                   duration:1500,
                   icon:'none',
+                  success:()=>{
+                    console.log("JJJJJJJJJJJJJJJJJ")
+                  }
                 })
                 setTimeout(() => {
                   wx.navigateTo({
@@ -1844,7 +1846,7 @@ export default {
                   this.mm ++
                 }, 1500);
               }else if(this.mm>=1){
-                wx.showModal({ //后天添加了提示导致两次提示
+                wx.showModal({
                     title:'请先认证才可以发布',
                     content:'是否跳转到认证页面',
                     success:(result)=>{

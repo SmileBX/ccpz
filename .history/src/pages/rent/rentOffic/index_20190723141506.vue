@@ -88,7 +88,7 @@
                   <div class="form-cells-hd">活动价格</div>
                   <input
                     class="ipt"
-                    type="number"
+                    type="text"
                     placeholder="请输入"
                     v-model="PropertyPrice"
                     placeholder-style="color:#b5b5b5;"
@@ -494,7 +494,7 @@
                   <div class="form-cells-hd">月租金（元）</div>
                   <input
                     class="ipt"
-                    type="number"
+                    type="text"
                     placeholder="请输入"
                     v-model="DeviceRent"
                     placeholder-style="color:#b5b5b5;"
@@ -634,7 +634,7 @@
                   <div class="form-cells-hd">租金（元）</div>
                   <input
                     class="ipt"
-                    type="number"
+                    type="text"
                     placeholder="请输入"
                     v-model="PropertyPrice"
                     placeholder-style="color:#b5b5b5;"
@@ -746,7 +746,7 @@
                   <div class="form-cells-hd">租金（元）</div>
                   <input
                     class="ipt"
-                    type="number"
+                    type="text"
                     placeholder="请输入"
                     v-model="PropertyPrice"
                     placeholder-style="color:#b5b5b5;"
@@ -758,7 +758,7 @@
                   <div class="form-cells-hd">月租金（元）</div>
                   <input
                     class="ipt"
-                    type="number"
+                    type="text"
                     placeholder="请输入"
                     v-model="DeviceRent"
                     placeholder-style="color:#b5b5b5;"
@@ -948,7 +948,7 @@
                   <div class="form-cells-hd">租金（元）</div>
                   <input
                     class="ipt"
-                    type="number"
+                    type="text"
                     placeholder="请输入"
                     v-model="PropertyPrice"
                     placeholder-style="color:#b5b5b5;"
@@ -1667,37 +1667,17 @@ export default {
         this.showDate = true
     },
     addDeviceNum(e){
-      let num = 0
-      this.Devicelist.map(item=>{
-        if(item.active){
-          num++
-        }
-      })
       if(this.Devicelist[e].Name=="自定义+"){
-        if(num<=10){
-          this.isShowMask = true
-          this.showNoChange = true
-          this.showInput=true
-          console.log(this.showInput,"showInput")
-          this.masktitle = '请输入自定义的内容'
-        }else{
-          wx.showToast({
-            title:"最多添加10组哦~",
-            icon:"none"
-          })
-        }
+        this.isShowMask = true
+        this.showNoChange = true
+        this.showInput=true
+        console.log(this.showInput,"showInput")
+        this.masktitle = '请输入自定义的内容'
       }else{
         if(this.Devicelist[e].active){
           this.$set(this.Devicelist[e],"active",false)
         }else{
-          if(num>10){
-              wx.showToast({
-                title:"最多添加10组哦~",
-                icon:"none"
-              })
-            }else{
-                this.$set(this.Devicelist[e],"active",true)
-            }
+          this.$set(this.Devicelist[e],"active",true)
         }
       }
     },
