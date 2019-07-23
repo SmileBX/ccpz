@@ -11,21 +11,22 @@
         <div class="flex flexAlignCenter boxSize p2 justifyContentEnd plr20" v-if="msg.MsgId=='a'">
           <div class="flex flexAlignEnd justifyContentEnd mrr2">
             <!-- <span class="fontColor" @click="scrollBottom">已读</span> -->
-            <div class="tagmsg cfff">
+            <!-- <div class="tagmsg cfff"> -->
+            <div class="tagmsg" v-if="msg.Info">
               <!-- <p v-if="msg.Info" class="boxSize">{{msg.Info}}</p> -->
-              <p v-if="msg.Info" class="boxSize" v-html="msg.Info"></p>
+              <p class="boxSize" v-html="msg.Info"></p>
 
               <!-- :onload="scrollBottom()" -->
-              <img
-                class="sendImg"
-                mode="widthFix"
-                v-if="msg.Pic"
-                :src="msg.Pic"
-                alt
-                @click="previewImg(msg.Pic)"
-              />
               <span class="sj rsj"></span>
             </div>
+            <img
+              class="sendImg"
+              mode="widthFix"
+              v-if="msg.Pic"
+              :src="msg.Pic"
+              alt
+              @click="previewImg(msg.Pic)"
+            />
           </div>
           <div class="avatarbox mr0" v-if="chatStatu.a">
             <img :src="chatStatu.a.Headimgurl" alt class="avatar" />
@@ -37,20 +38,20 @@
           </div>
           <div class="flex flexAlignEnd mrl2">
             <!-- <span class="fontColor">已读</span> -->
-            <div class="tagmsg bg_fff black">
+            <div class="tagmsg bg_fff black" v-if="msg.Info">
               <span class="sj lsj"></span>
               <!-- <p v-if="msg.Info" class="boxSize" style="color:#1a1a1a">{{msg.Info}}</p> -->
-              <p v-if="msg.Info" class="boxSize" v-html="msg.Info"></p>
+              <p class="boxSize" v-html="msg.Info"></p>
               <!-- :onload="scrollBottom()" -->
-              <img
-                class="sendImg"
-                mode="widthFix"
-                v-if="msg.Pic"
-                :src="msg.Pic"
-                alt
-                @click="previewImg(msg.Pic)"
-              />
             </div>
+            <img
+              class="sendImg"
+              mode="widthFix"
+              v-if="msg.Pic"
+              :src="msg.Pic"
+              alt
+              @click="previewImg(msg.Pic)"
+            />
           </div>
         </div>
       </div>
@@ -194,7 +195,7 @@ export default {
       token: "",
       curPage: "",
       FriendId: "", //好友ID
-      TempId:'',//临时联系id
+      TempId: "", //临时联系id
       isShowMask: false, //是否展示遮罩层
       showModule: "", //展示图片组；emotion：表情。message:常用语。imgage:照片
       messageType: [], //常用语分类
@@ -329,7 +330,7 @@ export default {
           UserId: this.userId,
           Token: this.token,
           FriendId: this.FriendId * 1,
-          TempId:this.TempId*1
+          TempId: this.TempId * 1
         },
         this.curPage
       );
@@ -404,7 +405,7 @@ export default {
             UserId: this.userId,
             Token: this.token,
             FriendId: this.FriendId * 1,
-            TempId:this.TempId*1,
+            TempId: this.TempId * 1,
             Page: this.page,
             PageSize: this.pageSize
           },
@@ -496,7 +497,7 @@ export default {
           UserId: this.userId,
           Token: this.token,
           FriendId: this.FriendId * 1,
-          TempId:this.TempId*1,
+          TempId: this.TempId * 1,
           Info: sendInfo,
           Pic: imgBase,
           Lat: lat,
@@ -718,7 +719,7 @@ export default {
       list.map((item, index) => {
         emotionArr.push({
           name: `[${item}]`,
-          url: `<img style="width:30px;height:30px;" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif">`
+          url: `<img style="width:25px;height:25px;" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif">`
         });
       });
       this.emotionArr = emotionArr;
@@ -903,9 +904,15 @@ export default {
   padding: 15rpx;
   font-size: 30rpx;
   word-break: break-all;
+  background: #fff;
+  color: #000;
   p {
     word-break: break-all;
   }
+}
+.rsj {
+  background: #fff;
+  border: 6rpx solid #fff;
 }
 // 表情
 .emotion {
