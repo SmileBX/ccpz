@@ -553,7 +553,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">出租价格</div>
+                  <div class="form-cells-hd">出售价格</div>
                   <input
                       class="ipt"
                       type="text"

@@ -393,7 +393,7 @@ export default {
   methods: {
     initData() {
       this.getBannerList(1); //获取banner
-      this.getBannerList(3); //优质房源广告位
+      // this.getBannerList(3); //优质房源广告位
       this.getBannerList(4); //成成企业拼租广告位
       this.getpublishType();
       this.getNews();
