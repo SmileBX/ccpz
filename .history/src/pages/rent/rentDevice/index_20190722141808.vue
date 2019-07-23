@@ -830,22 +830,13 @@
             <!-- <div class="form-cells-navigate navigate-right"> -->
               <div class="form-cells-hd">公司简介</div>
               <div class="form-cell-bd">
-                  <textarea
-                  class="ipt"
-                  type="text"
-                  maxlength = "-1"
-                  placeholder="请填写公司详细简介"
-                  style="height:200rpx!important;"
-                  v-model="Synopsis"
-                  placeholder-style="color:#b5b5b5;"
-                ></textarea>
-                <!-- <input
+                <input
                   class="ipt"
                   type="text"
                   placeholder="请填写公司详细简介"
                   v-model="Synopsis"
                   placeholder-style="color:#b5b5b5;"
-                > -->
+                >
               </div>
             </div>
           </div>
@@ -854,22 +845,14 @@
             <div class="">
               <div class="form-cells-hd">公司理念</div>
               <div class="form-cell-bd">
-                <textarea
-                  class="ipt"
-                  type="text"
-                  maxlength = "-1"
-                  placeholder="请填写公司理念"
-                  style="height:200rpx!important;"
-                  v-model="CompanyCulture"
-                  placeholder-style="color:#b5b5b5;"
-                ></textarea>
-                <!-- <input
+                <input
                   class="ipt"
                   type="text"
                   placeholder="请填写公司详细简介"
+                  style="height:200rpx!important;width:100%!important;" cols="10" rows="2" maxlength="100"
                   v-model="CompanyCulture"
                   placeholder-style="color:#b5b5b5;"
-                > -->
+                >
               </div>
             </div>
           </div>
@@ -882,9 +865,7 @@
                 <textarea
                   class="ipt"
                   type="text"
-                  maxlength = "-1"
                   placeholder="描述拼租细节能够更加吸引优质的候选人哦！"
-                  style="height:200rpx!important;"
                   v-model="ContentDetail"
                   placeholder-style="color:#b5b5b5;"
                 ></textarea>

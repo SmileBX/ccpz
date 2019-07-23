@@ -2084,7 +2084,7 @@ export default {
               time.push(item)
             }
             
-            this.RentTime=time[0]+":"+time[1]+"至"+time[2]+":"+time[3] //时间
+            this.RentTime=time[0]+":"+time[1]+"-"+time[2]+":"+time[3] //时间
         }
     
       }

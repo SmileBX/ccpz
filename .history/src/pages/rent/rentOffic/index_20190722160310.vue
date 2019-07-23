@@ -1079,22 +1079,13 @@
             <div class="">
               <div class="form-cells-hd">{{introduce}}</div>
               <div class="form-cell-bd">
-                <textarea
-                  class="ipt"
-                  type="text"
-                  maxlength = "-1"
-                  :placeholder="introducePlaceholder"
-                  style="height:200rpx!important;"
-                  v-model="Synopsis"
-                  placeholder-style="color:#b5b5b5;"
-                ></textarea>
-                <!-- <input
+                <input
                   class="ipt"
                   type="text"
                   :placeholder="introducePlaceholder"
                   v-model="Synopsis"
                   placeholder-style="color:#b5b5b5;"
-                > -->
+                >
               </div>
             </div>
           </div>
@@ -1103,22 +1094,13 @@
             <div class="">
               <div class="form-cells-hd">{{infoMore}}</div>
               <div class="form-cell-bd">
-                <textarea
-                  class="ipt"
-                  type="text"
-                  maxlength = "-1"
-                  :placeholder="infoMorePlaceHolder"
-                  style="height:200rpx!important;"
-                  v-model="ContentDetail"
-                  placeholder-style="color:#b5b5b5;"
-                ></textarea>
-                <!-- <input
+                <input
                   class="ipt"
                   type="text"
                   :placeholder="infoMorePlaceHolder"
                   v-model="ContentDetail"
                   placeholder-style="color:#b5b5b5;"
-                > -->
+                >
               </div>
             </div>
           </div>
@@ -1153,7 +1135,7 @@
             </div>
           </div>
           <!--选项-->
-          <!--地址/门牌号-->
+          <!--地址-->
           <div class="form-cells-item">
             <div class="">
               <div class="form-cells-hd">{{addrTitle}}</div>
@@ -1748,7 +1730,7 @@ export default {
           this.subTitle = '(产业园/商会/协会/研究所/实验室/慈善会/其他)'
           this.introduce = "机构简介"
           this.introducePlaceholder = "请填写机构详细简介"
-          this.upImgTitle = "请上传相关照片"
+          this.upImgTitle = "请上传相关机构照片"
           this.addrTitle = "地理位置"
           this.addrPlaceholder = "位置名称 如：如京基大厦"
         }
@@ -1788,7 +1770,7 @@ export default {
           this.subTitle = '(将根据您的要求推荐优质候选人)'
           this.introduce = "企业简介"
           this.introducePlaceholder = "请填写企业详细简介"
-          this.upImgTitle = "请上传相关照片"
+          this.upImgTitle = "请上传公司照片"
           this.addrTitle = "公司地址"
           this.addrPlaceholder = "办公楼名称 如：如京基大厦"
         }
@@ -1797,7 +1779,7 @@ export default {
           this.subTitle = '(将根据您的要求推荐优质候选人)'
           this.introduce = "团队简介"
           this.introducePlaceholder = "请填写团队详细简介"
-          this.upImgTitle = "请上传相关照片"
+          this.upImgTitle = "请上传公司照片"
           this.addrTitle = "公司地址"
           this.addrPlaceholder = "办公楼名称 如：如京基大厦"
         }
@@ -1806,7 +1788,7 @@ export default {
           this.subTitle = '(将根据您的要求推荐优质候选人)'
           this.introduce = "圈子简介"
           this.introducePlaceholder = "请填写圈子详细简介"
-          this.upImgTitle = "请上传相关照片"
+          this.upImgTitle = "请上传圈子相关照片"
           this.addrTitle = "圈子地址"
           this.addrPlaceholder = "地址名称 如：如京基大厦"
           
@@ -2084,7 +2066,7 @@ export default {
               time.push(item)
             }
             
-            this.RentTime=time[0]+":"+time[1]+"至"+time[2]+":"+time[3] //时间
+            this.RentTime=time[0]+":"+time[1]+"-"+time[2]+":"+time[3] //时间
         }
     
       }

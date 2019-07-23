@@ -835,7 +835,6 @@
                   type="text"
                   maxlength = "-1"
                   placeholder="请填写公司详细简介"
-                  style="height:200rpx!important;"
                   v-model="Synopsis"
                   placeholder-style="color:#b5b5b5;"
                 ></textarea>
@@ -859,7 +858,7 @@
                   type="text"
                   maxlength = "-1"
                   placeholder="请填写公司理念"
-                  style="height:200rpx!important;"
+                  style="height:300rpx!important;"
                   v-model="CompanyCulture"
                   placeholder-style="color:#b5b5b5;"
                 ></textarea>
@@ -884,7 +883,6 @@
                   type="text"
                   maxlength = "-1"
                   placeholder="描述拼租细节能够更加吸引优质的候选人哦！"
-                  style="height:200rpx!important;"
                   v-model="ContentDetail"
                   placeholder-style="color:#b5b5b5;"
                 ></textarea>

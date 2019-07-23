@@ -63,6 +63,7 @@ export default {
     this.setBarTitle();
   },
   onShow(){
+    
     this.getpublishType()
   },
   components: {},

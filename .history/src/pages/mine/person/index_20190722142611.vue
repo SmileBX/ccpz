@@ -46,7 +46,7 @@
               </block>
               <p class="msgList list_itt">
                 <span class="msgItem" style="font-size:24rpx">个人简介：</span>
-                <span class="msgItem2" style="font-size:24rpx;line-height:1.3" v-if="personInfo.WorkIdea">{{personInfo.WorkIdea}}</span>
+                <span class="msgItem2" style="font-size:24rpx" v-if="personInfo.WorkIdea">{{personInfo.WorkIdea}}</span>
                 <span class="msgItem2" style="font-size:24rpx" v-else>主人很懒...什么也没留下</span>
               </p>
             </div>
@@ -217,7 +217,7 @@
                   <img src="/static/images/icons/con_weixin.jpg" class="icon" alt="">
                   <span>微信</span>
               </p>
-              <span v-if="personInfo.WeChatNum" v-html="personInfo.WeChatNum"></span>
+              <span v-if="personInfo.WeChatNum">{{personInfo.WeChatNum}}</span>
               <span v-else>未填写</span>
             </div>
             <div class="item">
