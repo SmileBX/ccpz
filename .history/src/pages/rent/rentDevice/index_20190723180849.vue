@@ -870,9 +870,9 @@
                   class="ipt"
                   type="text"
                   maxlength = "-1"
-                  placeholder="描述细节能够更加吸引优质的候选人哦！"
+                  placeholder="描述拼租细节能够更加吸引优质的候选人哦！"
                   style="height:200rpx!important;"
-                  v-model="Synopsis"
+                  v-model="ContentDetail"
                   placeholder-style="color:#b5b5b5;"
                 ></textarea>
               </div>
@@ -2097,16 +2097,16 @@ export default {
           }
       }
       if(this.PageId == 29 ||  this.PageId == 28 || this.PageId == 27){
-          // if (this.ContentDetail == '') {
-          //   this.toastTip("请描述办公室环境!")   
-          //   return false;
-          // }
+          if (this.ContentDetail == '') {
+            this.toastTip("请描述办公室环境!")   
+            return false;
+          }
       }
       if(this.PageId == 30 ||this.PageId == 29 || this.PageId == 28 || this.PageId == 27){
-        // if (this.CompanyCulture == '') {
-        //     this.toastTip("请描述公司理念!")
-        //     return false;
-        //   }
+        if (this.CompanyCulture == '') {
+            this.toastTip("请描述公司理念!")
+            return false;
+          }
       }
       if(this.PageId == 30){
           if (this.CompanyDoorNum == '') {
@@ -2221,7 +2221,7 @@ export default {
             NeedOfficeNum:that.NeedOfficeNum,
             DeviceRent:that.DeviceRent,
             DevicePrice:that.DevicePrice,
-            // CompanyCulture:that.CompanyCulture
+            CompanyCulture:that.CompanyCulture
         }
       }else if(that.PageId == 31){
           GoodsInfo = {
@@ -2266,8 +2266,8 @@ export default {
             GladBuyArea:that.GladBuyArea,
             GladBuyAreaId:that.GladBuyAreaId,
             IsStockCooperation:that.IsStockCooperation,
-            // ContentDetail:that.ContentDetail,
-            // CompanyCulture:that.CompanyCulture
+            ContentDetail:that.ContentDetail,
+            CompanyCulture:that.CompanyCulture
         }
       }else if(that.PageId == 28){
           GoodsInfo = {
@@ -2296,7 +2296,7 @@ export default {
             IsStockCooperation:that.IsStockCooperation,
             ServiceName:that.ServiceName,
             CompanyCulture:that.CompanyCulture,
-            // ContentDetail:that.ContentDetail 
+            ContentDetail:that.ContentDetail 
         }
       }else if(that.PageId == 27){
           GoodsInfo = {
@@ -2313,7 +2313,7 @@ export default {
             Synopsis:that.Synopsis,
             GladBuyerTradeId:that.GladBuyerTradeId,
             GladBuyerTrade:that.GladBuyerTrade,
-            // CompanyCulture:that.CompanyCulture,
+            CompanyCulture:that.CompanyCulture,
             PropertyPrice:that.PropertyPrice,
             AllArea:that.AllArea,
             PlanBuyArea:that.PlanBuyArea,
@@ -2325,7 +2325,7 @@ export default {
             IsRegArea:that.IsRegArea,
             IsAllowOtherList:that.IsAllowOtherList,
             ServiceName:that.ServiceName,
-            // ContentDetail:that.ContentDetail 
+            ContentDetail:that.ContentDetail 
         }
       }
       if(that.valOther()){
@@ -2394,10 +2394,10 @@ export default {
       this.DeviceRent = ''
       this.ServiceName = ''
       this.AllArea = ''
-      // this.CompanyCulture = ''
+      this.CompanyCulture = ''
       this.NeedOfficeNum = ''
       this.RentTimeLimit = ''
-      // this.ContentDetail = ''
+      this.ContentDetail = ''
       this.columns2 = []
       this.columns = []
     }
