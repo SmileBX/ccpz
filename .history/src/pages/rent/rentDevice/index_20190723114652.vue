@@ -1799,15 +1799,14 @@ export default {
                   duration:1500,
                   icon:'none',
                   success:()=>{
-                    
+                    setTimeout(() => {
+                      wx.navigateTo({
+                        url: "/pages/mine2/myVertical/main?url=rentDevice"
+                      });
+                      this.mm ++
+                    }, 1500);
                   }
                 })
-                setTimeout(() => {
-                  wx.navigateTo({
-                    url: "/pages/mine2/myVertical/main?url=rentDevice"
-                  });
-                  this.mm ++
-                }, 1500);
               }else{
                 wx.showModal({
                     title:'请先认证才可以发布',
@@ -1836,15 +1835,17 @@ export default {
                   title:res.msg,
                   duration:1500,
                   icon:'none',
+                  success:()=>{
+                    setTimeout(() => {
+                      wx.navigateTo({
+                        url: "/pages/mine2/verticalCompany/main?url=rentDevice"
+                      });
+                      this.mm ++
+                    }, 1500);
+                  }
                 })
-                setTimeout(() => {
-                  wx.navigateTo({
-                    url: "/pages/mine2/verticalCompany/main?url=rentDevice"
-                  });
-                  this.mm ++
-                }, 1500);
               }else if(this.mm>=1){
-                wx.showModal({ //后天添加了提示导致两次提示
+                wx.showModal({
                     title:'请先认证才可以发布',
                     content:'是否跳转到认证页面',
                     success:(result)=>{

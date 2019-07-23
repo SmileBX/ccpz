@@ -1832,11 +1832,11 @@ export default {
             }else if(res.code==5){
               if(this.mm<1){
                 console.log("{{{{{{{{{{{{")
-                wx.showToast({
-                  title:res.msg,
-                  duration:1500,
-                  icon:'none',
-                })
+                // wx.showToast({
+                //   title:res.msg,
+                //   duration:1500,
+                //   icon:'none',
+                // })
                 setTimeout(() => {
                   wx.navigateTo({
                     url: "/pages/mine2/verticalCompany/main?url=rentDevice"
@@ -1844,7 +1844,7 @@ export default {
                   this.mm ++
                 }, 1500);
               }else if(this.mm>=1){
-                wx.showModal({ //后天添加了提示导致两次提示
+                wx.showModal({
                     title:'请先认证才可以发布',
                     content:'是否跳转到认证页面',
                     success:(result)=>{

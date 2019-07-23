@@ -1690,14 +1690,7 @@ export default {
         if(this.Devicelist[e].active){
           this.$set(this.Devicelist[e],"active",false)
         }else{
-          if(num>10){
-              wx.showToast({
-                title:"最多添加10组哦~",
-                icon:"none"
-              })
-            }else{
-                this.$set(this.Devicelist[e],"active",true)
-            }
+          this.$set(this.Devicelist[e],"active",true)
         }
       }
     },

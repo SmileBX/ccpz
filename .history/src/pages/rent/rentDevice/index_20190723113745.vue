@@ -1303,7 +1303,7 @@ export default {
     console.log("TypeId",this.TypeId);
     console.log("PageId",this.PageId);
     this.initData()
-    console.log(this.mm,"mmmmmmmm")
+    // console.log(this.mm,"{{{{{{{{{{{{{{{{{{{{{")
     // if(this.mm>=1){
     //   wx.switchTab({
     //     url:"/pages/my/main"
@@ -1799,20 +1799,19 @@ export default {
                   duration:1500,
                   icon:'none',
                   success:()=>{
-                    
+                    setTimeout(() => {
+                      wx.navigateTo({
+                        url: "/pages/mine2/myVertical/main?url=rentDevice"
+                      });
+                      this.mm ++
+                    }, 1500);
                   }
                 })
-                setTimeout(() => {
-                  wx.navigateTo({
-                    url: "/pages/mine2/myVertical/main?url=rentDevice"
-                  });
-                  this.mm ++
-                }, 1500);
               }else{
                 wx.showModal({
                     title:'请先认证才可以发布',
                     content:'是否跳转到认证页面',
-                    success:(result)=>{
+                    success(result){
                       if (result.confirm) {
                          setTimeout(() => {
                           wx.navigateTo({
@@ -1830,24 +1829,26 @@ export default {
               }
               
             }else if(res.code==5){
+              console.log(this.mm,"mmmmmmmm")
               if(this.mm<1){
-                console.log("{{{{{{{{{{{{")
                 wx.showToast({
                   title:res.msg,
                   duration:1500,
                   icon:'none',
+                  success:()=>{
+                    setTimeout(() => {
+                      wx.navigateTo({
+                        url: "/pages/mine2/verticalCompany/main?url=rentDevice"
+                      });
+                      this.mm ++
+                    }, 1500);
+                  }
                 })
-                setTimeout(() => {
-                  wx.navigateTo({
-                    url: "/pages/mine2/verticalCompany/main?url=rentDevice"
-                  });
-                  this.mm ++
-                }, 1500);
-              }else if(this.mm>=1){
-                wx.showModal({ //后天添加了提示导致两次提示
+              }else{
+                wx.showModal({
                     title:'请先认证才可以发布',
                     content:'是否跳转到认证页面',
-                    success:(result)=>{
+                    success(result){
                       if (result.confirm) {
                          setTimeout(() => {
                           wx.navigateTo({

@@ -217,7 +217,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd" style="position:relative;">面积（&nbsp;m<span style="position:absolute;font-size:18rpx">2</span>&nbsp;&nbsp;）</div>
+                  <div class="form-cells-hd">m<span>2</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -367,7 +367,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd" style="position:relative;">面积（&nbsp;m<span style="position:absolute;font-size:18rpx">2</span>&nbsp;&nbsp;）</div>
+                  <div class="form-cells-hd">面积m<span>2</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -541,7 +541,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd" style="position:relative;">面积（&nbsp;m<span style="position:absolute;font-size:18rpx">2</span>&nbsp;&nbsp;）</div>
+                  <div class="form-cells-hd" style="position:relative">面积(m<span style="position:absolute;font-size:18rpx">2</span>)</div>
                   <input
                     class="ipt"
                     type="text"
@@ -697,7 +697,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd" style="position:relative;">面积（&nbsp;m<span style="position:absolute;font-size:18rpx">2</span>&nbsp;&nbsp;）</div>
+                  <div class="form-cells-hd">m<span>2</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -781,7 +781,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd" style="position:relative;">面积（&nbsp;m<span style="position:absolute;font-size:18rpx">2</span>&nbsp;&nbsp;）</div>
+                  <div class="form-cells-hd">面积m<span>2</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -831,7 +831,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd" style="position:relative;">面积（&nbsp;m<span style="position:absolute;font-size:18rpx">2</span>&nbsp;&nbsp;）</div>
+                  <div class="form-cells-hd">m<span>2</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -983,7 +983,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd" style="position:relative;">面积（&nbsp;m<span style="position:absolute;font-size:18rpx">2</span>&nbsp;&nbsp;）</div>
+                  <div class="form-cells-hd">m<span>2</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -1667,37 +1667,17 @@ export default {
         this.showDate = true
     },
     addDeviceNum(e){
-      let num = 0
-      this.Devicelist.map(item=>{
-        if(item.active){
-          num++
-        }
-      })
       if(this.Devicelist[e].Name=="自定义+"){
-        if(num<=10){
-          this.isShowMask = true
-          this.showNoChange = true
-          this.showInput=true
-          console.log(this.showInput,"showInput")
-          this.masktitle = '请输入自定义的内容'
-        }else{
-          wx.showToast({
-            title:"最多添加10组哦~",
-            icon:"none"
-          })
-        }
+        this.isShowMask = true
+        this.showNoChange = true
+        this.showInput=true
+        console.log(this.showInput,"showInput")
+        this.masktitle = '请输入自定义的内容'
       }else{
         if(this.Devicelist[e].active){
           this.$set(this.Devicelist[e],"active",false)
         }else{
-          if(num>10){
-              wx.showToast({
-                title:"最多添加10组哦~",
-                icon:"none"
-              })
-            }else{
-                this.$set(this.Devicelist[e],"active",true)
-            }
+          this.$set(this.Devicelist[e],"active",true)
         }
       }
     },
