@@ -983,7 +983,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">面积(m²)</div>
+                  <div class="form-cells-hd">面积</div>
                   <input
                     class="ipt"
                     type="text"
@@ -2084,7 +2084,7 @@ export default {
               time.push(item)
             }
             
-            this.RentTime=time[0]+":"+time[1]+"至"+time[2]+":"+time[3] //时间
+            this.RentTime=time[0]+":"+time[1]+"-"+time[2]+":"+time[3] //时间
         }
     
       }

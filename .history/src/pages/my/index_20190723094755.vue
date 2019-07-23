@@ -3,7 +3,7 @@
     <div class="memberTop">
       <img src="/static/images/icons/set.png" @click="gotoSet" class="icon_set" alt>
       <span class="btnModifyInfo" @tap="editInfo">修改资料</span>
-      <div class="perInfo level__perInfo flex flexAlignCenter">
+      <div class="perInfo level__perInfo flex">
         <img @click="gotoPerson" :src="personInfo.Avatar" class="tx" alt>
         <div class="info flex1">
           <p class="">

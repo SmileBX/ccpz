@@ -217,7 +217,7 @@
                   <img src="/static/images/icons/con_weixin.jpg" class="icon" alt="">
                   <span>微信</span>
               </p>
-              <span v-if="personInfo.WeChatNum" v-html="personInfo.WeChatNum"></span>
+              <span v-if="personInfo.WeChatNum">{{personInfo.WeChatNum}}</span>
               <span v-else>未填写</span>
             </div>
             <div class="item">

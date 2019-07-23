@@ -3,11 +3,11 @@
     <div class="memberTop">
       <img src="/static/images/icons/set.png" @click="gotoSet" class="icon_set" alt>
       <span class="btnModifyInfo" @tap="editInfo">修改资料</span>
-      <div class="perInfo level__perInfo flex flexAlignCenter">
+      <div class="perInfo level__perInfo flex">
         <img @click="gotoPerson" :src="personInfo.Avatar" class="tx" alt>
         <div class="info flex1">
-          <p class="">
-            <span class="name" v-html="personInfo.Name"></span>
+          <p class="mt10">
+            <span class="name">{{personInfo.Name}}</span>
             <img src="/static/images/icons/v2.png" v-if="personInfo.IsVip" class="icon_attestation" alt="">
             <img src="/static/images/icons/attestationTag2.png" v-if="personInfo.IsAUT" class="icon_attestationTag" alt="">
           </p>

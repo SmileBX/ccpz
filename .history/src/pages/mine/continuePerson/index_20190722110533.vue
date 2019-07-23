@@ -2,7 +2,7 @@
   <div class="pageContent">
     <div class="pall bg_fff borderTop">
         <p style="margin-bottom:10rpx;">个人简介</p>
-        <textarea name="" id="aaa" style="height:200rpx!important;width:100%!important;" cols="10" rows="2" maxlength="100" placeholder="请输入个人简介" v-model="WorkIdea"></textarea>
+        <textarea name="" id="aaa" style="height:200rpx!important;width:100%!important" cols="10" rows="2" maxlength="100" placeholder="请输入个人简介" v-model="WorkIdea"></textarea>
     </div>
     <!--个人信息空-->
     <div class="weui-cells">

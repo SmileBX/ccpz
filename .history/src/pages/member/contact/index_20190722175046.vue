@@ -7,15 +7,16 @@
            <p class="tel">{{info.Mobile}}</p>
            <p class="time">服务时间&nbsp;{{info.WebTel}}</p>
         </button>
-        <!-- <span class="icon-arrow arrow-right"></span> -->
+        <span class="icon-arrow arrow-right"></span>
       </div>
       <div class="weui-cell">
         <img src="/static/images/icons/con_kefu.jpg" class="icon-nav" alt="">
         <button class="weui-cell__bd" plain style="border:none;text-align:left" open-type="contact" >
-            <p class="tel">在线客服</p>
-            <p class="time">服务时间&nbsp;{{info.WebTel}}</p>
+           <p class="tel">在线客服</p>
+           <p class="time">服务时间&nbsp;{{info.WebTel}}</p>
+            <span class="icon-arrow arrow-right"></span>
         </button>
-        <!-- <span class="icon-arrow arrow-right"></span> -->
+       
       </div>
     </div>
   </div>
