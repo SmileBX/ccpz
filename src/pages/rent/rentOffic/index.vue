@@ -981,7 +981,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">面积</div>
+                  <div class="form-cells-hd">面积(m²)</div>
                   <input
                     class="ipt"
                     type="text"
