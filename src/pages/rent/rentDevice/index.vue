@@ -309,7 +309,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">所需面积</div>
+                  <div class="form-cells-hd">所需面积(m²)</div>
                   <input
                     class="ipt"
                     type="text"
@@ -641,7 +641,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">总面积</div>
+                  <div class="form-cells-hd">总面积(m²)</div>
                   <input
                       class="ipt"
                       type="text"
@@ -653,7 +653,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">出租面积</div>
+                  <div class="form-cells-hd">出租面积(m²)</div>
                   <input
                       class="ipt"
                       type="text"
@@ -777,7 +777,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">总面积</div>
+                  <div class="form-cells-hd">总面积(m²)</div>
                   <input
                     class="ipt"
                     type="text"
@@ -787,7 +787,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">出租面积</div>
+                  <div class="form-cells-hd">出租面积(m²)</div>
                   <input
                     class="ipt"
                     type="text"
@@ -916,7 +916,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">面积</div>
+                  <div class="form-cells-hd">面积(m²)</div>
                   <input
                     class="ipt"
                     type="text"
