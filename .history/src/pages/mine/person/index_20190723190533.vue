@@ -795,7 +795,12 @@ export default {
   height:100%!important;
 }
 .infoDetail_pro{
-  height:90rpx;
+  height:120rpx;
+  border:1px solid red;
+  word-break:break-all;
+  display:-webkit-box;/**对象作为伸缩盒子模型展示**/
+  -webkit-box-orient:vertical;/**设置或检索伸缩盒子对象的子元素的排列方式**/
+  -webkit-line-clamp:3;/**显示的行数**/
   overflow:hidden;
 }
 

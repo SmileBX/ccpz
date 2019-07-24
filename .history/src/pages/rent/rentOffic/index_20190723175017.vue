@@ -27,13 +27,13 @@
           </div>
           <div class="form-cells-item" v-if="BrandId!=24">
             <div :class="showDefaultCompany?'form-cells-navigate navigate-bottom':''">
-              <div class="form-cells-hd">公司/团队</div>
+              <div class="form-cells-hd">公司名称</div>
               <div class="form-cell-bd">
                 <input
                   class="ipt"
                   type="text"
                   disabled
-                  placeholder="请选择公司/团队"
+                  placeholder="请输入公司名称"
                   @tap="getCompany"
                   v-model="Company"
                   placeholder-style="color:#b5b5b5;"
@@ -1742,21 +1742,19 @@ export default {
         this.addDetailPlaceholder = "门牌号/楼号等 例：3楼418室"
         }
         if(this.PageId==36 ||　this.PageId==35){
+          this.introduce = "公司简介"
+          this.introducePlaceholder = "请填写公司详细简介"
           this.upImgTitle = "请上传活动场地照片"
           this.addrTitle = "公司地址"
           this.addrPlaceholder = "办公大楼名称 如：如京基大厦"
           
         }
         if(this.PageId==36){
-          this.introduce = "场地简介"
-          this.introducePlaceholder = "请填写场地详细简介"
           this.pageTitle = '拼场地表单'
           this.subTitle = '(行业交流会/推广会/发布会/其他活动)'
           
         }
         if(this.PageId==35){
-          this.introduce = "活动简介"
-          this.introducePlaceholder = "请填写活动详细简介"
           this.pageTitle = '拼活动表单'
           this.subTitle = '(旅游/拓展/生日会/联谊会/其他活动)'
         }

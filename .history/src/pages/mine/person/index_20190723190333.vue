@@ -796,7 +796,10 @@ export default {
 }
 .infoDetail_pro{
   height:90rpx;
+  border:1px solid red;
   overflow:hidden;
+  white-space:nowrap;/*不显示的地方用省略号...代替*/
+  text-overflow:ellipsis;/* 支持 IE */
 }
 
 </style>

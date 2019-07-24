@@ -27,13 +27,13 @@
           </div>
           <div class="form-cells-item" v-if="BrandId!=24">
             <div :class="showDefaultCompany?'form-cells-navigate navigate-bottom':''">
-              <div class="form-cells-hd">公司/团队</div>
+              <div class="form-cells-hd">公司名称</div>
               <div class="form-cell-bd">
                 <input
                   class="ipt"
                   type="text"
                   disabled
-                  placeholder="请选择公司/团队"
+                  placeholder="请输入公司名称"
                   @tap="getCompany"
                   v-model="Company"
                   placeholder-style="color:#b5b5b5;"
@@ -79,6 +79,28 @@
                     placeholder="请选择"
                     @tap="isShowAddr=true"
                     v-model="GladBuyArea"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">活动价格（元）</div>
+                  <input
+                    class="ipt"
+                    type="number"
+                    placeholder="请输入"
+                    v-model="PropertyPrice"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">活动名称</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="Founder"
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
@@ -166,16 +188,6 @@
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
-                <div class="item2-column">
-                  <div class="form-cells-hd">活动价格（元）</div>
-                  <input
-                    class="ipt"
-                    type="number"
-                    placeholder="请输入"
-                    v-model="PropertyPrice"
-                    placeholder-style="color:#b5b5b5;"
-                  >
-                </div>
               </div>
           </div>
           <div v-if="PageId==43 || PageId==32 || PageId==33">
@@ -255,6 +267,30 @@
               </div>
           </div>
           <div v-if="PageId==34">
+               <div class="form-cells-item form-cells-item2">
+                  <div class="item2-column">
+                  <div class="form-cells-hd">圈子名称</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="Founder"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">成立日期</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    disabled
+                    @tap="choseDate"
+                    v-model="PlanBuyDate"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
                   <div class="form-cells-hd">圈子属性</div>
@@ -313,18 +349,6 @@
                     placeholder="请选择"
                     v-model="RingRate"
                     @tap="choseRing"
-                    placeholder-style="color:#b5b5b5;"
-                  >
-                </div>
-                <div class="item2-column">
-                  <div class="form-cells-hd">成立日期</div>
-                  <input
-                    class="ipt"
-                    type="text"
-                    placeholder="请输入"
-                    disabled
-                    @tap="choseDate"
-                    v-model="PlanBuyDate"
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
@@ -1053,7 +1077,7 @@
               </div>
           </div>
           <!--组件公司名称-->
-          <!-- <div class="form-cells-item" v-if="PageId==43|| PageId==32 ||PageId==33">
+          <div class="form-cells-item" v-if="PageId==43|| PageId==32 ||PageId==33">
             <div class="">
                   <div class="form-cells-hd" v-if="PageId==43">机构名称</div>
                   <div class="form-cells-hd" v-if="PageId==32">企业名称</div>
@@ -1066,9 +1090,16 @@
                     v-model="Founder"
                     placeholder-style="color:#b5b5b5;"
                   >
+                <!-- <input
+                  class="ipt"
+                  type="text"
+                  :placeholder="introducePlaceholder"
+                  v-model="Synopsis"
+                  placeholder-style="color:#b5b5b5;"
+                > -->
               </div>
             </div>
-          </div> -->
+          </div>
           <!--简介-->
           <div class="form-cells-item">
             <div class="">
@@ -1742,21 +1773,19 @@ export default {
         this.addDetailPlaceholder = "门牌号/楼号等 例：3楼418室"
         }
         if(this.PageId==36 ||　this.PageId==35){
+          this.introduce = "公司简介"
+          this.introducePlaceholder = "请填写公司详细简介"
           this.upImgTitle = "请上传活动场地照片"
           this.addrTitle = "公司地址"
           this.addrPlaceholder = "办公大楼名称 如：如京基大厦"
           
         }
         if(this.PageId==36){
-          this.introduce = "场地简介"
-          this.introducePlaceholder = "请填写场地详细简介"
           this.pageTitle = '拼场地表单'
           this.subTitle = '(行业交流会/推广会/发布会/其他活动)'
           
         }
         if(this.PageId==35){
-          this.introduce = "活动简介"
-          this.introducePlaceholder = "请填写活动详细简介"
           this.pageTitle = '拼活动表单'
           this.subTitle = '(旅游/拓展/生日会/联谊会/其他活动)'
         }
@@ -2552,10 +2581,10 @@ export default {
             this.toastTip("请选择公司!")
             return false;
           }
-          // if (this.Founder == '') {
-          //   this.toastTip(`请输入名称!`)
-          //   return false;
-          // }
+          if (this.Founder == '') {
+            this.toastTip(`请输入名称!`)
+            return false;
+          }
       }
       if(this.PageId==36 || this.PageId==35 || this.PageId==43 || this.PageId==32 || this.PageId==33){
         if (this.GladBuyerTradeId == '') {
@@ -2744,7 +2773,7 @@ export default {
           AgeLevel:that.AgeLevel,
           SexRatio:that.SexRatio,
           EducationLvl:that.EducationLvl,
-          // Founder:that.Founder
+          Founder:that.Founder
         }
       }
       if(that.PageId == 42){
@@ -2891,7 +2920,7 @@ export default {
             GladBuyerTrade:that.GladBuyerTrade,
             GladBuyArea:that.GladBuyArea,
             GladBuyAreaId:that.GladBuyAreaId,
-            // Founder:that.Founder,
+            Founder:that.Founder,
             BuyBudget:that.BuyBudget,
             PlanBuyDate:that.PlanBuyDate,
             PlanBuyArea:that.PlanBuyArea
@@ -2922,7 +2951,7 @@ export default {
             Synopsis:that.Synopsis,
             GladBuyArea:that.GladBuyArea,
             GladBuyAreaId:that.GladBuyAreaId,
-            // Founder:that.Founder,
+            Founder:that.Founder,
             BuyBudget:that.BuyBudget,
             PlanBuyDate:that.PlanBuyDate,
             RingType:that.RingType,
@@ -3025,7 +3054,7 @@ export default {
       this.SexRatio = ''
       this.AgeLevel = ''
       this.CompanyTrade = ''
-      // this.Founder = ''
+      this.Founder = ''
       this.PlanStartTime = ''
       this.PlanEndTime = ''
       this.PlanBuyNum = ''

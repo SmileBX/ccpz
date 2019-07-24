@@ -792,10 +792,11 @@ export default {
   padding-top: 20rpx;
 }
 .active{
-  height:100%!important;
+  height:600rpx!important;
 }
 .infoDetail_pro{
   height:90rpx;
+  border:1px solid red;
   overflow:hidden;
 }
 

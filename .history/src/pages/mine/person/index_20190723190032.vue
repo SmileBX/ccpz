@@ -617,7 +617,7 @@ export default {
     },
     showMoreInfo(){
       console.log("????????????")
-      if(!this.showMore){
+      if(this.showMore){
         this.seeMore = '点击收起'
       }else{
         this.seeMore = '查看更多'
@@ -792,10 +792,11 @@ export default {
   padding-top: 20rpx;
 }
 .active{
-  height:100%!important;
+  height:600rpx!important;
 }
 .infoDetail_pro{
   height:90rpx;
+  border:1px solid red;
   overflow:hidden;
 }
 

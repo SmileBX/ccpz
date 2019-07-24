@@ -796,6 +796,7 @@ export default {
 }
 .infoDetail_pro{
   height:90rpx;
+  border:1px solid red;
   overflow:hidden;
 }
 
