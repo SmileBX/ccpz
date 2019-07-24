@@ -7,25 +7,27 @@
     <!-- :class="{'showMessage':showModule,'showBtn':showBtn,'showEmotion':showEmotion}" -->
     <!--聊天列表-->
     <div class="padwid" @click="isShowMask=false">
-      <div v-for="(msg,msgIndex) in chatList" :key="msgIndex">
-        <div class="flex flexAlignCenter boxSize p2 justifyContentEnd plr20" v-if="msg.MsgId=='a'">
+      <div v-for="(msg,msgIndex) in chatList" :key="msgIndex" :id="msg.class">
+        <div class="time">{{msg.AddTime}}</div>
+        <div class="flex flexAlignCenter boxSize p2 justifyContentEnd plr20"  v-if="msg.MsgId=='a'">
           <div class="flex flexAlignEnd justifyContentEnd mrr2">
             <!-- <span class="fontColor" @click="scrollBottom">已读</span> -->
-            <div class="tagmsg cfff">
+            <!-- <div class="tagmsg cfff"> -->
+            <div class="tagmsg" v-if="msg.Info">
               <!-- <p v-if="msg.Info" class="boxSize">{{msg.Info}}</p> -->
-              <p v-if="msg.Info" class="boxSize" v-html="msg.Info"></p>
+              <p class="boxSize" v-html="msg.Info"></p>
 
               <!-- :onload="scrollBottom()" -->
-              <img
-                class="sendImg"
-                mode="widthFix"
-                v-if="msg.Pic"
-                :src="msg.Pic"
-                alt
-                @click="previewImg(msg.Pic)"
-              />
               <span class="sj rsj"></span>
             </div>
+            <img
+              class="sendImg"
+              mode="widthFix"
+              v-if="msg.Pic"
+              :src="msg.Pic"
+              alt
+              @click="previewImg(msg.Pic)"
+            />
           </div>
           <div class="avatarbox mr0" v-if="chatStatu.a">
             <img :src="chatStatu.a.Headimgurl" alt class="avatar" />
@@ -37,20 +39,20 @@
           </div>
           <div class="flex flexAlignEnd mrl2">
             <!-- <span class="fontColor">已读</span> -->
-            <div class="tagmsg bg_fff black">
+            <div class="tagmsg bg_fff black" v-if="msg.Info">
               <span class="sj lsj"></span>
               <!-- <p v-if="msg.Info" class="boxSize" style="color:#1a1a1a">{{msg.Info}}</p> -->
-              <p v-if="msg.Info" class="boxSize" v-html="msg.Info"></p>
+              <p class="boxSize" v-html="msg.Info"></p>
               <!-- :onload="scrollBottom()" -->
-              <img
-                class="sendImg"
-                mode="widthFix"
-                v-if="msg.Pic"
-                :src="msg.Pic"
-                alt
-                @click="previewImg(msg.Pic)"
-              />
             </div>
+            <img
+              class="sendImg"
+              mode="widthFix"
+              v-if="msg.Pic"
+              :src="msg.Pic"
+              alt
+              @click="previewImg(msg.Pic)"
+            />
           </div>
         </div>
       </div>
@@ -98,6 +100,14 @@
             alt
             class="logimg"
             @click="onShowModule('imgage')"
+            v-if="!sendInfo"
+          />
+          <img
+            src="/static/images/icons/send.png"
+            alt
+            class="logimg"
+            @click="sendMessage()"
+            v-else
           />
         </div>
       </div>
@@ -194,7 +204,7 @@ export default {
       token: "",
       curPage: "",
       FriendId: "", //好友ID
-      TempId:'',//临时联系id
+      TempId: "", //临时联系id
       isShowMask: false, //是否展示遮罩层
       showModule: "", //展示图片组；emotion：表情。message:常用语。imgage:照片
       messageType: [], //常用语分类
@@ -329,7 +339,7 @@ export default {
           UserId: this.userId,
           Token: this.token,
           FriendId: this.FriendId * 1,
-          TempId:this.TempId*1
+          TempId: this.TempId * 1
         },
         this.curPage
       );
@@ -395,7 +405,7 @@ export default {
       wx.sendSocketMessage({ data: JSON.stringify(data) });
     },
     //获取好友消息
-    getFriendMessage(scrollBottom) {
+    getFriendMessage(scrollBottom,scrollPosition) {
       return new Promise((resolve, reject) => {
         const that = this;
         wx.request({
@@ -404,17 +414,34 @@ export default {
             UserId: this.userId,
             Token: this.token,
             FriendId: this.FriendId * 1,
-            TempId:this.TempId*1,
+            TempId: this.TempId * 1,
             Page: this.page,
             PageSize: this.pageSize
           },
           method: "POST",
           success(_res) {
             let res = _res.data;
-            console.log(res, "resss");
             if (res.code === 0) {
+
               let info = [];
-              res.data.info.map(item => {
+              // 处理发送时间
+              let times=res.data.info[0]&&new Date(res.data.info[0].AddTime.replace('-','/'));
+              res.data.info.reverse(); //数组翻转
+              res.data.info.map((item,i) => {
+                 let date = new Date(item.AddTime.replace('-','/'));
+                item.class='class'+date.getTime(); //时间戳类，用户下拉聊天记录滑动对应位置
+                if(i!==0){
+                  const year = (date.getFullYear())===(times.getFullYear());
+                  const Month = date.getMonth()===times.getMonth();
+                  const dates = date.getDate()===times.getDate();
+                  const Hours = date.getHours()===times.getHours();
+                  const Minutes = date.getMinutes()-times.getMinutes()<5
+                  if(year&&Month&&dates&&Hours&&Minutes){
+                    item.AddTime=''
+                  }else{
+                    times = date;
+                  }
+                }
                 // 将匹配结果替换表情图片
                 item.Info = item.Info.replace(
                   /\[[\u4E00-\u9FA5]{1,3}\]/gi,
@@ -428,9 +455,10 @@ export default {
                     }
                   }
                 );
-                info.unshift(item);
+                // info.unshift(item);
+                info.push(item);
               });
-              console.log(info, "解析完的字符串");
+              
               // res.data.info = info;
               if (that.page === 1) {
                 that.chatList = info;
@@ -444,6 +472,22 @@ export default {
               ) {
                 console.log("滚动了");
                 that.scrollBottom();
+              }
+              if(scrollPosition){
+                  setTimeout(() => {
+                    wx
+                      .createSelectorQuery()
+                      .select("#"+scrollPosition)
+                      .boundingClientRect(function(rect) {
+                        // 使页面滚动到底部
+                        wx.pageScrollTo({
+                          scrollTop: rect.top,
+                          duration: 0
+                        });
+                      })
+                      .exec();
+                  }, 100);
+
               }
               resolve();
             } else {
@@ -496,7 +540,7 @@ export default {
           UserId: this.userId,
           Token: this.token,
           FriendId: this.FriendId * 1,
-          TempId:this.TempId*1,
+          TempId: this.TempId * 1,
           Info: sendInfo,
           Pic: imgBase,
           Lat: lat,
@@ -718,7 +762,7 @@ export default {
       list.map((item, index) => {
         emotionArr.push({
           name: `[${item}]`,
-          url: `<img style="width:30px;height:30px;" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif">`
+          url: `<img style="width:25px;height:25px;" src="https://res.wx.qq.com/mpres/htmledition/images/icon/emotion/${index}.gif">`
         });
       });
       this.emotionArr = emotionArr;
@@ -746,7 +790,7 @@ export default {
               scrollTop: rect.height,
               duration: 0
             });
-            console.log(rect.height, "height滚动了额");
+            console.log(rect, "height滚动了额");
           })
           .exec();
       }, 100);
@@ -756,7 +800,8 @@ export default {
   onPullDownRefresh() {
     this.initData();
     this.page += 1;
-    this.getFriendMessage();
+    
+    this.getFriendMessage('',this.chatList[0].class);
     wx.stopPullDownRefresh();
   },
   created() {
@@ -765,12 +810,18 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-// .padwid {
+.padwid {
 // height:86vh;
 // width:100%;
 // box-sizing:border-box;
 // padding-bottom:180rpx;
-// }
+.time{
+  color:#888;
+  font-size:20rpx;
+  text-align:center;
+  margin:10rpx 0;
+}
+}
 .showMessage {
   padding-bottom: 530rpx !important;
 }
@@ -903,9 +954,15 @@ export default {
   padding: 15rpx;
   font-size: 30rpx;
   word-break: break-all;
+  background: #fff;
+  color: #000;
   p {
     word-break: break-all;
   }
+}
+.rsj {
+  background: #fff;
+  border: 6rpx solid #fff;
 }
 // 表情
 .emotion {
