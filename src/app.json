@@ -11,6 +11,7 @@
         "pages/inviteFriends/main",
         "pages/inviteRecord/main",
         "pages/VerticalStatus/main",
+        "pages/VerticalFail/main",
         "pages/city-select/main",
         "pages/agreement/main",
         "pages/outpage/main"

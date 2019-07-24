@@ -43,7 +43,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 66,
+			"current": -1,
 			"list": [
 				{
 					"id": 0,
@@ -175,20 +175,6 @@
 					"id": 18,
 					"name": "帮助中心",
 					"pathName": "pages/member/help/main",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "服务卡兑换",
-					"pathName": "pages/member/serviceCardChange/main",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "服务卡兑换状态页面",
-					"pathName": "pages/member/changeStatus/main",
 					"query": "",
 					"scene": null
 				},
@@ -445,23 +431,9 @@
 					"scene": null
 				},
 				{
-					"id": -1,
-					"name": "验证码登录",
-					"pathName": "pages/codeLogin/main",
-					"query": "",
-					"scene": null
-				},
-				{
 					"id": 59,
 					"name": "城市列表",
 					"pathName": "pages/rent/city/main",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "111",
-					"pathName": "pages/publish/main",
 					"query": "",
 					"scene": null
 				},
@@ -560,6 +532,13 @@
 					"id": -1,
 					"name": "绑定手机号",
 					"pathName": "pages/bindTel/main",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "城市列表",
+					"pathName": "pages/VerticalFail/main",
 					"query": "",
 					"scene": null
 				}
