@@ -92,13 +92,13 @@
           <div class="line flex flexColumn">
               <div class="flex justifyContentBetween">
                   <h3 class="fontBold" style="font-size:32rpx;line-height:1.5">个人简介</h3>
-                    <p class="fontColor99" @tap="showMoreInfo" v-if="type!=2">{{seeMore}}
+                    <p class="fontColor99" @tap="showMore" v-if="type!=2">查看更多
                       <span class="icon-arrow arrow-right"></span>
                     </p>
               </div>
           </div>
           <div class="line flex flexColumn">
-                <p v-if="personInfo.WorkIdea" class="infoDetail_pro" :class="showMore?'active':''">
+                <p v-if="personInfo.WorkIdea">
                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{personInfo.WorkIdea}}
                 </p>
                 <p v-else>
@@ -358,9 +358,7 @@ export default {
       addFriendId:"",//好友Id
       conFriendId:"",//极速联系Id
       ReportId:0,//举报他人的id
-      menuAr:['/pages/mine/editMenTags/main?typeTips=1','/pages/mine/editMenTags/main?typeTips=2'],
-      showMore:false,//是否显示更多
-      seeMore:"查看更多"
+      menuAr:['/pages/mine/editMenTags/main?typeTips=1','/pages/mine/editMenTags/main?typeTips=2']
     }
   },
   onShow(){
@@ -374,11 +372,9 @@ export default {
     // console.log(this.type)
     // this.Id = 10394
     // this.type = 2
-    this.seeMore = '查看更多'
     this.companyInfo = []
     this.list = []
     this.hasData = false
-    this.showMore = false
     this.getMyHomePage()
   },
   methods: {
@@ -614,16 +610,6 @@ export default {
     //认证公司
     companyVertical(){
       wx.navigateTo({url:'/pages/mine2/verticalCompany/main'})
-    },
-    showMoreInfo(){
-      console.log("????????????")
-      if(!this.showMore){
-        this.seeMore = '点击收起'
-      }else{
-        this.seeMore = '查看更多'
-      }
-      this.showMore = !this.showMore
-      
     }
     
 
@@ -790,13 +776,6 @@ export default {
 }
 .addpaddingtop{
   padding-top: 20rpx;
-}
-.active{
-  height:100%!important;
-}
-.infoDetail_pro{
-  height:90rpx;
-  overflow:hidden;
 }
 
 </style>

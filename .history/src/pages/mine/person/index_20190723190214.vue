@@ -793,9 +793,11 @@ export default {
 }
 .active{
   height:100%!important;
+  overflow:auto;
 }
 .infoDetail_pro{
   height:90rpx;
+  border:1px solid red;
   overflow:hidden;
 }
 
