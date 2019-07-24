@@ -236,13 +236,12 @@ export default {
     // 改变搜索内容
     changeSearch(){
       const value = this.inputName
-      console.log("更改了++++++++++++",value);
       this.playerList =[]
       // debugger;
       this.friendArr.map(list=>{
         const listArr=[]
         list.items.map(item=>{
-         const index =  item.NickName.indexOf(this.inputName)
+         const index =  item.NickName.indexOf(value)
          if(index!==-1){
            listArr.push(item)
          }

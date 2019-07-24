@@ -72,6 +72,7 @@
                       </p>
                       <p class="priceArea">
                         <span class="price">￥{{item.PropertyPrice}}</span>
+                        <span class="againsubmit" @click.stop="gopage(item.Status)" :class="{'addcolor':item.Status===2}">{{item.Status===2?'查看原因':'重新发布'}}</span>
                       </p>
                     </div>
                   </div>
@@ -130,13 +131,14 @@
                         <span class="msgItem">{{item.Company}}</span>
                       </p>
                       <!--组建2-->
-                      <p class="tipsList" v-if="item.jobArr.length>0">
+                      <p class="tipsList" v-if="item.jobArr.length>0" style="position: relative">
                         <span
                           v-for="(item2,index2) in item.jobArr"
                           v-if="index<5"
                           :key="index2"
                         >{{item2}}</span>
                       </p>
+                      <div class="againsubmit" @click.stop="gopage(item.Status)" :class="{'addcolor':item.Status===2}">{{item.Status===2?'查看原因':'重新发布'}}</div>
                     </div>
                   </div>
                 </van-cell>
@@ -195,6 +197,7 @@
                       </p>
                       <p class="priceArea">
                         <span class="price">￥{{item.PropertyPrice}}</span>
+                        <span class="againsubmit" @click.stop="gopage(item.Status)" :class="{'addcolor':item.Status===2}">{{item.Status===2?'查看原因':'重新发布'}}</span>
                       </p>
                     </div>
                   </div>
@@ -259,6 +262,7 @@
                       </p>
                       <p class="priceArea">
                         <span class="price">￥{{item.PropertyPrice}}</span>
+                        <span class="againsubmit" @click.stop="gopage(item.Status)" :class="{'addcolor':item.Status===2}">{{item.Status===2?'查看原因':'重新发布'}}</span>
                       </p>
                     </div>
                   </div>
@@ -355,6 +359,13 @@ export default {
       wx.setNavigationBarTitle({
         title: "我的发布"
       });
+    },
+    gopage(status){
+      if(status==2){
+        wx.navigateTo({
+          url: `/pages/VerticalFail/main`
+        })
+      }
     },
     initData() {
       this.isRequest = false;
@@ -701,6 +712,22 @@ export default {
   text-align: left;
   .priceArea {
     margin-top: 30rpx;
+    width: 100%;
+    position: relative;
+    .againsubmit{
+      position: absolute;
+      display: block;
+      top: 0;
+      right: 0;
+      font-size: 22rpx;
+      color: #666;
+      padding: 4rpx 20rpx;
+      line-height: 44rpx;
+      height: 40rpx;
+      border: #ff6666 1rpx solid;
+      border-radius: 8rpx;
+      z-index: 10
+    }
   }
 }
 .ftBtn {
@@ -749,5 +776,22 @@ export default {
 }
 .filterMenu {
   color: #1a1a1a;
+}
+.addcolor{
+  color: #ff6666!important
+}
+.againsubmit{
+  position: absolute;
+  display: block;
+  bottom: 30rpx;
+  right: 30rpx;
+  font-size: 22rpx;
+  color: #666;
+  padding: 4rpx 20rpx;
+  line-height: 44rpx;
+  height: 40rpx;
+  border: #ff6666 1rpx solid;
+  border-radius: 8rpx;
+  z-index: 10
 }
 </style>

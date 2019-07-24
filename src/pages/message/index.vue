@@ -1,5 +1,17 @@
 <template>
   <div class="page bg_fff borderTop" v-if="isData">
+    <!--顶部输入框-->
+    <div class="bg_fff flex flexAlignCenter pall">
+      <img src="/static/images/icons/search.png" alt class="icon_search">
+      <input
+        type="text"
+        placeholder="请输入要搜索的联系人名字/最新消息"
+        class="flex1 bg_fff"
+        v-model="inputName"
+        @input="changeSearch"
+      >
+    </div>
+    <div class="slidebg"></div>
     <!--通知-->
     <div class=padwid>
         <div class="flex avatarhead flexAlignCenter boxSize" @click="toNociceList">
@@ -31,9 +43,9 @@
     </div>
     <div class="slidebg"></div>
     <!--消息列表-->
-    <div class="padwid" v-if="messageInfo.friend_new.length>0">
+    <div class="padwid" v-if="list.length>0">
         <div class="flex avatarhead flexAlignCenter boxSize p2" 
-          @click="goChat(item.FriendId,item.TempId)" v-for="(item,index) in messageInfo.friend_new" :key="index">
+          @click="goChat(item.FriendId,item.TempId)" v-for="(item,index) in list" :key="index">
             <div class="circlePosition">
                 <div class="avatarbox">
                   <img :src="item.Headimgurl" alt="" class="avatar">
@@ -61,7 +73,9 @@ export default {
       token:'',
       curPage:'',
       isData:false,//是否开始渲染
-      messageInfo:{}
+      messageInfo:{},
+      inputName:'',
+      list:[], //联系人
     }
   },
    onLoad() {
@@ -91,8 +105,9 @@ export default {
           Token: this.token
       },this.curPage).then(res=>{
           console.log(res)
-          this.messageInfo = res.data
-          this.isData = true
+          this.messageInfo = res.data;
+          this.list = res.data.friend_new;
+          this.isData = true;
       })
     },
     //进入聊天室
@@ -107,7 +122,20 @@ export default {
      seePermistion(){
         wx.navigateTo({url: '/pages/messages/newPromise/main'})
     },
-   
+    // 搜索最近联系人
+    changeSearch(){
+      console.log(this.inputName)
+      const value = this.inputName;
+      this.list=[];
+      this.messageInfo.friend_new.map((item,index)=>{
+        const i = item.NickName.indexOf(value)
+        const infoIndex = item.Info.indexOf(value)
+        if(i!==-1||infoIndex!==-1){
+          this.list.push(item);
+        }
+      })
+      this.list.length===0&&(this.list = this.messageInfo.friend_new)
+    },
   },
 
   created () {
