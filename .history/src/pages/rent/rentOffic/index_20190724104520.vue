@@ -413,6 +413,18 @@
                   >
                 </div>
                 <div class="item2-column">
+                  <div class="form-cells-hd">面宽</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="NeedFaceWidth"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
                   <div class="form-cells-hd">层高</div>
                   <input
                     class="ipt"
@@ -422,16 +434,16 @@
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
-                <!-- <div class="item2-column">
-                  <div class="form-cells-hd">面宽</div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">进深</div>
                   <input
                     class="ipt"
                     type="text"
                     placeholder="请输入"
-                    v-model="NeedFaceWidth"
+                    v-model="NeedFloorDepth"
                     placeholder-style="color:#b5b5b5;"
                   >
-                </div> -->
+                </div>
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
@@ -867,6 +879,18 @@
                   >
                 </div>
                 <div class="item2-column">
+                  <div class="form-cells-hd">面宽</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="NeedFaceWidth"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
                   <div class="form-cells-hd">层高</div>
                   <input
                     class="ipt"
@@ -876,18 +900,7 @@
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
-                <!-- <div class="item2-column">
-                  <div class="form-cells-hd">面宽</div>
-                  <input
-                    class="ipt"
-                    type="text"
-                    placeholder="请输入"
-                    v-model="NeedFaceWidth"
-                    placeholder-style="color:#b5b5b5;"
-                  >
-                </div> -->
-              </div>
-                <!-- <div class="item2-column">
+                <div class="item2-column">
                   <div class="form-cells-hd">进深</div>
                   <input
                     class="ipt"
@@ -896,8 +909,8 @@
                     v-model="NeedFloorDepth"
                     placeholder-style="color:#b5b5b5;"
                   >
-                </div> -->
-              
+                </div>
+              </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
                   <div class="form-cells-hd">付款方式</div>
@@ -994,6 +1007,18 @@
                   >
                 </div>
                 <div class="item2-column">
+                  <div class="form-cells-hd">面宽</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="NeedFaceWidth"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
                   <div class="form-cells-hd">层高</div>
                   <input
                     class="ipt"
@@ -1003,18 +1028,7 @@
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
-                <!-- <div class="item2-column">
-                  <div class="form-cells-hd">面宽</div>
-                  <input
-                    class="ipt"
-                    type="text"
-                    placeholder="请输入"
-                    v-model="NeedFaceWidth"
-                    placeholder-style="color:#b5b5b5;"
-                  >
-                </div> -->
-              </div>
-                <!-- <div class="item2-column">
+                <div class="item2-column">
                   <div class="form-cells-hd">进深</div>
                   <input
                     class="ipt"
@@ -1023,8 +1037,8 @@
                     v-model="NeedFloorDepth"
                     placeholder-style="color:#b5b5b5;"
                   >
-                </div> -->
-              
+                </div>
+              </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
                   <div class="form-cells-hd">转让费（元）</div>
@@ -2477,18 +2491,18 @@ export default {
         }
       }
       if(this.PageId==42 || this.PageId==39 || this.PageId==40){
-        // if (this.NeedFloorDepth=='') {
-        //   this.toastTip("请输入进深!") 
-        //   return false;
-        // }
+        if (this.NeedFloorDepth=='') {
+          this.toastTip("请输入进深!") 
+          return false;
+        }
         if (this.NeedFloorHeight=='') {
           this.toastTip("请输入层高!") 
           return false;
         }
-        // if (this.NeedFaceWidth=='') {
-        //   this.toastTip("请输入面宽!") 
-        //   return false;
-        // }
+        if (this.NeedFaceWidth=='') {
+          this.toastTip("请输入面宽!") 
+          return false;
+        }
       }
       if(this.PageId==42){
         if (this.DeviceRent=='') {
@@ -2748,9 +2762,9 @@ export default {
           PlanRentDate:that.PlanRentDate,
           PropertyType:that.PropertyType,
           NeedFloor:that.NeedFloor,
-          // NeedFaceWidth:that.NeedFaceWidth,
+          NeedFaceWidth:that.NeedFaceWidth,
           NeedFloorHeight:that.NeedFloorHeight,
-          // NeedFloorDepth:that.NeedFloorDepth,
+          NeedFloorDepth:that.NeedFloorDepth,
           PayType:that.PayType,
           PropertyPrice:that.PropertyPrice,
           DeviceRent:that.DeviceRent,
@@ -2834,9 +2848,9 @@ export default {
             PropertyType:that.PropertyType,
             PropertySort:that.PropertySort,
             NeedFloor:that.NeedFloor,
-            // NeedFaceWidth:that.NeedFaceWidth,
+            NeedFaceWidth:that.NeedFaceWidth,
             NeedFloorHeight:that.NeedFloorHeight,
-            // NeedFloorDepth:that.NeedFloorDepth,
+            NeedFloorDepth:that.NeedFloorDepth,
             RunStatus:that.RunStatus,
             GladBuyerTradeId:that.GladBuyerTradeId,
             GladBuyerTrade:that.GladBuyerTrade,
@@ -2859,9 +2873,9 @@ export default {
             PropertyType:that.PropertyType,
             PropertySort:that.PropertySort,
             NeedFloor:that.NeedFloor,
-            // NeedFaceWidth:that.NeedFaceWidth,
+            NeedFaceWidth:that.NeedFaceWidth,
             NeedFloorHeight:that.NeedFloorHeight,
-            // NeedFloorDepth:that.NeedFloorDepth,
+            NeedFloorDepth:that.NeedFloorDepth,
             PropertyPrice:that.PropertyPrice,
         }
       }
@@ -3022,9 +3036,9 @@ export default {
       this.PartnerList=[]
       this.RentTime = ''
       this.NeedFloor = ''
-      // this.NeedFaceWidth = ''
+      this.NeedFaceWidth = ''
       this.NeedFloorHeight = ''
-      // this.NeedFloorDepth = ''
+      this.NeedFloorDepth = ''
       this.PayType = ''
       this.IsTrim = ''
       this.IsTrimMsg = ''

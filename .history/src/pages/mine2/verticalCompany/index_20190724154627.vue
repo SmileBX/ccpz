@@ -116,10 +116,10 @@
       </div>
       <!--企业end-->
     </div>
-    <div class="ftBtn center" @click="btnSubmit">
+    <div class="ftBtn center">
       <div class="inner">
         <div class="btns">
-          <div class="btn color_fff bg_ff952e">{{btnTxt}}</div>
+          <div class="btn color_fff bg_ff952e" @click="btnSubmit">{{btnTxt}}</div>
         </div>
       </div>
     </div>
@@ -158,7 +158,7 @@ export default {
       idCard: "", //法人身份证号
       idCardPositive: "", //身份证正面
       idCardNegative: "", //身份证反面
-      businessLicense: "" //营业执照
+      businessLicense: "", //营业执照
       // otherSeniority: "" //其他资质
     };
   },
@@ -175,7 +175,7 @@ export default {
       this.idCard = ""; //法人身份证号
       this.idCardPositive = "", //身份证正面
       this.idCardNegative = "", //身份证反面
-      this.businessLicense = ""//营业执照
+      this.businessLicense = "", //营业执照
       // this.otherSeniority = "" //其他资质
     },
     valOther() {
@@ -296,10 +296,7 @@ export default {
         console.log("竟来了");
         let idcardPositive = await this.base64Img(this.idCardPositive);
         let idcardNegative = await this.base64Img(this.idCardNegative);
-        let businessLicense = ''
-        if(this.otherSeniority){
-          businessLicense = await this.base64Img(this.businessLicense);
-        }
+        let businessLicense = await this.base64Img(this.businessLicense);
         // let otherSeniority ="";
         // if(this.otherSeniority){
         //   otherSeniority = await this.base64Img(this.otherSeniority);

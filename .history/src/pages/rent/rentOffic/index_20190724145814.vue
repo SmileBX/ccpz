@@ -434,6 +434,19 @@
                 </div> -->
               </div>
               <div class="form-cells-item form-cells-item2">
+                
+                <!-- <div class="item2-column">
+                  <div class="form-cells-hd">进深</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="NeedFloorDepth"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div> -->
+              </div>
+              <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
                   <div class="form-cells-hd">付款方式</div>
                   <input
@@ -887,6 +900,8 @@
                   >
                 </div> -->
               </div>
+              <div class="form-cells-item form-cells-item2">
+                
                 <!-- <div class="item2-column">
                   <div class="form-cells-hd">进深</div>
                   <input
@@ -897,7 +912,7 @@
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div> -->
-              
+              </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
                   <div class="form-cells-hd">付款方式</div>
@@ -1014,6 +1029,8 @@
                   >
                 </div> -->
               </div>
+              <div class="form-cells-item form-cells-item2">
+                
                 <!-- <div class="item2-column">
                   <div class="form-cells-hd">进深</div>
                   <input
@@ -1024,7 +1041,7 @@
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div> -->
-              
+              </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
                   <div class="form-cells-hd">转让费（元）</div>
