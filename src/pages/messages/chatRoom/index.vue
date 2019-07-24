@@ -7,8 +7,9 @@
     <!-- :class="{'showMessage':showModule,'showBtn':showBtn,'showEmotion':showEmotion}" -->
     <!--聊天列表-->
     <div class="padwid" @click="isShowMask=false">
-      <div v-for="(msg,msgIndex) in chatList" :key="msgIndex">
-        <div class="flex flexAlignCenter boxSize p2 justifyContentEnd plr20" v-if="msg.MsgId=='a'">
+      <div v-for="(msg,msgIndex) in chatList" :key="msgIndex" :id="msg.class">
+        <div class="time">{{msg.AddTime}}</div>
+        <div class="flex flexAlignCenter boxSize p2 justifyContentEnd plr20"  v-if="msg.MsgId=='a'">
           <div class="flex flexAlignEnd justifyContentEnd mrr2">
             <!-- <span class="fontColor" @click="scrollBottom">已读</span> -->
             <!-- <div class="tagmsg cfff"> -->
@@ -99,6 +100,14 @@
             alt
             class="logimg"
             @click="onShowModule('imgage')"
+            v-if="!sendInfo"
+          />
+          <img
+            src="/static/images/icons/send.png"
+            alt
+            class="logimg"
+            @click="sendMessage()"
+            v-else
           />
         </div>
       </div>
@@ -396,7 +405,7 @@ export default {
       wx.sendSocketMessage({ data: JSON.stringify(data) });
     },
     //获取好友消息
-    getFriendMessage(scrollBottom) {
+    getFriendMessage(scrollBottom,scrollPosition) {
       return new Promise((resolve, reject) => {
         const that = this;
         wx.request({
@@ -412,10 +421,27 @@ export default {
           method: "POST",
           success(_res) {
             let res = _res.data;
-            console.log(res, "resss");
             if (res.code === 0) {
+
               let info = [];
-              res.data.info.map(item => {
+              // 处理发送时间
+              let times=res.data.info[0]&&new Date(res.data.info[0].AddTime.replace('-','/'));
+              res.data.info.reverse(); //数组翻转
+              res.data.info.map((item,i) => {
+                 let date = new Date(item.AddTime.replace('-','/'));
+                item.class='class'+date.getTime(); //时间戳类，用户下拉聊天记录滑动对应位置
+                if(i!==0){
+                  const year = (date.getFullYear())===(times.getFullYear());
+                  const Month = date.getMonth()===times.getMonth();
+                  const dates = date.getDate()===times.getDate();
+                  const Hours = date.getHours()===times.getHours();
+                  const Minutes = date.getMinutes()-times.getMinutes()<5
+                  if(year&&Month&&dates&&Hours&&Minutes){
+                    item.AddTime=''
+                  }else{
+                    times = date;
+                  }
+                }
                 // 将匹配结果替换表情图片
                 item.Info = item.Info.replace(
                   /\[[\u4E00-\u9FA5]{1,3}\]/gi,
@@ -429,9 +455,10 @@ export default {
                     }
                   }
                 );
-                info.unshift(item);
+                // info.unshift(item);
+                info.push(item);
               });
-              console.log(info, "解析完的字符串");
+              
               // res.data.info = info;
               if (that.page === 1) {
                 that.chatList = info;
@@ -445,6 +472,22 @@ export default {
               ) {
                 console.log("滚动了");
                 that.scrollBottom();
+              }
+              if(scrollPosition){
+                  setTimeout(() => {
+                    wx
+                      .createSelectorQuery()
+                      .select("#"+scrollPosition)
+                      .boundingClientRect(function(rect) {
+                        // 使页面滚动到底部
+                        wx.pageScrollTo({
+                          scrollTop: rect.top,
+                          duration: 0
+                        });
+                      })
+                      .exec();
+                  }, 100);
+
               }
               resolve();
             } else {
@@ -747,7 +790,7 @@ export default {
               scrollTop: rect.height,
               duration: 0
             });
-            console.log(rect.height, "height滚动了额");
+            console.log(rect, "height滚动了额");
           })
           .exec();
       }, 100);
@@ -757,7 +800,8 @@ export default {
   onPullDownRefresh() {
     this.initData();
     this.page += 1;
-    this.getFriendMessage();
+    
+    this.getFriendMessage('',this.chatList[0].class);
     wx.stopPullDownRefresh();
   },
   created() {
@@ -766,12 +810,18 @@ export default {
 };
 </script>
 <style scoped lang="scss">
-// .padwid {
+.padwid {
 // height:86vh;
 // width:100%;
 // box-sizing:border-box;
 // padding-bottom:180rpx;
-// }
+.time{
+  color:#888;
+  font-size:20rpx;
+  text-align:center;
+  margin:10rpx 0;
+}
+}
 .showMessage {
   padding-bottom: 530rpx !important;
 }
