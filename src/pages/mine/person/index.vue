@@ -55,32 +55,39 @@
         <block v-if="type==2">
         <div class="weui-cells noBorder__weui-cells column__weui-cells" style="margin-bottom:20rpx" v-for="(item,skey) in companyInfo" :key="skey">
             <div class="group flex justifyContentBetween">
-              <div class="weui-cell">
+              <div class="weui-cell min-w300">
                 <div class="weui-cell__hd">成立日期</div>
                 <div class="weui-cell__bd" v-if="item.SetUpDate">{{item.SetUpDate}}</div>
                 <div class="weui-cell__bd" v-else>无</div>
               </div>
-              <div class="weui-cell">
+              <div class="weui-cell min-w300">
                 <div class="weui-cell__hd">人员规模</div>
                 <div class="weui-cell__bd" v-if="item.StaffSize">{{item.StaffSize}}</div>
                 <div class="weui-cell__bd" v-else>无</div>
               </div>
             </div>
             <div class="group flex justifyContentBetween">
-              <div class="weui-cell">
+              <div class="weui-cell min-w300">
                 <div class="weui-cell__hd">办公面积</div>
                 <div class="weui-cell__bd" v-if="item.OfficeArea">{{item.OfficeArea}}</div>
                 <div class="weui-cell__bd" v-else>无</div>
               </div>
-              <div class="weui-cell">
+              <div class="weui-cell min-w300">
                 <div class="weui-cell__hd">地区</div>
                 <div class="weui-cell__bd" v-if="item.NativePlace">{{item.NativePlace}}</div>
                 <div class="weui-cell__bd" v-else>无</div>
               </div>
             </div>
             <div class="group flex">
-              <div class="weui-cell flex1">
+              <div class="weui-cell flex1 min-w300">
                 <div class="weui-cell__hd">办公地址</div>
+                <div class="weui-cell__bd" v-if="item.OfficeAddr">{{item.OfficeAddr}}</div>
+                <div class="weui-cell__bd" v-else>无</div>
+              </div>
+            </div>
+            <div class="group flex">
+              <div class="weui-cell flex1 min-w300">
+                <div class="weui-cell__hd">公司官网</div>
                 <div class="weui-cell__bd" v-if="item.OfficeAddr">{{item.OfficeAddr}}</div>
                 <div class="weui-cell__bd" v-else>无</div>
               </div>
@@ -273,12 +280,12 @@
         </div>
       </div>
       <!-- 公司理念 -->
-      <div class="section" v-if="type==2 && companyInfo[0].CompanyCulture.length>0" style="margin-top:20rpx">
+      <!-- <div class="section" v-if="type==2 && companyInfo[0].CompanyCulture.length>0" style="margin-top:20rpx">
           <div class="locationBox pd15">
             <h3 class="title detail__title">公司理念</h3>
             <div class="con">{{companyInfo[0].CompanyCulture}}</div>
           </div>
-      </div>
+      </div> -->
       <!--照片-->
       <div class="form-cells-item pall bg_fff" style="margin-top:20rpx" v-if="type==2&&companyInfo[0].CompanyPic[0].length>0" >
         <div class="flex justifyContentBetween">
@@ -449,10 +456,11 @@ export default {
           }
           if(res.data.CyList.length>1){
             this.companyInfo.push(this.personInfo.CyList[0])
+          console.log(this.companyInfo)
            }else{
              this.companyInfo = res.data.CyList
-           }
           console.log(this.companyInfo)
+           }
         }
       })
     },
@@ -798,5 +806,8 @@ export default {
   height:90rpx;
   overflow:hidden;
 }
-
+.min-w300{
+  min-width:300rpx;
+  text-align:left!important;
+}
 </style>

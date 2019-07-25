@@ -32,8 +32,8 @@
         <div class="weui-cells noBorder__weui-cells column__weui-cells mt0">
           <div class="group flex">
             <div class="weui-cell group-item" v-for="(item,index) in attrArr" :key="index" v-show="item.Value">
-              <div class="weui-cell__hd">{{item.Text}}</div>
-              <div class="weui-cell__bd">{{item.Value}}</div>
+              <div class="weui-cell__hd mr12">{{item.Text}}</div>
+              <div class="weui-cell__bd f26">{{item.Value}}</div>
             </div>
           </div>
         </div>
@@ -85,7 +85,7 @@
           <p class="name">{{data.ShopInfo.Value.Name.Value}}</p>
           <div class="flex serviceTime">
             <p class="serviceTime">{{data.ShopInfo.Value.Job.Value}}</p> 
-            &nbsp;|&nbsp;
+            <div v-if="data.ShopInfo.Value.Job.Value&&data.ShopInfo.Value.WorkLife.Value">&nbsp;|&nbsp;</div>
             <p class="serviceTime">{{data.ShopInfo.Value.WorkLife.Value}}</p>
           </div>
         </div>
@@ -148,12 +148,14 @@ export default {
       const attrArr = [];
       // 活动名称
       data["Founder"] && attrArr.push(data["Founder"]);
+      // 活动区域
+      data["GladBuyArea"] && attrArr.push(data["GladBuyArea"]);
+      // 起止时间
+      data["StartEndTime"] && attrArr.push(data["StartEndTime"]);
       // 公司行业
       data["CompanyTrade"] && attrArr.push(data["CompanyTrade"]);
       // 拼活动公司行业/主业
       data["GladBuyerTrade"] && attrArr.push(data["GladBuyerTrade"]);
-      // 活动区域
-      data["GladBuyArea"] && attrArr.push(data["GladBuyArea"]);
       // 本公司人数
       data["PlanAllNum"] && attrArr.push(data["PlanAllNum"]);
       // 拼活动公司人数
@@ -169,8 +171,6 @@ export default {
       data["TypeName"] && attrArr.push(data["TypeName"]);
       // 男女比例
       data["SexRatio"] && attrArr.push(data["SexRatio"]);
-      // 起止时间
-      data["StartEndTime"] && attrArr.push(data["StartEndTime"]);
       // 学历结构
       data["EducationLvl"] && attrArr.push(data["EducationLvl"]);
       // 年龄层次

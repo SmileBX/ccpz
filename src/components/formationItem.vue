@@ -45,7 +45,7 @@
             <span class="icon-gou"></span> 已认证
           </span>
         </p>
-        <p class="msgList">
+        <p class="msgList" style="line-height:35rpx">
           <span class="msgItem" v-if="item.Founder">{{item.Founder}}</span>
           <span class="msgItem">投资{{item.BuyBudget}}万</span>
           <span class="msgItem">{{item.GladBuyArea}}</span>
