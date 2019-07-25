@@ -1194,7 +1194,6 @@ export default {
   onLoad() {
     this.mm = 0
     this.showDefaultCompany = false
-    this.trimData()
     this.setBarTitle();
     this.initData()
   },

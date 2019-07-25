@@ -1194,7 +1194,6 @@ export default {
   onLoad() {
     this.mm = 0
     this.showDefaultCompany = false
-    this.trimData()
     this.setBarTitle();
     this.initData()
   },
@@ -1215,11 +1214,6 @@ export default {
     // }else{
       this.GetPublishItems()
     // }
-    if(this.$root.$mp.query.url){
-      //是否需要重新编辑数据
-      this.publishId = this.$root.$mp.query.Id
-      this.getDefaultData()
-    }
    
     
   },
@@ -1229,135 +1223,6 @@ export default {
       wx.setNavigationBarTitle({
         title: "发布"
       });
-    },
-    //获取需要重新编辑发布的数据
-    getDefaultData(){
-      post('Goods/GetRent_Editxq',{
-        UserId:this.userId,
-        Token:this.token,
-        Id:this.publishId
-      },this.curPage).then(res=>{
-         if(res.code==0){
-           this.Title = res.data.Title.Value
-           this.Synopsis = res.data. Synopsis.Value
-           if(res.data.Company){
-             this.Company = res.data.Company.Value
-              this.CompanyId = res.data.CompanyId.Value
-           }
-           if(res.data.CompanyAddr){
-             this.CompanyAddr = res.data.CompanyAddr.Value
-             this.CompanyDoorNum = res.data.CompanyDoorNum.Value
-           }
-           if(res.data.PlanBuyArea){
-             this.PlanBuyArea = res.data.PlanBuyArea.Value
-           }
-           if(res.data.PlanBuyDate){
-             this.PlanBuyDate = res.data.PlanBuyDate.Value
-           }
-           if(res.data.GladBuyArea){
-             this.GladBuyArea = res.data.GladBuyArea.Value
-              this.GladBuyAreaId = res.data.GladBuyAreaId.Value
-           }
-           if(res.data.GladBuyerTrade){
-             this.GladBuyerTrade = res.data.GladBuyerTrade.Value
-              this.GladBuyerTradeId = res.data.GladBuyerTradeId.Value
-           }
-           if(res.data.PropertyPrice){
-              this.PropertyPrice = res.data.PropertyPrice.Value
-           }
-           if(res.data.CompanyTradeId){
-             this.CompanyTradeId = res.data.CompanyTradeId.Value
-              this.CompanyTrade = res.data.CompanyTrade.Value
-           }
-           if(res.data.PlanRentDate){
-              this.PlanRentDate = res.data.PlanRentDate.Value
-           }
-           if(res.data.PropertySort){
-            this.PropertySort = res.data.PropertySort.Value
-           }
-           if(res.data.BuyBudget){
-             this.BuyBudget = res.data.BuyBudget.Value
-           }
-           if(res.data.PropertyType){
-              this.PropertyType = res.data.PropertyType.Value
-           }
-           if(res.data.SpecsType){
-             this.SpecsType = res.data.SpecsType.Value
-           }
-           if(res.data.PlanBuyNum){
-             this.PlanBuyNum = res.data.PlanBuyNum.Value
-           }
-           if(res.data.NeedOfficeNum){
-              this.NeedOfficeNum = res.data.NeedOfficeNum.Value
-          }
-          if(res.data.DeviceRent){
-            this.DeviceRent = res.data.DeviceRent.Value
-          }
-          if(res.data.DevicePrice){
-            this.DevicePrice = res.data.DevicePrice.Value
-          }
-          if(res.data.RentTimeLimit){
-            this.RentTimeLimit = res.data.RentTimeLimit.Value
-          }
-          if(res.data.AllArea){
-            this.AllArea = res.data.AllArea.Value 
-          }
-            if(res.data.IsRegArea){
-              if(res.data.IsRegArea.Value == 1){
-                  this.IsRegAreaMsg = '是'
-              }else{
-                  this.IsRegAreaMsg = '否'
-              }
-            }
-            if(res.data.IsSubPack){
-              if(res.data.IsSubPack.Value == 1){
-                  this.IsSubPackMsg = '是'
-              }else{
-                  this.IsSubPackMsg = '否'
-              }
-            }
-            if(res.data.IsSenior){
-              if(res.data.IsSenior.Value == 1){
-                  this.IsSeniorMsg = '是'
-              }else{
-                  this.IsSeniorMsg = '否'
-              }
-            }
-            if(res.data.IsStockCooperation){
-              if(res.data.IsStockCooperation.Value == 1){
-                  this.IsStockCooperationMsg = '是'
-              }else{
-                  this.IsStockCooperationMsg = '否'
-              }
-            }
-            if(res.data.IsAllowOtherList){
-              if(res.data.IsAllowOtherList.Value == 1){
-                  this.IsAllowOtherListMsg = '是'
-              }else{
-                  this.IsAllowOtherListMsg = '否'
-              }
-            }
-            if(res.data.IsCompanyList){
-              if(res.data.IsCompanyList.Value == 1){
-                  this.IsCompanyListMsg = '是'
-              }else{
-                  this.IsCompanyListMsg = '否'
-              }
-            }
-            if(res.data.IsTrim){
-              if(res.data.IsTrim.Value == 1){
-                  this.IsTrimMsg = '是'
-              }else{
-                  this.IsTrimMsg = '否'
-              }
-            }
-            
-            
-            
-
-          //  this.ServiceName = res.data.ServiceName.Value
-         }
-      })
     },
     aaa(){
       this.isShowAddr = true;
@@ -2346,7 +2211,7 @@ export default {
             IsSubPack:that.IsSubPack,
             IsStockCooperation:that.IsStockCooperation,
             ServiceName:that.ServiceName,
-            // CompanyCulture:that.CompanyCulture,
+            CompanyCulture:that.CompanyCulture,
             // ContentDetail:that.ContentDetail 
         }
       }else if(that.PageId == 27){

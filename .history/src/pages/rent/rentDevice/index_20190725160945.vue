@@ -1194,7 +1194,6 @@ export default {
   onLoad() {
     this.mm = 0
     this.showDefaultCompany = false
-    this.trimData()
     this.setBarTitle();
     this.initData()
   },
@@ -1335,20 +1334,6 @@ export default {
                   this.IsAllowOtherListMsg = '是'
               }else{
                   this.IsAllowOtherListMsg = '否'
-              }
-            }
-            if(res.data.IsCompanyList){
-              if(res.data.IsCompanyList.Value == 1){
-                  this.IsCompanyListMsg = '是'
-              }else{
-                  this.IsCompanyListMsg = '否'
-              }
-            }
-            if(res.data.IsTrim){
-              if(res.data.IsTrim.Value == 1){
-                  this.IsTrimMsg = '是'
-              }else{
-                  this.IsTrimMsg = '否'
               }
             }
             

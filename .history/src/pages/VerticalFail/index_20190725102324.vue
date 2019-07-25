@@ -22,7 +22,6 @@ export default {
       AuditReasonText:"",//审核失败的原因
       id:"",  //需要审核的id
       PageId:"",
-      TypeId:"",
       userId: "",
       token: "",
       curPage: ""
@@ -55,20 +54,19 @@ export default {
         if (res.code == 0) {
           this.AuditReasonText=res.data.AuditReason.Value;console.log("**********",this.AuditReasonText)
           this.PageId=res.data.PageId;console.log("+++++++++",this.PageId)
-          this.TypeId = res.data.TypeId
         }
       });
     },
     //重新发布
     gopage(){
       var PageId=this.PageId;
-      if(this.PageId==36 ||　this.PageId==35 || this.PageId==32 || this.PageId==33 || this.PageId==34 || this.PageId==43 || this.PageId==41 || this.PageId==42 || this.PageId==37 || this.PageId==38 || this.PageId==39 ||this.PageId==40){
+      if(PageId==""){
         wx.redirectTo({
-          url: '/pages/rent/rentOffic/main?PageId='+this.PageId+"&TypeId="+this.TypeId+"&url=VerticalFail"+"&Id="+this.id
+          url: '/pages/rent/rentOffic/main'
         })
-      }else if(this.PageId==26 ||　this.PageId==25 || this.PageId==30 || this.PageId==31 || this.PageId==28 ||　this.PageId==29 || this.PageId==27){
+      }else{
         wx.redirectTo({
-          url: '/pages/rent/rentDevice/main?PageId='+this.PageId+"&TypeId="+this.TypeId+"&url=VerticalFail"+"&Id="+this.id
+          url: '/pages/rent/rentDevice/main'
         })
       }
     }

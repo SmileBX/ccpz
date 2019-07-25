@@ -362,13 +362,11 @@ export default {
     },
     //重新发布
     gopage(status,id,PageId){console.log(status,id,PageId)
-      if(status==2){//status==2 审核失败 1 审核通过 0 待审核
-      //查看审核失败的原因 
+      if(status==2){//status==2 审核失败 1 审核通过 0 待审核 
         wx.navigateTo({
           url: '/pages/VerticalFail/main?Id='+id
         })
       }else{
-        //编辑修改数据
         if(PageId==""){
           wx.navigateTo({
             url: '/pages/rent/rentOffic/main'
