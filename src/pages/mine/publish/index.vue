@@ -72,7 +72,7 @@
                       </p>
                       <p class="priceArea">
                         <span class="price">￥{{item.PropertyPrice}}</span>
-                        <span class="againsubmit" @click.stop="gopage(item.Status)" :class="{'addcolor':item.Status===2}">{{item.Status===2?'查看原因':'重新发布'}}</span>
+                        <span class="againsubmit" @click.stop="gopage(item.Status,item.Id,item.PageId)" :class="{'addcolor':item.Status===2}">{{item.Status===2?'查看原因':'重新发布'}}</span>
                       </p>
                     </div>
                   </div>
@@ -138,7 +138,7 @@
                           :key="index2"
                         >{{item2}}</span>
                       </p>
-                      <div class="againsubmit" @click.stop="gopage(item.Status)" :class="{'addcolor':item.Status===2}">{{item.Status===2?'查看原因':'重新发布'}}</div>
+                      <div class="againsubmit" @click.stop="gopage(item.Status,item.Id,item.PageId)" :class="{'addcolor':item.Status===2}">{{item.Status===2?'查看原因':'重新发布'}}</div>
                     </div>
                   </div>
                 </van-cell>
@@ -197,7 +197,7 @@
                       </p>
                       <p class="priceArea">
                         <span class="price">￥{{item.PropertyPrice}}</span>
-                        <span class="againsubmit" @click.stop="gopage(item.Status)" :class="{'addcolor':item.Status===2}">{{item.Status===2?'查看原因':'重新发布'}}</span>
+                        <span class="againsubmit" @click.stop="gopage(item.Status,item.Id,item.PageId)" :class="{'addcolor':item.Status===2}">{{item.Status===2?'查看原因':'重新发布'}}</span>
                       </p>
                     </div>
                   </div>
@@ -262,7 +262,7 @@
                       </p>
                       <p class="priceArea">
                         <span class="price">￥{{item.PropertyPrice}}</span>
-                        <span class="againsubmit" @click.stop="gopage(item.Status)" :class="{'addcolor':item.Status===2}">{{item.Status===2?'查看原因':'重新发布'}}</span>
+                        <span class="againsubmit" @click.stop="gopage(item.Status,item.Id,item.PageId)" :class="{'addcolor':item.Status===2}">{{item.Status===2?'查看原因':'重新发布'}}</span>
                       </p>
                     </div>
                   </div>
@@ -360,11 +360,22 @@ export default {
         title: "我的发布"
       });
     },
-    gopage(status){
-      if(status==2){
+    //重新发布
+    gopage(status,id,PageId){console.log(status,id,PageId)
+      if(status==2){//status==2 审核失败 1 审核通过 0 待审核 
         wx.navigateTo({
-          url: `/pages/VerticalFail/main`
+          url: '/pages/VerticalFail/main?Id='+id
         })
+      }else{
+        if(PageId==""){
+          wx.navigateTo({
+            url: '/pages/rent/rentOffic/main'
+          })
+        }else{
+          wx.navigateTo({
+            url: '/pages/rent/rentDevice/main'
+          })
+        }
       }
     },
     initData() {
