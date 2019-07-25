@@ -88,7 +88,7 @@
             <div class="group flex">
               <div class="weui-cell flex1 min-w300">
                 <div class="weui-cell__hd">公司官网</div>
-                <div class="weui-cell__bd" v-if="item.OfficeAddr">{{item.OfficeAddr}}</div>
+                <div class="weui-cell__bd" v-if="item.OfficialWebsite">{{item.OfficialWebsite}}</div>
                 <div class="weui-cell__bd" v-else>无</div>
               </div>
             </div>
@@ -429,16 +429,16 @@ export default {
             this.$set(res.data,"Area",res.data.Area.split(',').slice(1).join('-'))
           }
           this.$set(res.data,"Trade",res.data.Trade.split(',').join(' '))
-          if( res.data.TagsCapGood[0].length<=0){
+          if( res.data.TagsCapGood.length>0){
               this.$set(res.data,"TagsCapGood",res.data.TagsCapGood.splice(1))
           }
-          if( res.data.TagsCapKnow[0].length<=0){
+          if( res.data.TagsCapKnow.length>0){
               this.$set(res.data,"TagsCapKnow",res.data.TagsCapKnow.splice(1))
           }
-          if( res.data.TagsResGood[0].length<=0){
+          if( res.data.TagsResGood.length>0){
               this.$set(res.data,"TagsResGood",res.data.TagsResGood.splice(1))
           }
-          if( res.data.TagsResKnow[0].length<=0){
+          if( res.data.TagsResKnow.length>0){
               this.$set(res.data,"TagsResKnow",res.data.TagsResKnow.splice(1))
           }
           this.personInfo = res.data

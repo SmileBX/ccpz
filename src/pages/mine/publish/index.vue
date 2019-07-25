@@ -52,7 +52,7 @@
                         <img :src="item.PicNo" alt mode="aspectFill">
                       </div>
                     </div>
-                    <div class="txtBox flex1">
+                    <div class="txtBox flex1 ">
                       <p class="title ellipsis" style="color:#1a1a1a">
                         <span class="typeName" v-if="item.TypeName !==''">{{item.TypeName}}</span>
                         {{item.Title}}
@@ -719,12 +719,15 @@ export default {
   padding: 0;
 }
 .levelPanel .item .outside .txtBox .title {
-  margin-bottom: 30rpx !important;
+  // margin-bottom: 30rpx !important;
 }
 .txtBox {
   text-align: left;
+  display:flex;
+  flex-flow:column nowrap;
+  justify-content:space-between;
   .priceArea {
-    margin-top: 30rpx;
+    // margin-top: 30rpx;
     width: 100%;
     position: relative;
     .againsubmit{
@@ -733,9 +736,9 @@ export default {
       top: 0;
       right: 0;
       font-size: 22rpx;
-      color: #666;
-      padding: 4rpx 20rpx;
-      line-height: 44rpx;
+      color: #ff6666;
+      padding: 0 20rpx;
+      line-height: 40rpx;
       height: 40rpx;
       border: #ff6666 1rpx solid;
       border-radius: 8rpx;
@@ -799,12 +802,15 @@ export default {
   bottom: 30rpx;
   right: 30rpx;
   font-size: 22rpx;
-  color: #666;
+  color: #ff6666;
   padding: 4rpx 20rpx;
   line-height: 44rpx;
   height: 40rpx;
   border: #ff6666 1rpx solid;
   border-radius: 8rpx;
   z-index: 10
+}
+.msgList{
+  line-height:1.3;
 }
 </style>

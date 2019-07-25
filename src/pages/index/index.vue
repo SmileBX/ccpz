@@ -48,7 +48,8 @@
         >
           <block v-for="(item,index) in picList" :key="index">
             <swiper-item class="item">
-              <img :src="item.Pic" alt @click="record(item.Id,item.Url)">
+              <!-- <img :src="item.Pic" alt @click="record(item.Id,item.Url)"> -->
+              <img :src="item.Pic" alt @click="gooutpage(item.Url)">
               <!-- <image src="item" class="slide-image" width="355" height="150"> -->
             </swiper-item>
           </block>
