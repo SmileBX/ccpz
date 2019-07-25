@@ -1724,18 +1724,10 @@ export default {
               this.NeedApartment = res.data.NeedApartment.Value
             }
             if(res.data.IsRegArea){
-              if(res.data.IsRegArea.Value == 1){
-                  this.IsRegAreaMsg = '是'
-              }else{
-                  this.IsRegAreaMsg = '否'
-              }
+              this.IsRegArea = res.data.IsRegArea.Value
             }
             if(res.data.IsSubPack){
-              if(res.data.IsSubPack.Value == 1){
-                  this.IsSubPackMsg = '是'
-              }else{
-                  this.IsSubPackMsg = '否'
-              }
+              this.IsSubPack = res.data.IsSubPack.Value
             }
             if(res.data.BuyBudget){
               this.BuyBudget = res.data.BuyBudget.Value

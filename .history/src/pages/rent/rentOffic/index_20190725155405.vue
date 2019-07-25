@@ -1723,19 +1723,15 @@ export default {
             if(res.data.NeedApartment){
               this.NeedApartment = res.data.NeedApartment.Value
             }
-            if(res.data.IsRegArea){
-              if(res.data.IsRegArea.Value == 1){
-                  this.IsRegAreaMsg = '是'
-              }else{
-                  this.IsRegAreaMsg = '否'
-              }
+            if(res.data.IsRegArea==1){
+              this.IsRegAreaMsg = '是'
+            }else if(res.data.IsRegArea==0){
+              this.IsRegAreaMsg = '否'
             }
-            if(res.data.IsSubPack){
-              if(res.data.IsSubPack.Value == 1){
-                  this.IsSubPackMsg = '是'
-              }else{
-                  this.IsSubPackMsg = '否'
-              }
+            if(res.data.IsSubPack==1){
+              this.IsSubPackMsg = '是'
+            }else if(res.data.IsSubPack==0){
+              this.IsSubPackMsg = '否'
             }
             if(res.data.BuyBudget){
               this.BuyBudget = res.data.BuyBudget.Value

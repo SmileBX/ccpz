@@ -52,7 +52,7 @@
                         <img :src="item.PicNo" alt mode="aspectFill">
                       </div>
                     </div>
-                    <div class="txtBox flex1 ">
+                    <div class="txtBox flex1">
                       <p class="title ellipsis" style="color:#1a1a1a">
                         <span class="typeName" v-if="item.TypeName !==''">{{item.TypeName}}</span>
                         {{item.Title}}
@@ -72,7 +72,7 @@
                       </p>
                       <p class="priceArea">
                         <span class="price">￥{{item.PropertyPrice}}</span>
-                        <span class="againsubmit" @click.stop="gopage(item.Status,item.Id,item.PageId)" :class="{'addcolor':item.Status===2}" v-if="item.Status!==0">{{item.Status===2?'查看原因':'重新发布'}}</span>
+                        <span class="againsubmit" @click.stop="gopage(item.Status,item.Id,item.PageId)" :class="{'addcolor':item.Status===2}">{{item.Status===2?'查看原因':'重新发布'}}</span>
                       </p>
                     </div>
                   </div>
@@ -138,7 +138,7 @@
                           :key="index2"
                         >{{item2}}</span>
                       </p>
-                      <div class="againsubmit" @click.stop="gopage(item.Status,item.Id,item.PageId)" :class="{'addcolor':item.Status===2}" v-if="item.Status!==0">{{item.Status===2?'查看原因':'重新发布'}}</div>
+                      <div class="againsubmit" @click.stop="gopage(item.Status,item.Id,item.PageId)" :class="{'addcolor':item.Status===2}">{{item.Status===2?'查看原因':'重新发布'}}</div>
                     </div>
                   </div>
                 </van-cell>
@@ -197,7 +197,7 @@
                       </p>
                       <p class="priceArea">
                         <span class="price">￥{{item.PropertyPrice}}</span>
-                        <span class="againsubmit" @click.stop="gopage(item.Status,item.Id,item.PageId)" :class="{'addcolor':item.Status===2}" v-if="item.Status!==0">{{item.Status===2?'查看原因':'重新发布'}}</span>
+                        <span class="againsubmit" @click.stop="gopage(item.Status,item.Id,item.PageId)" :class="{'addcolor':item.Status===2}">{{item.Status===2?'查看原因':'重新发布'}}</span>
                       </p>
                     </div>
                   </div>
@@ -262,7 +262,7 @@
                       </p>
                       <p class="priceArea">
                         <span class="price">￥{{item.PropertyPrice}}</span>
-                        <span class="againsubmit" @click.stop="gopage(item.Status,item.Id,item.PageId)" :class="{'addcolor':item.Status===2}" v-if="item.Status!==0">{{item.Status===2?'查看原因':'重新发布'}}</span>
+                        <span class="againsubmit" @click.stop="gopage(item.Status,item.Id,item.PageId)" :class="{'addcolor':item.Status===2}">{{item.Status===2?'查看原因':'重新发布'}}</span>
                       </p>
                     </div>
                   </div>
@@ -362,13 +362,11 @@ export default {
     },
     //重新发布
     gopage(status,id,PageId){console.log(status,id,PageId)
-      if(status==2){//status==2 审核失败 1 审核通过 0 待审核
-      //查看审核失败的原因 
+      if(status==2){//status==2 审核失败 1 审核通过 0 待审核 
         wx.navigateTo({
           url: '/pages/VerticalFail/main?Id='+id
         })
       }else{
-        //编辑修改数据
         if(PageId==""){
           wx.navigateTo({
             url: '/pages/rent/rentOffic/main'
@@ -719,15 +717,12 @@ export default {
   padding: 0;
 }
 .levelPanel .item .outside .txtBox .title {
-  // margin-bottom: 30rpx !important;
+  margin-bottom: 30rpx !important;
 }
 .txtBox {
   text-align: left;
-  display:flex;
-  flex-flow:column nowrap;
-  justify-content:space-between;
   .priceArea {
-    // margin-top: 30rpx;
+    margin-top: 30rpx;
     width: 100%;
     position: relative;
     .againsubmit{
@@ -736,9 +731,9 @@ export default {
       top: 0;
       right: 0;
       font-size: 22rpx;
-      color: #ff6666;
-      padding: 0 20rpx;
-      line-height: 40rpx;
+      color: #666;
+      padding: 4rpx 20rpx;
+      line-height: 44rpx;
       height: 40rpx;
       border: #ff6666 1rpx solid;
       border-radius: 8rpx;
@@ -802,15 +797,12 @@ export default {
   bottom: 30rpx;
   right: 30rpx;
   font-size: 22rpx;
-  color: #ff6666;
+  color: #666;
   padding: 4rpx 20rpx;
   line-height: 44rpx;
   height: 40rpx;
   border: #ff6666 1rpx solid;
   border-radius: 8rpx;
   z-index: 10
-}
-.msgList{
-  line-height:1.3;
 }
 </style>

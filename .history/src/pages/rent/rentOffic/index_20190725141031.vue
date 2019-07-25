@@ -321,7 +321,7 @@
                   <input
                     class="ipt"
                     type="text"
-                    placeholder="请选择"
+                    placeholder="请输入"
                     disabled
                     @tap="choseDate"
                     v-model="PlanBuyDate"
@@ -1572,7 +1572,6 @@ export default {
     this.mm = 0
     this.showDefaultCompany = false
     this.setBarTitle();
-    this.trimData()
     this.initData()
   },
   onShow(){
@@ -1675,81 +1674,34 @@ export default {
             if(res.data.AgeLevel){
               this.AgeLevel = res.data.AgeLevel.Value
             }
-            if(res.data.SexRatio){
-              this.SexRatio = res.data.SexRatio.Value
-            }
-            if(res.data.EducationLvl){
-              this.EducationLvl = res.data.EducationLvl.Value
-            }
-            if(res.data.ContentDetail){
-              this.ContentDetail = res.data.ContentDetail.Value
-            } 
-            if(res.data.PlanRentDate){
-              this.PlanRentDate = res.data.PlanRentDate.Value
-            }
-            if(res.data.RunStatus){
-              this.RunStatus = res.data.RunStatus.Value
-            }
-            if(res.data.RentTime){
-              this.RentTime = res.data.RentTime.Value
-            }
-            if(res.data.PropertyType){
-              this.PropertyType = res.data.PropertyType.Value
-            }
-            if(res.data.NeedFloor){
-              this.NeedFloor = res.data.NeedFloor.Value
-            }
-            if(res.data.NeedFloorHeight){
-              this.NeedFloorHeight = res.data.NeedFloorHeight.Value
-            }
-            if(res.data.PayType){
-              this.PayType = res.data.PayType.Value
-            }
-            if(res.data.DeviceRent){
-              this.DeviceRent = res.data.DeviceRent.Value
-            }
-            if(res.data.PropertySort){
-              this.PropertySort = res.data.PropertySort.Value
-            }
-            if(res.data.Decoration){
-              this.Decoration = res.data.Decoration.Value
-            }
-            if(res.data.PropertyType){
-              this.PropertyType = res.data.PropertyType.Value
-            }
-            if(res.data.NeedStation){
-              this.NeedStation = res.data.NeedStation.Value
-            }
-            if(res.data.NeedApartment){
-              this.NeedApartment = res.data.NeedApartment.Value
-            }
-            if(res.data.IsRegArea){
-              if(res.data.IsRegArea.Value == 1){
-                  this.IsRegAreaMsg = '是'
-              }else{
-                  this.IsRegAreaMsg = '否'
-              }
-            }
-            if(res.data.IsSubPack){
-              if(res.data.IsSubPack.Value == 1){
-                  this.IsSubPackMsg = '是'
-              }else{
-                  this.IsSubPackMsg = '否'
-              }
-            }
-            if(res.data.BuyBudget){
-              this.BuyBudget = res.data.BuyBudget.Value
-            }
-            if(res.data.RingType){
-              this.RingType = res.data.RingType.Value
-            }
-            if(res.data.RingNum){
-              this.RingNum = res.data.RingNum.Value
-            }
-            if( res.data.RingRate){
-              this.RingRate = res.data.RingRate.Value
-            }
-            
+           
+           
+           
+
+          //  this.SexRatio = res.data.SexRatio.Value
+          //  this.EducationLvl = res.data.EducationLvl.Value
+          //  this.ContentDetail = res.data.ContentDetail.Value
+          //  this.RentTime = res.data.RentTime.Value
+          //  this.PropertyType = res.data.PropertyType.Value
+          //  this.NeedFloor = res.data.NeedFloor.Value
+          //  this.NeedFloorHeight = res.data.NeedFloorHeight.Value
+          //  this.PayType = res.data.PayType.Value
+          //  this.DeviceRent = res.data.DeviceRent.Value
+          //  this.PropertySort = res.data.PropertySort.Value
+          //  this.Decoration = res.data.Decoration.Value
+          //  this.PropertyType = res.data.PropertyType.Value
+          //  this.NeedStation = res.data.NeedStation.Value
+          //  this.NeedApartment = res.data.NeedApartment.Value
+          //  this.IsRegArea = res.data.IsRegArea.Value
+          //  this.IsSubPack = res.data.IsSubPack.Value
+
+          //  this.BuyBudget = res.data.BuyBudget.Value
+          //  this.RingType = res.data.RingType.Value
+          //  this.RingNum = res.data.RingNum.Value
+          //  this.RingRate = res.data.RingRate.Value
+
+
+
 
           //  this.ServiceName = res.data.ServiceName.Value
            if(this.PageId==32 || this.PageId==33){

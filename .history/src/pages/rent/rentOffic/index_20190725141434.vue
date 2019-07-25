@@ -321,7 +321,7 @@
                   <input
                     class="ipt"
                     type="text"
-                    placeholder="请选择"
+                    placeholder="请输入"
                     disabled
                     @tap="choseDate"
                     v-model="PlanBuyDate"
@@ -1572,7 +1572,6 @@ export default {
     this.mm = 0
     this.showDefaultCompany = false
     this.setBarTitle();
-    this.trimData()
     this.initData()
   },
   onShow(){
@@ -1683,12 +1682,6 @@ export default {
             }
             if(res.data.ContentDetail){
               this.ContentDetail = res.data.ContentDetail.Value
-            } 
-            if(res.data.PlanRentDate){
-              this.PlanRentDate = res.data.PlanRentDate.Value
-            }
-            if(res.data.RunStatus){
-              this.RunStatus = res.data.RunStatus.Value
             }
             if(res.data.RentTime){
               this.RentTime = res.data.RentTime.Value
@@ -1724,32 +1717,22 @@ export default {
               this.NeedApartment = res.data.NeedApartment.Value
             }
             if(res.data.IsRegArea){
-              if(res.data.IsRegArea.Value == 1){
-                  this.IsRegAreaMsg = '是'
-              }else{
-                  this.IsRegAreaMsg = '否'
-              }
+              this.IsRegArea = res.data.IsRegArea.Value
             }
             if(res.data.IsSubPack){
-              if(res.data.IsSubPack.Value == 1){
-                  this.IsSubPackMsg = '是'
-              }else{
-                  this.IsSubPackMsg = '否'
-              }
+              this.IsSubPack = res.data.IsSubPack.Value
             }
-            if(res.data.BuyBudget){
-              this.BuyBudget = res.data.BuyBudget.Value
-            }
-            if(res.data.RingType){
-              this.RingType = res.data.RingType.Value
-            }
-            if(res.data.RingNum){
-              this.RingNum = res.data.RingNum.Value
-            }
-            if( res.data.RingRate){
-              this.RingRate = res.data.RingRate.Value
-            }
-            
+           
+           
+           
+
+          //  this.BuyBudget = res.data.BuyBudget.Value
+          //  this.RingType = res.data.RingType.Value
+          //  this.RingNum = res.data.RingNum.Value
+          //  this.RingRate = res.data.RingRate.Value
+
+
+
 
           //  this.ServiceName = res.data.ServiceName.Value
            if(this.PageId==32 || this.PageId==33){

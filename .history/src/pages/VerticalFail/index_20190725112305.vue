@@ -64,11 +64,11 @@ export default {
       var PageId=this.PageId;
       if(this.PageId==36 ||　this.PageId==35 || this.PageId==32 || this.PageId==33 || this.PageId==34 || this.PageId==43 || this.PageId==41 || this.PageId==42 || this.PageId==37 || this.PageId==38 || this.PageId==39 ||this.PageId==40){
         wx.redirectTo({
-          url: '/pages/rent/rentOffic/main?PageId='+this.PageId+"&TypeId="+this.TypeId+"&url=VerticalFail"+"&Id="+this.id
+          url: '/pages/rent/rentOffic/main?PageId='+this.PageId+"&TypeId="+this.TypeId+"&url=VerticalFail"
         })
       }else if(this.PageId==26 ||　this.PageId==25 || this.PageId==30 || this.PageId==31 || this.PageId==28 ||　this.PageId==29 || this.PageId==27){
         wx.redirectTo({
-          url: '/pages/rent/rentDevice/main?PageId='+this.PageId+"&TypeId="+this.TypeId+"&url=VerticalFail"+"&Id="+this.id
+          url: '/pages/rent/rentDevice/main?PageId='+this.PageId+"&TypeId="+this.TypeId+"&url=VerticalFail"
         })
       }
     }

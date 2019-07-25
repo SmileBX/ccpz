@@ -1194,7 +1194,6 @@ export default {
   onLoad() {
     this.mm = 0
     this.showDefaultCompany = false
-    this.trimData()
     this.setBarTitle();
     this.initData()
   },
@@ -1337,20 +1336,6 @@ export default {
                   this.IsAllowOtherListMsg = '否'
               }
             }
-            if(res.data.IsCompanyList){
-              if(res.data.IsCompanyList.Value == 1){
-                  this.IsCompanyListMsg = '是'
-              }else{
-                  this.IsCompanyListMsg = '否'
-              }
-            }
-            if(res.data.IsTrim){
-              if(res.data.IsTrim.Value == 1){
-                  this.IsTrimMsg = '是'
-              }else{
-                  this.IsTrimMsg = '否'
-              }
-            }
             
             
             
@@ -1413,7 +1398,7 @@ export default {
       this.addressList[quindex].Child[jiedaoindex].Child.forEach(item3 => {
         arr3.push(item3.Name)
       })
-      this.addressList3=arr3;console.log(this.addressList)
+      this.addressList3=arr3;console.log(this.addressList3)
       // picker.setColumnValues(2, this.addressList3);
       this.columns2=[
         {
@@ -1790,7 +1775,7 @@ export default {
                 }
               )
               this.hasAddr = true,
-              console.log(this.columns2)
+              console.log(this.hasAddr)
               console.log(this.addressList2,"this.addressList2----------")
             }
           
