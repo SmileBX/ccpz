@@ -24,10 +24,10 @@
                 </span>
               </div>
               <p class="msgList flex-center">
-                <span class="msgItem">创始人{{data.CompanyInfo.Value.LegalPerson.Value}}</span>
-                <span class="msgItem">{{data.CompanyInfo.Value.Company.Value}}</span>
-                <span class="attestationStatus">
-                  <span class="icon-gou" v-if="data.CompanyInfo.Value.IsAUT.Value"></span> 已认证
+                <span class="msgItem" >{{data.CompanyInfo.Value.LegalPerson.Value}}</span>
+                <span class="msgItem" >{{data.CompanyInfo.Value.Company.Value}}</span>
+                <span class="attestationStatus" v-if="data.CompanyInfo.Value.IsAUT.Value">
+                  <span class="icon-gou" ></span> 已认证
                 </span>
               </p>
               <!-- <p class="msgList flex-center">
@@ -52,14 +52,14 @@
           <div class="group flex" style="flex-flow:row wrap">
             <!-- 名称 -->
             <div
-              class="weui-cell flex1"
-              style="flex:1 0 auto;width:300rpx;"
+              class="weui-cell"
+              style="min-width:330rpx;padding:6rpx 12rpx 6rpx 20rpx;"
               v-for="(item,index) in attrArr"
               :key="index"
               v-show="item.Value"
             >
-              <div class="weui-cell__hd">{{item.Text}}</div>
-              <div class="weui-cell__bd">{{item.Value}}</div>
+              <div class="weui-cell__hd mr12">{{item.Text}}</div>
+              <div class="weui-cell__bd f26">{{item.Value}}</div>
             </div>
           </div>
         </div>
@@ -328,10 +328,11 @@ export default {
   align-items: center;
 }
 .msgList {
-  margin-bottom: 20rpx;
+  margin-bottom: 10rpx;
   .msgItem {
     border-left: 2rpx solid #999;
     padding: 0 20rpx !important;
+    margin-bottom:10rpx;
     &:first-child {
       border-left: none;
       padding: 0 20rpx 0 0 !important;
@@ -374,17 +375,19 @@ export default {
     .msgList {
       font-size: 24rpx;
       line-height: 24rpx;
-      height: 24rpx;
+      // height: 24rpx;
       overflow: hidden;
+      flex-flow:row wrap;
       .attestationStatus {
         box-sizing: border-box;
         border: 1rpx solid #ff952e;
         padding: 0 5rpx 0 0;
-        height: 24rpx;
-        line-height: 18rpx;
+        line-height: 23rpx;
+        height: 28rpx;
         overflow: hidden;
+        margin-bottom:8rpx;
         .icon-gou {
-          // margin-right:4rpx;
+          margin-top:4rpx;
         }
       }
     }

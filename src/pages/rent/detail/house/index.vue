@@ -32,8 +32,8 @@
             <!-- 公司名称 -->
             <div class="weui-cell group-item" 
               v-for="(item,index) in attrArr" :key="index" v-show="item.Value">
-              <div class="weui-cell__hd">{{item.Text}}</div>
-              <div class="weui-cell__bd">{{item.Value}}</div>
+              <div class="weui-cell__hd mr12">{{item.Text}}</div>
+              <div class="weui-cell__bd f26">{{item.Value}}</div>
             </div>
           </div>
         </div>
@@ -83,8 +83,8 @@
         <div class="info flex1">
           <p class="name">{{data.ShopInfo.Value.Name.Value}}</p>
           <div class="flex serviceTime">
-            <p class="serviceTime">{{data.ShopInfo.Value.Job.Value}}</p> 
-            &nbsp;|&nbsp;
+            <p class="serviceTime">{{data.ShopInfo.Value.Job.Value}}</p>
+            <div v-if="data.ShopInfo.Value.Job.Value&&data.ShopInfo.Value.WorkLife.Value">&nbsp;|&nbsp;</div>
             <p class="serviceTime">{{data.ShopInfo.Value.WorkLife.Value}}</p>
           </div>
         </div>

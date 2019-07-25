@@ -34,8 +34,8 @@
             <!-- 公司名称 -->
             <div class="weui-cell group-item" 
               v-for="(item,index) in attrArr" :key="index" v-show="item.Value">
-              <div class="weui-cell__hd">{{item.Text}}</div>
-              <div class="weui-cell__bd">{{item.Value}}</div>
+              <div class="weui-cell__hd mr12">{{item.Text}}</div>
+              <div class="weui-cell__bd f26">{{item.Value}}</div>
             </div>
           </div>
         </div>
@@ -88,7 +88,7 @@
           <p class="name">{{data.ShopInfo.Value.Name.Value}}</p>
           <div class="flex serviceTime">
             <p class="serviceTime">{{data.ShopInfo.Value.Job.Value}}</p> 
-            &nbsp;|&nbsp;
+            <div v-if="data.ShopInfo.Value.Job.Value&&data.ShopInfo.Value.WorkLife.Value">&nbsp;|&nbsp;</div>
             <p class="serviceTime">{{data.ShopInfo.Value.WorkLife.Value}}</p>
           </div>
         </div>
@@ -153,12 +153,14 @@ export default {
       data["Company"] && attrArr.push(data["Company"]);
       // 公司行业
       data["CompanyTrade"] && attrArr.push(data["CompanyTrade"]);
-      // 意向拼购方行业
-      data["GladBuyerTrade"] && attrArr.push(data["GladBuyerTrade"]);
       // 成立时间
       data["SetUpDate"] && attrArr.push(data["SetUpDate"]);
-      // 注册
-      data["IsRegArea"] && attrArr.push(data["IsRegArea"]);
+      // 计划购买面积
+      data["PlanBuyArea"] && attrArr.push(data["PlanBuyArea"]);
+      // 租赁到期时间
+      data["PlanBuyDate"] && attrArr.push(data["PlanBuyDate"]);
+      // 期限
+      data["RentTimeLimit"] && attrArr.push(data["RentTimeLimit"]);
       // if (data["IsRegArea"] && data["IsRegArea"].Value) {
       //   const obj = {
       //     Text: "注册",
@@ -166,14 +168,8 @@ export default {
       //   };
       //   attrArr.push(obj);
       // }
-      // 本公司是否挂牌
-      data["IsCompanyList"] && attrArr.push(data["IsCompanyList"]);
-      // 是否装修
-      data["IsTrim"] && attrArr.push(data["IsTrim"]);
       // 总面积
       data["AllArea"] && attrArr.push(data["AllArea"]);
-      // 计划购买面积
-      data["PlanBuyArea"] && attrArr.push(data["PlanBuyArea"]);
       // 购买预算
       data["BuyBudget"] && attrArr.push(data["BuyBudget"]);
       // 物业形式
@@ -182,14 +178,18 @@ export default {
       data["PropertyType"] && attrArr.push(data["PropertyType"]);
       // 出租卡位
       data["NeedOfficeNum"] && attrArr.push(data["NeedOfficeNum"]);
-      // 租赁到期时间
-      data["PlanBuyDate"] && attrArr.push(data["PlanBuyDate"]);
-      // 期限
-      data["RentTimeLimit"] && attrArr.push(data["RentTimeLimit"]);
       // 价格区间
       data["PropertyPrice1"] && attrArr.push(data["PropertyPrice1"]);
       // 计划日期
       // data["PlanBuyDate"] && attrArr.push(data["PlanBuyDate"]);
+      // 是否装修
+      data["IsTrim"] && attrArr.push(data["IsTrim"]);
+      // 注册
+      data["IsRegArea"] && attrArr.push(data["IsRegArea"]);
+      // 本公司是否挂牌
+      data["IsCompanyList"] && attrArr.push(data["IsCompanyList"]);
+      // 意向拼购方行业
+      data["GladBuyerTrade"] && attrArr.push(data["GladBuyerTrade"]);
       this.attrArr = attrArr;
       console.log(this.attrArr, "this.attrArr");
     },
@@ -241,7 +241,7 @@ export default {
   padding: 0;
   .group-item {
     flex: 1 0 auto;
-    min-width: 300rpx;
+    min-width: 330rpx;
   }
 }
 </style>

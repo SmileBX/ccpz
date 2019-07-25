@@ -109,8 +109,8 @@ export default {
         Company["NativePlace"] && CompanyInfo.push(Company["NativePlace"]);
         // 注册资本
         Company["RegCapital"] && CompanyInfo.push(Company["RegCapital"]);
-        // 实缴资本
-        Company["RealCapital"] && CompanyInfo.push(Company["RealCapital"]);
+        // 人员规模
+        Company["StaffSize"] && CompanyInfo.push(Company["StaffSize"]);
         // 社会信用代码
         // Company["RegNum"] && CompanyInfo.push(Company["RegNum"]);
         // 营业执照上传
