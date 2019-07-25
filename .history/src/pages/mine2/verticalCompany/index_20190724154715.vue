@@ -116,10 +116,10 @@
       </div>
       <!--企业end-->
     </div>
-    <div class="ftBtn center" @click="btnSubmit">
+    <div class="ftBtn center">
       <div class="inner">
         <div class="btns">
-          <div class="btn color_fff bg_ff952e">{{btnTxt}}</div>
+          <div class="btn color_fff bg_ff952e" @click="btnSubmit">{{btnTxt}}</div>
         </div>
       </div>
     </div>
@@ -296,10 +296,7 @@ export default {
         console.log("竟来了");
         let idcardPositive = await this.base64Img(this.idCardPositive);
         let idcardNegative = await this.base64Img(this.idCardNegative);
-        let businessLicense = ''
-        if(this.otherSeniority){
-          businessLicense = await this.base64Img(this.businessLicense);
-        }
+        let businessLicense = await this.base64Img(this.businessLicense);
         // let otherSeniority ="";
         // if(this.otherSeniority){
         //   otherSeniority = await this.base64Img(this.otherSeniority);

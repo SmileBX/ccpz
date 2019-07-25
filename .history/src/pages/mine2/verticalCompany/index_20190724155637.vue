@@ -296,10 +296,7 @@ export default {
         console.log("竟来了");
         let idcardPositive = await this.base64Img(this.idCardPositive);
         let idcardNegative = await this.base64Img(this.idCardNegative);
-        let businessLicense = ''
-        if(this.otherSeniority){
-          businessLicense = await this.base64Img(this.businessLicense);
-        }
+        let businessLicense = await this.base64Img(this.businessLicense);
         // let otherSeniority ="";
         // if(this.otherSeniority){
         //   otherSeniority = await this.base64Img(this.otherSeniority);

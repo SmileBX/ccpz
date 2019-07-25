@@ -57,7 +57,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">物业单价（元/m²）</div>
+                  <div class="form-cells-hd">物业单价</div>
                   <input
                     class="ipt"
                     type="text"
@@ -107,7 +107,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">计划购买面积（&nbsp;m²&nbsp;）</div>
+                  <div class="form-cells-hd">计划购买面积</div>
                   <input
                     class="ipt"
                     type="text"
@@ -131,7 +131,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">购买预算（元）</div>
+                  <div class="form-cells-hd">购买预算</div>
                   <input
                     class="ipt"
                     type="text"
@@ -183,7 +183,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">计划购买数量（个）</div>
+                  <div class="form-cells-hd">计划购买数量</div>
                   <input
                     class="ipt"
                     type="text"
@@ -233,7 +233,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">设备单价（元）</div>
+                  <div class="form-cells-hd">设备单价</div>
                   <input
                     class="ipt"
                     type="text"
@@ -243,7 +243,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">购买预算（元）</div>
+                  <div class="form-cells-hd">购买预算</div>
                   <input
                     class="ipt"
                     type="text"
@@ -309,7 +309,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd" style="position:relative;">面积（&nbsp;m<span style="position:absolute;font-size:18rpx">2</span>&nbsp;&nbsp;）</div>
+                  <div class="form-cells-hd">所需面积(m²)</div>
                   <input
                     class="ipt"
                     type="text"
@@ -541,7 +541,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">设备数量（个）</div>
+                  <div class="form-cells-hd">设备数量</div>
                   <input
                       class="ipt"
                       type="text"
@@ -663,7 +663,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">卡位数量（个）</div>
+                  <div class="form-cells-hd">卡位数量</div>
                   <input
                     class="ipt"
                     type="text"
@@ -741,7 +741,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">卡座数量（个）</div>
+                  <div class="form-cells-hd">卡座数量</div>
                   <input
                     class="ipt"
                     type="text"
@@ -1278,7 +1278,7 @@ export default {
       this.addressList[quindex].Child[jiedaoindex].Child.forEach(item3 => {
         arr3.push(item3.Name)
       })
-      this.addressList3=arr3;console.log(this.addressList)
+      this.addressList3=arr3;console.log(this.addressList3)
       // picker.setColumnValues(2, this.addressList3);
       this.columns2=[
         {
@@ -1655,7 +1655,7 @@ export default {
                 }
               )
               this.hasAddr = true,
-              console.log(this.columns2)
+              console.log(this.hasAddr)
               console.log(this.addressList2,"this.addressList2----------")
             }
           

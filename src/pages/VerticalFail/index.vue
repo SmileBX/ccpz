@@ -9,19 +9,19 @@
     </div>
     <div class="msgBox">
       <h2 class="statusTips">抱歉，您的发布审核未通过！</h2>
-      <p class="msg">发布的房源图片模糊、失真且与发布内容不符 合，判定为虚假图片</p>
+      <p class="msg">{{AuditReasonText}}</p>
     </div>
-    <div class="againsubmit">重新发布</div>
+    <div class="againsubmit" @click="gopage()">重新发布</div>
   </div>
 </template>
 <script>
-import { post, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
+import { post, valPhone, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
 export default {
   data() {
     return {
-      type: 1, //1:发布审核；2：认证审核
-      verticalType:"",   //认证审核中是个人认证还是企业认证；1:个人认证；2：企业认证
+      AuditReasonText:"",//审核失败的原因
       id:"",  //需要审核的id
+      PageId:"",
       userId: "",
       token: "",
       curPage: ""
@@ -31,21 +31,44 @@ export default {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
-    // if(this.$root.$mp.query.type && this.$root.$mp.query.type !==""){
-    //   this.type = this.$root.$mp.query.type;
-    // }
-    // if(this.$root.$mp.query.id && this.$root.$mp.query.id !==""){
-    //   this.id = this.$root.$mp.query.id;
-    // }
-    // if(this.$root.$mp.query.verticalType && this.$root.$mp.query.verticalType !==""){
-    //   this.verticalType = this.$root.$mp.query.verticalType;
-    // }
+    this.id = this.$root.$mp.query.Id;
+    this.Editxq()
   },
   methods: {
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: "发布"
       });
+    },
+    //审核失败原因
+    Editxq() {
+      post(
+        "Goods/GetRent_Editxq",
+        {
+          UserId: this.userId,
+          Token: this.token,
+          Id: this.id
+        },
+        this.curPage
+      ).then(res => {
+        if (res.code == 0) {
+          this.AuditReasonText=res.data.AuditReason.Value;console.log("**********",this.AuditReasonText)
+          this.PageId=res.data.PageId;console.log("+++++++++",this.PageId)
+        }
+      });
+    },
+    //重新发布
+    gopage(){
+      var PageId=this.PageId;
+      if(PageId==""){
+        wx.redirectTo({
+          url: '/pages/rent/rentOffic/main'
+        })
+      }else{
+        wx.redirectTo({
+          url: '/pages/rent/rentDevice/main'
+        })
+      }
     }
   }
 };
