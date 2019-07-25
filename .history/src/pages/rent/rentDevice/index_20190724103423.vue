@@ -57,7 +57,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">物业单价（元/m²）</div>
+                  <div class="form-cells-hd">物业单价</div>
                   <input
                     class="ipt"
                     type="text"
@@ -131,7 +131,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">购买预算（元）</div>
+                  <div class="form-cells-hd">购买预算</div>
                   <input
                     class="ipt"
                     type="text"
@@ -233,7 +233,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">设备单价（元）</div>
+                  <div class="form-cells-hd">设备单价</div>
                   <input
                     class="ipt"
                     type="text"
@@ -243,7 +243,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">购买预算（元）</div>
+                  <div class="form-cells-hd">购买预算</div>
                   <input
                     class="ipt"
                     type="text"

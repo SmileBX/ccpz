@@ -1488,6 +1488,7 @@ export default {
       RingNum:"",//计划人数
       RingType:"",//圈子属性
       Decoration:"",
+      IsTrim:"",
       IsRegArea:"",
       IsRegAreaMsg:"",
       IsSubPack:"",
@@ -1880,18 +1881,16 @@ export default {
     //装修情况
      getTrim(n){
         this.isShowMask = true
+        this.showNoChange = true
         if(n==1){
-          this.showNoChange = true
-          this.list = [{Id:1,Name:'毛坯'},{Id:0,Name:'普装'},{Id:2,Name:'精装'}]
-          this.masktitle = '请选择装修情况'
+          this.list = [{Id:1,Name:'毛坯'},{Id:0,Name:'普装'}]
+          this.masktitle = '精装'
         }
         if(n==2){
-          this.showNoChange = true
           this.list = [{Id:1,Name:'可以注册'},{Id:0,Name:'不允许注册'}]
           this.masktitle = '请选择可否注册'
         }
         if(n==3){
-          this.showNoChange = true
           this.list = [{Id:1,Name:'可以分割'},{Id:0,Name:'不允许分割'}]
           this.masktitle = '请选择可否分割'
         }
@@ -2755,7 +2754,7 @@ export default {
           PayType:that.PayType,
           PropertyPrice:that.PropertyPrice,
           DeviceRent:that.DeviceRent,
-          Decoration:that.Decoration,
+          IsTrim:that.IsTrim,
           PropertySort:that.PropertySort,
           NeedStation:that.NeedStation,
           NeedApartment:that.NeedApartment,
@@ -2779,7 +2778,7 @@ export default {
           NeedFloor:that.NeedFloor,
           PayType:that.PayType,
           PropertyPrice:that.PropertyPrice,
-          Decoration:that.Decoration,
+          IsTrim:that.IsTrim,
           IsRegArea:that.IsRegArea,
           IsSubPack:that.IsSubPack,
           NeedStation:that.NeedStation,
@@ -3027,7 +3026,7 @@ export default {
       this.NeedFloorHeight = ''
       // this.NeedFloorDepth = ''
       this.PayType = ''
-      this.Decoration = ''
+      this.IsTrim = ''
       this.Decoration = ''
       this.IsSubPack = ''
       this.IsSubPackMsg = ''

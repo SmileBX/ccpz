@@ -1,6 +1,6 @@
 <template>
-  <div class="pageContent">
-    <div class="weui-cells" style="margin-top:0;margin-bottom:20rpx;">
+  <span class="pageContent">
+    <span class="weui-cells" style="margin-top:0;margin-bottom:20rpx;">
       <div class="weui-cell" @tap="showSelect(0)">
         <label class="weui-label"><span style="color:#f00">*</span>公司行业</label>
         <div class="weui-cell__bd text_r">
@@ -19,12 +19,12 @@
           <input type="text" disabled :value="setUpDate" class="weui-input" placeholder="请选择">
         </div>
       </div>
-      <div class="weui-cell">
+      <span class="weui-cell">
         <label class="weui-label"><span style="color:#f00">*</span>人员规模</label>
         <div class="weui-cell__bd text_r">
           <input type="text" class="weui-input" v-model="staffSize" placeholder="请输入">
         </div>
-      </div>
+      </span>
       <div class="weui-cell">
         <label class="weui-label">办公面积</label>
         <div class="weui-cell__bd text_r">
@@ -43,8 +43,8 @@
         <div class="weui-cell__bd text_r">
           <input type="text" :value="nativePlace" disabled class="weui-input" placeholder="请选择">
         </div>
-      </div>
-    </div>
+      </span>
+    </span>
     <div class="pall bg_fff" v-if="showtextarea">
       <p style="margin-bottom:10rpx;">公司简介</p>
       <textarea name id cols="30" rows="10" v-model="companyIntro" placeholder="请输入公司简介"></textarea>
@@ -158,7 +158,7 @@
             </div>
         </div>
     <!-- 选择籍贯弹窗  end -->
-  </div>
+  </span>
 </template>
 <script>
 import { post, toLogin, getCurrentPageUrlWithArgs, trim } from "@/utils";

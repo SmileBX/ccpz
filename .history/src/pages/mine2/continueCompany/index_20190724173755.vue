@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="weui-cell">
-        <label class="weui-label"><span style="color:#f00">*</span>人员规模</label>
+        <label class="weui-label">人员规模</label>
         <div class="weui-cell__bd text_r">
           <input type="text" class="weui-input" v-model="staffSize" placeholder="请输入">
         </div>

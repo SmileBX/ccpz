@@ -3,7 +3,7 @@
     <div class="weui-cells">
       <div class="weui-cell">
         <div class="weui-cell_bd">
-          <p class="txt"><span style="color:#f00">*</span>企业/团队</p>
+          <p class="txt">企业名称</p>
         </div>
         <input type="text" v-model="name" placeholder="请输入企业名称">
       </div>
@@ -15,13 +15,13 @@
       </div>
       <div class="weui-cell">
         <div class="weui-cell_bd">
-          <p class="txt"><span style="color:#f00">*</span>法人姓名</p>
+          <p class="txt">法人姓名</p>
         </div>
         <input type="text" v-model="legalPerson" placeholder="请输入法人姓名">
       </div>
       <div class="weui-cell">
         <div class="weui-cell_bd">
-          <p class="txt"><span style="color:#f00">*</span>法人身份证号</p>
+          <p class="txt">法人身份证号</p>
         </div>
         <input type="text" v-model="idCard" placeholder="请输入法人身份证号">
       </div>
@@ -29,7 +29,7 @@
     <!--上传身份证-->
     <div class="uploadBox bg_fff mt10">
       <div>
-        <p class="font30 fontBold company_pic_title" style="padding:30rpx 30rpx 0;margin-bottom:0;"><span style="color:#f00">*</span>身份证照</p>
+        <p class="font30 fontBold company_pic_title" style="padding:30rpx 30rpx 0;margin-bottom:0;">身份证照</p>
         <div class="idendityPic flex justifyContentBetween">
           <div class="imgBox">
             <img
@@ -91,7 +91,7 @@
           </div>
         </div>
         <!--企业上传其他照片-->
-        <!-- <div class="otherPic">
+        <div class="otherPic">
           <p class="font30 fontBold company_pic_title">其他资质</p>
           <div class="flex">
             <div class="imgBox">
@@ -112,14 +112,14 @@
               >
             </div>
           </div>
-        </div> -->
+        </div>
       </div>
       <!--企业end-->
     </div>
-    <div class="ftBtn center" @click="btnSubmit">
+    <div class="ftBtn center">
       <div class="inner">
         <div class="btns">
-          <div class="btn color_fff bg_ff952e">{{btnTxt}}</div>
+          <div class="btn color_fff bg_ff952e" @click="btnSubmit">{{btnTxt}}</div>
         </div>
       </div>
     </div>
@@ -158,8 +158,8 @@ export default {
       idCard: "", //法人身份证号
       idCardPositive: "", //身份证正面
       idCardNegative: "", //身份证反面
-      businessLicense: "" //营业执照
-      // otherSeniority: "" //其他资质
+      businessLicense: "", //营业执照
+      otherSeniority: "" //其他资质
     };
   },
   methods: {
@@ -175,8 +175,8 @@ export default {
       this.idCard = ""; //法人身份证号
       this.idCardPositive = "", //身份证正面
       this.idCardNegative = "", //身份证反面
-      this.businessLicense = ""//营业执照
-      // this.otherSeniority = "" //其他资质
+      this.businessLicense = "", //营业执照
+      this.otherSeniority = "" //其他资质
     },
     valOther() {
       //认证的校验
@@ -188,14 +188,14 @@ export default {
         });
         return false;
       }
-      // if (trim(this.regNum) == "") {
-      //   wx.showToast({
-      //     title: "请输入企业注册号!",
-      //     icon: "none",
-      //     duration: 1500
-      //   });
-      //   return false;
-      // }
+      if (trim(this.regNum) == "") {
+        wx.showToast({
+          title: "请输入企业注册号!",
+          icon: "none",
+          duration: 1500
+        });
+        return false;
+      }
       if (trim(this.legalPerson) == "") {
         wx.showToast({
           title: "请输入法人姓名!",
@@ -236,14 +236,14 @@ export default {
         });
         return false;
       }
-      // if (trim(this.businessLicense) == "") {
-      //   wx.showToast({
-      //     title: "请上传营业执照!",
-      //     icon: "none",
-      //     duration: 1500
-      //   });
-      //   return false;
-      // }
+      if (trim(this.businessLicense) == "") {
+        wx.showToast({
+          title: "请上传营业执照!",
+          icon: "none",
+          duration: 1500
+        });
+        return false;
+      }
       return true;
     },
     upLoadImg(index) {
@@ -266,9 +266,9 @@ export default {
           if (index == 3) {
             _this.businessLicense = imgPathArr;
           }
-          // if (index == 4) {
-          //   _this.otherSeniority = imgPathArr;
-          // }
+          if (index == 4) {
+            _this.otherSeniority = imgPathArr;
+          }
         }
       });
     },
@@ -282,9 +282,9 @@ export default {
       if (index == 3) {
         this.businessLicense = "";
       }
-      // if (index == 4) {
-      //   this.otherSeniority = "";
-      // }
+      if (index == 4) {
+        this.otherSeniority = "";
+      }
     },
     async base64Img(path) {
       const base64Arr = await pathToBase64(path);
@@ -296,16 +296,13 @@ export default {
         console.log("竟来了");
         let idcardPositive = await this.base64Img(this.idCardPositive);
         let idcardNegative = await this.base64Img(this.idCardNegative);
-        let businessLicense = ''
+        let businessLicense = await this.base64Img(this.businessLicense);
+        let otherSeniority ="";
         if(this.otherSeniority){
-          businessLicense = await this.base64Img(this.businessLicense);
+          otherSeniority = await this.base64Img(this.otherSeniority);
         }
-        // let otherSeniority ="";
-        // if(this.otherSeniority){
-        //   otherSeniority = await this.base64Img(this.otherSeniority);
-        // }
         if(this.id && this.id !==""){
-          this.UserBusinessAuthEdit(idcardPositive,idcardNegative,businessLicense);
+          this.UserBusinessAuthEdit(idcardPositive,idcardNegative,businessLicense,otherSeniority);
         }else{
           //  this.UserBusinessAuth(idcardPositive,idcardNegative,businessLicense,otherSeniority);
            const userCompany={
@@ -316,7 +313,7 @@ export default {
             IdcardPositive: idcardPositive,
             IdcardNegative: idcardNegative,
             BusinessLicense: businessLicense,
-            // OtherSeniority: otherSeniority
+            OtherSeniority: otherSeniority
           }
           console.log(userCompany)
           this.$store.commit('update',{userCompany})
@@ -331,7 +328,7 @@ export default {
       idcardPositive,
       idcardNegative,
       businessLicense,
-      // otherSeniority
+      otherSeniority
     ) {
       let that = this;
       post(
@@ -347,7 +344,7 @@ export default {
             IdcardPositive: idcardPositive,
             IdcardNegative: idcardNegative,
             BusinessLicense: businessLicense,
-            // OtherSeniority: otherSeniority
+            OtherSeniority: otherSeniority
           }
         },
         that.curPage
@@ -386,7 +383,7 @@ export default {
     UserBusinessAuthEdit(idcardPositive,
       idcardNegative,
       businessLicense,
-      ){  //编辑对应的企业认证
+      otherSeniority){  //编辑对应的企业认证
       let that = this;
       post("User/UserBusinessAuthEdit",{
         UserId:that.userId,
@@ -400,7 +397,7 @@ export default {
           IdcardPositive: idcardPositive,
           IdcardNegative: idcardNegative,
           BusinessLicense: businessLicense,
-          // OtherSeniority: otherSeniority
+          OtherSeniority: otherSeniority
         }
       },that.curPage).then(res => {
         if (res.code === 0) {

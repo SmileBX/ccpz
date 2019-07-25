@@ -434,6 +434,19 @@
                 </div> -->
               </div>
               <div class="form-cells-item form-cells-item2">
+                
+                <!-- <div class="item2-column">
+                  <div class="form-cells-hd">进深</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="NeedFloorDepth"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div> -->
+              </div>
+              <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
                   <div class="form-cells-hd">付款方式</div>
                   <input
@@ -467,14 +480,14 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">装修情况</div>
+                  <div class="form-cells-hd">是否装修</div>
                   <input
                     class="ipt"
                     type="text"
                     disabled
                     placeholder="请选择"
                     @click="getTrim(1)"
-                    v-model="Decoration"
+                    v-model="IsTrimMsg"
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
@@ -621,14 +634,14 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">装修情况</div>
+                  <div class="form-cells-hd">是否装修</div>
                   <input
                     class="ipt"
                     type="text"
                     disabled
                     placeholder="请选择"
                     @click="getTrim(1)"
-                    v-model="Decoration"
+                    v-model="IsTrimMsg"
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
@@ -887,6 +900,8 @@
                   >
                 </div> -->
               </div>
+              <div class="form-cells-item form-cells-item2">
+                
                 <!-- <div class="item2-column">
                   <div class="form-cells-hd">进深</div>
                   <input
@@ -897,7 +912,7 @@
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div> -->
-              
+              </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
                   <div class="form-cells-hd">付款方式</div>
@@ -1014,6 +1029,8 @@
                   >
                 </div> -->
               </div>
+              <div class="form-cells-item form-cells-item2">
+                
                 <!-- <div class="item2-column">
                   <div class="form-cells-hd">进深</div>
                   <input
@@ -1024,7 +1041,7 @@
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div> -->
-              
+              </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
                   <div class="form-cells-hd">转让费（元）</div>
@@ -1487,7 +1504,8 @@ export default {
       RingRate:"",//活动频率
       RingNum:"",//计划人数
       RingType:"",//圈子属性
-      Decoration:"",
+      IsTrimMsg:"",
+      IsTrim:"",
       IsRegArea:"",
       IsRegAreaMsg:"",
       IsSubPack:"",
@@ -1877,21 +1895,19 @@ export default {
             this.addDetailPlaceholder = "详细的描述会大大增加快速出租几率"
         }
     },
-    //装修情况
+    //是否装修
      getTrim(n){
         this.isShowMask = true
+        this.showNoChange = true
         if(n==1){
-          this.showNoChange = true
-          this.list = [{Id:1,Name:'毛坯'},{Id:0,Name:'普装'},{Id:2,Name:'精装'}]
-          this.masktitle = '请选择装修情况'
+          this.list = [{Id:1,Name:'需要装修'},{Id:0,Name:'不需要装修'}]
+          this.masktitle = '请选择是否装修'
         }
         if(n==2){
-          this.showNoChange = true
           this.list = [{Id:1,Name:'可以注册'},{Id:0,Name:'不允许注册'}]
           this.masktitle = '请选择可否注册'
         }
         if(n==3){
-          this.showNoChange = true
           this.list = [{Id:1,Name:'可以分割'},{Id:0,Name:'不允许分割'}]
           this.masktitle = '请选择可否分割'
         }
@@ -2046,13 +2062,13 @@ export default {
                   this.EducationLvl = this.list[i].Name
                   // this.Degree = this.list[i].Name
               }
-              if(this.masktitle =='请选择装修情况'){
-                this.Decoration = this.list[i].Name;
-                // if(this.list[i].Id==0){
-                //   this.IsTrimMsg = '否';
-                // }else{
-                //    this.IsTrimMsg = '是';
-                // }
+              if(this.masktitle =='请选择是否装修'){
+                this.IsTrim = this.list[i].Id;
+                if(this.list[i].Id==0){
+                  this.IsTrimMsg = '否';
+                }else{
+                   this.IsTrimMsg = '是';
+                }
               }
               if(this.masktitle =='请选择可否注册'){
                 this.IsRegArea = this.list[i].Id;
@@ -2462,8 +2478,8 @@ export default {
           this.toastTip("请输入户型!") 
           return false;
         }
-        if (this.Decoration=='') {
-          this.toastTip("请选择装修情况!") 
+        if (this.IsTrimMsg=='') {
+          this.toastTip("请选择是否装修!") 
           return false;
         }
       }
@@ -2749,13 +2765,13 @@ export default {
           PlanRentDate:that.PlanRentDate,
           PropertyType:that.PropertyType,
           NeedFloor:that.NeedFloor,
-          // NeedFaceWidth:that.NeedFaceWidth,
+          NeedFaceWidth:that.NeedFaceWidth,
           NeedFloorHeight:that.NeedFloorHeight,
-          // NeedFloorDepth:that.NeedFloorDepth,
+          NeedFloorDepth:that.NeedFloorDepth,
           PayType:that.PayType,
           PropertyPrice:that.PropertyPrice,
           DeviceRent:that.DeviceRent,
-          Decoration:that.Decoration,
+          IsTrim:that.IsTrim,
           PropertySort:that.PropertySort,
           NeedStation:that.NeedStation,
           NeedApartment:that.NeedApartment,
@@ -2779,7 +2795,7 @@ export default {
           NeedFloor:that.NeedFloor,
           PayType:that.PayType,
           PropertyPrice:that.PropertyPrice,
-          Decoration:that.Decoration,
+          IsTrim:that.IsTrim,
           IsRegArea:that.IsRegArea,
           IsSubPack:that.IsSubPack,
           NeedStation:that.NeedStation,
@@ -2835,9 +2851,9 @@ export default {
             PropertyType:that.PropertyType,
             PropertySort:that.PropertySort,
             NeedFloor:that.NeedFloor,
-            // NeedFaceWidth:that.NeedFaceWidth,
+            NeedFaceWidth:that.NeedFaceWidth,
             NeedFloorHeight:that.NeedFloorHeight,
-            // NeedFloorDepth:that.NeedFloorDepth,
+            NeedFloorDepth:that.NeedFloorDepth,
             RunStatus:that.RunStatus,
             GladBuyerTradeId:that.GladBuyerTradeId,
             GladBuyerTrade:that.GladBuyerTrade,
@@ -2860,9 +2876,9 @@ export default {
             PropertyType:that.PropertyType,
             PropertySort:that.PropertySort,
             NeedFloor:that.NeedFloor,
-            // NeedFaceWidth:that.NeedFaceWidth,
+            NeedFaceWidth:that.NeedFaceWidth,
             NeedFloorHeight:that.NeedFloorHeight,
-            // NeedFloorDepth:that.NeedFloorDepth,
+            NeedFloorDepth:that.NeedFloorDepth,
             PropertyPrice:that.PropertyPrice,
         }
       }
@@ -3023,12 +3039,12 @@ export default {
       this.PartnerList=[]
       this.RentTime = ''
       this.NeedFloor = ''
-      // this.NeedFaceWidth = ''
+      this.NeedFaceWidth = ''
       this.NeedFloorHeight = ''
-      // this.NeedFloorDepth = ''
+      this.NeedFloorDepth = ''
       this.PayType = ''
-      this.Decoration = ''
-      this.Decoration = ''
+      this.IsTrim = ''
+      this.IsTrimMsg = ''
       this.IsSubPack = ''
       this.IsSubPackMsg = ''
       this.IsRegArea = ''
