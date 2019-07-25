@@ -1429,7 +1429,6 @@ import {pathToBase64} from "@/utils/image-tools";
 export default {
   data() {
     return {
-      urlPp:"",//路由
       currentDate: new Date().getTime(),
       minDate:new Date().getTime(),
       dateTips:false,
@@ -1595,15 +1594,6 @@ export default {
     this.tradeListBox = [],//行业列表
     this.deviceTip = ''
     this.PageId = this.$root.$mp.query.PageId
-    if(this.$root.$mp.query.url){
-      //是否需要重新编辑数据
-      this.urlPp = this.$root.$mp.query.url
-      this.publishId = this.$root.$mp.query.Id
-      console.log(this.imgArr.length,"***********************")
-      if(this.imgArr.length<=0){
-        this.getDefaultData()
-      }
-    }
     console.log("PageId}}}",this.PageId)
     if(this.mm>=1){
       wx.switchTab({
@@ -1612,7 +1602,11 @@ export default {
     }else{
       this.GetPublishItems()
     }
-    
+    if(this.$root.$mp.query.url){
+      //是否需要重新编辑数据
+      this.publishId = this.$root.$mp.query.Id
+      this.getDefaultData()
+    }
   },
   components: {},
    methods: {
@@ -1629,7 +1623,6 @@ export default {
         Id:this.publishId
       },this.curPage).then(res=>{
          if(res.code==0){
-           this.TypeId = res.data.TypeId
            this.Title = res.data.Title.Value
            this.Synopsis = res.data. Synopsis.Value
            if(res.data.Company){
@@ -1940,8 +1933,8 @@ export default {
           this.addrTitle = "地理位置"
           this.addrPlaceholder = "位置名称 如：如京基大厦"
         }
-        console.log(this.urlPp,"this.$root.query.url)")
-        if(!this.urlPp){
+        console.log(this.$root.$mp.query.url,"this.$root.query.url)")
+        if(!this.$root.$mp.query.url){
           if(this.imgArr.length<=0){
               if(this.PageId==32 || this.PageId==33){
                 this.PartnerList=[
@@ -2338,21 +2331,11 @@ export default {
     //获取默认数据
     GetPublishItems(){
       let that = this;
-      let pp = {}
-      if(that.$root.$mp.query.url){
-        pp = {
-          UserId:that.userId,
-          Token:that.token,
-          Id:that.publishId
-        }
-      }else{
-        pp = {
+      post('Goods/GetPublishItems',{
           UserId:that.userId,
           Token:that.token,
           TypeId:that.TypeId
-        }
-      }
-      post('Goods/GetPublishItems',pp,that.curPage).then(res=>{
+      },that.curPage).then(res=>{
         console.log(res,"GetPublishItems")
         if(res.code==0){
             //已经认证了 获取信息 发布信息
@@ -2573,7 +2556,6 @@ export default {
             },
           });
       }
-      console.log(that.imgArr.length,"///////////////////////")
     },
     async base64Img(arr){
       let base64Arr = []
@@ -3141,8 +3123,8 @@ export default {
           }
           console.log("_____")
           if(that.PageId==32　|| that.PageId==33 || that.PageId==34){
-            if(this.urlPp){
-              pramas={
+            if(that.$root.$mp.query.url){
+                pramas={
                   UserId:this.userId,
                   Token:this.token,
                   Id:this.publishId,
@@ -3162,8 +3144,8 @@ export default {
             }
            
           }else{
-            if(this.urlPp){
-              pramas={
+            if(that.$root.$mp.query.url){
+                pramas={
                   UserId:this.userId,
                   Token:this.token,
                   Id:this.publishId,
@@ -3171,7 +3153,7 @@ export default {
                   GoodsInfo:GoodsInfo
               }
             }else{
-                pramas={
+              pramas={
                   UserId:this.userId,
                   Token:this.token,
                   TypeId:this.TypeId,
@@ -3206,7 +3188,6 @@ export default {
       })
     },
     trimData(){
-      this.urlPp = ''
       this.imgArr=[]
       this.Title = ''
       this.Company = ''

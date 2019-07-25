@@ -1599,10 +1599,7 @@ export default {
       //是否需要重新编辑数据
       this.urlPp = this.$root.$mp.query.url
       this.publishId = this.$root.$mp.query.Id
-      console.log(this.imgArr.length,"***********************")
-      if(this.imgArr.length<=0){
-        this.getDefaultData()
-      }
+      this.getDefaultData()
     }
     console.log("PageId}}}",this.PageId)
     if(this.mm>=1){
@@ -2573,7 +2570,6 @@ export default {
             },
           });
       }
-      console.log(that.imgArr.length,"///////////////////////")
     },
     async base64Img(arr){
       let base64Arr = []
@@ -3141,45 +3137,22 @@ export default {
           }
           console.log("_____")
           if(that.PageId==32　|| that.PageId==33 || that.PageId==34){
-            if(this.urlPp){
-              pramas={
-                  UserId:this.userId,
-                  Token:this.token,
-                  Id:this.publishId,
-                  PicList:_PicList,
-                  GoodsInfo:GoodsInfo,
-                  PartnerList:_PartnerList
-              }
-            }else{
-              pramas={
-                  UserId:this.userId,
-                  Token:this.token,
-                  TypeId:this.TypeId,
-                  PicList:_PicList,
-                  GoodsInfo:GoodsInfo,
-                  PartnerList:_PartnerList
-              }
-            }
-           
+           pramas={
+              UserId:this.userId,
+              Token:this.token,
+              TypeId:this.TypeId,
+              PicList:_PicList,
+              GoodsInfo:GoodsInfo,
+              PartnerList:_PartnerList
+           }
           }else{
-            if(this.urlPp){
-              pramas={
-                  UserId:this.userId,
-                  Token:this.token,
-                  Id:this.publishId,
-                  PicList:_PicList,
-                  GoodsInfo:GoodsInfo
-              }
-            }else{
-                pramas={
-                  UserId:this.userId,
-                  Token:this.token,
-                  TypeId:this.TypeId,
-                  PicList:_PicList,
-                  GoodsInfo:GoodsInfo
-              }
-            }
-            
+            pramas={
+              UserId:this.userId,
+              Token:this.token,
+              TypeId:this.TypeId,
+              PicList:_PicList,
+              GoodsInfo:GoodsInfo
+           }
           }
           // console.log(pramas,"pramas")
           that.submitAll(pramas)

@@ -1211,7 +1211,6 @@ export default {
       this.urlPp = this.$root.$mp.query.url
       this.publishId = this.$root.$mp.query.Id
       console.log(this.publishId,"publishId")
-      console.log(this.imgArr.length,"***********************")
       if(this.imgArr.length<=0){
         this.getDefaultData()
       }

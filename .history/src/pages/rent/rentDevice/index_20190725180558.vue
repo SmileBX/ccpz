@@ -1211,10 +1211,7 @@ export default {
       this.urlPp = this.$root.$mp.query.url
       this.publishId = this.$root.$mp.query.Id
       console.log(this.publishId,"publishId")
-      console.log(this.imgArr.length,"***********************")
-      if(this.imgArr.length<=0){
-        this.getDefaultData()
-      }
+      this.getDefaultData()
     }
     console.log("TypeId",this.TypeId);
     console.log("PageId",this.PageId);
@@ -1774,6 +1771,9 @@ export default {
           this.columns2 = []
           this.columns = []
           that.detailInfo = res.data;
+          if(that.urlPp){
+            this.TypeId = res.data.TypeId
+          }
           if(res.data.arealist.length>0){
             {
               this.addressList = res.data.arealist
@@ -2402,25 +2402,14 @@ export default {
       }
     },
     submitAll(PicList,GoodsInfo){
-      let pprr = {}
-      if(this.urlPp){
-         pprr = {
-           UserId:this.userId,
-            Token:this.token,
-            Id:this.publishId,
-            PicList:PicList,
-            GoodsInfo:GoodsInfo
-         }
-      }else{
-        pprr = {
-           UserId:this.userId,
-            Token:this.token,
-            TypeId:this.TypeId,
-            PicList:PicList,
-            GoodsInfo:GoodsInfo
-         }
-      }
-      post('Goods/RentSharing',pprr,this.curPage).then(res=>{
+      post('Goods/RentSharing',{
+          UserId:this.userId,
+          Token:this.token,
+          TypeId:this.TypeId,
+          PicList:PicList,
+          GoodsInfo:GoodsInfo
+
+      },this.curPage).then(res=>{
         console.log("Goods/RentSharing",res)
         if(res.code==0){
             wx.showToast({

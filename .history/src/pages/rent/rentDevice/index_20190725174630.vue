@@ -1096,7 +1096,6 @@ import {pathToBase64} from "@/utils/image-tools";
 export default {
   data() {
     return {
-      urlPp:"",//路由
       currentDate: new Date().getTime(),
       minDate: new Date().getTime(),
       publishId:"",//重新发布的Id
@@ -1208,13 +1207,9 @@ export default {
     this.PageId = this.$root.$mp.query.PageId;
     if(this.$root.$mp.query.url){
       //是否需要重新编辑数据
-      this.urlPp = this.$root.$mp.query.url
       this.publishId = this.$root.$mp.query.Id
       console.log(this.publishId,"publishId")
-      console.log(this.imgArr.length,"***********************")
-      if(this.imgArr.length<=0){
-        this.getDefaultData()
-      }
+      this.getDefaultData()
     }
     console.log("TypeId",this.TypeId);
     console.log("PageId",this.PageId);
@@ -1246,7 +1241,6 @@ export default {
         Id:this.publishId
       },this.curPage).then(res=>{
          if(res.code==0){
-           this.TypeId = res.data.TypeId
            this.Title = res.data.Title.Value
            this.Synopsis = res.data. Synopsis.Value
            if(res.data.Company){
@@ -1750,7 +1744,6 @@ export default {
     //获取默认数据
     GetPublishItems(){
       let that = this;
-      
       console.log(that.$root.$mp.query.url,that.publishId,"{{{{{{{{{{")
      
       let pp = {}
@@ -2402,25 +2395,14 @@ export default {
       }
     },
     submitAll(PicList,GoodsInfo){
-      let pprr = {}
-      if(this.urlPp){
-         pprr = {
-           UserId:this.userId,
-            Token:this.token,
-            Id:this.publishId,
-            PicList:PicList,
-            GoodsInfo:GoodsInfo
-         }
-      }else{
-        pprr = {
-           UserId:this.userId,
-            Token:this.token,
-            TypeId:this.TypeId,
-            PicList:PicList,
-            GoodsInfo:GoodsInfo
-         }
-      }
-      post('Goods/RentSharing',pprr,this.curPage).then(res=>{
+      post('Goods/RentSharing',{
+          UserId:this.userId,
+          Token:this.token,
+          TypeId:this.TypeId,
+          PicList:PicList,
+          GoodsInfo:GoodsInfo
+
+      },this.curPage).then(res=>{
         console.log("Goods/RentSharing",res)
         if(res.code==0){
             wx.showToast({
@@ -2438,7 +2420,6 @@ export default {
       })
     },
     trimData(){
-      this.urlPp = ''
       this.imgArr=[]
       this.Title = ''
       this.Company = ''

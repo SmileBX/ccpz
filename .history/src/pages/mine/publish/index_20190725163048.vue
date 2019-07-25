@@ -72,7 +72,7 @@
                       </p>
                       <p class="priceArea">
                         <span class="price">￥{{item.PropertyPrice}}</span>
-                        <span class="againsubmit" @click.stop="gopage(item.Status,item.Id,item.PageId)" :class="{'addcolor':item.Status===2}" v-if="item.Status!==0">{{item.Status===2?'查看原因':'重新发布'}}</span>
+                        <span class="againsubmit" @click.stop="gopage(item.Status,item.Id,item.PageId,item.TypeId)" :class="{'addcolor':item.Status===2}" v-if="item.Status!==0">{{item.Status===2?'查看原因':'重新发布'}}</span>
                       </p>
                     </div>
                   </div>
@@ -138,7 +138,7 @@
                           :key="index2"
                         >{{item2}}</span>
                       </p>
-                      <div class="againsubmit" @click.stop="gopage(item.Status,item.Id,item.PageId)" :class="{'addcolor':item.Status===2}" v-if="item.Status!==0">{{item.Status===2?'查看原因':'重新发布'}}</div>
+                      <div class="againsubmit" @click.stop="gopage(item.Status,item.Id,item.PageId,item.TypeId)" :class="{'addcolor':item.Status===2}" v-if="item.Status!==0">{{item.Status===2?'查看原因':'重新发布'}}</div>
                     </div>
                   </div>
                 </van-cell>
@@ -197,7 +197,7 @@
                       </p>
                       <p class="priceArea">
                         <span class="price">￥{{item.PropertyPrice}}</span>
-                        <span class="againsubmit" @click.stop="gopage(item.Status,item.Id,item.PageId)" :class="{'addcolor':item.Status===2}" v-if="item.Status!==0">{{item.Status===2?'查看原因':'重新发布'}}</span>
+                        <span class="againsubmit" @click.stop="gopage(item.Status,item.Id,item.PageId,item.TypeId)" :class="{'addcolor':item.Status===2}" v-if="item.Status!==0">{{item.Status===2?'查看原因':'重新发布'}}</span>
                       </p>
                     </div>
                   </div>
@@ -262,7 +262,7 @@
                       </p>
                       <p class="priceArea">
                         <span class="price">￥{{item.PropertyPrice}}</span>
-                        <span class="againsubmit" @click.stop="gopage(item.Status,item.Id,item.PageId)" :class="{'addcolor':item.Status===2}" v-if="item.Status!==0">{{item.Status===2?'查看原因':'重新发布'}}</span>
+                        <span class="againsubmit" @click.stop="gopage(item.Status,item.Id,item.PageId,item.TypeId)" :class="{'addcolor':item.Status===2}" v-if="item.Status!==0">{{item.Status===2?'查看原因':'重新发布'}}</span>
                       </p>
                     </div>
                   </div>
@@ -361,7 +361,7 @@ export default {
       });
     },
     //重新发布
-    gopage(status,id,PageId){console.log(status,id,PageId)
+    gopage(status,id,PageId,TypeId){console.log(status,id,PageId)
       if(status==2){//status==2 审核失败 1 审核通过 0 待审核
       //查看审核失败的原因 
         wx.navigateTo({
@@ -371,11 +371,11 @@ export default {
         //编辑修改数据
         if(PageId==36 ||　PageId==35 || PageId==32 || PageId==33 || PageId==34 || PageId==43 || PageId==41 || PageId==42 || PageId==37 || PageId==38 || PageId==39 ||PageId==40){
           wx.navigateTo({
-            url: '/pages/rent/rentOffic/main?PageId='+PageId+"&url=VerticalFail"+"&Id="+id
+            url: '/pages/rent/rentOffic/main?PageId='+PageId+"&TypeId="+TypeId+"&url=VerticalFail"+"&Id="+id
           })
         }else{
           wx.navigateTo({
-            url: '/pages/rent/rentDevice/main?PageId='+PageId+"&url=VerticalFail"+"&Id="+id
+            url: '/pages/rent/rentDevice/main?PageId='+PageId+"&TypeId="+TypeId+"&url=VerticalFail"+"&Id="+id
           })
         }
       }

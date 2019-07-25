@@ -1600,9 +1600,7 @@ export default {
       this.urlPp = this.$root.$mp.query.url
       this.publishId = this.$root.$mp.query.Id
       console.log(this.imgArr.length,"***********************")
-      if(this.imgArr.length<=0){
-        this.getDefaultData()
-      }
+      this.getDefaultData()
     }
     console.log("PageId}}}",this.PageId)
     if(this.mm>=1){
@@ -2573,7 +2571,6 @@ export default {
             },
           });
       }
-      console.log(that.imgArr.length,"///////////////////////")
     },
     async base64Img(arr){
       let base64Arr = []

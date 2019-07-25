@@ -2573,7 +2573,6 @@ export default {
             },
           });
       }
-      console.log(that.imgArr.length,"///////////////////////")
     },
     async base64Img(arr){
       let base64Arr = []
