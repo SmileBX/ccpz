@@ -1881,7 +1881,7 @@ export default {
      getTrim(n){
         this.isShowMask = true
         if(n==1){
-          this.showNoChange = true
+          this.showNoChange = false
           this.list = [{Id:1,Name:'毛坯'},{Id:0,Name:'普装'},{Id:2,Name:'精装'}]
           this.masktitle = '请选择装修情况'
         }
