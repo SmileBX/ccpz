@@ -368,16 +368,33 @@ export default {
           url: '/pages/VerticalFail/main?Id='+id
         })
       }else{
-        //编辑修改数据
-        if(PageId==36 ||　PageId==35 || PageId==32 || PageId==33 || PageId==34 || PageId==43 || PageId==41 || PageId==42 || PageId==37 || PageId==38 || PageId==39 ||PageId==40){
-          wx.navigateTo({
-            url: '/pages/rent/rentOffic/main?PageId='+PageId+"&url=VerticalFail"+"&Id="+id
-          })
-        }else{
-          wx.navigateTo({
-            url: '/pages/rent/rentDevice/main?PageId='+PageId+"&url=VerticalFail"+"&Id="+id
-          })
-        }
+        post(
+        "Goods/GetRent_Editxq",
+        {
+          UserId: this.userId,
+          Token: this.token,
+          Id: id
+        },
+        this.curPage
+        ).then(res => {
+          if (res.code == 0) {//检验是否可以重新发布
+            //编辑修改数据
+            if(PageId==36 ||　PageId==35 || PageId==32 || PageId==33 || PageId==34 || PageId==43 || PageId==41 || PageId==42 || PageId==37 || PageId==38 || PageId==39 ||PageId==40){
+              wx.navigateTo({
+                url: '/pages/rent/rentOffic/main?PageId='+PageId+"&url=VerticalFail"+"&Id="+id
+              })
+            }else{
+              wx.navigateTo({
+                url: '/pages/rent/rentDevice/main?PageId='+PageId+"&url=VerticalFail"+"&Id="+id
+              })
+            }
+          }else{
+            wx.showToast({
+              title:res.msg,
+              icon:"none"
+            });
+          }
+        });
       }
     },
     initData() {
