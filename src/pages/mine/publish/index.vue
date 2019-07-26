@@ -360,26 +360,6 @@ export default {
         title: "我的发布"
       });
     },
-    //检验是否可以重新发布
-    Editxq() {
-      post(
-        "Goods/GetRent_Editxq",
-        {
-          UserId: this.userId,
-          Token: this.token,
-          Id: this.id
-        },
-        this.curPage
-      ).then(res => {
-        if (res.code == 0) {
-
-        }else{
-          wx.showToast({
-            title:res.msg
-          });
-        }
-      });
-    },
     //重新发布
     gopage(status,id,PageId){console.log(status,id,PageId)
       if(status==2){//status==2 审核失败 1 审核通过 0 待审核
