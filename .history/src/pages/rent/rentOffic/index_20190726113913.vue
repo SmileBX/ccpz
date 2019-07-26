@@ -1,5 +1,5 @@
 <template>
-  <div class="pageContent" @touchstart="showp=true">
+  <div class="pageContent">
     <div class="FormBox">
       <img class="topbgimg" src="/static/images/icons/bg2.jpg" v-if="BrandId==24">
       <img class="topbgimg" src="/static/images/icons/bg3.jpg" v-else-if="PageId==32||PageId==33 ||PageId==34 ">

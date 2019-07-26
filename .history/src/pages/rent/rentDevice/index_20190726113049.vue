@@ -866,14 +866,14 @@
               <div class="form-cells-hd" v-if="PageId==26 ||PageId==25">拼购简介</div>
               <div class="form-cells-hd" v-else>拼租简介</div>
               <div class="form-cell-bd">
-                <p class="ipt" style="height:200rpx!important;padding:0rpx" v-if="showp" @tap="showp=false" :class="Synopsis.length>0?'colorBlack':'colorPlace'">{{Synopsis ||  '描述细节能够更加吸引优质的候选人哦！'}}</p>
+                <p class="ipt" style="height:200rpx!important;padding:2rpx" v-if="showp" @tap="showp=false" :class="Synopsis.length>0?'colorBlack':'colorPlace'">{{Synopsis ||  '描述细节能够更加吸引优质的候选人哦！'}}</p>
                 <textarea
                   v-else
                   class="ipt"
                   type="text"
                   maxlength = "-1"
                   placeholder="描述细节能够更加吸引优质的候选人哦！"
-                  style="height:200rpx!important;padding:4rpx;box-sizing:border-box"
+                  style="height:200rpx!important;"
                   v-model="Synopsis"
                   placeholder-style="color:#b5b5b5;"
                   auto-focus

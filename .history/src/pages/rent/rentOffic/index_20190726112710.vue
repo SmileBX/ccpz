@@ -1,5 +1,5 @@
 <template>
-  <div class="pageContent" @touchstart="showp=true">
+  <div class="pageContent">
     <div class="FormBox">
       <img class="topbgimg" src="/static/images/icons/bg2.jpg" v-if="BrandId==24">
       <img class="topbgimg" src="/static/images/icons/bg3.jpg" v-else-if="PageId==32||PageId==33 ||PageId==34 ">
@@ -1060,7 +1060,7 @@
             <div class="">
               <div class="form-cells-hd">{{introduce}}</div>
               <div class="form-cell-bd">
-                <p class="ipt" style="height:200rpx!important;padding:0rpx" v-if="showp" @tap="showp=false" :class="Synopsis.length>0?'colorBlack':'colorPlace'">{{Synopsis ||  'introducePlaceholder'}}</p>
+                <p class="ipt" style="height:200rpx!important;padding:50rpx" v-if="showp" @tap="showp=false" :class="Synopsis.length>0?'colorBlack':'colorPlace'">{{Synopsis ||  'introducePlaceholder'}}</p>
                 
                 <textarea
                   v-else
@@ -1068,7 +1068,7 @@
                   type="text"
                   maxlength = "-1"
                   :placeholder="introducePlaceholder"
-                  style="height:200rpx!important;padding:4rpx;box-sizing:border-box"
+                  style="height:200rpx!important;"
                   v-model="Synopsis"
                   placeholder-style="color:#b5b5b5;"
                   @blur="showp=true"
@@ -1572,7 +1572,6 @@ export default {
       ShowTime:false,//
       mm:0,//页面跳转的次数
       imgTips:true,//上传图片不执行函数
-      showp:true,//textarea控制显示
 
     };
     
@@ -1586,7 +1585,6 @@ export default {
     this.initData()
   },
   onShow(){
-    this.showp = true
     console.log(this.$root.$mp.query.url,"}}}}}}}}}}}}}}}}}}}}}}")
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
