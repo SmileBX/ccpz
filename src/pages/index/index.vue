@@ -44,7 +44,7 @@
           previous-margin="60rpx"
           next-margin="30rpx"
           circular="true"
-          indicator-active-color="rgba(255,255,255,0.8)"
+          indicator-active-color="rgba(255,149,46,0.8)"
         >
           <block v-for="(item,index) in picList" :key="index">
             <swiper-item class="item">
@@ -169,12 +169,26 @@
         </div>
       </div>
       <!-- 广告图 -->
-      <div
+      <!-- <div
         class="advimg bg_fff"
         v-if="ggaoPic.length>0"
         @tap="gooutpage(ggaoPic[0].Url)"
       >
         <img :src="ggaoPic[0].Pic" class="radius10 picImg" mode="widthFix" alt>
+      </div> -->
+      <div class="advimg bg_fff">
+        <swiper 
+          indicator-dots
+          indicator-active-color="rgba(255,149,46,0.8)"
+          class="h210"
+         >
+          <block v-for="(item,index) in ggaoPic" :key="index">
+            <swiper-item>
+              <img :src="ggaoPic[0].Pic" class="radius10 picImg" mode="widthFix" alt 
+              @tap="gooutpage(ggaoPic[0].Url)" />
+            </swiper-item>
+          </block>
+        </swiper>
       </div>
       <!-- 为您推荐 -->
       <div class="section">
@@ -295,7 +309,7 @@
 </template>
 
 <script>
-import { post, getCurrentPageUrlWithArgs } from "@/utils";
+import { post,getNewMsgDot, getCurrentPageUrlWithArgs } from "@/utils";
 import { mapState, mapMutations } from "vuex"; //vuex辅助函数
 import location from "@/utils/location";
 import rentItem from "@/components/rentItem.vue";
@@ -378,6 +392,7 @@ export default {
     if (this.userId && this.token) {
       this.IsNewUser();
     }
+    getNewMsgDot();
     // this.getLocal();GetCityCode
     // 初始化定位和城市名称
     // .then(res=>{
@@ -898,8 +913,12 @@ export default {
 }
 .picImg{
   width:100%;
+  height:200rpx;
 }
 .advimg{
   padding: 0 30rpx;
+}
+.h210{
+  height:213rpx;
 }
 </style>

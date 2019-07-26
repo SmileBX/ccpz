@@ -4,7 +4,7 @@
       <li v-for="(item,index) in list" :key="index" @click="goDetail(item.Id)">
         <div class="time">{{item.PubTime}}</div>
         <div class="list">
-          <p class="title ellipsis">{{item.Title}}</p>
+          <p class="title ellipsis" :class="{'c999':item.IsRead===0}">{{item.Title}}</p>
           <img mode="widthFix" :src="item.Pic" class="pic" alt v-if="item.Pic">
           <!-- <div class="con ellipsis content" v-html="item.Memo"></div> -->
           <div class="con ellipsis content" >{{item.Memo}}</div>
@@ -131,5 +131,8 @@ export default {
     border-top:1rpx #e8e8e8 solid;
   }
 }
+}
+.c999{
+  color:#999;
 }
 </style>
