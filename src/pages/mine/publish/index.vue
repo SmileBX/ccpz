@@ -522,6 +522,7 @@ export default {
           msg = "您确定要购买该条信息的刷新功能么？";
         }
       }
+      const that = this;
       wx.showModal({
         // title: "提示",
         content: msg,
@@ -529,10 +530,21 @@ export default {
           cancelColor:'#999',
         success(res) {
           if (res.confirm) {
-            //跳转到对应的购买页面
-            wx.navigateTo({
-              url: `/pages/member2/buyFunction/main?type=${type}&publishId=${publishId}`
-            });
+            // 状态为200--无须付款，状态为0--跳转付款
+            post('User/ReadRefreshSetting',{
+                UserId:that.userId,
+                Token:that.token,
+                Id:publishId
+            }).then(_res=>{
+              if(_res.code===200){
+                wx.showToast({title:res.msg})
+              }else if(_res.code===0){
+                //跳转到对应的购买页面
+                wx.navigateTo({
+                  url: `/pages/member2/buyFunction/main?type=${type}&publishId=${publishId}`
+                });
+              }
+            })
           } else if (res.cancel) {
           }
         }

@@ -783,6 +783,7 @@ export default {
       this.hasFilter = false;
       this.page = 1;
       this.twoTypeList = [];
+      this.TownStr='';
       this.tradelist = []; //根据一级行业搜查对应的行业
       this.tradeOneTab = ""; //选择行业中的一级tab
       this.tradeTwoTab = ""; //选择行业中的二级tab
