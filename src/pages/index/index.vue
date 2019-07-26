@@ -9,30 +9,30 @@
         </div>
         <div class="searchBox flex1" @click="showSearch = true">
           <div class="search">
-            <img src="/static/images/icons/search.png" class="icon_search" alt>
+            <img src="/static/images/icons/search.png" class="icon_search" alt />
             <span>搜索</span>
           </div>
         </div>
       </div>
     </div>
-      <!-- 搜索导航 -->
-      <div class="position-fixed" v-show="showSearch" >
-        <div class="mask" @click="showSearch = false;"></div>
-        <div class="box">
-          <!-- 请选择要搜索的分类 -->
-          <div class="box-title">请选择要搜索的分类</div>
-          <ul class="navList li_25 center navList2 searchNav">
-            <li @click="goSearch(item.Id)" v-for="(item,index) in publishType" :key="index">
-              <div class="outside">
-                <div class="icon-img">
-                  <img :src="item.Img" alt>
-                </div>
-                <p class="title">{{item.Name}}</p>
+    <!-- 搜索导航 -->
+    <div class="position-fixed" v-show="showSearch">
+      <div class="mask" @click="showSearch = false;"></div>
+      <div class="box">
+        <!-- 请选择要搜索的分类 -->
+        <div class="box-title">请选择要搜索的分类</div>
+        <ul class="navList li_25 center navList2 searchNav">
+          <li @click="goSearch(item.Id)" v-for="(item,index) in publishType" :key="index">
+            <div class="outside">
+              <div class="icon-img">
+                <img :src="item.Img" alt />
               </div>
-            </li>
-          </ul>
-        </div>
+              <p class="title">{{item.Name}}</p>
+            </div>
+          </li>
+        </ul>
       </div>
+    </div>
     <scroll-view class="indexPage" scroll-y>
       <!-- banner -->
       <div class="bannerBox" style="padding:0;margin-bottom:0;">
@@ -49,7 +49,7 @@
           <block v-for="(item,index) in picList" :key="index">
             <swiper-item class="item">
               <!-- <img :src="item.Pic" alt @click="record(item.Id,item.Url)"> -->
-              <img :src="item.Pic" alt @click="gooutpage(item.Url)">
+              <img :src="item.Pic" alt @click="gooutpage(item.Url)" />
               <!-- <image src="item" class="slide-image" width="355" height="150"> -->
             </swiper-item>
           </block>
@@ -61,7 +61,7 @@
           <li @click="goToList(item.Id)" v-for="(item,index) in publishType" :key="index">
             <div class="outside">
               <div class="icon-img">
-                <img :src="item.Img" alt>
+                <img :src="item.Img" alt />
               </div>
               <p class="title">{{item.Name}}</p>
             </div>
@@ -74,7 +74,7 @@
           <div class="left flexColumn flex justifyContentCenter center" @click="goTo(1)">
             <!-- <span class="name">成成</span>
             <span class="tipsName">头条</span>-->
-            <img src="/static/images/icons/newsTips.jpg" class="tipImg" alt>
+            <img src="/static/images/icons/newsTips.jpg" class="tipImg" alt />
           </div>
           <div class="conMain flex1">
             <ul class="wenList">
@@ -99,7 +99,7 @@
           <block v-if="ggaoList.length>0">
             <ul class="tuClumn clear">
               <li v-for="(item,index) in ggaoList" @tap="gotoRouseDetail(item.Id)" :key="index">
-                <img :src="item.PicNo" alt>
+                <img :src="item.PicNo" alt />
               </li>
             </ul>
           </block>
@@ -112,7 +112,7 @@
               </li>
             </ul>
           </block>
-        </div> -->
+        </div>-->
       </div>
       <!-- 热门商铺2 -->
       <div class="section">
@@ -140,7 +140,7 @@
                 >
                   <div class="outside">
                     <div class="pictrueAll">
-                      <img :src="item.PicNo" alt mode="aspectFill">
+                      <img :src="item.PicNo" alt mode="aspectFill" />
                     </div>
                     <div class="txtBox">
                       <p class="title ellipsis">
@@ -175,17 +175,18 @@
         @tap="gooutpage(ggaoPic[0].Url)"
       >
         <img :src="ggaoPic[0].Pic" class="radius10 picImg" mode="widthFix" alt>
-      </div> -->
+      </div>-->
       <div class="advimg bg_fff">
-        <swiper 
-          indicator-dots
-          indicator-active-color="rgba(255,149,46,0.8)"
-          class="h210"
-         >
+        <swiper indicator-dots indicator-active-color="rgba(255,149,46,0.8)" class="h210">
           <block v-for="(item,index) in ggaoPic" :key="index">
             <swiper-item>
-              <img :src="ggaoPic[0].Pic" class="radius10 picImg" mode="widthFix" alt 
-              @tap="gooutpage(ggaoPic[0].Url)" />
+              <img
+                :src="ggaoPic[0].Pic"
+                class="radius10 picImg"
+                mode="widthFix"
+                alt
+                @tap="gooutpage(ggaoPic[0].Url)"
+              />
             </swiper-item>
           </block>
         </swiper>
@@ -278,9 +279,9 @@
             class="icon-close"
             @click="closeGiftShade"
             alt
-          >
+          />
           <div class="gift__hd">
-            <img src="/static/images/icons/giftTopBg.png" mode="widthFix" class="giftTopBg" alt>
+            <img src="/static/images/icons/giftTopBg.png" mode="widthFix" class="giftTopBg" alt />
           </div>
           <div class="gift__bd">
             <div class="giftList">
@@ -309,7 +310,7 @@
 </template>
 
 <script>
-import { post,getNewMsgDot, getCurrentPageUrlWithArgs } from "@/utils";
+import { post, getNewMsgDot, getCurrentPageUrlWithArgs } from "@/utils";
 import { mapState, mapMutations } from "vuex"; //vuex辅助函数
 import location from "@/utils/location";
 import rentItem from "@/components/rentItem.vue";
@@ -321,7 +322,7 @@ export default {
   data() {
     return {
       // cityName:"",
-      showSearch:false,//显示搜索的分类
+      showSearch: false, //显示搜索的分类
       picList: [], //banner图
       newList: [], //头条消息
       publishType: [], //发布类型
@@ -359,15 +360,15 @@ export default {
       recomendList: [] //为您推荐的列表
     };
   },
-  watch:{
-    CityName(){
-          this.cityCode = this.CityCode;
-          this.CityName = this.CityName;
-          this.getList();
-    },
+  watch: {
+    CityName() {
+      this.cityCode = this.CityCode;
+      this.CityName = this.CityName;
+      this.getList();
+    }
   },
   computed: {
-    ...mapState(["CityName","CityCode"])
+    ...mapState(["CityName", "CityCode"])
   },
   onLoad() {
     this.setBarTitle();
@@ -420,13 +421,13 @@ export default {
       });
     },
     // 获取分类列表
-    getList(){
-      this.getQueryRentList(23, 3, 3,0); //热门拼租
-      this.getQueryRentList(21, 3, 3,0); //人气活动
-      this.getQueryRentList(21, 3, 5,0); //为您推荐
+    getList() {
+      this.getQueryRentList(23, 3, 3, 0); //热门拼租
+      this.getQueryRentList(21, 3, 3, 0); //人气活动
+      this.getQueryRentList(21, 3, 5, 0); //为您推荐
     },
     //banner图跳转++后台获取点击广告的次数（记录）--userId token
-    record(id,url) {
+    record(id, url) {
       post("Banner/BannerHits", {
         Id: id
       });
@@ -435,7 +436,7 @@ export default {
       });
     },
     //外部广告跳转
-    gooutpage(url){
+    gooutpage(url) {
       wx.navigateTo({
         url: "/pages/outpage/main?url=" + url
       });
@@ -611,7 +612,7 @@ export default {
     },
     shiftMenu(index, id) {
       console.log("切换的" + id);
-      this.getQueryRentList(parseInt(id), 3, 5,index);
+      this.getQueryRentList(parseInt(id), 3, 5, index);
     },
     gotoMoreList() {
       //点击为您推荐中的加载更多的时候，跳转到相对应的列表中去
@@ -627,7 +628,7 @@ export default {
         url: `/pages/rent/detail/main?type=${type}&id=${id}`
       });
     },
-    getQueryRentList(brandId, hotType, pageSize,index) {
+    getQueryRentList(brandId, hotType, pageSize, index) {
       let that = this;
       //获取发布列表
       post(
@@ -644,7 +645,8 @@ export default {
         that.curPage
       ).then(res => {
         if (res.code === 0) {
-          if(pageSize == 3){ //热门拼租/人气活动
+          if (pageSize == 3) {
+            //热门拼租/人气活动
             if (brandId === 23) {
               if (that.page === 1) {
                 that.hotStoreList = [];
@@ -664,17 +666,17 @@ export default {
               }
             }
           }
-          if(pageSize == 5){
-              if (that.page === 1) {
-                that.recomendList = [];
-              }
-              //为您推荐
-              if (res.data.length > 0) {
-                that.recomendList = res.data;
-              }
+          if (pageSize == 5) {
+            if (that.page === 1) {
+              that.recomendList = [];
+            }
+            //为您推荐
+            if (res.data.length > 0) {
+              that.recomendList = res.data;
+            }
           }
           //切换为您推荐中的选项
-          index!==undefined&&(this.menuTab = index)
+          index !== undefined && (this.menuTab = index);
         }
         // if (res.code === 0) {
         //   if (hotType === 2) {
@@ -695,60 +697,59 @@ export default {
         //       that.recomendList = res.data;
         //     }
         //   }
-          
+
         //   //切换为您推荐中的选项
         //   index!==undefined&&(this.menuTab = index)
         // }
-
       });
     },
     // 跳转搜索
-    goSearch(id){
+    goSearch(id) {
       wx.navigateTo({
-        url:`/pages/rent/searchHistory/main?brandId=${id}`
-      })
+        url: `/pages/rent/searchHistory/main?brandId=${id}`
+      });
       this.showSearch = false;
-    },
+    }
   },
   //下拉刷新
   onPullDownRefresh() {
-    this.initData()
+    this.initData();
     wx.stopPullDownRefresh();
   },
   created() {}
 };
 </script>
 <style lang="scss" scoped>
-.position-fixed{
-  position:fixed;
-  top:0;
-  left:0;
-  width:100%;
-  z-index:100;
+.position-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 100;
 }
-.mask{
-  z-index:9;
+.mask {
+  z-index: 9;
 }
-.bannerBox{
-  .item{
-    img{
-      border-radius:10rpx;
+.bannerBox {
+  .item {
+    img {
+      border-radius: 10rpx;
     }
   }
 }
-.box{
-  width:94%;
-  height:330rpx;
-  background:#fff;
-  margin:300rpx auto 0;
-  border-radius:5rpx;
-  position:relative;
-  z-index:10;
+.box {
+  width: 94%;
+  height: 330rpx;
+  background: #fff;
+  margin: 300rpx auto 0;
+  border-radius: 5rpx;
+  position: relative;
+  z-index: 10;
 }
-.box-title{
-  line-height:120rpx;
-  font-size:32rpx;
-  text-align:center;
+.box-title {
+  line-height: 120rpx;
+  font-size: 32rpx;
+  text-align: center;
 }
 .section {
   background: #fff;
@@ -904,21 +905,21 @@ export default {
   top: -60rpx;
   z-index: 30;
 }
-.pictrueAll{
-  img{
+.pictrueAll {
+  img {
     width: 394rpx;
     height: 295rpx;
-    border-radius:8rpx;
+    border-radius: 8rpx;
   }
 }
-.picImg{
-  width:100%;
-  height:200rpx;
+.picImg {
+  width: 100%;
+  height: 200rpx;
 }
-.advimg{
+.advimg {
   padding: 0 30rpx;
 }
-.h210{
-  height:213rpx;
+.h210 {
+  height: 213rpx;
 }
 </style>
