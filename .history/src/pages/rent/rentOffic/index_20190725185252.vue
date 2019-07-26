@@ -1564,8 +1564,7 @@ export default {
         {Id:1,Name:"小学",active:true},{Id:2,Name:"中学"},{Id:3,Name:"高中"},{Id:4,Name:"中专"},{Id:5,Name:"大专"},{Id:6,Name:"本科"},{Id:7,Name:"硕士"},{Id:8,Name:"MBA"},
       ],
       ShowTime:false,//
-      mm:0,//页面跳转的次数
-      imgTips:true,//上传图片不执行函数
+      mm:0//页面跳转的次数
 
     };
     
@@ -1601,11 +1600,10 @@ export default {
       this.urlPp = this.$root.$mp.query.url
       this.publishId = this.$root.$mp.query.Id
       console.log(this.imgArr.length,"***********************")
-      if(this.imgTips){
+      if(this.imgArr.length<=0){
         this.getDefaultData()
       }
     }
-    
     console.log("PageId}}}",this.PageId)
     if(this.mm>=1){
       wx.switchTab({
@@ -2561,7 +2559,6 @@ export default {
     //上传图片
     chosseImg(){
       const that = this;
-      that.imgTips = false
       let num = 0;
       if(that.imgArr.length<that.picLength){
           num = that.picLength - that.imgArr.length
@@ -2572,12 +2569,11 @@ export default {
             success: (res)=>{
                res.tempFilePaths.forEach(item=>{
                   that.imgArr.push(item)
-                  console.log(that.imgArr,that.imgArr.length,"///////////////////////")
                })
             },
           });
       }
-      
+      console.log(that.imgArr,that.imgArr.length,"///////////////////////")
     },
     async base64Img(arr){
       let base64Arr = []

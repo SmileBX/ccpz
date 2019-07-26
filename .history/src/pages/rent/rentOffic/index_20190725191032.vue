@@ -1564,8 +1564,7 @@ export default {
         {Id:1,Name:"小学",active:true},{Id:2,Name:"中学"},{Id:3,Name:"高中"},{Id:4,Name:"中专"},{Id:5,Name:"大专"},{Id:6,Name:"本科"},{Id:7,Name:"硕士"},{Id:8,Name:"MBA"},
       ],
       ShowTime:false,//
-      mm:0,//页面跳转的次数
-      imgTips:true,//上传图片不执行函数
+      mm:0//页面跳转的次数
 
     };
     
@@ -1573,6 +1572,15 @@ export default {
   onLoad() {
     this.mm = 0
     this.showDefaultCompany = false
+    if(this.$root.$mp.query.url){
+      //是否需要重新编辑数据
+      this.urlPp = this.$root.$mp.query.url
+      this.publishId = this.$root.$mp.query.Id
+      console.log(this.imgArr.length,"***********************")
+      if(this.imgArr.length<=0){
+        this.getDefaultData()
+      }
+    }
     this.setBarTitle();
     this.trimData()
     this.initData()
@@ -1596,15 +1604,6 @@ export default {
     this.tradeListBox = [],//行业列表
     this.deviceTip = ''
     this.PageId = this.$root.$mp.query.PageId
-    if(this.$root.$mp.query.url){
-      //是否需要重新编辑数据
-      this.urlPp = this.$root.$mp.query.url
-      this.publishId = this.$root.$mp.query.Id
-      console.log(this.imgArr.length,"***********************")
-      if(this.imgTips){
-        this.getDefaultData()
-      }
-    }
     
     console.log("PageId}}}",this.PageId)
     if(this.mm>=1){
@@ -2561,7 +2560,6 @@ export default {
     //上传图片
     chosseImg(){
       const that = this;
-      that.imgTips = false
       let num = 0;
       if(that.imgArr.length<that.picLength){
           num = that.picLength - that.imgArr.length
