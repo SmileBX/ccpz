@@ -1429,7 +1429,6 @@ import {pathToBase64} from "@/utils/image-tools";
 export default {
   data() {
     return {
-      urlPp:"",//路由
       currentDate: new Date().getTime(),
       minDate:new Date().getTime(),
       dateTips:false,
@@ -1564,15 +1563,13 @@ export default {
         {Id:1,Name:"小学",active:true},{Id:2,Name:"中学"},{Id:3,Name:"高中"},{Id:4,Name:"中专"},{Id:5,Name:"大专"},{Id:6,Name:"本科"},{Id:7,Name:"硕士"},{Id:8,Name:"MBA"},
       ],
       ShowTime:false,//
-      mm:0,//页面跳转的次数
-      imgTips:true,//上传图片不执行函数
+      mm:0//页面跳转的次数
 
     };
     
   },
   onLoad() {
     this.mm = 0
-    this.imgTips = true
     this.showDefaultCompany = false
     this.setBarTitle();
     this.trimData()
@@ -1597,17 +1594,6 @@ export default {
     this.tradeListBox = [],//行业列表
     this.deviceTip = ''
     this.PageId = this.$root.$mp.query.PageId
-    console.log(this.imgTips,"this.imgTips")
-    if(this.$root.$mp.query.url){
-      //是否需要重新编辑数据
-      this.urlPp = this.$root.$mp.query.url
-      this.publishId = this.$root.$mp.query.Id
-      console.log(this.imgArr.length,"***********************")
-      if(this.imgTips){
-        this.getDefaultData()
-      }
-    }
-    
     console.log("PageId}}}",this.PageId)
     if(this.mm>=1){
       wx.switchTab({
@@ -1616,7 +1602,11 @@ export default {
     }else{
       this.GetPublishItems()
     }
-    
+    if(this.$root.$mp.query.url){
+      //是否需要重新编辑数据
+      this.publishId = this.$root.$mp.query.Id
+      this.getDefaultData()
+    }
   },
   components: {},
    methods: {
@@ -1633,8 +1623,6 @@ export default {
         Id:this.publishId
       },this.curPage).then(res=>{
          if(res.code==0){
-           console.log("ppppppppppppppppppppppppppppppppppppppppp")
-          //  this.TypeId = res.data.TypeId
            this.Title = res.data.Title.Value
            this.Synopsis = res.data. Synopsis.Value
            if(res.data.Company){
@@ -1734,13 +1722,6 @@ export default {
             }
             if(res.data.NeedApartment){
               this.NeedApartment = res.data.NeedApartment.Value
-            }
-            if(res.data.PicList){
-              let info = []
-              res.data.PicList.Value.map(item=>{
-                info.push(item.PicUrl)
-              })
-              this.imgArr = info
             }
             if(res.data.IsRegArea){
               if(res.data.IsRegArea.Value == 1){
@@ -1952,8 +1933,8 @@ export default {
           this.addrTitle = "地理位置"
           this.addrPlaceholder = "位置名称 如：如京基大厦"
         }
-        console.log(this.urlPp,"this.$root.query.url)")
-        if(!this.urlPp){
+        console.log(this.$root.$mp.query.url,"this.$root.query.url)")
+        if(!this.$root.$mp.query.url){
           if(this.imgArr.length<=0){
               if(this.PageId==32 || this.PageId==33){
                 this.PartnerList=[
@@ -2571,7 +2552,6 @@ export default {
     //上传图片
     chosseImg(){
       const that = this;
-      that.imgTips = false
       let num = 0;
       if(that.imgArr.length<that.picLength){
           num = that.picLength - that.imgArr.length
@@ -2582,12 +2562,10 @@ export default {
             success: (res)=>{
                res.tempFilePaths.forEach(item=>{
                   that.imgArr.push(item)
-                  console.log(that.imgArr,that.imgArr.length,"///////////////////////")
                })
             },
           });
       }
-      
     },
     async base64Img(arr){
       let base64Arr = []
@@ -3155,45 +3133,22 @@ export default {
           }
           console.log("_____")
           if(that.PageId==32　|| that.PageId==33 || that.PageId==34){
-            if(this.urlPp){
-              pramas={
-                  UserId:this.userId,
-                  Token:this.token,
-                  Id:this.publishId,
-                  PicList:_PicList,
-                  GoodsInfo:GoodsInfo,
-                  PartnerList:_PartnerList
-              }
-            }else{
-              pramas={
-                  UserId:this.userId,
-                  Token:this.token,
-                  TypeId:this.TypeId,
-                  PicList:_PicList,
-                  GoodsInfo:GoodsInfo,
-                  PartnerList:_PartnerList
-              }
-            }
-           
+           pramas={
+              UserId:this.userId,
+              Token:this.token,
+              TypeId:this.TypeId,
+              PicList:_PicList,
+              GoodsInfo:GoodsInfo,
+              PartnerList:_PartnerList
+           }
           }else{
-            if(this.urlPp){
-              pramas={
-                  UserId:this.userId,
-                  Token:this.token,
-                  Id:this.publishId,
-                  PicList:_PicList,
-                  GoodsInfo:GoodsInfo
-              }
-            }else{
-                pramas={
-                  UserId:this.userId,
-                  Token:this.token,
-                  TypeId:this.TypeId,
-                  PicList:_PicList,
-                  GoodsInfo:GoodsInfo
-              }
-            }
-            
+            pramas={
+              UserId:this.userId,
+              Token:this.token,
+              TypeId:this.TypeId,
+              PicList:_PicList,
+              GoodsInfo:GoodsInfo
+           }
           }
           // console.log(pramas,"pramas")
           that.submitAll(pramas)
@@ -3220,7 +3175,6 @@ export default {
       })
     },
     trimData(){
-      this.urlPp = ''
       this.imgArr=[]
       this.Title = ''
       this.Company = ''

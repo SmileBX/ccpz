@@ -1572,7 +1572,7 @@ export default {
   },
   onLoad() {
     this.mm = 0
-    this.imgTips = true
+    this.imgTips = false
     this.showDefaultCompany = false
     this.setBarTitle();
     this.trimData()
@@ -1734,13 +1734,6 @@ export default {
             }
             if(res.data.NeedApartment){
               this.NeedApartment = res.data.NeedApartment.Value
-            }
-            if(res.data.PicList){
-              let info = []
-              res.data.PicList.Value.map(item=>{
-                info.push(item.PicUrl)
-              })
-              this.imgArr = info
             }
             if(res.data.IsRegArea){
               if(res.data.IsRegArea.Value == 1){

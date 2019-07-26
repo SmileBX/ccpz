@@ -1195,7 +1195,7 @@ export default {
   },
   onLoad() {
     this.mm = 0
-    this.imgTips = true
+    this.imgTips = false
     this.showDefaultCompany = false
     this.trimData()
     this.setBarTitle();
@@ -1247,7 +1247,7 @@ export default {
         Id:this.publishId
       },this.curPage).then(res=>{
          if(res.code==0){
-          //  this.TypeId = res.data.TypeId
+           this.TypeId = res.data.TypeId
            this.Title = res.data.Title.Value
            this.Synopsis = res.data. Synopsis.Value
            if(res.data.Company){
@@ -1965,7 +1965,7 @@ export default {
           });
       }
     },
-    async base64Img(arr){
+    async base27Img(arr){
       let base27Arr = []
       for(let i = 0;i < arr.length;i++){
         const res = await pathToBase64(arr[i]);
@@ -2202,7 +2202,7 @@ export default {
     async submitApply(){
       console.log(this.CompanyId,this.Company,"++++++")
       const that = this
-      let PicList = await that.base64Img(that.imgArr);
+      let PicList = await that.base27Img(that.imgArr);
       if(that.PageId == 30 || that.PageId == 27 || that.PageId == 28){
           this.ServiceName = ''
           for(let i in that.Devicelist){

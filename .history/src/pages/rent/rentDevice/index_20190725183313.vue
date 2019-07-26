@@ -1187,15 +1187,14 @@ export default {
       ],
       deviceTip:"",//添加自定义
       ShowTime:"",//展示时分秒
-      mm:0,//页面跳转的次数
-      imgTips:true,//上传图片不执行函数
+      mm:0//页面跳转的次数
+     
 
     };
     
   },
   onLoad() {
     this.mm = 0
-    this.imgTips = true
     this.showDefaultCompany = false
     this.trimData()
     this.setBarTitle();
@@ -1212,8 +1211,7 @@ export default {
       this.urlPp = this.$root.$mp.query.url
       this.publishId = this.$root.$mp.query.Id
       console.log(this.publishId,"publishId")
-      console.log(this.imgArr.length,"***********************")
-      if(this.imgTips){
+      if(this.imgArr.length<=0){
         this.getDefaultData()
       }
     }
@@ -1247,7 +1245,7 @@ export default {
         Id:this.publishId
       },this.curPage).then(res=>{
          if(res.code==0){
-          //  this.TypeId = res.data.TypeId
+           this.TypeId = res.data.TypeId
            this.Title = res.data.Title.Value
            this.Synopsis = res.data. Synopsis.Value
            if(res.data.Company){
@@ -1949,7 +1947,6 @@ export default {
     //上传图片
     chosseImg(){
       const that = this;
-      that.imgTips = false
       let num = 0;
       if(that.imgArr.length<that.picLength){
           num = that.picLength - that.imgArr.length
@@ -1965,7 +1962,7 @@ export default {
           });
       }
     },
-    async base64Img(arr){
+    async base27Img(arr){
       let base27Arr = []
       for(let i = 0;i < arr.length;i++){
         const res = await pathToBase64(arr[i]);
@@ -2202,7 +2199,7 @@ export default {
     async submitApply(){
       console.log(this.CompanyId,this.Company,"++++++")
       const that = this
-      let PicList = await that.base64Img(that.imgArr);
+      let PicList = await that.base27Img(that.imgArr);
       if(that.PageId == 30 || that.PageId == 27 || that.PageId == 28){
           this.ServiceName = ''
           for(let i in that.Devicelist){
