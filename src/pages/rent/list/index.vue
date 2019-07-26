@@ -66,7 +66,7 @@
           <li
             v-for="(item,index) in twoTypeList"
             :key="index"
-            :class="{'active':index==twoTabIndex}"
+            :class="{'active':index===twoTabIndex}"
             @click="shiftTwoType(index,item.PageId,item.Id)"
           >
             <div class="outside">
@@ -393,7 +393,7 @@ export default {
       oneTabIndex: 0, //一级类的tab
       oneId: "", //一级类id
       twoTypeList: [], //根据对应的一级类搜出对应的二级类
-      twoTabIndex: 0, //二级类的tab
+      twoTabIndex: '', //二级类的tab
       pageId: "", //获取对应发布筛选查询接口中的pageId
       tradelist: [], //根据一级行业搜查对应的行业
       tradeOneTab: "", //选择行业中的一级tab
@@ -477,7 +477,8 @@ export default {
       //this.cityName = wx.getStorageSync("cityName");
       this.twoTypeList = [];
       this.goodsInfo={};
-      this.twoTabIndex = 0;
+      this.typeId='';
+      this.twoTabIndex = '';
       this.oneTabIndex = 0;
       this.areaTwoList=[];
       this.page = 1;
@@ -573,11 +574,14 @@ export default {
       },this.curPage).then(res => {
         if (res.code === 0 && res.data.length > 0) {
           that.oneTypeList = res.data;
+          // 默认展示全部，而不是二级分类中的第一个分类
           if (res.data[0].PageId === 0) {
-            //有下级类的时候
+          //   //有下级类的时候
             that.oneId = res.data[0].Id;
+            that.typeId = res.data[0].Id; //20190726 获取一级分类下的产品
             that.getSubTwoMenu();
-          } else {
+          } 
+          else {
             //没有下级类的时候
             that.typeId = res.data[0].Id;
             that.pageId = res.data[0].PageId;
@@ -596,7 +600,7 @@ export default {
         if (res.code === 0 && res.data.length > 0) {
           that.twoTypeList = res.data;
           that.pageId = res.data[0].PageId;
-          that.typeId = res.data[0].Id;
+          // that.typeId = res.data[0].Id;
           that.getQueryRentList();
           that.GetFilterQuery();
         }
@@ -758,15 +762,16 @@ export default {
       this.tradeOneTab = ""; //选择行业中的一级tab
       this.tradeTwoTab = ""; //选择行业中的二级tab
       this.isShadeType = ""; //类型弹窗
-      this.twoTabIndex = 0; //二级分类活动状态
+      this.twoTabIndex = ''; //二级分类活动状态
       this.goodsInfo = {}; //筛选条件对象
       this.isShade = false; //遮罩
       this.initAll();
+        this.typeId = id;
       if (this.oneTypeList[index].PageId !== 0) {
         //没有二级
         console.log("这里点击切换一级的时候，pageid不是0");
         this.pageId = this.oneTypeList[index].PageId;
-        this.typeId = id;
+        // this.typeId = id;
         this.getQueryRentList();
         this.GetFilterQuery();
       } else {
