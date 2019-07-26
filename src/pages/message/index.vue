@@ -65,7 +65,7 @@
 </template>
 
 <script>
-import { post,getCurrentPageUrlWithArgs} from "@/utils";
+import { post,getCurrentPageUrlWithArgs,getNewMsgDot} from "@/utils";
 export default {
   data () {
     return {
@@ -80,13 +80,14 @@ export default {
   },
    onLoad() {
     this.setBarTitle();
+    this.curPage = getCurrentPageUrlWithArgs();
   },
   onShow(){
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
-    this.curPage = getCurrentPageUrlWithArgs();
     console.log(this.curPage)
     this.getMessage()
+    getNewMsgDot();
   },
 
   components: {
@@ -135,9 +136,14 @@ export default {
         }
       })
       this.list.length===0&&(this.list = this.messageInfo.friend_new)
-    },
+    }
   },
-
+  //下拉刷新
+  onPullDownRefresh() {
+    wx.stopPullDownRefresh();
+    this.getMessage()
+    getNewMsgDot();
+  },
   created () {
     // let app = getApp()
   }

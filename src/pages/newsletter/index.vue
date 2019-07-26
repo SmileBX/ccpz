@@ -35,7 +35,7 @@
 
 <script>
 import IndexList from "@/components/IndexList.vue";
-import { post, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
+import { post, toLogin, getCurrentPageUrlWithArgs,getNewMsgDot } from "@/utils";
 export default {
   data() {
     return {
@@ -58,6 +58,7 @@ export default {
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
     this.getFriends();
+    getNewMsgDot();
   },
   components: {
     IndexList

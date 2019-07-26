@@ -164,7 +164,7 @@
 </template>
 
 <script>
-import { post, valPhone, toLogin, getCurrentPageUrlWithArgs } from "@/utils";
+import { post, valPhone, toLogin, getCurrentPageUrlWithArgs,getNewMsgDot } from "@/utils";
 //type:1:合作加盟；2：增值服务；3：意见反馈;这个是跳转到feedback需要传的
 export default {
   data() {
@@ -188,6 +188,7 @@ export default {
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
     this.getPerson()
+    getNewMsgDot();
   },
   methods: {
     setBarTitle() {

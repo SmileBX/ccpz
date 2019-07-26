@@ -354,6 +354,21 @@ export function getLocation() {
         })
     })
 }
+// 获取新消息红点
+export function getNewMsgDot() {
+    if (wx.getStorageSync("userId") && wx.getStorageSync("token")) {
+      post("User/GetMessageRed", {
+        UserId: wx.getStorageSync("userId"),
+        Token: wx.getStorageSync("token")
+      }).then(res => {
+        if (res.code === 0 && res.data.Count === 1) {
+          wx.showTabBarRedDot({
+            index: 3
+          });
+        }
+      });
+    }
+  }
 
 export {
     host,
@@ -371,4 +386,5 @@ export default {
     previewImage: previewImage,
     trim,
     getLocation,
+    getNewMsgDot
 }
