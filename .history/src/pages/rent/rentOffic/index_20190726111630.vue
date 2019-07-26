@@ -1060,7 +1060,7 @@
             <div class="">
               <div class="form-cells-hd">{{introduce}}</div>
               <div class="form-cell-bd">
-                <p class="ipt" style="height:200rpx!important;padding:30rpx" v-if="showp" @tap="showp=false" :class="Synopsis.length>0?'colorBlack':'colorPlace'">{{Synopsis ||  'introducePlaceholder'}}</p>
+                <p class="ipt" style="height:200rpx!important;" v-if="showp" @tap="showp=false" :class="Synopsis.length>0?'colorBlack':'colorPlace'">{{Synopsis ||  'introducePlaceholder'}}</p>
                 
                 <textarea
                   v-else
@@ -1073,7 +1073,6 @@
                   placeholder-style="color:#b5b5b5;"
                   @blur="showp=true"
                   auto-focus
-                  adjust-position="true"
                 ></textarea>
                 <!-- <input
                   class="ipt"

@@ -1,5 +1,5 @@
 <template>
-  <div class="pageContent"  @touchstart="showp=true">
+  <div class="pageContent">
     <div class="FormBox">
       <img class="topbgimg" src="/static/images/icons/bg2.jpg" v-if=" PageId==28">
       <img class="topbgimg" src="/static/images/icons/bg1.jpg" v-else>

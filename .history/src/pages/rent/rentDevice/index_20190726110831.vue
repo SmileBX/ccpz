@@ -1,5 +1,5 @@
 <template>
-  <div class="pageContent"  @touchstart="showp=true">
+  <div class="pageContent">
     <div class="FormBox">
       <img class="topbgimg" src="/static/images/icons/bg2.jpg" v-if=" PageId==28">
       <img class="topbgimg" src="/static/images/icons/bg1.jpg" v-else>
@@ -1203,7 +1203,6 @@ export default {
     this.initData()
   },
   onShow(){
-    this.showp = true
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
@@ -2514,12 +2513,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.colorBlack{
-  color:#1a1a1a;
-}
-.colorPlace{
-  color:#b5b5b5;
-}
 .form-cells .form-cells-item .ipt{
   padding-right:0
 }
