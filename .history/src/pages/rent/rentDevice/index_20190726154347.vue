@@ -1214,9 +1214,9 @@ export default {
     this.curPage = getCurrentPageUrlWithArgs();
     this.TypeId = this.$root.$mp.query.TypeId;
     this.PageId = this.$root.$mp.query.PageId;
-    console.log(this.urlPp,"OOOOOOOOOOOOOOOOOOO")
-    console.log(this.$root.$mp.query.url,"rrrrrrrrrrrr")
+    console.log(this.$root.$mp.query.url,this.urlPp,"OOOOOOOOOOOOOOOOOOO")
     if(this.$root.$mp.query.url){
+      this.urlPramas = this.$root.$mp.query.url
       //是否需要重新编辑数据
       this.urlPp = this.$root.$mp.query.url
       this.publishId = this.$root.$mp.query.Id
@@ -2460,7 +2460,7 @@ export default {
               duration:1500,
             })
             setTimeout(() => {
-              wx.redirectTo({
+              wx.navigateTo({
                 url:'/pages/VerticalStatus/main'
               })
               this.trimData()
