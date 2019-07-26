@@ -1060,7 +1060,7 @@
             <div class="">
               <div class="form-cells-hd">{{introduce}}</div>
               <div class="form-cell-bd">
-                <p class="ipt" style="height:200rpx!important;padding:0rpx" v-if="showp" @tap="showp=false" :class="Synopsis.length>0?'colorBlack':'colorPlace'">{{Synopsis.length>0?Synopsis:introducePlaceholder}}</p>
+                <p class="ipt" style="height:200rpx!important;padding:0rpx" v-if="showp" @tap="showp=false" :class="Synopsis.length>0?'colorBlack':'colorPlace'">{{Synopsis}} || {{introducePlaceholder}}</p>
                 
                 <textarea
                   v-else
@@ -1090,14 +1090,14 @@
             <div class="">
               <div class="form-cells-hd">{{infoMore}}</div>
               <div class="form-cell-bd">
-                <p class="ipt" style="height:200rpx!important;padding:0rpx" v-if="showPP" @tap="showPP=false" :class="ContentDetail.length>0?'colorBlack':'colorPlace'">{{ContentDetail.length>0?ContentDetail:infoMorePlaceHolder}}</p>
+                <p class="ipt" style="height:200rpx!important;padding:0rpx" v-if="showPP" @tap="showPP=false" :class="ContentDetail.length>0?'colorBlack':'colorPlace'">{{ContentDetail.length>0?ContentDetail:introducePlaceholder}}</p>
                 <textarea
                 v-else
                   class="ipt"
                   type="text"
                   maxlength = "-1"
                   :placeholder="infoMorePlaceHolder"
-                  style="height:200rpx!important;padding:4rpx;box-sizing:border-box"
+                  style="height:200rpx!important;"
                   v-model="ContentDetail"
                   placeholder-style="color:#b5b5b5;"
                   @blur="showPP=true"
