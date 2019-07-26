@@ -42,17 +42,21 @@
                       :disabled="item.Status!==1"
                       :checked="pinzuList.selectedIndex===index && item.Status===1"
                       v-if="showEdit"
-                    >
+                    />
                     <div class="pictrueAll">
-                      <span class="isTopTag" v-if="item.IsTop && item.IsRefresh">已置顶刷新</span>
-                      <span class="isTopTag" v-if="item.IsTop&&!item.IsRefresh">已置顶</span>
-                      <span class="isTopTag" v-if="item.IsRefresh&&!item.IsTop">已刷新</span>
-                      <span class="isTopTag" v-if="item.Status!==1">{{item.Status===0?'待审核':item.Status===2?'审核失败':''}}</span>
+                      <div class="isTopTags">
+                        <p class="" v-if="item.IsTop">{{item.IsTop}}</p>
+                        <p class="" v-if="item.IsRefresh">{{item.IsRefresh}}</p>
+                      </div>
+                      <span
+                        class="isTopTag"
+                        v-if="item.Status!==1"
+                      >{{item.Status===0?'待审核':item.Status===2?'审核失败':''}}</span>
                       <div class="pictrue img">
-                        <img :src="item.PicNo" alt mode="aspectFill">
+                        <img :src="item.PicNo" alt mode="aspectFill" />
                       </div>
                     </div>
-                    <div class="txtBox flex1 ">
+                    <div class="txtBox flex1">
                       <p class="title ellipsis" style="color:#1a1a1a">
                         <span class="typeName" v-if="item.TypeName !==''">{{item.TypeName}}</span>
                         {{item.Title}}
@@ -72,7 +76,12 @@
                       </p>
                       <p class="priceArea">
                         <span class="price">￥{{item.PropertyPrice}}</span>
-                        <span class="againsubmit" @click.stop="gopage(item.Status,item.Id,item.PageId)" :class="{'addcolor':item.Status===2}" v-if="item.Status!==0">{{item.Status===2?'查看原因':'重新发布'}}</span>
+                        <span
+                          class="againsubmit"
+                          @click.stop="gopage(item.Status,item.Id,item.PageId)"
+                          :class="{'addcolor':item.Status===2}"
+                          v-if="item.Status!==0"
+                        >{{item.Status===2?'查看原因':'重新发布'}}</span>
                       </p>
                     </div>
                   </div>
@@ -103,19 +112,21 @@
                     class="outside"
                     @click.stop="selectItem(item.Id,index,zujianList.selectedIndex,item.Status)"
                   >
+                      <div class="isTopTags">
+                        <p class="" v-if="item.IsTop">{{item.IsTop}}</p>
+                        <p class="" v-if="item.IsRefresh">{{item.IsRefresh}}</p>
+                      </div>
                     <span
-                      class="isTopTag zujian__isTopTag"
-                      v-if="item.IsTop&& item.IsRefresh">已置顶刷新</span>
-                    <span class="isTopTag zujian__isTopTag" v-if="item.IsTop&&!item.IsRefresh">已置顶</span>
-                    <span class="isTopTag zujian__isTopTag" v-if="item.IsRefresh&&!item.IsTop">已刷新</span>
-                      <span class="isTopTag" v-if="item.Status!==1">{{item.Status===0?'待审核':item.Status===2?'审核失败':''}}</span>
+                      class="isTopTag"
+                      v-if="item.Status!==1"
+                    >{{item.Status===0?'待审核':item.Status===2?'审核失败':''}}</span>
                     <input
                       type="checkbox"
                       class="checkbox-cart"
                       :disabled="item.Status!==1"
                       :checked="zujianList.selectedIndex===index && item.Status===1"
                       v-if="showEdit"
-                    >
+                    />
                     <!--类似头像小图片  组建-->
                     <div class="avatarbox mrr2">
                       <p class="avatar">{{item.GrName}}</p>
@@ -127,7 +138,10 @@
                         style="color:#1a1a1a;margin-bottom:22rpx !important;"
                       >{{item.Title}}</p>
                       <p class="msgList">
-                        <span class="msgItem" v-if="item.GladBuyerTrade !==''">{{item.GladBuyerTrade}}</span>
+                        <span
+                          class="msgItem"
+                          v-if="item.GladBuyerTrade !==''"
+                        >{{item.GladBuyerTrade}}</span>
                         <span class="msgItem">{{item.Company}}</span>
                       </p>
                       <!--组建2-->
@@ -138,7 +152,12 @@
                           :key="index2"
                         >{{item2}}</span>
                       </p>
-                      <div class="againsubmit" @click.stop="gopage(item.Status,item.Id,item.PageId)" :class="{'addcolor':item.Status===2}" v-if="item.Status!==0">{{item.Status===2?'查看原因':'重新发布'}}</div>
+                      <div
+                        class="againsubmit"
+                        @click.stop="gopage(item.Status,item.Id,item.PageId)"
+                        :class="{'addcolor':item.Status===2}"
+                        v-if="item.Status!==0"
+                      >{{item.Status===2?'查看原因':'重新发布'}}</div>
                     </div>
                   </div>
                 </van-cell>
@@ -175,14 +194,18 @@
                       :disabled="item.Status!==1"
                       :checked="huodongList.selectedIndex===index && item.Status===1"
                       v-if="showEdit"
-                    >
+                    />
                     <div class="pictrueAll">
-                      <span class="isTopTag" v-if="item.IsTop && item.IsRefresh">已置顶刷新</span>
-                      <span class="isTopTag" v-if="item.IsTop&&!item.IsRefresh">已置顶</span>
-                      <span class="isTopTag" v-if="item.IsRefresh&&!item.IsTop">已刷新</span>
-                      <span class="isTopTag" v-if="item.Status!==1">{{item.Status===0?'待审核':item.Status===2?'审核失败':''}}</span>
+                      <div class="isTopTags">
+                        <p class="" v-if="item.IsTop">{{item.IsTop}}</p>
+                        <p class="" v-if="item.IsRefresh">{{item.IsRefresh}}</p>
+                      </div>
+                      <span
+                        class="isTopTag"
+                        v-if="item.Status!==1"
+                      >{{item.Status===0?'待审核':item.Status===2?'审核失败':''}}</span>
                       <div class="pictrue img">
-                        <img :src="item.PicNo" alt mode="aspectFill">
+                        <img :src="item.PicNo" alt mode="aspectFill" />
                       </div>
                     </div>
                     <div class="txtBox flex1">
@@ -197,7 +220,12 @@
                       </p>
                       <p class="priceArea">
                         <span class="price">￥{{item.PropertyPrice}}</span>
-                        <span class="againsubmit" @click.stop="gopage(item.Status,item.Id,item.PageId)" :class="{'addcolor':item.Status===2}" v-if="item.Status!==0">{{item.Status===2?'查看原因':'重新发布'}}</span>
+                        <span
+                          class="againsubmit"
+                          @click.stop="gopage(item.Status,item.Id,item.PageId)"
+                          :class="{'addcolor':item.Status===2}"
+                          v-if="item.Status!==0"
+                        >{{item.Status===2?'查看原因':'重新发布'}}</span>
                       </p>
                     </div>
                   </div>
@@ -235,14 +263,18 @@
                       :disabled="item.Status!==1"
                       :checked="fangList.selectedIndex===index && item.Status===1"
                       v-if="showEdit"
-                    >
+                    />
                     <div class="pictrueAll">
-                      <span class="isTopTag" v-if="item.IsTop && item.IsRefresh">已置顶刷新</span>
-                      <span class="isTopTag" v-if="item.IsTop&&!item.IsRefresh">已置顶</span>
-                      <span class="isTopTag" v-if="item.IsRefresh&&!item.IsTop">已刷新</span>
-                      <span class="isTopTag" v-if="item.Status!==1">{{item.Status===0?'待审核':item.Status===2?'审核失败':''}}</span>
+                      <div class="isTopTags">
+                        <p class="" v-if="item.IsTop">{{item.IsTop}}</p>
+                        <p class="" v-if="item.IsRefresh">{{item.IsRefresh}}</p>
+                      </div>
+                      <span
+                        class="isTopTag"
+                        v-if="item.Status!==1"
+                      >{{item.Status===0?'待审核':item.Status===2?'审核失败':''}}</span>
                       <div class="pictrue img">
-                        <img :src="item.PicNo" alt mode="aspectFill">
+                        <img :src="item.PicNo" alt mode="aspectFill" />
                       </div>
                     </div>
                     <div class="txtBox flex1">
@@ -257,12 +289,18 @@
                         >{{item.GladBuyerTrade}}</span>
                         <span class="msgItem">{{item.GladBuyArea}}</span>
                         <span class="msgItem" v-if="item.PlanBuyArea !==''">
-                          {{item.PlanBuyArea}}m<span class="sup">2</span>
+                          {{item.PlanBuyArea}}m
+                          <span class="sup">2</span>
                         </span>
                       </p>
                       <p class="priceArea">
                         <span class="price">￥{{item.PropertyPrice}}</span>
-                        <span class="againsubmit" @click.stop="gopage(item.Status,item.Id,item.PageId)" :class="{'addcolor':item.Status===2}" v-if="item.Status!==0">{{item.Status===2?'查看原因':'重新发布'}}</span>
+                        <span
+                          class="againsubmit"
+                          @click.stop="gopage(item.Status,item.Id,item.PageId)"
+                          :class="{'addcolor':item.Status===2}"
+                          v-if="item.Status!==0"
+                        >{{item.Status===2?'查看原因':'重新发布'}}</span>
                       </p>
                     </div>
                   </div>
@@ -337,15 +375,15 @@ export default {
       }, //房源
       hasData: false,
       isOver: false,
-      isRequest:false   //是否请求成功
+      isRequest: false //是否请求成功
     };
   },
   onLoad() {
-      this.setBarTitle();
-      this.tabindex=0;
-      this.BrandId = 21;
+    this.setBarTitle();
+    this.tabindex = 0;
+    this.BrandId = 21;
   },
-  onShow(){
+  onShow() {
     this.curPage = getCurrentPageUrlWithArgs();
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
@@ -361,37 +399,63 @@ export default {
       });
     },
     //重新发布
-    gopage(status,id,PageId){console.log(status,id,PageId)
-      if(status==2){//status==2 审核失败 1 审核通过 0 待审核
-      //查看审核失败的原因 
+    gopage(status, id, PageId) {
+      console.log(status, id, PageId);
+      if (status == 2) {
+        //status==2 审核失败 1 审核通过 0 待审核
+        //查看审核失败的原因
         wx.navigateTo({
-          url: '/pages/VerticalFail/main?Id='+id
-        })
-      }else{
+          url: "/pages/VerticalFail/main?Id=" + id
+        });
+      } else {
         post(
-        "Goods/GetRent_Editxq",
-        {
-          UserId: this.userId,
-          Token: this.token,
-          Id: id
-        },
-        this.curPage
+          "Goods/GetRent_Editxq",
+          {
+            UserId: this.userId,
+            Token: this.token,
+            Id: id
+          },
+          this.curPage
         ).then(res => {
-          if (res.code == 0) {//检验是否可以重新发布
+          if (res.code == 0) {
+            //检验是否可以重新发布
             //编辑修改数据
-            if(PageId==36 ||　PageId==35 || PageId==32 || PageId==33 || PageId==34 || PageId==43 || PageId==41 || PageId==42 || PageId==37 || PageId==38 || PageId==39 ||PageId==40){
+            if (
+              PageId == 36 ||
+              PageId == 35 ||
+              PageId == 32 ||
+              PageId == 33 ||
+              PageId == 34 ||
+              PageId == 43 ||
+              PageId == 41 ||
+              PageId == 42 ||
+              PageId == 37 ||
+              PageId == 38 ||
+              PageId == 39 ||
+              PageId == 40
+            ) {
               wx.navigateTo({
-                url: '/pages/rent/rentOffic/main?PageId='+PageId+"&url=VerticalFail"+"&Id="+id
-              })
-            }else{
+                url:
+                  "/pages/rent/rentOffic/main?PageId=" +
+                  PageId +
+                  "&url=VerticalFail" +
+                  "&Id=" +
+                  id
+              });
+            } else {
               wx.navigateTo({
-                url: '/pages/rent/rentDevice/main?PageId='+PageId+"&url=VerticalFail"+"&Id="+id
-              })
+                url:
+                  "/pages/rent/rentDevice/main?PageId=" +
+                  PageId +
+                  "&url=VerticalFail" +
+                  "&Id=" +
+                  id
+              });
             }
-          }else{
+          } else {
             wx.showToast({
-              title:res.msg,
-              icon:"none"
+              title: res.msg,
+              icon: "none"
             });
           }
         });
@@ -481,7 +545,7 @@ export default {
         });
       }
     },
-    gotoBuy(type) {
+    async gotoBuy(type) {
       //1:置顶；2：刷新
       let isTop = "";
       let isRefresh = "";
@@ -508,57 +572,69 @@ export default {
         "isRefresh:" + isRefresh,
         "publishId:" + publishId
       );
+
+      let url = "";
+      if (type === 1) {
+        url = "User/ReadTopSetting";
+      } else if (type === 2) {
+        url = "User/ReadRefreshSetting";
+      }
+      // 免费
+      // 状态为200--无须付款，状态为0--跳转付款
+      const _res = await post(url, {
+        UserId: this.userId,
+        Token: this.token,
+        Id: publishId
+      });
+      if (_res.code === 200) {
+        setTimeout(()=>{
+        this.initData();
+        this.getMyPublish();
+        },1500)
+        wx.showToast({ title: res.msg });
+        return false;
+      }
+
       if (type === 1) {
         if (isTop !== "") {
-          msg = "您已经购买了该条信息的置顶功能，是否要继续购买？"; 
-        }else{
+          msg = "您已经购买了该条信息的置顶功能，是否要继续购买？";
+        } else {
           msg = "您确定要购买该条信息的置顶功能么？";
         }
       }
       if (type === 2) {
         if (isRefresh !== "") {
           msg = "您已经购买了该条信息的刷新功能，是否要继续购买？";
-        }else{
+        } else {
           msg = "您确定要购买该条信息的刷新功能么？";
         }
       }
-      const that = this;
       wx.showModal({
         // title: "提示",
         content: msg,
-          confirmColor:'#ff952e',
-          cancelColor:'#999',
+        confirmColor: "#ff952e",
+        cancelColor: "#999",
         success(res) {
           if (res.confirm) {
-            // 状态为200--无须付款，状态为0--跳转付款
-            post('User/ReadRefreshSetting',{
-                UserId:that.userId,
-                Token:that.token,
-                Id:publishId
-            }).then(_res=>{
-              if(_res.code===200){
-                wx.showToast({title:res.msg})
-              }else if(_res.code===0){
-                //跳转到对应的购买页面
-                wx.navigateTo({
-                  url: `/pages/member2/buyFunction/main?type=${type}&publishId=${publishId}`
-                });
-              }
-            })
+            console.log(res);
+            //跳转到对应的购买页面
+            wx.navigateTo({
+              url: `/pages/member2/buyFunction/main?type=${type}&publishId=${publishId}`
+            });
           } else if (res.cancel) {
           }
         }
       });
     },
-      //滑块的点击删除
+    //滑块的点击删除
     delectData(e, index, id) {
-      e.mp.detail.instance.close()
+      e.mp.detail.instance.close();
       let that = this;
       wx.showModal({
         title: "删除确认",
         content: "您确定要删除该条数据么？",
-          confirmColor:'#ff952e',
-          cancelColor:'#999',
+        confirmColor: "#ff952e",
+        cancelColor: "#999",
         success(res) {
           if (res.confirm) {
             //跳转到对应的购买页面
@@ -710,19 +786,40 @@ export default {
   background-color: #f44;
 }
 .isTopTag {
-  background: rgba(255, 149, 46, 0.6);
   color: #fff;
   position: absolute;
   z-index: 3;
   left: 0;
   top: 0;
-  padding: 2rpx 10rpx;
   font-size: 22rpx;
+  padding: 2rpx 10rpx;
+  background: rgba(255, 149, 46, 0.6);
   line-height: 1.4;
   &.zujian__isTopTag {
     // left: 30rpx;
     left: 0;
     top: 20rpx;
+  }
+}
+.isTopTags {
+  color: #fff;
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  top: 0;
+  font-size: 22rpx;
+  &.zujian__isTopTag {
+    // left: 30rpx;
+    left: 0;
+    top: 20rpx;
+  }
+  p{
+    margin-bottom:5rpx;
+  background: rgba(255, 149, 46, 0.6);
+  border-radius:5rpx;
+  padding: 0 10rpx;
+  line-height: 1.4;
+  text-align:center;
   }
 }
 .storeList.levelPanel {
@@ -752,14 +849,14 @@ export default {
 }
 .txtBox {
   text-align: left;
-  display:flex;
-  flex-flow:column nowrap;
-  justify-content:space-between;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-between;
   .priceArea {
     // margin-top: 30rpx;
     width: 100%;
     position: relative;
-    .againsubmit{
+    .againsubmit {
       position: absolute;
       display: block;
       top: 0;
@@ -771,7 +868,7 @@ export default {
       height: 40rpx;
       border: #ff6666 1rpx solid;
       border-radius: 8rpx;
-      z-index: 10
+      z-index: 10;
     }
   }
 }
@@ -822,10 +919,10 @@ export default {
 .filterMenu {
   color: #1a1a1a;
 }
-.addcolor{
-  color: #ff6666!important
+.addcolor {
+  color: #ff6666 !important;
 }
-.againsubmit{
+.againsubmit {
   position: absolute;
   display: block;
   bottom: 30rpx;
@@ -837,9 +934,9 @@ export default {
   height: 40rpx;
   border: #ff6666 1rpx solid;
   border-radius: 8rpx;
-  z-index: 10
+  z-index: 10;
 }
-.msgList{
-  line-height:1.3;
+.msgList {
+  line-height: 1.3;
 }
 </style>
