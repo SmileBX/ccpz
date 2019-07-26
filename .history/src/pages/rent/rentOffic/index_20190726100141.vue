@@ -1,5 +1,5 @@
 <template>
-  <div class="pageContent" @touchstart="touchEvent">
+  <div class="pageContent">
     <div class="FormBox">
       <img class="topbgimg" src="/static/images/icons/bg2.jpg" v-if="BrandId==24">
       <img class="topbgimg" src="/static/images/icons/bg3.jpg" v-else-if="PageId==32||PageId==33 ||PageId==34 ">
@@ -1060,20 +1060,14 @@
             <div class="">
               <div class="form-cells-hd">{{introduce}}</div>
               <div class="form-cell-bd">
-                <p class="ipt" style="height:200rpx!important;padding:0rpx" v-if="showp" @tap="showp=false" :class="Synopsis.length>0?'colorBlack':'colorPlace'">{{Synopsis.length>0?Synopsis:introducePlaceholder}}</p>
-                
                 <textarea
-                  v-else
                   class="ipt"
                   type="text"
                   maxlength = "-1"
                   :placeholder="introducePlaceholder"
-                  style="height:200rpx!important;padding:4rpx;box-sizing:border-box"
+                  style="height:200rpx!important;"
                   v-model="Synopsis"
                   placeholder-style="color:#b5b5b5;"
-                  @blur="showp=true"
-                  auto-focus
-                  adjust-position="true"
                 ></textarea>
                 <!-- <input
                   class="ipt"
@@ -1090,19 +1084,14 @@
             <div class="">
               <div class="form-cells-hd">{{infoMore}}</div>
               <div class="form-cell-bd">
-                <p class="ipt" style="height:200rpx!important;padding:0rpx" v-if="showPP" @tap="showPP=false" :class="ContentDetail.length>0?'colorBlack':'colorPlace'">{{ContentDetail.length>0?ContentDetail:infoMorePlaceHolder}}</p>
                 <textarea
-                v-else
                   class="ipt"
                   type="text"
                   maxlength = "-1"
                   :placeholder="infoMorePlaceHolder"
-                  style="height:200rpx!important;padding:4rpx;box-sizing:border-box"
+                  style="height:200rpx!important;"
                   v-model="ContentDetail"
                   placeholder-style="color:#b5b5b5;"
-                  @blur="showPP=true"
-                  auto-focus
-                  adjust-position="true"
                 ></textarea>
                 <!-- <input
                   class="ipt"
@@ -1577,8 +1566,6 @@ export default {
       ShowTime:false,//
       mm:0,//页面跳转的次数
       imgTips:true,//上传图片不执行函数
-      showp:true,//textarea控制显示
-      showPP:true,
 
     };
     
@@ -1592,8 +1579,6 @@ export default {
     this.initData()
   },
   onShow(){
-    this.showp = true
-    this.showPP = true
     console.log(this.$root.$mp.query.url,"}}}}}}}}}}}}}}}}}}}}}}")
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
@@ -1639,10 +1624,6 @@ export default {
       wx.setNavigationBarTitle({
         title: "发布"
       });
-    },
-    touchEvent(){
-      this.showp = true 
-      this.showPP = true
     },
     //获取需要重新编辑发布的数据
     getDefaultData(){
@@ -1754,13 +1735,13 @@ export default {
             if(res.data.NeedApartment){
               this.NeedApartment = res.data.NeedApartment.Value
             }
-            if(res.data.PicList){
-              let info = []
-                res.data.PicList.Value.map(item=>{
-                info.push(item.PicUrl)
-              })
-              this.imgArr = info
-            }
+            // if(res.data.PicList){
+            //   let info = []
+            //   res.data.PicList.Value.map(item=>{
+            //     info.push(item.PicUrl)
+            //   })
+            //   this.imgArr = info
+            // }
             if(res.data.IsRegArea){
               if(res.data.IsRegArea.Value == 1){
                   this.IsRegAreaMsg = '是'
@@ -1789,16 +1770,10 @@ export default {
             }
             if(res.data.ServiceName){
                 console.log(this.Devicelist)
-                this.Devicelist.map(item=>{
-                  res.data.ServiceName.Value.map(item2=>{
-                    console.log(item.Name,item2)
-                    if(item.Name == item2){
-                      this.$set(item,"active",true)
-                    }
-                  })
-                })
-                console.log(res.data.ServiceName.Value)
-          }
+                console.log(res.data.ServiceName.value)
+            }
+            
+
           //  this.ServiceName = res.data.ServiceName.Value
            if(this.PageId==32 || this.PageId==33){
              let info = {}
@@ -3324,12 +3299,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.colorBlack{
-  color:#1a1a1a;
-}
-.colorPlace{
-  color:#b5b5b5;
-}
 .form-cells .form-cells-item .ipt{
   padding-right:0
 }

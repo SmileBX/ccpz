@@ -1097,7 +1097,7 @@
                   type="text"
                   maxlength = "-1"
                   :placeholder="infoMorePlaceHolder"
-                  style="height:200rpx!important;padding:4rpx;box-sizing:border-box"
+                  style="height:200rpx!important;"
                   v-model="ContentDetail"
                   placeholder-style="color:#b5b5b5;"
                   @blur="showPP=true"

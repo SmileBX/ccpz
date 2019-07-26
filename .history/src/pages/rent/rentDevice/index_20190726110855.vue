@@ -1,5 +1,5 @@
 <template>
-  <div class="pageContent"  @touchstart="showp=true">
+  <div class="pageContent">
     <div class="FormBox">
       <img class="topbgimg" src="/static/images/icons/bg2.jpg" v-if=" PageId==28">
       <img class="topbgimg" src="/static/images/icons/bg1.jpg" v-else>
@@ -866,18 +866,14 @@
               <div class="form-cells-hd" v-if="PageId==26 ||PageId==25">拼购简介</div>
               <div class="form-cells-hd" v-else>拼租简介</div>
               <div class="form-cell-bd">
-                <p class="ipt" style="height:200rpx!important;padding:0rpx" v-if="showp" @tap="showp=false" :class="Synopsis.length>0?'colorBlack':'colorPlace'">{{Synopsis ||  '描述细节能够更加吸引优质的候选人哦！'}}</p>
                 <textarea
-                  v-else
                   class="ipt"
                   type="text"
                   maxlength = "-1"
                   placeholder="描述细节能够更加吸引优质的候选人哦！"
-                  style="height:200rpx!important;padding:4rpx;box-sizing:border-box"
+                  style="height:200rpx!important;"
                   v-model="Synopsis"
                   placeholder-style="color:#b5b5b5;"
-                  auto-focus
-                  adjust-position="true"
                 ></textarea>
               </div>
             </div>
@@ -2518,12 +2514,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.colorBlack{
-  color:#1a1a1a;
-}
-.colorPlace{
-  color:#b5b5b5;
-}
 .form-cells .form-cells-item .ipt{
   padding-right:0
 }

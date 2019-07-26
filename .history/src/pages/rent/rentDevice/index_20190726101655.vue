@@ -1,5 +1,5 @@
 <template>
-  <div class="pageContent"  @touchstart="showp=true">
+  <div class="pageContent">
     <div class="FormBox">
       <img class="topbgimg" src="/static/images/icons/bg2.jpg" v-if=" PageId==28">
       <img class="topbgimg" src="/static/images/icons/bg1.jpg" v-else>
@@ -866,18 +866,14 @@
               <div class="form-cells-hd" v-if="PageId==26 ||PageId==25">拼购简介</div>
               <div class="form-cells-hd" v-else>拼租简介</div>
               <div class="form-cell-bd">
-                <p class="ipt" style="height:200rpx!important;padding:0rpx" v-if="showp" @tap="showp=false" :class="Synopsis.length>0?'colorBlack':'colorPlace'">{{Synopsis ||  '描述细节能够更加吸引优质的候选人哦！'}}</p>
                 <textarea
-                  v-else
                   class="ipt"
                   type="text"
                   maxlength = "-1"
                   placeholder="描述细节能够更加吸引优质的候选人哦！"
-                  style="height:200rpx!important;padding:4rpx;box-sizing:border-box"
+                  style="height:200rpx!important;"
                   v-model="Synopsis"
                   placeholder-style="color:#b5b5b5;"
-                  auto-focus
-                  adjust-position="true"
                 ></textarea>
               </div>
             </div>
@@ -1193,7 +1189,6 @@ export default {
       ShowTime:"",//展示时分秒
       mm:0,//页面跳转的次数
       imgTips:true,//上传图片不执行函数
-      showp:true,//textarea控制显示
 
     };
     
@@ -1201,13 +1196,13 @@ export default {
   onLoad() {
     this.mm = 0
     this.imgTips = true
+    this.Devicelist = []
     this.showDefaultCompany = false
     this.trimData()
     this.setBarTitle();
     this.initData()
   },
   onShow(){
-    this.showp = true
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
@@ -1318,20 +1313,12 @@ export default {
           if(res.data.AllArea){
             this.AllArea = res.data.AllArea.Value 
           }
-          if(res.data.PicList){
-            let info = []
-            res.data.PicList.Value.map(item=>{
-              info.push(item.PicUrl)
-            })
-            this.imgArr = info
-          }
           if(res.data.ServiceName){
                 console.log(this.Devicelist)
                 this.Devicelist.map(item=>{
                   res.data.ServiceName.Value.map(item2=>{
-                    // console.log(item.Name,item2)
                     if(item.Name == item2){
-                      this.$set(item,"active",true)
+                      this.$set(this.Devicelist[e],"active",true)
                     }
                   })
                 })
@@ -1988,13 +1975,11 @@ export default {
                })
             },
           });
-          console.log(that.imgArr,"that.imgArr////////////")
       }
     },
     async base64Img(arr){
       let base27Arr = []
       for(let i = 0;i < arr.length;i++){
-        console.log(arr[i])
         const res = await pathToBase64(arr[i]);
         base27Arr.push({
           PicUrl:res
@@ -2518,12 +2503,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.colorBlack{
-  color:#1a1a1a;
-}
-.colorPlace{
-  color:#b5b5b5;
-}
 .form-cells .form-cells-item .ipt{
   padding-right:0
 }

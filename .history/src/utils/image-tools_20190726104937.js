@@ -38,14 +38,13 @@ export function pathToBase64(path) {
         }
         //小程序--不是临时上传带域名的
         if (typeof wx === 'object' && /https?:\/\/(?:[^/]+\.)?([^./]+\.\w*.(?:cn|com|top|com\.tw))(?:$|\/)/.test(path)) {
-            let objUrl = "http://" + path.split("://")[1];
-            // let objUrl = "https://" + path.split("://")[1]; 根据后台配置是http还是https
+            let objUrl = "https://" + path.split("://")[1];
             wx.request({
                 url: objUrl,
                 responseType: 'arraybuffer', //最关键的参数，设置返回的数据格式为arraybuffer
                 success: res => {
                     //把arraybuffer转成base64
-                    let base64 = wx.arrayBufferToBase64(res.data);
+                    let base64 = wx.arrayBufferToBase64(res);
                     resolve('data:image/png;base64,' + base64);
                 }
             })

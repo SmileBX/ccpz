@@ -873,7 +873,7 @@
                   type="text"
                   maxlength = "-1"
                   placeholder="描述细节能够更加吸引优质的候选人哦！"
-                  style="height:200rpx!important;padding:4rpx;box-sizing:border-box"
+                  style="height:200rpx!important;padding:2rpx"
                   v-model="Synopsis"
                   placeholder-style="color:#b5b5b5;"
                   auto-focus
