@@ -1195,7 +1195,7 @@ export default {
   },
   onLoad() {
     this.mm = 0
-    this.imgTips = true
+    this.imgTips = false
     this.showDefaultCompany = false
     this.trimData()
     this.setBarTitle();

@@ -1195,7 +1195,7 @@ export default {
   },
   onLoad() {
     this.mm = 0
-    this.imgTips = true
+    this.imgTips = false
     this.showDefaultCompany = false
     this.trimData()
     this.setBarTitle();
@@ -1247,7 +1247,7 @@ export default {
         Id:this.publishId
       },this.curPage).then(res=>{
          if(res.code==0){
-          //  this.TypeId = res.data.TypeId
+           this.TypeId = res.data.TypeId
            this.Title = res.data.Title.Value
            this.Synopsis = res.data. Synopsis.Value
            if(res.data.Company){

@@ -1572,7 +1572,7 @@ export default {
   },
   onLoad() {
     this.mm = 0
-    this.imgTips = true
+    this.imgTips = false
     this.showDefaultCompany = false
     this.setBarTitle();
     this.trimData()
@@ -1597,7 +1597,6 @@ export default {
     this.tradeListBox = [],//行业列表
     this.deviceTip = ''
     this.PageId = this.$root.$mp.query.PageId
-    console.log(this.imgTips,"this.imgTips")
     if(this.$root.$mp.query.url){
       //是否需要重新编辑数据
       this.urlPp = this.$root.$mp.query.url
@@ -1633,7 +1632,6 @@ export default {
         Id:this.publishId
       },this.curPage).then(res=>{
          if(res.code==0){
-           console.log("ppppppppppppppppppppppppppppppppppppppppp")
           //  this.TypeId = res.data.TypeId
            this.Title = res.data.Title.Value
            this.Synopsis = res.data. Synopsis.Value
