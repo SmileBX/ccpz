@@ -1965,7 +1965,7 @@ export default {
           });
       }
     },
-    async base64Img(arr){
+    async base27Img(arr){
       let base27Arr = []
       for(let i = 0;i < arr.length;i++){
         const res = await pathToBase64(arr[i]);
