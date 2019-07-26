@@ -316,7 +316,8 @@ export default {
         }
         post(objUrl,{
           UserId: this.userId,
-          Token: this.token
+          Token: this.token,
+          id:this.publishId
         },this.curPage).then(res=>{
           if(res.code==0){
               this.NeedMoney = res.data.Price
