@@ -1312,18 +1312,11 @@ export default {
           if(res.data.AllArea){
             this.AllArea = res.data.AllArea.Value 
           }
-          if(res.data.PicList){
-            let info = []
-            res.data.PicList.Value.map(item=>{
-              info.push(item.PicUrl)
-            })
-            this.imgArr = info
-          }
           if(res.data.ServiceName){
                 console.log(this.Devicelist)
                 this.Devicelist.map(item=>{
                   res.data.ServiceName.Value.map(item2=>{
-                    // console.log(item.Name,item2)
+                    console.log(item.Name,item2)
                     if(item.Name == item2){
                       this.$set(item,"active",true)
                     }
@@ -1982,13 +1975,11 @@ export default {
                })
             },
           });
-          console.log(that.imgArr,"that.imgArr////////////")
       }
     },
     async base64Img(arr){
       let base27Arr = []
       for(let i = 0;i < arr.length;i++){
-        console.log(arr[i])
         const res = await pathToBase64(arr[i]);
         base27Arr.push({
           PicUrl:res

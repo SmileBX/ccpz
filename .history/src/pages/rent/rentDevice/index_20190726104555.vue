@@ -1982,13 +1982,12 @@ export default {
                })
             },
           });
-          console.log(that.imgArr,"that.imgArr////////////")
+          console.log(that.imgArr)
       }
     },
     async base64Img(arr){
       let base27Arr = []
       for(let i = 0;i < arr.length;i++){
-        console.log(arr[i])
         const res = await pathToBase64(arr[i]);
         base27Arr.push({
           PicUrl:res

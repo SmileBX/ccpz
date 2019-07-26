@@ -2421,7 +2421,7 @@ export default {
         }
       }
       if(that.valOther()){
-        that.submitAll(JSON.stringify(PicList),GoodsInfo)
+        // that.submitAll(JSON.stringify(PicList),GoodsInfo)
       }
     },
     submitAll(PicList,GoodsInfo){

@@ -1736,12 +1736,12 @@ export default {
               this.NeedApartment = res.data.NeedApartment.Value
             }
             if(res.data.PicList){
-              let info = []
-                res.data.PicList.Value.map(item=>{
-                info.push(item.PicUrl)
-              })
-              this.imgArr = info
-            }
+            let info = []
+            res.data.PicList.Value.map(item=>{
+              info.push(item.PicUrl)
+            })
+            this.imgArr = info
+          }
             if(res.data.IsRegArea){
               if(res.data.IsRegArea.Value == 1){
                   this.IsRegAreaMsg = '是'

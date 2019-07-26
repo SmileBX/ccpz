@@ -1735,13 +1735,13 @@ export default {
             if(res.data.NeedApartment){
               this.NeedApartment = res.data.NeedApartment.Value
             }
-            if(res.data.PicList){
-              let info = []
-                res.data.PicList.Value.map(item=>{
-                info.push(item.PicUrl)
-              })
-              this.imgArr = info
-            }
+            // if(res.data.PicList){
+            //   let info = []
+            //   res.data.PicList.Value.map(item=>{
+            //     info.push(item.PicUrl)
+            //   })
+            //   this.imgArr = info
+            // }
             if(res.data.IsRegArea){
               if(res.data.IsRegArea.Value == 1){
                   this.IsRegAreaMsg = '是'
@@ -1768,18 +1768,8 @@ export default {
             if( res.data.RingRate){
               this.RingRate = res.data.RingRate.Value
             }
-            if(res.data.ServiceName){
-                console.log(this.Devicelist)
-                this.Devicelist.map(item=>{
-                  res.data.ServiceName.Value.map(item2=>{
-                    console.log(item.Name,item2)
-                    if(item.Name == item2){
-                      this.$set(item,"active",true)
-                    }
-                  })
-                })
-                console.log(res.data.ServiceName.Value)
-          }
+            
+
           //  this.ServiceName = res.data.ServiceName.Value
            if(this.PageId==32 || this.PageId==33){
              let info = {}
