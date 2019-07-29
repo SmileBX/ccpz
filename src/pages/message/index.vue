@@ -13,24 +13,30 @@
     </div>
     <div class="slidebg"></div>
     <!--通知-->
-    <div class=padwid>
-        <div class="flex avatarhead flexAlignCenter boxSize" @click="toNociceList">
-            <div class="circlePosition">
-                <div class="avatarbox">
-                      <img src="/static/images/icons/default.jpg" alt="" class="avatar">
+    <div>
+            <!-- <van-swipe-cell :right-width="65" > -->
+              <div class="padwid">
+                <div class="flex avatarhead flexAlignCenter boxSize" @click="toNociceList">
+                    <div class="circlePosition">
+                        <div class="avatarbox">
+                              <img src="/static/images/icons/default.jpg" alt="" class="avatar">
+                        </div>
+                        <span class="circleNum msgnum" v-if="messageInfo.SysNotice.Count>0">{{messageInfo.SysNotice.Count}}</span>
+                    </div>
+                      <div class="flex flexColumn flex1">
+                          <div class="flex">
+                              <span class="flex1 font32">系统通知</span>
+                              <span class="font_four">{{messageInfo.SysNotice.PubTime}}</span>
+                          </div>
+                          <div class="fontColor text_space">{{messageInfo.SysNotice.Title}}</div>
+                      </div>
                 </div>
-                <span class="circleNum msgnum" v-if="messageInfo.SysNotice.Count>0">{{messageInfo.SysNotice.Count}}</span>
-            </div>
-            <div class="flex flexColumn flex1">
-                <div class="flex">
-                    <span class="flex1 font32">系统通知</span>
-                    <span class="font_four">{{messageInfo.SysNotice.PubTime}}</span>
                 </div>
-                <div class="fontColor text_space">{{messageInfo.SysNotice.Title}}</div>
-            </div>
-            
-        </div>
+                <!-- <span slot="right" class="informRead">已读</span> -->
+            <!-- </van-swipe-cell> -->
+              <div class="padwid">
         <div class="flex flexAlignCenter p1 boxSize" @click="seePermistion">
+          
             <div class="avatarbox">
                   <img v-if="messageInfo.friend_req.Headimgurl" :src="messageInfo.friend_req.Headimgurl" alt="" class="avatar">
                   <img v-else src="/static/images/icons/pinzu.jpg" alt="" class="avatar">
@@ -38,6 +44,7 @@
             <div class="flex1 flex circlePosition">
                 <span class="flex1 font32">好友请求</span>
                 <span class="circleNum onlynum" v-if="messageInfo.friend_req.Count>0">{{messageInfo.friend_req.Count}}</span>
+            </div>
             </div>
         </div>
     </div>
@@ -149,3 +156,15 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+.informRead{
+  background:#ff952e;
+  color:#fff;
+  height:170rpx;
+  line-height:170rpx;
+  width:130rpx;
+  display:inline-block;
+  text-align:center;
+}
+</style>
+

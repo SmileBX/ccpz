@@ -7,12 +7,12 @@
           <input type="text" disabled :value="trade" class="weui-input" placeholder="请选择">
         </div>
       </div>
-      <div class="weui-cell">
+      <!-- <div class="weui-cell">
         <label class="weui-label"><span style="color:#f00">*</span>职位</label>
         <div class="weui-cell__bd text_r">
           <input type="text" class="weui-input" v-model="job" placeholder="请输入">
         </div>
-      </div>
+      </div> -->
       <div class="weui-cell" @tap="showSelect(1)">
         <label class="weui-label"><span style="color:#f00">*</span>成立日期</label>
         <div class="weui-cell__bd text_r">
@@ -20,7 +20,7 @@
         </div>
       </div>
       <div class="weui-cell">
-        <label class="weui-label"><span style="color:#f00">*</span>注册资本</label>
+        <label class="weui-label"><span style="color:#f00">*</span>注册资本（万）</label>
         <div class="weui-cell__bd text_r">
           <input type="text" class="weui-input" v-model="capital" placeholder="请输入">
         </div>
@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="weui-cell">
-        <label class="weui-label">办公面积</label>
+        <label class="weui-label">办公面积（㎡）</label>
         <div class="weui-cell__bd text_r">
           <input type="text" class="weui-input" v-model="officeArea" placeholder="请输入">
         </div>
@@ -114,6 +114,13 @@
         </div>
       </div>
     </div>
+            <div class="flex padwid">
+              <input type="checkbox" :checked="agreen" @click="agreen=!agreen" class="checkbox-cart">
+              <p>
+                <span>已阅读并同意</span>
+                <span class="fontColor99" @tap="gotoAreement">《认证服务协议》</span>
+              </p>
+            </div>
     <!--底部按钮-->
     <div style="padding:80rpx 30rpx;">
       <div class="weui-btn btn-active fill" @click="btnSubmit">提交</div>
@@ -191,6 +198,7 @@ export default {
       token: "",
       curPage: "",
       showShade: [false,false,false],
+      agreen: true, //同意协议
       tradeList: {}, //行业数据
       columns: [],  //选择行业弹窗需要传入的数据
       id: "",
@@ -325,14 +333,14 @@ export default {
         });
         return false;
       }
-      if (trim(this.job) == "") {
-        wx.showToast({
-          title: "请输入职位!",
-          icon: "none",
-          duration: 1500
-        });
-        return false;
-      }
+      // if (trim(this.job) == "") {
+      //   wx.showToast({
+      //     title: "请输入职位!",
+      //     icon: "none",
+      //     duration: 1500
+      //   });
+      //   return false;
+      // }
       if (trim(this.setUpDate) == "") {
         wx.showToast({
           title: "请选择公司成立日期!",
@@ -416,6 +424,10 @@ export default {
       return base64Arr;
     },
     async btnSubmit() {
+      if(!this.agreen){
+        wx.showToast({title:'请阅读并同意《认证服务协议》!',icon:'none'})
+        return false;
+      }
       //提交下.一.步
       if (this.valOther()) {
         let companyPic = [];
@@ -476,7 +488,7 @@ export default {
           Company: {
             Id: that.id, //企业认证id
             Trade: that.trade, //行业格式'企业,行业'
-            Job: that.job, //职位
+            // Job: that.job, //职位
             SetUpDate: that.setUpDate, //成立日期
             StaffSize: that.staffSize, //人员规模
             RegCapital: that.capital, //注册资本
@@ -546,7 +558,12 @@ export default {
           that.hasTrade = true;
         }
       });
-    }
+    },
+    gotoAreement(){  //跳转到协议查看
+      wx.navigateTo({
+        url: '/pages/agreement/main?type=1'
+      })
+    },
   }
 };
 </script>
