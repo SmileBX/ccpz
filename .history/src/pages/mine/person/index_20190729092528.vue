@@ -124,7 +124,7 @@
                 <!-- v-if="personInfo.TagsResGood[0] && personInfo.TagsResKnow[0]" -->
             </div>
             <div class="flex mt10" >
-                <div>我拥有</div>
+                <div>我擅长</div>
                 <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentStart flex1 tipsGray" v-if="personInfo.TagsResGood.length>0">
                   <span v-for="(item,tindex) in personInfo.TagsResGood" :key="tindex">{{item}}</span>
                 </div>
@@ -156,7 +156,7 @@
                 <!-- v-if="personInfo.TagsCapGood[0] && personInfo.TagsCapKnow[0]" -->
             </div>
             <div class="flex mt10" >
-                <div>我拥有</div>
+                <div>我擅长</div>
                 <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentStart flex1 tipsGray" v-if="personInfo.TagsCapGood.length>0">
                   <span v-for="(item,cindex) in personInfo.TagsCapGood" :key="cindex">{{item}}</span>
                 </div>
@@ -429,18 +429,18 @@ export default {
             this.$set(res.data,"Area",res.data.Area.split(',').slice(1).join('-'))
           }
           this.$set(res.data,"Trade",res.data.Trade.split(',').join(' '))
-          // if( res.data.TagsCapGood.length>0){
-          //     this.$set(res.data,"TagsCapGood",res.data.TagsCapGood.splice(1))
-          // }
-          // if( res.data.TagsCapKnow.length>0){
-          //     this.$set(res.data,"TagsCapKnow",res.data.TagsCapKnow.splice(1))
-          // }
-          // if( res.data.TagsResGood.length>0){
-          //     this.$set(res.data,"TagsResGood",res.data.TagsResGood.splice(1))
-          // }
-          // if( res.data.TagsResKnow.length>0){
-          //     this.$set(res.data,"TagsResKnow",res.data.TagsResKnow.splice(1))
-          // }
+          if( res.data.TagsCapGood.length>0){
+              this.$set(res.data,"TagsCapGood",res.data.TagsCapGood.splice(1))
+          }
+          if( res.data.TagsCapKnow.length>0){
+              this.$set(res.data,"TagsCapKnow",res.data.TagsCapKnow.splice(1))
+          }
+          if( res.data.TagsResGood.length>0){
+              this.$set(res.data,"TagsResGood",res.data.TagsResGood.splice(1))
+          }
+          if( res.data.TagsResKnow.length>0){
+              this.$set(res.data,"TagsResKnow",res.data.TagsResKnow.splice(1))
+          }
           this.personInfo = res.data
           this.hasData = true
           if(this.type==2){

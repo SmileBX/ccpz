@@ -131,7 +131,8 @@
                   >
                 </div>
               </div>
-              <!-- <div class="form-cells-item form-cells-item2">
+              <div class="form-cells-item form-cells-item2">
+                
                  <div class="item2-column">
                   <div class="form-cells-hd">年龄层次</div>
                   <input
@@ -154,7 +155,7 @@
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
-              </div> -->
+              </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
                  <div class="item2-column">
@@ -282,7 +283,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">计划投资（万元）</div>
+                  <div class="form-cells-hd">计划投资（元）</div>
                   <input
                     class="ipt"
                     type="text"

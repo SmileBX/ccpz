@@ -124,7 +124,7 @@
                 <!-- v-if="personInfo.TagsResGood[0] && personInfo.TagsResKnow[0]" -->
             </div>
             <div class="flex mt10" >
-                <div>我拥有</div>
+                <div>我擅长</div>
                 <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentStart flex1 tipsGray" v-if="personInfo.TagsResGood.length>0">
                   <span v-for="(item,tindex) in personInfo.TagsResGood" :key="tindex">{{item}}</span>
                 </div>
@@ -156,7 +156,7 @@
                 <!-- v-if="personInfo.TagsCapGood[0] && personInfo.TagsCapKnow[0]" -->
             </div>
             <div class="flex mt10" >
-                <div>我拥有</div>
+                <div>我擅长</div>
                 <div class="tipsList border__tipsList bg_active flex flexWrap justifyContentStart flex1 tipsGray" v-if="personInfo.TagsCapGood.length>0">
                   <span v-for="(item,cindex) in personInfo.TagsCapGood" :key="cindex">{{item}}</span>
                 </div>

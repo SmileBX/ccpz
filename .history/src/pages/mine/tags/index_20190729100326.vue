@@ -92,17 +92,16 @@ export default {
           }
           this.taglist = res.data
           // console.log(this.taglist)
-           //标记不能选取的标签
-          // for(let i=0;i<this.onelist.length;i++){
-          //   // console.log(this.onelist[i])
-          //   for(let j=0;j<this.taglist.length;j++){
-          //   // console.log(this.taglist[j].Name)
-          //     if(this.onelist[i] == this.taglist[j].Name){
-          //         // console.log(this.taglist[j])
-          //         this.$set(this.taglist[j],"statu",true)
-          //     }
-          //   }
-          // }
+          for(let i=0;i<this.onelist.length;i++){
+            // console.log(this.onelist[i])
+            for(let j=0;j<this.taglist.length;j++){
+            // console.log(this.taglist[j].Name)
+              if(this.onelist[i] == this.taglist[j].Name){
+                  // console.log(this.taglist[j])
+                  this.$set(this.taglist[j],"statu",true)
+              }
+            }
+          }
         }
       })
     },
@@ -112,37 +111,31 @@ export default {
     choseTag(i){
         console.log(this.onelist.length,"this.onelist.length")
          console.log(i)
-         if(this.taglist[i].statu){
+         if(this.onelist.length == 0){
+           //首次添加标签
+           if(this.taglist[i].statu){
               this.$set(this.taglist[i],"statu",false)
-          }else{
-            this.$set(this.taglist[i],"statu",true)
-          }
-          //不能选择已经编辑过的标签
-        //  if(this.onelist.length == 0){
-        //    //首次添加标签
-        //    if(this.taglist[i].statu){
-        //       this.$set(this.taglist[i],"statu",false)
-        //     }else{
-        //       this.$set(this.taglist[i],"statu",true)
-        //     }
-        //  }else{
-        //    //编辑增加标签
-        //     let num = 0
-        //     for(let j=0;j<this.onelist.length;j++){
-        //       if(this.taglist[i].Name!=this.onelist[j]){
-        //         num++
-        //       }
-        //     }
-        //     // console.log(num)
-        //     if(num == this.onelist.length && num!=0){
-        //       if(this.taglist[i].statu){
-        //           this.$set(this.taglist[i],"statu",false)
-        //       }else{
-        //         this.$set(this.taglist[i],"statu",true)
-        //       }
-        //     }
+            }else{
+              this.$set(this.taglist[i],"statu",true)
+            }
+         }else{
+           //编辑增加标签
+            let num = 0
+            for(let j=0;j<this.onelist.length;j++){
+              if(this.taglist[i].Name!=this.onelist[j]){
+                num++
+              }
+            }
+            // console.log(num)
+            if(num == this.onelist.length && num!=0){
+              if(this.taglist[i].statu){
+                  this.$set(this.taglist[i],"statu",false)
+              }else{
+                this.$set(this.taglist[i],"statu",true)
+              }
+            }
 
-        //  }
+         }
     },
     //确定标签
     addTagsSubmit(){
@@ -153,17 +146,15 @@ export default {
           choseList.push(item)
         }
       })
-      
-      //不能选取已经选择过的标签
-      // this.onelist.map((value)=>{
-      //   console.log("Tttttttt")
-      //   choseList.map((key,index)=>{
-      //     if(value==key.Name){
-      //         console.log(key,index,"**********")
-      //         choseList.splice(index,1)
-      //     }
-      //   })
-      // })
+      this.onelist.map((value)=>{
+        console.log("Tttttttt")
+        choseList.map((key,index)=>{
+          if(value==key.Name){
+              console.log(key,index,"**********")
+              choseList.splice(index,1)
+          }
+        })
+      })
       
       console.log(choseList,"}}}}}}}}}}}}}}}")
       const _choseList = JSON.stringify(choseList)
