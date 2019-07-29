@@ -2145,8 +2145,7 @@ export default {
             return false;
           }
       }
-      if(this.PageId == 30){
-      // if(this.PageId == 30 || this.PageId == 31){
+      if(this.PageId == 30 || this.PageId == 31){
           if(this.DeviceRent ==''){
             this.toastTip("请输入最低价格!")
             return false;
@@ -2345,8 +2344,8 @@ export default {
             IsSubPack:that.IsSubPack,
             IsStockCooperation:that.IsStockCooperation,
             IsRegArea:that.IsRegArea,
-            // DeviceRent:that.DeviceRent,
-            // DevicePrice:that.DevicePrice
+            DeviceRent:that.DeviceRent,
+            DevicePrice:that.DevicePrice
         }
       }else if(that.PageId == 29){
           GoodsInfo = {
