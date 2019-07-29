@@ -5,7 +5,7 @@
         <p class="apoint" style="padding-top:20rpx;">充值金额</p>
         <p class="flex flexAlignBaseline" style="padding-top:10rpx;padding-bottom:20rpx;">
           <span class="fh">￥</span>
-          <input v-model="amount" type="number" auto-focus class="inputPrice flex1">
+          <input v-model="amount" type="number" class="inputPrice flex1">
         </p>
       </div>
     </div>
@@ -104,7 +104,7 @@ export default {
     this.setBarTitle();
   },
   onShow() {
-    this.amount = ' '
+    this.amount = ''
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
