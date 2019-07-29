@@ -193,7 +193,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">计划投资（元）</div>
+                  <div class="form-cells-hd">计划投资（万元）</div>
                   <input
                     class="ipt"
                     type="text"
@@ -281,7 +281,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">计划投资（元）</div>
+                  <div class="form-cells-hd">计划投资（万元）</div>
                   <input
                     class="ipt"
                     type="text"
