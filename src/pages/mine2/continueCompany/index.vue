@@ -20,6 +20,12 @@
         </div>
       </div>
       <div class="weui-cell">
+        <label class="weui-label"><span style="color:#f00">*</span>注册资本</label>
+        <div class="weui-cell__bd text_r">
+          <input type="text" class="weui-input" v-model="capital" placeholder="请输入">
+        </div>
+      </div>
+      <div class="weui-cell">
         <label class="weui-label"><span style="color:#f00">*</span>人员规模</label>
         <div class="weui-cell__bd text_r">
           <input type="text" class="weui-input" v-model="staffSize" placeholder="请输入">
@@ -203,6 +209,7 @@ export default {
       contactsTel: "",
       weChatNum: "",
       mailbox: "",
+      capital:"",
       officialWebsite: "",
       hasTrade: false,  //是否已经返回了行业数据
       currentDate: new Date().getTime(),
@@ -281,12 +288,13 @@ export default {
     },
     confirmBirthArr(e){  //选择籍贯的点击确定
       let arr = e.mp.detail.values;
-      // console.log(e);
-      let str = '';
+      // console.log(arr);
+      let strArr = [];
       arr.forEach(item => {
-        str += item.name;
+        strArr.push(item.name);
         // code.push(item.code);
       })
+      let str = strArr.join('-')
       this.nativePlace = str;
       this.areaStatus = false;
       this.areaValue = arr[arr.length-1].code;
@@ -305,6 +313,7 @@ export default {
       this.companyCulture="";
       this.nativePlace="";
       this.officeArea="";
+      this.capital='';
     },
     valOther() {
       //认证的校验
@@ -327,6 +336,14 @@ export default {
       if (trim(this.setUpDate) == "") {
         wx.showToast({
           title: "请选择公司成立日期!",
+          icon: "none",
+          duration: 1500
+        });
+        return false;
+      }
+      if (trim(this.capital) == "") {
+        wx.showToast({
+          title: "请输入注册资本!",
           icon: "none",
           duration: 1500
         });
@@ -462,6 +479,7 @@ export default {
             Job: that.job, //职位
             SetUpDate: that.setUpDate, //成立日期
             StaffSize: that.staffSize, //人员规模
+            RegCapital: that.capital, //注册资本
             OfficeArea: that.officeArea, //办公面积
             OfficeAddr: that.officeAddr, //办公地址
             NativePlace: that.nativePlace, //负责人籍贯

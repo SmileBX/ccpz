@@ -1133,9 +1133,7 @@ export default {
     goSearch() {
       const keyWords = this.keyWords === "搜索" ? "" : this.keyWords;
       wx.redirectTo({
-        url: `/pages/rent/searchHistory/main?brandId=${
-          this.type
-        }&keyWords=${keyWords}`
+        url: `/pages/rent/searchHistory/main?brandId=&keyWords=${keyWords}`
       });
     }
   },

@@ -9,6 +9,7 @@ const store = new Vuex.Store({
         // selectedFriends: []
         CityName:'',
         CityCode:'',
+        KeyWords:'',
         lng:'',
         lat:'',
         Wallet:0,

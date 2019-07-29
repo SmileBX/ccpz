@@ -108,12 +108,12 @@ export default {
      this.keyWords = '';
     },
     gotoList(){  //点击搜索的时候
-      if(trim(this.keyWords)){
+      // if(trim(this.keyWords)){
         //跳转到
         wx.redirectTo({
           url: `/pages/rent/list/main?type=${this.brandId}&keyWords=${this.keyWords}`
         })
-      }
+      // }
     },
     clearHistory(){  //点击清空的删除图标的时候
     let that = this;

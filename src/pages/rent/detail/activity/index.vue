@@ -106,7 +106,7 @@
       </div>
     </div>
     <!-- 办公室描述 end -->
-    <div class="section">
+    <div class="section" v-if="data.CompanyAddr.Value">
       <div class="locationBox pd15">
         <h3 class="title detail__title">地理位置</h3>
         <div class="flex flexAlignCenter">
