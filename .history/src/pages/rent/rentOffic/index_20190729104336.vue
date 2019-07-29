@@ -281,7 +281,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">计划投资（万元）</div>
+                  <div class="form-cells-hd">计划投资（元）</div>
                   <input
                     class="ipt"
                     type="text"
@@ -1060,7 +1060,7 @@
             <div class="">
               <div class="form-cells-hd">{{introduce}}</div>
               <div class="form-cell-bd">
-                <p class="ipt" style="height:200rpx!important;padding:0rpx" v-if="showp" @tap="showp=false" :class="Synopsis.length>0?'colorBlack':'colorPlace'">{{Synopsis.length>0?Synopsis:introducePlaceholder}}</p>
+                <p class="ipt" style="height:200rpx!important;padding:0rpx;overflow:hidden" v-if="showp" @tap="showp=false" :class="Synopsis.length>0?'colorBlack':'colorPlace'">{{Synopsis.length>0?Synopsis:introducePlaceholder}}</p>
                 
                 <textarea
                   v-else
@@ -1090,7 +1090,7 @@
             <div class="">
               <div class="form-cells-hd">{{infoMore}}</div>
               <div class="form-cell-bd">
-                <p class="ipt" style="height:200rpx!important;padding:0rpx" v-if="showPP" @tap="showPP=false" :class="ContentDetail.length>0?'colorBlack':'colorPlace'">{{ContentDetail.length>0?ContentDetail:infoMorePlaceHolder}}</p>
+                <p class="ipt" style="height:200rpx!important;padding:0rpx;overflow:hidden" v-if="showPP" @tap="showPP=false" :class="ContentDetail.length>0?'colorBlack':'colorPlace'">{{ContentDetail.length>0?ContentDetail:infoMorePlaceHolder}}</p>
                 <textarea
                 v-else
                   class="ipt"

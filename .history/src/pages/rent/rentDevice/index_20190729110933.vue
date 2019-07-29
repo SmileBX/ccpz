@@ -347,7 +347,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">价格区间（元）</div>
+                  <div class="form-cells-hd">价格区间（元/m²）</div>
                   <div class="flex flexAlignCenter">
                         <input
                             class="ipt"

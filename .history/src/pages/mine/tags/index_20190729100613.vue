@@ -153,7 +153,12 @@ export default {
           choseList.push(item)
         }
       })
-      
+      choseList.map((key,index)=>{
+          if(value==key.Name){
+              console.log(key,index,"**********")
+            choseList.splice(index,1)
+        }
+      })
       //不能选取已经选择过的标签
       // this.onelist.map((value)=>{
       //   console.log("Tttttttt")

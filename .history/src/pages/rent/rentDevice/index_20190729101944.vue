@@ -480,8 +480,8 @@
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
-                <!-- <div class="item2-column">
-                  <div class="form-cells-hd">价格区间（元/m²）</div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">价格区间（元）</div>
                   <div class="flex flexAlignCenter">
                         <input
                             class="ipt"
@@ -499,7 +499,7 @@
                         placeholder-style="color:#b5b5b5;"
                       >
                   </div>
-                </div> -->
+                </div>
               </div>
           </div>
           <div v-if="PageId==29">
@@ -1092,7 +1092,7 @@
 //TypeId--58厂房发布  
 //拼购--   设备拼购--pageid=26   物业拼购-pageid=25 else --没有公司理念
 //寻找拼租  办公室拼租-pageid=30  设备寻找-pageid=31  --公司理念
-//提供拼租  短租办公pageid=28  提供设备拼租-pageid=29   提供拼租 --pageid =27  --公司理念 --环境
+//提供拼租  短租办公pageid=28  提供设备拼租-pageid=29   提供拼租 --pageid=27  --公司理念 --环境
 import "@/style/style_fb.scss";
 import { post,host,getCurrentPageUrlWithArgs} from "@/utils";
 // import areaList from "@/utils/areaList";
@@ -1649,7 +1649,7 @@ export default {
       }
       if(n==3){
         this.list = [{Id:1,Name:'公司资质是可以使用'},{Id:0,Name:'公司资质是不可使用'}]
-        this.masktitle = '请选择公司资质使用'
+        this.masktitle = '请选择公司资质'
       }
       if(n==4){
         this.list = [{Id:1,Name:'考虑未来股份合作'},{Id:0,Name:'不考虑未来股份合作'}]
@@ -2145,8 +2145,7 @@ export default {
             return false;
           }
       }
-      if(this.PageId == 30){
-      // if(this.PageId == 30 || this.PageId == 31){
+      if(this.PageId == 30 || this.PageId == 31){
           if(this.DeviceRent ==''){
             this.toastTip("请输入最低价格!")
             return false;
@@ -2345,8 +2344,8 @@ export default {
             IsSubPack:that.IsSubPack,
             IsStockCooperation:that.IsStockCooperation,
             IsRegArea:that.IsRegArea,
-            // DeviceRent:that.DeviceRent,
-            // DevicePrice:that.DevicePrice
+            DeviceRent:that.DeviceRent,
+            DevicePrice:that.DevicePrice
         }
       }else if(that.PageId == 29){
           GoodsInfo = {
