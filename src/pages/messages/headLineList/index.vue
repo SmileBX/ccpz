@@ -36,15 +36,15 @@ export default {
   },
 
   onLoad() {
-      
+    this.type = this.$root.$mp.query.type
+    this.setBarTitle();
   },
   onShow(){
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
-    this.type = this.$root.$mp.query.type
     this.isData = false;
     this.list=[]
-    this.setBarTitle();
+    this.page=1;
     this.getNewsList()
   },
   methods: {
@@ -77,7 +77,15 @@ export default {
   onReachBottom(){
     this.page+=1;
     this.getNewsList();
-  }
+  },
+  //下拉刷新
+  onPullDownRefresh() {
+    wx.stopPullDownRefresh();
+    this.isData = false;
+    this.list=[]
+    this.page=1;
+    this.getNewsList()
+  },
 };
 </script>
 <style lang="scss" scoped>

@@ -80,12 +80,12 @@
                   <img :src="item.Avatar" class="tx" alt />
                   <div class="weui-cell__bd text_l">
                     <p>
-                      <span class="name">{{item.Name}}</span>
-                      <img src="/static/images/icons/v.jpg" class="icon_attestation" alt />
+                      <span class="name" v-if="item.Name">{{item.Name}}</span>
+                      <img src="/static/images/icons/v.png" class="icon_attestation" alt />
                     </p>
                     <p class="msgList">
-                      <span class="msgItem">{{item.Company[0].Job}}</span>
-                      <span class="msgItem">{{item.Company[0].Name}}</span>
+                      <!-- <span class="msgItem">{{item.Company[0].Job}}</span> -->
+                      <span class="msgItem" v-if="item.Company[0]">{{item.Company[0].Name}}</span>
                     </p>
                   </div>
                 </div>

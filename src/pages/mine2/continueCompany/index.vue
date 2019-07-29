@@ -50,15 +50,21 @@
           <input type="text" :value="nativePlace" disabled class="weui-input" placeholder="请选择">
         </div>
       </div>
+      <div class="weui-cell">
+        <label class="weui-label">官网</label>
+        <div class="weui-cell__bd text_r">
+          <input type="text" class="weui-input" v-model="officialWebsite" placeholder="请输入">
+        </div>
+      </div>
     </div>
     <div class="pall bg_fff" v-if="showtextarea">
       <p style="margin-bottom:10rpx;">公司简介</p>
       <textarea name id cols="30" rows="10" v-model="companyIntro" placeholder="请输入公司简介"></textarea>
     </div>
-    <div class="pall bg_fff" v-if="showtextarea">
+    <!-- <div class="pall bg_fff" v-if="showtextarea">
       <p style="margin-bottom:10rpx;">公司理念</p>
       <textarea name id cols="30" rows="10" v-model="companyCulture" placeholder="请输入公司理念"></textarea>
-    </div>
+    </div> -->
 
     <div style="margin-top:20rpx;">
       <!--上传图片-->
@@ -105,12 +111,6 @@
         <label class="weui-label">邮箱</label>
         <div class="weui-cell__bd text_r">
           <input type="text" class="weui-input" v-model="mailbox" placeholder="请输入">
-        </div>
-      </div>
-      <div class="weui-cell">
-        <label class="weui-label">官网</label>
-        <div class="weui-cell__bd text_r">
-          <input type="text" class="weui-input" v-model="officialWebsite" placeholder="请输入">
         </div>
       </div>
     </div>
@@ -180,16 +180,19 @@ import { pathToBase64 } from "@/utils/image-tools";
 export default {
   onLoad() {
     this.setBarTitle();
+    this.userId = wx.getStorageSync("userId");
+    this.token = wx.getStorageSync("token");
+    if(this.$root.$mp.query.id !=="" && this.$root.$mp.query.id){
+      this.id = this.$root.$mp.query.id;
+      this.getDetailInfo();
+    }
+    this.curPage = getCurrentPageUrlWithArgs();
+    this.columns = []
+    this.GetTradeList();
   },
   onShow() {
     this.userId = wx.getStorageSync("userId");
     this.token = wx.getStorageSync("token");
-    this.curPage = getCurrentPageUrlWithArgs();
-    this.columns = []
-    if(this.$root.$mp.query.id !=="" && this.$root.$mp.query.id){
-      this.id = this.$root.$mp.query.id;
-    }
-    this.GetTradeList();
   },
   data() {
     return {
@@ -213,6 +216,7 @@ export default {
       companyPic:[],
       maxPicLen:6,
       isUploadBtn:true,
+      officeAddr:'',
       contacts: "",
       contactsTel: "",
       weChatNum: "",
@@ -240,6 +244,35 @@ export default {
       wx.setNavigationBarTitle({
         title: "认证新企业"
       });
+    },
+    // 编辑企业认证下一步获取提交的资料
+    async getDetailInfo(){  
+      this.companyPic=[];
+      const res = await post('User/UserBusinessAuthNextInfo',{
+        UserId:this.userId,
+        Token:this.token,
+        Id:this.id
+      })
+        if(res.code===0){
+          this.trade = res.data.Trade.join(',');
+          this.setUpDate = res.data.SetUpDate ;
+          this.capital = res.data.RegCapital;
+          this.staffSize = res.data.StaffSize;
+          this.officeArea = res.data.OfficeArea;
+          this.officeAddr = res.data.OfficeAddr;
+          this.nativePlace = res.data.NativePlace;
+          this.companyIntro = res.data.CompanyIntro;
+          this.officialWebsite = res.data.OfficialWebsite;
+          // let companyPic =[]
+          // for(let i=0;i<res.data.CompanyPic.length;i+=1){
+          //   const item = res.data.CompanyPic[i];
+          //   companyPic.push(await pathToBase64(item));
+          // }
+          this.companyPic =res.data.CompanyPic;
+            // this.idCardPositive =await pathToBase64(res.data.IdcardPositive);
+            // this.idCardNegative =await pathToBase64(res.data.IdcardNegative);
+            // this.businessLicense =await pathToBase64(res.data.BusinessLicense);
+        }
     },
     showSelect(index) {
       //弹窗是否显示
@@ -325,7 +358,7 @@ export default {
     },
     valOther() {
       //认证的校验
-      if (trim(this.trade) == "") {
+      if (!trim(this.trade)) {
         wx.showToast({
           title: "请选择公司行业!",
           icon: "none",
@@ -341,7 +374,7 @@ export default {
       //   });
       //   return false;
       // }
-      if (trim(this.setUpDate) == "") {
+      if (!trim(this.setUpDate)) {
         wx.showToast({
           title: "请选择公司成立日期!",
           icon: "none",
@@ -349,7 +382,8 @@ export default {
         });
         return false;
       }
-      if (trim(this.capital) == "") {
+      if (!this.capital*1) {
+        console.log(this.capital,'注册资本')
         wx.showToast({
           title: "请输入注册资本!",
           icon: "none",
@@ -357,7 +391,7 @@ export default {
         });
         return false;
       }
-      if (trim(this.staffSize) == "") {
+      if (!this.staffSize*1) {
         wx.showToast({
           title: "请输入人员规模!",
           icon: "none",
@@ -365,26 +399,26 @@ export default {
         });
         return false;
       }
-      if(trim(this.contactsTel) !==""){
-        if(!((/^0\d{2,3}-\d{7,8}$/).test(this.contactsTel) || (/^[1][3,4,5,6,7,8][0-9]{9}$/).test(this.contactsTel))){
-          wx.showToast({
-            title: "请输入正确的电话格式！",
-            icon: "none",
-            duration: 1500
-          });
-          return false;
-        }
-      }
-      if(trim(this.mailbox) !==""){
-        if(!/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(this.mailbox)){
-          wx.showToast({
-            title: "请输入正确的邮箱格式！",
-            icon: "none",
-            duration: 1500
-          });
-          return false;
-        }
-      }
+      // if(trim(this.contactsTel) !==""){
+      //   if(!((/^0\d{2,3}-\d{7,8}$/).test(this.contactsTel) || (/^[1][3,4,5,6,7,8][0-9]{9}$/).test(this.contactsTel))){
+      //     wx.showToast({
+      //       title: "请输入正确的电话格式！",
+      //       icon: "none",
+      //       duration: 1500
+      //     });
+      //     return false;
+      //   }
+      // }
+      // if(trim(this.mailbox) !==""){
+      //   if(!/^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(this.mailbox)){
+      //     wx.showToast({
+      //       title: "请输入正确的邮箱格式！",
+      //       icon: "none",
+      //       duration: 1500
+      //     });
+      //     return false;
+      //   }
+      // }
       return true;
     },
     upLoadImg() {
@@ -432,7 +466,12 @@ export default {
       if (this.valOther()) {
         let companyPic = [];
         if(this.companyPic.length>0){
-           companyPic = await this.base64Img(this.companyPic);
+          for(let i=0;i<this.companyPic.length;i+=1){
+        console.log('aaa1'+i)
+            const item = this.companyPic[i]
+           companyPic.push({PicUrl:item.indexOf('base64')!==-1?item:await pathToBase64(item)});
+          console.log('aaa2'+i)
+        }
         }
         // this.UserBusinessAuthNext(JSON.stringify(companyPic));
         

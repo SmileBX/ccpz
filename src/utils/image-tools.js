@@ -65,7 +65,6 @@ export function pathToBase64(path) {
             })
             return
         }
-
         reject(new Error('not support'))
     })
 }

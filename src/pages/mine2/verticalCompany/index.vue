@@ -138,11 +138,14 @@ export default {
     this.token = wx.getStorageSync("token");
     this.curPage = getCurrentPageUrlWithArgs();
     if(this.$root.$mp.query.id && this.$root.$mp.query.id !==""){
-      console.log("fdddddddddddddddddddddddddddddddddd")
-      this.btnTxt = "保存";
+      // console.log("fdddddddddddddddddddddddddddddddddd")
+      // this.btnTxt = "保存";
       this.id = parseInt(this.$root.$mp.query.id);
       //获取对应的企业认证信息
       this.UserBusinessAuthxq();
+    }else{
+      // this.btnTxt = "下一步";
+      this.id ='';
     }
   },
   data() {
@@ -294,19 +297,19 @@ export default {
       //提交下一步
       if (this.valOther()) {
         console.log("竟来了");
-        let idcardPositive = await this.base64Img(this.idCardPositive);
-        let idcardNegative = await this.base64Img(this.idCardNegative);
+        let idcardPositive = this.idCardPositive.indexOf('base64')!==-1?this.idCardPositive:await this.base64Img(this.idCardPositive);
+        let idcardNegative = this.idCardNegative.indexOf('base64')!==-1?this.idCardNegative:await this.base64Img(this.idCardNegative);
         let businessLicense = ''
         if(this.otherSeniority){
-          businessLicense = await this.base64Img(this.businessLicense);
+          businessLicense = this.businessLicense.indexOf('base64')!==-1?this.businessLicense:await this.base64Img(this.businessLicense);
         }
         // let otherSeniority ="";
         // if(this.otherSeniority){
         //   otherSeniority = await this.base64Img(this.otherSeniority);
         // }
-        if(this.id && this.id !==""){
-          this.UserBusinessAuthEdit(idcardPositive,idcardNegative,businessLicense);
-        }else{
+        // if(this.id && this.id !==""){
+          // this.UserBusinessAuthEdit(idcardPositive,idcardNegative,businessLicense);
+        // }else{
           //  this.UserBusinessAuth(idcardPositive,idcardNegative,businessLicense,otherSeniority);
            const userCompany={
             Name: this.name,
@@ -321,9 +324,9 @@ export default {
           console.log(userCompany)
           this.$store.commit('update',{userCompany})
           wx.redirectTo({
-            url: '/pages/mine2/continueCompany/main'
+            url: '/pages/mine2/continueCompany/main?id='+this.id
           })
-        }
+        // }
         
       }
     },
@@ -368,20 +371,22 @@ export default {
         }
       });
     },
-    UserBusinessAuthxq(){  //获取对应的企业认证详情
+    async UserBusinessAuthxq(){  //获取对应的企业认证详情
       let that = this;
-      post("User/UserBusinessAuthxq",{
+      const res = await post("User/UserBusinessAuthxq",{
         UserId:that.userId,
         Token:that.token,
         Id:that.id
-      },that.curPage).then(res => {
+      },that.curPage)
         if(res.code===0){
           that.name = res.data.Name;
           that.regNum = res.data.RegNum;
           that.legalPerson = res.data.LegalPerson;
           that.idCard = res.data.Idcard;
+            that.idCardPositive =await pathToBase64(res.data.IdcardPositive);
+            that.idCardNegative =await pathToBase64(res.data.IdcardNegative);
+            that.businessLicense =await pathToBase64(res.data.BusinessLicense);
         }
-      })
     },
     UserBusinessAuthEdit(idcardPositive,
       idcardNegative,
