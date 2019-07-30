@@ -143,28 +143,6 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">活动价格（元）</div>
-                  <input
-                    class="ipt"
-                    type="number"
-                    placeholder="请输入"
-                    v-model="PropertyPrice"
-                    placeholder-style="color:#b5b5b5;"
-                  >
-                </div>
-              </div>
-              <!-- <div class="form-cells-item form-cells-item2">
-                 <div class="item2-column">
-                  <div class="form-cells-hd">年龄层次</div>
-                  <input
-                    class="ipt"
-                    type="text"
-                    placeholder="请输入"
-                    v-model="AgeLevel"
-                    placeholder-style="color:#b5b5b5;"
-                  >
-                </div>
-                <div class="item2-column">
                   <div class="form-cells-hd">学历结构</div>
                   <input
                     class="ipt"
@@ -176,7 +154,29 @@
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
-              </div> -->
+              </div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">年龄层次</div>
+                  <input
+                    class="ipt"
+                    type="text"
+                    placeholder="请输入"
+                    v-model="AgeLevel"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+                <div class="item2-column">
+                  <div class="form-cells-hd">活动价格（元）</div>
+                  <input
+                    class="ipt"
+                    type="number"
+                    placeholder="请输入"
+                    v-model="PropertyPrice"
+                    placeholder-style="color:#b5b5b5;"
+                  >
+                </div>
+              </div>
           </div>
           <div v-if="PageId==43 || PageId==32 || PageId==33">
                <div class="form-cells-item form-cells-item2">
