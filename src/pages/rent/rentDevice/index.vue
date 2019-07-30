@@ -589,7 +589,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">意向区域</div>
+                  <div class="form-cells-hd">区域</div>
                   <input
                     class="ipt"
                     type="text"
@@ -811,7 +811,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">意向区域</div>
+                  <div class="form-cells-hd">区域</div>
                   <input
                     class="ipt"
                     type="text"
@@ -910,7 +910,7 @@
                 >
               </div>
               <div class="item2-column" v-if="PageId!=29">
-                <div class="form-cells-hd">可否使用公司资质</div>
+                <div class="form-cells-hd">资质使用</div>
                 <input
                   class="ipt"
                   type="text"
@@ -1631,14 +1631,14 @@ export default {
     },
     //选择弹层item
     chose(e){
-        this.statu = e
+        this.statu = e;console.log(e)
     },
     //是否装修
     getTrim(n){
       //1-是否装修 2-业务分包 3-是否可使用公司资质 4-股份合作 5-公司挂牌 6-对方公司挂牌  7-可否注册
       this.isShowMask = true
       this.showNoChange = true
-      console.log(this.showNoChange)
+      console.log(this.showNoChange,n)
       if(n==1){
         this.list = [{Id:1,Name:'需要装修'},{Id:0,Name:'不需要装修'}]
         this.masktitle = '请选择是否装修'
@@ -1671,7 +1671,7 @@ export default {
 
     },
     //确定选择
-    subConfirm(){
+    subConfirm(){console.log(this.list,this.statu)
       for(let i in this.list){
           if(i*1 == this.statu){
               if(this.masktitle =='请选择物业形式' || this.masktitle =='请选择设备形式' || this.masktitle =='请选择办公形式'){
@@ -1701,7 +1701,7 @@ export default {
                    this.IsSubPackMsg = '是';
                 }
               }
-              if(this.masktitle =='请选择公司资质'){
+              if(this.masktitle =='请选择公司资质使用'){
                 this.IsSenior = this.list[i].Id;
                 if(this.list[i].Id==0){
                   this.IsSeniorMsg = '否';
