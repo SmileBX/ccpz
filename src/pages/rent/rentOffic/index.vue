@@ -1223,7 +1223,9 @@
                   <input
                     class="ipt"
                     type="text"
-                    placeholder="请输入工作年限"
+                    placeholder="请选择工作年限"
+                    disabled
+                    @tap="touchExperience(pindex)"
                     v-model="item.Experience"
                     placeholder-style="color:#b5b5b5;"
                   >
@@ -1233,7 +1235,9 @@
                   <input
                     class="ipt"
                     type="text"
-                    placeholder="请输入"
+                    placeholder="请选择"
+                    disabled 
+                    @tap="touchEducation(pindex)"
                     v-model="item.Degree"
                     placeholder-style="color:#b5b5b5;"
                   >
@@ -1522,6 +1526,7 @@ export default {
       showTouchEducation:false,//组件要求学历标识
       showTouchTreat:false,//待遇
       showJobType:false,
+      showExperience:false,
       
       RentTimeLimit:"",//租赁期限
       ContentDetail:"",//办公室环境描述
@@ -1606,6 +1611,7 @@ export default {
     this.showTrade =  false
     this.showDate = false
     this.showTouchEducation = false
+    this.showExperience = false
     this.columns = []
     this.columns2 = []
     this.tradeList = {},//行业列表
@@ -1996,6 +2002,7 @@ export default {
                       PartDesc:'',    //职位描述、合伙描述
                       ShowWork:false,//学历要求
                       ShowTreatment:false,//待遇
+                      ShowExperr:false,
 
                   }
                 ]
@@ -2009,6 +2016,7 @@ export default {
                       WorkTime:'',    //工作时间、时间要求
                       PartDesc:'',    //职位描述、合伙描述
                       JobSex:'',      //性别要求
+                      ShowExperr:false,
                   }
                 ]
               }
@@ -2212,6 +2220,14 @@ export default {
       this.masktitle2 = '请选择学历要求'
       this.showTouchEducation = true
     },
+    touchExperience(n){
+      this.PartnerList[n].ShowWork = true
+      this.list = [
+        {Id:1,Name:'1年以下'},{Id:2,Name:'1-2年'},{Id:3,Name:'3-5年'},{Id:4,Name:'6-10年'},{Id:5,Name:'11-15年'},{Id:6,Name:'16年以上'}
+      ]
+      this.masktitle2 = '请选择经验要求'
+      this.showExperience = true
+    },
 
     //获取设备类型
     getPropertyType(){
@@ -2245,14 +2261,19 @@ export default {
         if(this.showJobType){
           this.PartnerList[n].JobType = this.list[this.statu].Name
         }
+        if(this.showExperience){
+          this.PartnerList[n].Experience = this.list[this.statu].Name
+        }
         this.isShowMask = false
         this.showNoChange = false
         this.ShowTime = false
         this.showInput = false
         this.PartnerList[n].ShowWork = false
         this.PartnerList[n].ShowTreatment = false
+        this.PartnerList[n].ShowExperr = false
         this.showTouchEducation = false
         this.showTouchTreat = false
+        this.showExperience = false
         this.showJobType = false
         this.statu = 0
         this.list = []
