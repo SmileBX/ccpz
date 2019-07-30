@@ -1,11 +1,11 @@
 <template>
   <div class="pageContent">
-    <div class="widthdrawBox bg_fff">
+    <div class="widthdrawBox bg_fff"  @click="setfocus">
       <div class="charge">
         <p class="apoint" style="padding-top:20rpx;">充值金额</p>
         <p class="flex flexAlignBaseline" style="padding-top:10rpx;padding-bottom:20rpx;">
           <span class="fh">￥</span>
-          <input v-model="amount" type="number" auto-focus class="inputPrice flex1">
+          <input v-model="amount" type="digit" :focus="focus" class="inputPrice flex1">
         </p>
       </div>
     </div>
@@ -114,6 +114,7 @@ export default {
   data() {
     return {
       amount: "",
+      focus:true,
       Wallet:0,
       showPay:false,
       // showPayWay:false,
@@ -125,6 +126,10 @@ export default {
       wx.setNavigationBarTitle({
         title: "充值"
       });
+    },
+    setfocus(){
+      this.focus=true;
+      console.log(this.focus)
     },
     // getCharge(){
     //   post('/User/GetMemberWallet',{

@@ -1,7 +1,7 @@
 <template>
   <div class="pageContent">
     <div class="section bg_fff pd15" v-if="type==2">
-      <div class="form-cells-hd">选择服务</div>
+      <div class="form-cells-hd">选择服务<span style="color:red">※</span></div>
       <checkbox-group class="checkboxGroup">
         <label class="check__label checkbox-cart" @tap="shiftCheckbox(1)">
           <checkbox :checked="isCultivate===1" class="checkbox" />股权咨询培训
@@ -27,8 +27,8 @@
     <div class="section bg_fff pd15" v-if="type==1 || type==3">
       <div class="form-cells-item">
         <div class="form-cells-hd">
-          <block v-if="type==3">图片反馈</block>
-          <block v-if="type==1">上传图片</block>
+          <block v-if="type==3">图片反馈 <span style="color:#999">(选填)</span></block>
+          <block v-if="type==1">上传图片 <span style="color:#999">(选填)</span></block>
         </div>
         <!-- <div class="form-cell-bd form-cell-img">
           <div class="upbtn" v-for="(item,index) in picList" :key="index">
@@ -58,13 +58,13 @@
       <div class="weui-cell">
         <span class="label">姓名</span>
         <div class="weui-cell__bd">
-          <input type="text" class="weui-input" v-model="memberName" placeholder="请输入您的姓名">
+          <input type="text" class="weui-input" v-model="memberName" placeholder="请输入您的姓名(选填)">
         </div>
       </div>
       <div class="weui-cell">
         <span class="label">电话</span>
         <div class="weui-cell__bd">
-          <input type="text" class="weui-input" v-model="mobile" placeholder="请输入您的电话号码">
+          <input type="text" class="weui-input" v-model="mobile" placeholder="请输入您的电话号码(选填)">
         </div>
       </div>
     </div>
@@ -223,22 +223,22 @@ export default {
         })
         return false;
       }
-      if(trim(this.memberName) == ""){
-         wx.showToast({
-          title: '请输入您的姓名！',
-          icon: 'none',
-          duration: 1500
-        })
-        return false;
-      }
-      if(trim(this.mobile) == ""){
-         wx.showToast({
-          title: '请输入您的电话！',
-          icon: 'none',
-          duration: 1500
-        })
-        return false;
-      }
+      // if(trim(this.memberName) == ""){
+      //    wx.showToast({
+      //     title: '请输入您的姓名！',
+      //     icon: 'none',
+      //     duration: 1500
+      //   })
+      //   return false;
+      // }
+      // if(trim(this.mobile) == ""){
+      //    wx.showToast({
+      //     title: '请输入您的电话！',
+      //     icon: 'none',
+      //     duration: 1500
+      //   })
+      //   return false;
+      // }
       if(this.type===2){  //增值服务的时候，选择服务必须选择一个
         let num = 0;
         if(this.isCultivate===1 || this.isEvaluate===1 || this.isGuide===1){
@@ -256,7 +256,7 @@ export default {
       return true;
     },
     async btnSubmit(){  //点击提交按钮的时候
-      if(this.valOther() && valPhone(this.mobile)){
+      if(this.valOther()){
         let base64Arr = [];
         if(this.picList.length>0){
           base64Arr =  await this.base64Img(this.picList);

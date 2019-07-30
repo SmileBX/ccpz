@@ -4,7 +4,8 @@
       <li v-for="(item,index) in list" :key="index" @click="goDetail(item.Id)">
         <div class="time">{{item.PubTime}}</div>
         <div class="list">
-          <p class="title ellipsis" :class="{'c999':item.IsRead===0}">{{item.Title}}</p>
+          <img src="/static/images/icons/notRead.png" alt="" class="notRead" v-if="item.IsRead!==0">
+          <p class="title ellipsis" >{{item.Title}}</p>
           <img mode="widthFix" :src="item.Pic" class="pic" alt v-if="item.Pic">
           <!-- <div class="con ellipsis content" v-html="item.Memo"></div> -->
           <div class="con ellipsis content" >{{item.Memo}}</div>
@@ -95,6 +96,14 @@ export default {
 };
 </script>
 <style  lang="scss" scoped>
+  .notRead{
+    position:absolute;
+    top:0;
+    right:0;
+    width:80rpx!important;
+    height:80rpx!important;
+    z-index:10;
+  }
 .message{
   padding:0 20rpx;
   .time{
@@ -109,6 +118,7 @@ export default {
   flex-flow:column nowrap;
   padding:0 30rpx;
   border-radius:8rpx;
+  position:relative;
   .title{
     font-size:32rpx;
     font-weight:600;

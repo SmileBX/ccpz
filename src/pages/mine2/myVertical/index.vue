@@ -37,7 +37,7 @@
               <div class="imgBox">
                 <img
                   @click="upLoadImg(1)"
-                  v-if="idCardPositive=='' "
+                  v-if="!idCardPositive"
                   src="/static/images/icons/iden-top.jpg"
                   alt
                   class="inendity_pic"
@@ -54,7 +54,7 @@
               <div class="imgBox">
                 <img
                   @click="upLoadImg(2)"
-                  v-if="idCardNegative=='' "
+                  v-if="!idCardNegative"
                   src="/static/images/icons/iden-back.jpg"
                   alt
                   class="inendity_pic"
@@ -73,7 +73,7 @@
               <input type="checkbox" :checked="agreen" @click="agreen=!agreen" class="checkbox-cart">
               <p>
                 <span>已阅读并同意</span>
-                <span class="fontColor99" @tap="gotoAreement">《成成快拼认证服务协议》</span>
+                <span class="fontColor99" @tap="gotoAreement">《认证服务协议》</span>
               </p>
             </div>
             <div class="ftBtn center">
@@ -89,7 +89,12 @@
               <div class="verticalItem">
                 <div class="person_info">
                   <p class="name" style="line-height:1;">{{userVerticalInfo.UserRName}}</p>
-                  <p class="certical">个人认证：<span v-if="userVerticalInfo.IsAUT===1" >已认证</span><span v-if="userVerticalInfo.IsAUT===2">不通过<span class="btnReset" @tap="btnUserReset">重新填写</span></span><span v-if="userVerticalInfo.IsAUT===3">待审核</span></p>
+                  <p class="certical">个人认证：
+                    <span v-if="userVerticalInfo.IsAUT===1" >已认证</span>
+                    <span v-if="userVerticalInfo.IsAUT===2">不通过<span class="btnReset" @tap="btnUserReset">重新填写</span>
+                    </span>
+                    <span v-if="userVerticalInfo.IsAUT===3">待审核<span class="btnReset" @tap="btnUserReset">重新填写</span></span>
+                  </p>
                   <p class="tips">认证时间 : {{userVerticalInfo.AuthTime}}</p>
                   <p class="tips">认证方式 : 身份证实名认证</p>
                 </div>
@@ -105,7 +110,11 @@
             <div class="verticalItem" v-for="(item,index) in list"  :key="index">
               <div class="person_info">
                 <p class="name com_name">{{item.Name}}</p>
-                <p class="certical">企业认证：<span v-if="item.IsAUT===1" >已认证</span><span v-if="item.IsAUT===2" style="color:#f10d0d">不通过<span class="btnReset" @tap="gotoAdd(item.Id)">重新填写</span></span><span v-if="item.IsAUT===3">待审核</span></p>
+                <p class="certical">企业认证：
+                  <span v-if="item.IsAUT===1" >已认证</span>
+                  <span v-if="item.IsAUT===2" style="color:#f10d0d">不通过<span class="btnReset" @tap="gotoAdd(item.Id)">重新填写</span></span>
+                  <span v-if="item.IsAUT===3">待审核<span class="btnReset" @tap="gotoAdd(item.Id)">重新填写</span></span>
+                </p>
                 <p class="tips">认证时间 : {{item.AuthTime}}</p>
                 <p class="tips">认证方式 : 营业执照认证</p>
               </div>
@@ -152,6 +161,7 @@ export default {
   },
   onLoad() {
     this.setBarTitle();
+      this.userReset = false;
   },
   onShow() {
     console.log(this.$store.state.personInfo);
@@ -358,17 +368,19 @@ export default {
           }
        })
     },
-    UserOwnerAuthxq(){  //重新填写个人认证中的详情
+    async UserOwnerAuthxq(){  //重新填写个人认证中的详情
       let that = this;
-      post("User/UserOwnerAuthxq",{
+      const res = await post("User/UserOwnerAuthxq",{
         UserId:that.userId,
         Token:that.token
-      },that.curPage).then(res => {
+      },that.curPage)
+      
          if(res.code===0){
             that.userRName = res.data.UserRName; //真实姓名
             that.idCard = res.data.Idcard; //身份证号码
+            that.idCardPositive =await pathToBase64(res.data.IdcardNegative);
+            that.idCardNegative =await pathToBase64(res.data.IdcardPositive);
          }
-      })
 
     },
     gotoAdd(id){

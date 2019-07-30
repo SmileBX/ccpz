@@ -30,12 +30,12 @@
             />
           </div>
           <div class="avatarbox mr0" v-if="chatStatu.a">
-            <img :src="chatStatu.a.Headimgurl" alt class="avatar" />
+            <img :src="chatStatu.a.Headimgurl" alt class="avatar"  @click="goUserCenter"/>
           </div>
         </div>
         <div class="flex flexAlignCenter boxSize plr20 justifyContentStart" v-if="msg.MsgId=='b'">
           <div class="avatarbox mr0" v-if="chatStatu.b">
-            <img :src="chatStatu.b.Headimgurl" alt class="avatar" />
+            <img :src="chatStatu.b.Headimgurl" alt class="avatar" @click="goUserCenter(chatStatu.b.TempId)"/>
           </div>
           <div class="flex flexAlignEnd mrl2">
             <!-- <span class="fontColor">已读</span> -->
@@ -490,7 +490,24 @@ export default {
 
               }
               resolve();
-            } else {
+            } else if(res.code === 1){
+              
+              wx.showModal({
+                title: "开通会员",
+                content: "此功能需要开通会员，是否跳转开通会员页面?",
+                confirmColor: "#ff952e",
+                cancelColor: "#999",
+                success(res) {
+                  if (res.confirm) {
+                    wx.navigateTo({ url: "/pages/member2/buyFunction/main?type=3" });
+                  }else{
+                    wx.navigateBack();
+                    reject();
+                  }
+                }
+              });
+
+              }else {
               wx.showToast({ title: res.msg, icon: "none" });
               setTimeout(() => {
                 wx.navigateBack();
@@ -794,6 +811,15 @@ export default {
           })
           .exec();
       }, 100);
+    },
+    // 查看个人资料
+    goUserCenter(id){
+      console.log('typeOf(id*1)',typeof(id),id)
+      if(typeof(id)==='number'){
+       wx.navigateTo({url:'/pages/mine/person/main?type=2&Id='+id})
+      }else{
+       wx.navigateTo({url:'/pages/mine/person/main?type=1'})
+      }
     }
   },
   //下拉刷新

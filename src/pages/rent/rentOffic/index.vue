@@ -131,14 +131,14 @@
                   >
                 </div>
               </div>
-              <!-- <div class="form-cells-item form-cells-item2">
-                 <div class="item2-column">
-                  <div class="form-cells-hd">年龄层次</div>
+              <div class="form-cells-item form-cells-item2">
+                <div class="item2-column">
+                  <div class="form-cells-hd">男女比例</div>
                   <input
                     class="ipt"
                     type="text"
                     placeholder="请输入"
-                    v-model="AgeLevel"
+                    v-model="SexRatio"
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
@@ -154,15 +154,20 @@
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
-              </div> -->
+              </div>
               <div class="form-cells-item form-cells-item2">
+<<<<<<< HEAD
                  <div class="item2-column">
                   <div class="form-cells-hd">男女比例</div>
+=======
+                <div class="item2-column">
+                  <div class="form-cells-hd">年龄层次</div>
+>>>>>>> 9e09fd4d800b1538e212c8dad0fc59ef36d42e78
                   <input
                     class="ipt"
                     type="text"
                     placeholder="请输入"
-                    v-model="SexRatio"
+                    v-model="AgeLevel"
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
@@ -281,7 +286,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">计划投资（元）</div>
+                  <div class="form-cells-hd">计划投资（万元）</div>
                   <input
                     class="ipt"
                     type="text"
@@ -1060,7 +1065,7 @@
             <div class="">
               <div class="form-cells-hd">{{introduce}}</div>
               <div class="form-cell-bd">
-                <p class="ipt" style="height:200rpx!important;padding:0rpx;overflow:hidden" v-if="showp" @tap="showp=false" :class="Synopsis.length>0?'colorBlack':'colorPlace'">{{Synopsis.length>0?Synopsis:introducePlaceholder}}</p>
+                <p class="ipt" style="height:200rpx!important;padding:0rpx" v-if="showp" @tap="showp=false" :class="Synopsis.length>0?'colorBlack':'colorPlace'">{{Synopsis.length>0?Synopsis:introducePlaceholder}}</p>
                 
                 <textarea
                   v-else
@@ -1090,7 +1095,7 @@
             <div class="">
               <div class="form-cells-hd">{{infoMore}}</div>
               <div class="form-cell-bd">
-                <p class="ipt" style="height:200rpx!important;padding:0rpx;overflow:hidden" v-if="showPP" @tap="showPP=false" :class="ContentDetail.length>0?'colorBlack':'colorPlace'">{{ContentDetail.length>0?ContentDetail:infoMorePlaceHolder}}</p>
+                <p class="ipt" style="height:200rpx!important;padding:0rpx" v-if="showPP" @tap="showPP=false" :class="ContentDetail.length>0?'colorBlack':'colorPlace'">{{ContentDetail.length>0?ContentDetail:infoMorePlaceHolder}}</p>
                 <textarea
                 v-else
                   class="ipt"
@@ -1442,7 +1447,7 @@ export default {
     return {
       urlPp:"",//路由
       currentDate: new Date().getTime(),
-      minDate: new Date().setFullYear(1600,0,1),
+      minDate:new Date().getTime(),
       dateTips:false,
       hourses:[],
       minutes:[],
@@ -2817,10 +2822,10 @@ export default {
             this.toastTip("请输入男女比例!")
             return false;
           }
-          // if (this.AgeLevel == '') {
-          //   this.toastTip("请输入年龄层次!")
-          //   return false;
-          // }
+          if (this.AgeLevel == '') {
+            this.toastTip("请输入年龄层次!")
+            return false;
+          }
           
           if (this.PlanStartTime =='') {
             this.toastTip("请选择开始时间!")
@@ -2840,10 +2845,10 @@ export default {
               return false;
             }
           }
-          // if (this.EducationLvl =='') {
-          //   this.toastTip("请选择学历结构!")
-          //   return false;
-          // }
+          if (this.EducationLvl =='') {
+            this.toastTip("请选择学历结构!")
+            return false;
+          }
           if (this.CompanyTradeId =='') {
             this.toastTip("请选择公司行业!")
             return false;
@@ -2986,9 +2991,9 @@ export default {
           PlanEndTime:that.PlanEndTime,
           GladBuyArea:that.GladBuyArea,
           GladBuyAreaId:that.GladBuyAreaId,
-          // AgeLevel:that.AgeLevel,
+          AgeLevel:that.AgeLevel,
           SexRatio:that.SexRatio,
-          // EducationLvl:that.EducationLvl,
+          EducationLvl:that.EducationLvl,
           // Founder:that.Founder
         }
       }
