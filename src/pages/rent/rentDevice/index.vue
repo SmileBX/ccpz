@@ -910,7 +910,7 @@
                 >
               </div>
               <div class="item2-column" v-if="PageId!=29">
-                <div class="form-cells-hd">可否使用公司资质</div>
+                <div class="form-cells-hd">资质使用</div>
                 <input
                   class="ipt"
                   type="text"
