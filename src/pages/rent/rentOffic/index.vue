@@ -2223,7 +2223,7 @@ export default {
     touchExperience(n){
       this.PartnerList[n].ShowWork = true
       this.list = [
-        {Id:1,Name:'1年以下'},{Id:1,Name:'1-2年'},{Id:1,Name:'3-5年'},{Id:1,Name:'6-10年'},{Id:1,Name:'11-15年'},{Id:1,Name:'16年以上'}
+        {Id:1,Name:'1年以下'},{Id:2,Name:'1-2年'},{Id:3,Name:'3-5年'},{Id:4,Name:'6-10年'},{Id:5,Name:'11-15年'},{Id:6,Name:'16年以上'}
       ]
       this.masktitle2 = '请选择经验要求'
       this.showExperience = true
