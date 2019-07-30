@@ -135,9 +135,41 @@ export default {
               }
             });
           });
+          // that.playerList.map(item=>{
+          // console.log(item.title);
+          // })
+          // let arrSort = [
+          //   {title:'a'},
+          //   {title:'t'},
+          //   {title:'r'},
+          //   {title:'h'},
+          //   {title:'y'},
+          //   {title:'x'},
+          // ]
+          function aaa(a,b){
+                const aa = a.title
+                const bb = b.title
+              console.log("a-b",aa>bb);
+              if(aa>bb){
+                return 1;
+              }else if(aa==bb){
+                return 0;
+              }else{
+                return -1;
+              }
+          }
+          let playerList = that.playerList.sort(aaa)
+          // arrSort.sort(aaa)
+          console.log("_________________",playerList);
+          playerList.map(item=>{
+          console.log(item.title);
+          })
+          // function compare(prop){
+          //   return function (a,b){
+          //     return a[prop] - a[prop]
+          //   }
+          // }
           that.friendArr = that.playerList
-          console.log("_________________");
-          console.log(that.playerList);
           that.hasplayerList = true;
           that.hasData = true
         }

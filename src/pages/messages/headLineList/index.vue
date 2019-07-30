@@ -4,7 +4,7 @@
       <li v-for="(item,index) in list" :key="index" @click="goDetail(item.Id)" 
         class="flex-center listBox">
         <div class="leftBox">
-          <div class="title ellipsis">{{item.Title}}</div>
+          <div class="title ellipsis">{{item.Title}} <span v-if="type!=1&&item.IsRead===0">未读</span></div>
           <div class="left-bottom flex-center">
             <div class=""><img src="/static/images/icons/time.jpg" alt="">{{item.AddTime}}</div>
             <div class="" v-if="type==1"><img src="/static/images/icons/read.png" alt="">{{item.Hits}}</div>
@@ -89,7 +89,11 @@ export default {
         res.data.length!==this.pageSize&&(this.hasData = true)
     },
     goDetail(id){
+      if(this.type==1){
         wx.navigateTo({url:'/pages/messages/topNewsDetail/main?Id='+id})
+      }else{
+        wx.navigateTo({url:'/pages/messages/messageDetail/main?Id='+id})
+      }
     }
   },
   onReachBottom(){
@@ -122,6 +126,14 @@ export default {
   .leftBox{
     min-width:450rpx;
     .title{
+      span{
+        padding:3rpx 5rpx;
+        background:red;
+        border-radius:4rpx;
+        color:#fff;
+      font-size:20rpx;
+      margin-left:10rpx;
+      }
     // width:450rpx;
       font-size:30rpx;
       line-height:45rpx;

@@ -591,7 +591,7 @@ export default {
         this.initData();
         this.getMyPublish();
         },1500)
-        wx.showToast({ title: res.msg });
+        wx.showToast({ title: _res.msg });
         return false;
       }
 
