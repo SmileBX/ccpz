@@ -719,7 +719,7 @@
                   >
                 </div>
               </div>
-              <!-- <div class="form-cells-item form-cells-item2">
+              <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
                   <div class="form-cells-hd">月租金（元）</div>
                   <input
@@ -730,7 +730,7 @@
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
-              </div> -->
+              </div>
           </div>
           <div v-if="PageId==38">
               <div class="form-cells-item form-cells-item2">
@@ -3059,7 +3059,7 @@ export default {
           PropertyType:that.PropertyType,
           PayType:that.PayType,
           PropertyPrice:that.PropertyPrice,
-          // DeviceRent:that.DeviceRent
+          DeviceRent:that.DeviceRent
         }
       }
       if(that.PageId == 38){

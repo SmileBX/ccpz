@@ -719,7 +719,7 @@
                   >
                 </div>
               </div>
-              <!-- <div class="form-cells-item form-cells-item2">
+              <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
                   <div class="form-cells-hd">月租金（元）</div>
                   <input
@@ -730,7 +730,7 @@
                     placeholder-style="color:#b5b5b5;"
                   >
                 </div>
-              </div> -->
+              </div>
           </div>
           <div v-if="PageId==38">
               <div class="form-cells-item form-cells-item2">
@@ -2477,26 +2477,20 @@ export default {
             //没有认证 先去认证  code=5 企业认证  code=6个人认证
           if(res.code==6){
               if(this.mm<1){
-                 wx.showModal({
-                    title:'您未完成认证，认证后才能发布信息',
-                    content:'是否跳转到认证页面',
-                    confirmText:"去认证",
-                    cancelText:"再想想",
-                    success:(result)=>{
-                      if (result.confirm) {
-                         setTimeout(() => {
-                          wx.navigateTo({
-                            url: "/pages/mine2/myVertical/main?url=rentDevice"
-                          });
-                          this.mm ++
-                    }, 1500);
-                        } else if (result.cancel) {
-                          wx.switchTab({
-                            url:"/pages/my/main"
-                          })
-                        }
-                    }
+                wx.showToast({
+                  title:res.msg,
+                  duration:1500,
+                  icon:'none',
+                  success:()=>{
+                    
+                  }
                 })
+                setTimeout(() => {
+                  wx.navigateTo({
+                    url: "/pages/mine2/myVertical/main?url=rentDevice"
+                  });
+                  this.mm ++
+                }, 1500);
               }else{
                 wx.showModal({
                     title:'请先认证才可以发布',
@@ -2515,32 +2509,23 @@ export default {
                           })
                         }
                     }
-                })
+                  })
               }
               
             }else if(res.code==5){
               if(this.mm<1){
                 console.log("{{{{{{{{{{{{")
-                wx.showModal({ //后天添加了提示导致两次提示
-                    title:'您未完成认证，认证后才能发布信息',
-                    content:'是否跳转到认证页面',
-                    confirmText:"去认证",
-                    cancelText:"再想想",
-                    success:(result)=>{
-                      if (result.confirm) {
-                         setTimeout(() => {
-                          wx.navigateTo({
-                            url: "/pages/mine2/verticalCompany/main?url=rentDevice"
-                          });
-                          this.mm ++
-                    }, 1500);
-                        } else if (result.cancel) {
-                          wx.switchTab({
-                            url:"/pages/my/main"
-                          })
-                        }
-                    }
+                wx.showToast({
+                  title:res.msg,
+                  duration:1500,
+                  icon:'none',
                 })
+                setTimeout(() => {
+                  wx.navigateTo({
+                    url: "/pages/mine2/verticalCompany/main?url=rentDevice"
+                  });
+                  this.mm ++
+                }, 1500);
               }else if(this.mm>=1){
                 wx.showModal({ //后天添加了提示导致两次提示
                     title:'请先认证才可以发布',
@@ -2559,7 +2544,7 @@ export default {
                           })
                         }
                     }
-                })
+                  })
               }
               
             }
@@ -3059,7 +3044,7 @@ export default {
           PropertyType:that.PropertyType,
           PayType:that.PayType,
           PropertyPrice:that.PropertyPrice,
-          // DeviceRent:that.DeviceRent
+          DeviceRent:that.DeviceRent
         }
       }
       if(that.PageId == 38){

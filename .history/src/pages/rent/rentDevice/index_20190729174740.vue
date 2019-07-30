@@ -1883,7 +1883,6 @@ export default {
                     content:'是否跳转到认证页面',
                     confirmText:"去认证",
                     cancelText:"再想想",
-                    success:(result)=>{
                     if (result.confirm) {
                          setTimeout(() => {
                           wx.navigateTo({
@@ -1936,26 +1935,17 @@ export default {
             }else if(res.code==5){
               if(this.mm<1){
                 console.log("{{{{{{{{{{{{")
-                wx.showModal({ //后天添加了提示导致两次提示
-                    title:'您未完成认证，认证后才能发布信息',
-                    content:'是否跳转到认证页面',
-                    confirmText:"去认证",
-                    cancelText:"再想想",
-                    success:(result)=>{
-                      if (result.confirm) {
-                         setTimeout(() => {
-                          wx.navigateTo({
-                            url: "/pages/mine2/verticalCompany/main?url=rentDevice"
-                          });
-                          this.mm ++
-                    }, 1500);
-                        } else if (result.cancel) {
-                          wx.switchTab({
-                            url:"/pages/my/main"
-                          })
-                        }
-                    }
-                  })
+                wx.showToast({
+                  title:res.msg,
+                  duration:1500,
+                  icon:'none',
+                })
+                setTimeout(() => {
+                  wx.navigateTo({
+                    url: "/pages/mine2/verticalCompany/main?url=rentDevice"
+                  });
+                  this.mm ++
+                }, 1500);
               }else if(this.mm>=1){
                 wx.showModal({ //后天添加了提示导致两次提示
                     title:'请先认证才可以发布',
