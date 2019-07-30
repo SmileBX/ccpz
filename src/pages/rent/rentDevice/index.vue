@@ -589,7 +589,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">意向区域</div>
+                  <div class="form-cells-hd">区域</div>
                   <input
                     class="ipt"
                     type="text"
@@ -811,7 +811,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">意向区域</div>
+                  <div class="form-cells-hd">区域</div>
                   <input
                     class="ipt"
                     type="text"
