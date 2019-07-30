@@ -75,11 +75,11 @@ function request(url, method, data, curPage, header = {}) {
 
                 } else {
                     resolve(res.data);
-                    wx.showToast({
-                        title: res.data.msg + '!',
-                        icon: 'none',
-                        duration: 1500
-                    })
+                    // wx.showToast({
+                    //     title: res.data.msg + '!',
+                    //     icon: 'none',
+                    //     duration: 1500
+                    // })
 
                 }
             },
