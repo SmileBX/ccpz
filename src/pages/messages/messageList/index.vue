@@ -72,7 +72,6 @@ export default {
         res.data.map(item=>{
               // item.Memo = item.Memo.replace(/\<img.*?\"\>/gi,'')
               item.Memo = item.Memo.replace(/\<.*?\>/gi,'')
-              console.log(item.Memo)
         })
         this.list = this.list.concat(res.data)   
         res.data.length!==this.pageSize&&(this.hasData = true)

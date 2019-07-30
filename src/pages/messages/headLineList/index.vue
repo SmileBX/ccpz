@@ -7,12 +7,12 @@
           <div class="title ellipsis">{{item.Title}}</div>
           <div class="left-bottom flex-center">
             <div class=""><img src="/static/images/icons/time.jpg" alt="">{{item.AddTime}}</div>
-            <div class=""><img src="/static/images/icons/read.png" alt="">{{item.Hits}}</div>
-            <p class="">{{item.Keywords}}</p>
+            <div class="" v-if="type==1"><img src="/static/images/icons/read.png" alt="">{{item.Hits}}</div>
+            <p class="" v-if="type==1">{{item.Keywords}}</p>
           </div>
         </div>
         <!-- <div class="con ellipsis" v-html="item.Memo"></div> -->
-        <img mode="widthFix" :src="item.Pic" class="pic" alt v-if="item.Pic">
+        <img  :src="item.Pic" class="pic" alt v-if="item.Pic">
       </li>
     </ul>
     <div class="noData" v-if="list.length<1">没有数据哦！</div>
@@ -21,22 +21,23 @@
 </template>
 <script>
 import { post} from "@/utils";
+// type:1 = 头条；2 = 系统通知
 export default {
   data(){
     return {
-      pramas:"",//首页头条列表---消息页系统通知
+      // pramas:"",//首页头条列表---消息页系统通知
       userId:'',
       token:'',
       list:[],//消息列表
       page:1,
       pageSize:12,
       isData:false,
-      type:""
+      type:1
     }
   },
 
   onLoad() {
-    this.type = this.$root.$mp.query.type
+    this.type = this.$root.$mp.query.type*1
     this.setBarTitle();
   },
   onShow(){
@@ -59,22 +60,40 @@ export default {
         title: title
       });
     },
-    //获取头条
-    getNewsList(){
-      post('About/AboutList',{PageSize:this.pageSize,Page:this.page}).then(res=>{
-        console.log(res) 
-        if(res.data.length<1){
-          this.isData = true;
-        }else{
+    //获取列表
+    async getNewsList(){
+      let url=''
+      let params = {}
+      if(this.type===1){
+        url = 'About/AboutList';
+        params = {PageSize:this.pageSize,Page:this.page}
+      }else{
+        url = 'User/GetSysNotice'
+        params = {
+          UserId: this.userId,
+          Token: this.token,
+          Page:this.page,
+          PageSize:this.pageSize
+      }
+      }
+      const res = await post(url,params)
+              if(this.type==2){
+          res.data.map(item=>{
+              // item.Memo = item.Memo.replace(/\<img.*?\"\>/gi,'')
+              // item.Memo = item.Memo.replace(/\<.*?\>/gi,'')
+                item.AddTime = item.PubTime
+        })
+              }
          this.list = this.list.concat(res.data) 
-        }
-      })
+                console.log(this.type,this.list)
+        res.data.length!==this.pageSize&&(this.hasData = true)
     },
     goDetail(id){
         wx.navigateTo({url:'/pages/messages/topNewsDetail/main?Id='+id})
     }
   },
   onReachBottom(){
+    if(this.hasData)return false;
     this.page+=1;
     this.getNewsList();
   },
@@ -91,15 +110,19 @@ export default {
 <style lang="scss" scoped>
 .topNewsList{
     margin:20rpx 0 0;
+    li{
+    padding: 20rpx 30rpx;
+    }
+
   .listBox{
     justify-content:space-between;
     margin:0;
     border-bottom:1rpx #ececec solid;
   }
   .leftBox{
-    width:450rpx;
+    min-width:450rpx;
     .title{
-    width:450rpx;
+    // width:450rpx;
       font-size:30rpx;
       line-height:45rpx;
       // height:90rpx;
@@ -115,6 +138,7 @@ export default {
         justify-content:space-between;
         font-size:24rpx;
         margin-top:30rpx;
+     max-width:450rpx;
       div{
         color:#999;
         margin-right:50rpx;
@@ -137,7 +161,7 @@ export default {
     }
   }
   .pic{
-    width:200rpx;
+    width:150rpx;
     height:150rpx;
   }
 }
