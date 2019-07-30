@@ -1233,7 +1233,9 @@
                   <input
                     class="ipt"
                     type="text"
-                    placeholder="请输入"
+                    placeholder="请选择"
+                    disabled 
+                    @tap="touchEducation(pindex)"
                     v-model="item.Degree"
                     placeholder-style="color:#b5b5b5;"
                   >
