@@ -362,8 +362,12 @@ export function getNewMsgDot() {
         Token: wx.getStorageSync("token")
       }).then(res => {
         if (res.code === 0 && res.data.Count === 1) {
-          wx.showTabBarRedDot({
-            index: 3
+            const _res = res.data
+          let num = _res.SysNotice.Count+_res.friend_new.Count+_res.friend_req.Count
+          num>99?num = '99+':num = String(num);
+          wx.setTabBarBadge({
+            index: 3,
+            text:num
           });
         }
       });
