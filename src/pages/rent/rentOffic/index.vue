@@ -2809,7 +2809,7 @@ export default {
         }
       }
       if(this.PageId==36 || this.PageId==35){
-          if (this.PropertyPrice == '') {
+          if (this.PropertyPrice === '') {
             this.toastTip("请输入对应金额!")
             return false;
           }

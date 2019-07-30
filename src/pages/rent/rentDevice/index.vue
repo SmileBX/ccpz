@@ -2074,7 +2074,7 @@ export default {
           }
       }
       if(this.PageId == 25 ||　this.PageId ==26 || this.PageId == 31 || this.PageId == 29 || this.PageId == 28 || this.PageId == 27){
-        if (this.PropertyPrice == '') {
+        if (this.PropertyPrice === '') {
           this.toastTip("请输入对应金额!")
           return false;
         }
@@ -2176,15 +2176,15 @@ export default {
       }
       if(this.PageId == 30){
       // if(this.PageId == 30 || this.PageId == 31){
-          if(this.DeviceRent ==''){
+          if(this.DeviceRent ===''){
             this.toastTip("请输入最低价格!")
             return false;
           }
-          if(this.DevicePrice == ''){
+          if(this.DevicePrice === ''){
             this.toastTip("请输入最高价格!")
             return false;
           }
-          if(this.DeviceRent>=this.DevicePrice){
+          if(this.DeviceRent>this.DevicePrice){
             this.toastTip("最低价不能高于最高价!")
             return false;
           }
