@@ -26,7 +26,7 @@
     <div class="ftBtn" style="padding:60rpx 30rpx;">
       <div class="inner">
         <div class="btns">
-          <div class="btn bg_ff952e color_fff center" @click="submitWithdraw">预计两小时内到账，确认提现</div>
+          <div class="btn bg_ff952e color_fff center" @click="submitWithdraw">预计{{CashWithdrawalTime}}小时处理，确认提现</div>
         </div>
       </div>
     </div>

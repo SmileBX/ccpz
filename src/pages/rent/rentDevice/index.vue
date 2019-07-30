@@ -1864,7 +1864,7 @@ export default {
                   }
                 )
             }
-            //公司的信息
+            //公司的信.息
             if(res.data.CompanyList.length>1){
                 this.showDefaultCompany = true
             }else{
@@ -1879,10 +1879,12 @@ export default {
             if(res.code==6){
               if(this.mm<1){
                  wx.showModal({
-                    title:'您未完成认证，认证后才能发布信息',
-                    content:'是否跳转到认证页面',
+                    title:'完成认证',
+                    content:'完成认证后才能发布信息，是否跳转到认证页面',
                     confirmText:"去认证",
                     cancelText:"再想想",
+                    cancelColor:"#999999",
+                    confirmColor:"#ff952e",
                     success:(result)=>{
                     if (result.confirm) {
                          setTimeout(() => {
@@ -1937,10 +1939,12 @@ export default {
               if(this.mm<1){
                 console.log("{{{{{{{{{{{{")
                 wx.showModal({ //后天添加了提示导致两次提示
-                    title:'您未完成认证，认证后才能发布信息',
-                    content:'是否跳转到认证页面',
+                    title:'完成认证',
+                    content:'完成认证后才能发布信息，是否跳转到认证页面',
                     confirmText:"去认证",
                     cancelText:"再想想",
+                    cancelColor:"#999999",
+                    confirmColor:"#ff952e",
                     success:(result)=>{
                       if (result.confirm) {
                          setTimeout(() => {

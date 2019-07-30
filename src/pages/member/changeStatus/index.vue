@@ -4,7 +4,7 @@
       <img src="/static/images/icons/success.jpg" class="icon-status" alt="">
       <div class="txtBox center">
          <h2 class="statusTxt successTxt">兑换成功</h2>
-         <p class="msg">恭喜您成功兑换&nbsp;会{{changeName}}</p>
+         <p class="msg">恭喜您成功兑换&nbsp;会员{{changeName}}</p>
       </div>
       <div class="weui-btn btn-active fill" @click="comfirm">完成</div>
     </div>
