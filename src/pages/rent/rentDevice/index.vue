@@ -2228,7 +2228,7 @@ export default {
       
       return true;
     },
-    //提交发布.
+    //提交发布
     async submitApply(){
       console.log(this.CompanyId,this.Company,"++++++")
       const that = this
