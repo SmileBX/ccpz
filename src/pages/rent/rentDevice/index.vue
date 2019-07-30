@@ -233,7 +233,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">设备单价（元/m²）</div>
+                  <div class="form-cells-hd">设备单价（元/台）</div>
                   <input
                     class="ipt"
                     type="text"

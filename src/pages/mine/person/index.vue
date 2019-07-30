@@ -8,7 +8,8 @@
             <div class="info flex1">
               <div>
                 <span class="name" style="color:#1a1a1a">{{personInfo.Name}}</span>
-                <img src="/static/images/icons/v.png" class="icon_attestation" alt v-if="personInfo.IsAUT">
+                <img src="/static/images/icons/v.png" class="icon_attestation" alt v-if="personInfo.IsAUT" style="margin-right:0">
+                <span class="attestationStatus color_white font22 my_attion" style="margin-left:0;margin-right:20rpx">个人{{personInfo.IsAUT}}</span>
                 <span class="lookAttestation" @tap="seeVertical" v-if="type==1"><img src="/static/images/icons/attestationTag.png" class="icon_attestationTag" alt="">查看认证</span>
               </div>
               <p class="msgList list_itt">
