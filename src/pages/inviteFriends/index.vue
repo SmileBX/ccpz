@@ -40,7 +40,7 @@
                 <div class="box__bd">
                     <div class="box__hd box__hd2"><span class="title">我的邀请战绩</span></div>
                     <ul class="gains flex center">
-                        <li class="item flex1">
+                        <li class="item flex1" @click="gopage">
                             <p class="num">{{num}}</p>
                             <p class="title">共邀请好友</p>
                         </li>
@@ -97,6 +97,11 @@ export default {
             }
         })
     },
+    gopage(){
+        wx.navigateTo({
+        url: "/pages/inviteRecord/main"
+      });
+    }
   },
   onShareAppMessage: function (res) {
         if (res.from === 'button') {

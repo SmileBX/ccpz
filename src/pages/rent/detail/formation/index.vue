@@ -171,7 +171,7 @@
           <h3 class="title detail__title">地理位置</h3>
           <div class="flex flexAlignCenter">
             <div class="flex1">
-              <p class="address">{{data.CompanyAddr.Value}}</p>
+              <p class="address" style="font-size:28rpx">{{data.CompanyAddr.Value}}</p>
               <p class="space">{{data.CompanyDoorNum.Value}}</p>
             </div>
             <img src="/static/images/icons/map.jpg" class="map" @click="checkLocation" alt />

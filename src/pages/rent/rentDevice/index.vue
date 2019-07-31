@@ -1004,7 +1004,7 @@
           </div>
           <!--标签-->
           <div class="form-cells-item" v-if="PageId == 30 || PageId == 27 || PageId == 28 || PageId == 27">
-              <div class="form-cells-hd">拼租设施/设备</div>
+              <div class="form-cells-hd">拼租设施</div>
               <div class="form-cell-bd">
                 <div class="btns-group">
                   <div class="btn" :class="{'cur':item.active}" v-for="(item,dindex) in Devicelist" :key="dindex" @click="addDeviceNum(dindex)">{{item.Name}}</div>
@@ -1316,6 +1316,7 @@ export default {
           }
           if(res.data.RentTimeLimit){
             this.RentTimeLimit = res.data.RentTimeLimit.Value
+            this.RentTimeLimitValue=res.data.RentTimeLimit.Value1
           }
           if(res.data.AllArea){
             this.AllArea = res.data.AllArea.Value 
@@ -1588,7 +1589,7 @@ export default {
           }
           this.list.push(info)
       })
-      
+      console.log(this.list)
       this.masktitle = '请选择期限'
     },
 

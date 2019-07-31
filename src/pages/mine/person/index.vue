@@ -2,15 +2,16 @@
   <div class="pageContent" v-if="hasData">
     <div class="storeDetail">
        <div class="pagePerson pall">
-          <p class="editinfo" @tap="editInfo" v-if="type==1" style="color:#9A9A9A">编辑</p>
+          <p class="editinfo" style="color:#9A9A9A;height:40rpx;"></p>
           <div class="legalInfo flex">
             <img :src="personInfo.Avatar" class="tx" alt style="border-radius:50%">
             <div class="info flex1">
               <div>
                 <span class="name" style="color:#1a1a1a">{{personInfo.Name}}</span>
-                <img src="/static/images/icons/v.png" class="icon_attestation" alt v-if="personInfo.IsAUT" style="margin-right:0">
-                <span class="attestationStatus color_white font22 my_attion" style="margin-left:0;margin-right:20rpx">个人{{personInfo.IsAUT}}</span>
-                <span class="lookAttestation" @tap="seeVertical" v-if="type==1"><img src="/static/images/icons/attestationTag.png" class="icon_attestationTag" alt="">查看认证</span>
+                <img src="/static/images/icons/v.png" class="icon_attestation" alt v-if="personInfo.IsVip==1" style="margin-right:0">
+                <!-- <span class="attestationStatus color_white font22 my_attion" style="margin-left:0;margin-right:20rpx">个人{{personInfo.IsAUT}}</span> -->
+                <!-- <span class="lookAttestation" @tap="seeVertical" v-if="type==1"><img src="/static/images/icons/attestationTag.png" class="icon_attestationTag" alt="">查看认证</span> -->
+                <span class="lookAttestation" style="margin-left:16rpx">个人{{personInfo.IsAUT}}</span>
               </div>
               <p class="msgList list_itt">
                 <span class="msgItem font22" v-if="personInfo.Trade">{{personInfo.Trade}}</span>
@@ -21,8 +22,8 @@
               <block v-if="companyInfo.length>0">
                 <div class="msgList flex list_itt" v-for="(item,key) in companyInfo" :key="key">
                   <p class="msgList">
-                    <span class="msgItem font22" v-if="item.Job">{{item.Job}}</span>
-                    <span class="msgItem font22" v-else>未透漏职位</span>
+                    <!-- <span class="msgItem font22" v-if="item.Job">{{item.Job}}</span>
+                    <span class="msgItem font22" v-else>未透漏职位</span> -->
                     <span class="msgItem font22" v-if="item.Name">{{item.Name}}</span>
                     <span class="msgItem font22" v-else>未透漏公司</span>
                   </p>
@@ -33,7 +34,7 @@
                     <span > 切换</span>
                   </span>
                   <span class="attestationStatus color_white font22 my_attion" v-if="item.IsAUT">
-                    <span class="icon-gou"></span> {{item.IsAUT}}
+                    <span class="icon-gou"></span> 公司{{item.IsAUT}}
                   </span>
                   <div class="msgList flex" v-if="companyInfo.length==0">
                     <p class="msgList">
@@ -101,7 +102,7 @@
               <div class="flex justifyContentBetween">
                   <h3 class="fontBold" style="font-size:32rpx;line-height:1.5">个人简介</h3>
                     <p class="fontColor99" @tap="showMoreInfo">{{seeMore}}
-                      <span class="icon-arrow arrow-right"></span>
+                      <!-- <span class="icon-arrow arrow-down"></span> -->
                     </p>
               </div>
           </div>
@@ -288,7 +289,7 @@
           </div>
       </div> -->
       <!--照片-->
-      <div class="form-cells-item pall bg_fff" style="margin-top:20rpx" v-if="type==2&&companyInfo[0].CompanyPic[0].length>0" >
+      <div class="form-cells-item pall bg_fff" style="margin-top:20rpx" v-if="false" >
         <div class="flex justifyContentBetween">
               <h3 class="title detail__title fontBold">公司照片</h3>
           </div>
@@ -810,5 +811,9 @@ export default {
 .min-w300{
   min-width:300rpx;
   text-align:left!important;
+}
+.msgList .msgItem:first-child {
+  border-left: none;
+  padding-left: 0 !important;
 }
 </style>
