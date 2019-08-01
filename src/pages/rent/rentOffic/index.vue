@@ -1060,7 +1060,7 @@
             <div class="">
               <div class="form-cells-hd">{{introduce}}</div>
               <div class="form-cell-bd">
-                <p class="ipt" style="height:200rpx!important;padding:0rpx" v-if="showp" @tap="showp=false" :class="Synopsis.length>0?'colorBlack':'colorPlace'">{{Synopsis.length>0?Synopsis:introducePlaceholder}}</p>
+                <p class="ipt" style="height:200rpx!important;padding:0rpx;overflow: hidden;" v-if="showp" @tap="showp=false" :class="Synopsis.length>0?'colorBlack':'colorPlace'">{{Synopsis.length>0?Synopsis:introducePlaceholder}}</p>
                 
                 <textarea
                   v-else
@@ -2838,10 +2838,10 @@ export default {
             this.toastTip("请输入男女比例!")
             return false;
           }
-          if (this.AgeLevel == '') {
-            this.toastTip("请输入年龄层次!")
-            return false;
-          }
+          // if (this.AgeLevel == '') {
+          //   this.toastTip("请输入年龄层次!")
+          //   return false;
+          // }
           
           if (this.PlanStartTime =='') {
             this.toastTip("请选择开始时间!")

@@ -13,30 +13,41 @@
                 <!-- <span class="lookAttestation" @tap="seeVertical" v-if="type==1"><img src="/static/images/icons/attestationTag.png" class="icon_attestationTag" alt="">查看认证</span> -->
                 <span class="lookAttestation" style="margin-left:16rpx">个人{{personInfo.IsAUT}}</span>
               </div>
-              <p class="msgList list_itt">
-                <span class="msgItem font22" v-if="personInfo.Trade">{{personInfo.Trade}}</span>
-                <span class="msgItem font22" v-else>未透漏行业</span>
-                <span class="msgItem font22" v-if="personInfo.WorkLife">{{personInfo.WorkLife}}</span>
-                <span class="msgItem font22" v-else>未透漏经验</span>
+              <p class="msgList list_itt" v-if="personInfo.Age">
+                <span class="msgItem font22">年龄：{{personInfo.Age}}</span>
+              </p>
+              <p class="msgList list_itt" v-if="personInfo.Area">
+                <span class="msgItem font22">地区：{{personInfo.Area}}</span>
+              </p>
+              <p class="msgList list_itt" v-if="personInfo.NativePlace">
+                <span class="msgItem font22">籍贯：{{personInfo.NativePlace}}</span>
               </p>
               <block v-if="companyInfo.length>0">
-                <div class="msgList flex list_itt" v-for="(item,key) in companyInfo" :key="key">
+                <div class="msgList list_itt" v-for="(item,key) in companyInfo" :key="key">
                   <p class="msgList">
-                    <!-- <span class="msgItem font22" v-if="item.Job">{{item.Job}}</span>
-                    <span class="msgItem font22" v-else>未透漏职位</span> -->
                     <span class="msgItem font22" v-if="item.Name">{{item.Name}}</span>
                     <span class="msgItem font22" v-else>未透漏公司</span>
+                    <span class="msgItem font22"  style="border-left: 1px solid #9A9A9A;" v-if="item.Trade">{{item.Trade}}</span>
+                    <span class="msgItem font22"  style="border-left: 1px solid #9A9A9A;" v-else>未透漏行业</span>
+                    <span class="msgItem font22" style="border-left: 1px solid #9A9A9A;" v-if="item.Job">{{item.Job}}</span>
+                    <span class="msgItem font22" style="border-left: 1px solid #9A9A9A;" v-else>未透漏职位</span>
+                    <span class="msgItem font22" v-if="item.WorkLife&&type==1">{{item.WorkLife}}</span>
                   </p>
-                  <span class="attestationStatus color_white font22 my_attion"  @tap="editCompany(item.Id)" v-if="type==1">
+                  <p class="msgList list_itt">
+                    <span class="attestationStatus color_white font22 my_attion"  @tap="editCompany(item.Id)" v-if="type==1">
                     <span> 编辑</span>
-                  </span>
-                  <span class="attestationStatus color_white font22 my_attion" @tap="changeCompany"  v-if="type==1">
-                    <span > 切换</span>
-                  </span>
-                  <span class="attestationStatus color_white font22 my_attion" v-if="item.IsAUT">
-                    <span class="icon-gou"></span> 公司{{item.IsAUT}}
-                  </span>
-                  <div class="msgList flex" v-if="companyInfo.length==0">
+                    </span>
+                    <span class="attestationStatus color_white font22 my_attion" @tap="changeCompany"  v-if="type==1">
+                      <span > 切换</span>
+                    </span>
+                    <span class="attestationStatus color_white font22 my_attion" v-if="item.IsAUT">
+                      <span class="icon-gou"></span> 公司{{item.IsAUT}}
+                    </span>
+                  </p>
+                </div>
+              </block>
+              <block  v-if="companyInfo.length==0">
+                <div class="msgList flex">
                     <p class="msgList">
                       未透露公司
                     </p>
@@ -44,7 +55,6 @@
                       <span class="icon-gou"></span> 去认证
                     </span>
                   </div>
-                </div>
               </block>
               <!-- <p class="msgList list_itt">
                 <span class="msgItem" style="font-size:24rpx">个人简介：</span>
@@ -60,38 +70,50 @@
               <div class="weui-cell min-w300">
                 <div class="weui-cell__hd">成立日期</div>
                 <div class="weui-cell__bd" v-if="item.SetUpDate">{{item.SetUpDate}}</div>
-                <div class="weui-cell__bd" v-else>无</div>
+                <div class="weui-cell__bd" v-else>未透露</div>
               </div>
               <div class="weui-cell min-w300">
                 <div class="weui-cell__hd">人员规模</div>
                 <div class="weui-cell__bd" v-if="item.StaffSize">{{item.StaffSize}}</div>
-                <div class="weui-cell__bd" v-else>无</div>
+                <div class="weui-cell__bd" v-else>未透露</div>
+              </div>
+            </div>
+            <div class="group flex justifyContentBetween">
+              <div class="weui-cell min-w300">
+                <div class="weui-cell__hd min-w120">职位</div>
+                <div class="weui-cell__bd" v-if="item.Trade">{{item.Job}}</div>
+                <div class="weui-cell__bd" v-else>未透露</div>
+              </div>
+              <div class="weui-cell min-w300">
+                <div class="weui-cell__hd min-w120">经验</div>
+                <div class="weui-cell__bd" v-if="item.NativePlace">{{item.WorkLife}}</div>
+                <div class="weui-cell__bd" v-else>未透露</div>
               </div>
             </div>
             <div class="group flex justifyContentBetween">
               <div class="weui-cell min-w300">
                 <div class="weui-cell__hd">办公面积</div>
                 <div class="weui-cell__bd" v-if="item.OfficeArea">{{item.OfficeArea}}</div>
-                <div class="weui-cell__bd" v-else>无</div>
+                <div class="weui-cell__bd" v-else>未透露</div>
               </div>
               <div class="weui-cell min-w300">
                 <div class="weui-cell__hd">地区</div>
                 <div class="weui-cell__bd" v-if="item.NativePlace">{{item.NativePlace}}</div>
-                <div class="weui-cell__bd" v-else>无</div>
+                <div class="weui-cell__bd" v-else>未透露</div>
               </div>
             </div>
             <div class="group flex">
               <div class="weui-cell flex1 min-w300">
                 <div class="weui-cell__hd">办公地址</div>
                 <div class="weui-cell__bd" v-if="item.OfficeAddr">{{item.OfficeAddr}}</div>
-                <div class="weui-cell__bd" v-else>无</div>
+                <div class="weui-cell__bd" v-else>未透露</div>
               </div>
             </div>
             <div class="group flex">
               <div class="weui-cell flex1 min-w300">
                 <div class="weui-cell__hd">公司官网</div>
                 <div class="weui-cell__bd" v-if="item.OfficialWebsite">{{item.OfficialWebsite}}</div>
-                <div class="weui-cell__bd" v-else>无</div>
+                <div class="weui-cell__bd" v-else>未透露</div>
               </div>
             </div>
         </div>
@@ -428,7 +450,7 @@ export default {
         console.log("Res:",res)
         if(res.code==0){
           if(res.data.Area){
-            this.$set(res.data,"Area",res.data.Area.split(',').slice(1).join('-'))
+            // this.$set(res.data,"Area",res.data.Area.split(' ').slice(1).join(' '))
           }
           this.$set(res.data,"Trade",res.data.Trade.split(',').join(' '))
           // if( res.data.TagsCapGood.length>0){
@@ -661,19 +683,14 @@ export default {
     border:1rpx solid #ff9325!important
 }
 .group{
-  padding:0;
+  padding:8rpx 0;
   font-size:24rpx;
-}
-.msgItem,.msgItem2{
-  padding:0 4rpx;
-  border-left: none;
-  color:#9A9A9A
 }
 .msgItem:last-child{
   border-left: 1px solid #9A9A9A;
 }
 .weui-cells{
-  padding:20rpx 50rpx;
+  padding:20rpx 30rpx;
   margin:0
 }
 .weui-cell{
@@ -796,7 +813,8 @@ export default {
   height:26rpx!important;
   line-height:26rpx!important;
   padding:3rpx 10rpx 3rpx 5rpx!important;
-  margin-left:20rpx!important
+  margin-right:20rpx!important;
+  margin-left:0!important
 }
 .addpaddingtop{
   padding-top: 20rpx;
@@ -810,6 +828,10 @@ export default {
 }
 .min-w300{
   min-width:300rpx;
+  text-align:left!important;
+}
+.min-w120{
+  min-width:120rpx;
   text-align:left!important;
 }
 .msgList .msgItem:first-child {

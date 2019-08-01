@@ -29,7 +29,7 @@
                 <div class="weui-cell_bd">
                   <p class="txt">身份证号</p>
                 </div>
-                <input type="number" v-model="idCard" placeholder="请输入您的身份证号">
+                <input type="text" v-model="idCard" placeholder="请输入您的身份证号">
               </div>
             </div>
             <!--上传身份证-->
@@ -108,6 +108,7 @@
           <scroll-view class="listScroll"  scroll-y="true">
           <div class="list" style="padding:40rpx 30rpx;">
             <div class="verticalItem" v-for="(item,index) in list"  :key="index">
+              <div class="delBtn" @click="delBtn(item.Id)"><img src="/static/images/cancle.png" alt=""></div>
               <div class="person_info">
                 <p class="name com_name">{{item.Name}}</p>
                 <p class="certical">企业认证：
@@ -190,6 +191,46 @@ export default {
     setBarTitle() {
       wx.setNavigationBarTitle({
         title: '我的认证'
+      });
+    },
+    delBtn(id){
+      wx.showModal({
+        title:'删除企业认证',
+        content:'您确定要删除该条企业认证吗？',
+        confirmText:"确定",
+        cancelText:"取消",
+        cancelColor:"#999999",
+        confirmColor:"#ff952e",
+        success:(result)=>{
+          this.UserBusinessAuthDel(id)
+        }
+      })
+    },
+    UserBusinessAuthDel(id) {
+      //删除认证
+      let that = this;
+      post(
+        "User/UserBusinessAuthDel",
+        {
+          UserId: that.userId,
+          Token: that.token,
+          Id: id
+        },
+        that.curPage
+      ).then(res => {
+        if (res.code === 0) {
+          //删除成功
+          wx.showToast({
+            title: "删除成功",
+            icon: "none",
+            duration: 1500,
+            success:function(){
+              setTimeout(()=>{
+                that.UserBusinessAuthInfo()
+              },1500)
+            }
+          });
+        }
       });
     },
     gotoAreement(){  //跳转到协议查看
@@ -453,6 +494,20 @@ export default {
   padding: 40rpx 30rpx 30rpx;
   border-radius: 16rpx;
   margin-bottom: 30rpx;
+  position: relative;
+}
+.delBtn{
+  position: absolute;
+  width: 60rpx;
+  height: 60rpx;
+  top: -24rpx;
+  right: -24rpx;
+  img{
+    width: 40rpx;
+    height: 40rpx;
+    display: block;
+    margin: 10rpx;
+  }
 }
 .card_bd {
   height: calc(100vh - 150rpx);
