@@ -4,13 +4,13 @@
       scroll-y="true"
       class="moreHeight"
       :scroll-into-view="scrollTopId"
+      scroll-with-animation
       @scroll="onListWrapScroll"
       ref="indexWrap"
-      :scroll-top="scrollTop"
       id="scroll"
     >
       <!-- <ul class="index-list-wrap" ref="indexWrap" @scroll="onListWrapScroll"> -->
-      
+
       <ul class="index-list-wrap">
         <li
           v-for="(group,nindex) in data"
@@ -18,7 +18,7 @@
           class="index-group"
           ref="indexGroup"
           :data-title="group.title"
-          :class="'itemClient'+(nindex*1)"
+          :id="'itemClient'+(nindex*1)"
         >
           <h3 class="index-group-title">{{group.title}}</h3>
           <ul>
@@ -28,18 +28,45 @@
                 <span class="name">{{item.name}}</span>
             </li>-->
 
-            <van-swipe-cell :right-width="[hasSetStar ? 130 : 65]"  class="swipe-cell"  v-for="(item,sindex) in group.items" :key="sindex">
-                <van-cell-group>
-                  <van-cell>
-                    <li class="index-group-item" @click="onClick(item)">
-                      <!-- <img v-if="useLazyLoad"  :src="item.avatar" class="avatar" alt=""> -->
-                      <img :src="item.Headimgurl" class="avatar" alt="">
-                      <span class="name">{{item.NickName}}</span>
-                    </li>
-                  </van-cell>
-                </van-cell-group>
-                <span slot="right" v-if="hasSetStar" class="van-swipe-cell__right van-swipe-cell__right1" @click.stop="resetStar(item.Id,item.IsStar,nindex,sindex)"><img v-if="item.IsStar===0" src="/static/images/icons/star.png" class="icon-star" alt=""><img v-if="item.IsStar===1" src="/static/images/icons/star2.png" class="icon-star" alt=""></span>
-                <span slot="right" class="van-swipe-cell__right" @click.stop="Delete(item.Id,nindex,sindex)">删除</span>
+            <van-swipe-cell
+              :right-width="[hasSetStar ? 130 : 65]"
+              class="swipe-cell"
+              v-for="(item,sindex) in group.items"
+              :key="sindex"
+            >
+              <van-cell-group>
+                <van-cell>
+                  <li class="index-group-item" @click="onClick(item)">
+                    <!-- <img v-if="useLazyLoad"  :src="item.avatar" class="avatar" alt=""> -->
+                    <img :src="item.Headimgurl" class="avatar" alt />
+                    <span class="name">{{item.NickName}}</span>
+                  </li>
+                </van-cell>
+              </van-cell-group>
+              <span
+                slot="right"
+                v-if="hasSetStar"
+                class="van-swipe-cell__right van-swipe-cell__right1"
+                @click.stop="resetStar(item.Id,item.IsStar,nindex,sindex)"
+              >
+                <img
+                  v-if="item.IsStar===0"
+                  src="/static/images/icons/star.png"
+                  class="icon-star"
+                  alt
+                />
+                <img
+                  v-if="item.IsStar===1"
+                  src="/static/images/icons/star2.png"
+                  class="icon-star"
+                  alt
+                />
+              </span>
+              <span
+                slot="right"
+                class="van-swipe-cell__right"
+                @click.stop="Delete(item.Id,nindex,sindex)"
+              >删除</span>
             </van-swipe-cell>
           </ul>
         </li>
@@ -76,7 +103,7 @@ export default {
         return [];
       }
     },
-    hasSetStar:{
+    hasSetStar: {
       type: Boolean,
       default: false
     },
@@ -92,7 +119,8 @@ export default {
       scrollTop: "",
       currentIndex: 0,
       moving: false,
-      currentIndicator: ""
+      currentIndicator: "",
+      listHeight:[],
     };
   },
   watch: {
@@ -114,40 +142,47 @@ export default {
       });
     }
   },
-  onShow() {
+  onLoad() {
+    console.log('执行了onLoad')
     this.listHeight = [];
     this.timer = null;
     this.scrollTimer = null;
-    console.log(this.data,'data')
-    if(this.data.length>0){
-    // setTimeout(() => {
-      this._calculateHeight();
-    // }, 2000);
-    }
+      this.time100();
   },
   methods: {
-    
+    time100(){
+      setTimeout(() => {
+        if(this.data&&this.data.length>0){
+          this._calculateHeight();
+          console.log('完成',this.data)
+        }else{
+          this.time100();
+        }
+      }, 100);
+    },
     _calculateHeight() {
       this.listHeight = [];
       const list = this.data;
       let height = 0;
       this.listHeight.push(height);
+      const that = this;
       for (let i = 0; i < list.length; i++) {
-        let item = list[i];
         var query = wx.createSelectorQuery();
         query
-          .select(".itemClient" + i)
+          .select("#itemClient" + i)
           .boundingClientRect(rect => {
-            if(rect){
-            height += rect.height;
-            this.listHeight.push(height);
+            if (rect) {
+              height += rect.height;
+              that.listHeight.push(height);
             }
           })
           .exec();
       }
     },
     _onTouchStartIndex(index) {
-          this.scrollTop = this.listHeight[index];
+      this.scrollTopId='itemClient'+index
+      this.currentIndex = index;
+      // this.scrollTop = this.listHeight[index];
       // console.log(index,this.listHeight,this.listHeight[index],"this.listHeight[index]")
       // this.currentIndex = index;
       // var query = wx.createSelectorQuery();
@@ -165,7 +200,7 @@ export default {
       this.$emit("choose", item);
     },
     // 点击列表事件
-    onClick(item){
+    onClick(item) {
       this.$emit("onClick", item);
     },
     resetStar(id, isStar, pIndex, index) {
@@ -176,26 +211,26 @@ export default {
     },
     onListWrapScroll(e) {
       // console.log(e,"+++++++++++++++++++++++")
-      clearTimeout(this.scrollTimer);
-      this.scrollTimer = setTimeout(() => {
+      // clearTimeout(this.scrollTimer);
+      // this.scrollTimer = setTimeout(() => {
         // let scrollTop = this.$refs.indexWrap.scrollTop
         let scrollTop = e.mp.detail.scrollTop;
-        console.log(this.listHeight,"scrollTop")
         // let scrollTop = this.scrollTopId
         const listHeight = this.listHeight;
-        for (let i = 0; i < listHeight.length - 1; i++) {
+        for (let i = 0; i < listHeight.length; i++) {
           if (
-            scrollTop <= listHeight[i + 1] - TITLE_HEIGHT &&
+            scrollTop <= (listHeight[i + 1] - TITLE_HEIGHT) &&
             scrollTop >= listHeight[i]
           ) {
+            // this.scrollTopId = 'itemClient'+i;
             this.currentIndex = i;
             // console.log(this.currentIndex,"i+++++++++")
             return;
           }
         }
-      }, 10);
+      // }, 10);
     }
-  },
+  }
   // destroyed() {
   //   clearTimeout(this.timer)
   //   clearTimeout(this.scrollTimer)
@@ -204,8 +239,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.moreHeight{
-  height:calc(100vh-700rpx)
+.moreHeight {
+  height: calc(100vh - 290rpx);
 }
 .index-list {
   position: relative;
