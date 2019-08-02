@@ -9,13 +9,14 @@
     <div class="padwid" @click="isShowMask=false">
       <div v-for="(msg,msgIndex) in chatList" :key="msgIndex" :id="msg.class">
         <div class="time">{{msg.AddTime}}</div>
-        <div class="flex flexAlignCenter boxSize p2 justifyContentEnd plr20"  v-if="msg.MsgId=='a'">
+        <div class="flex flexAlignCenter boxSize p2 justifyContentEnd plr20" v-if="msg.MsgId=='a'">
           <div class="flex flexAlignEnd justifyContentEnd mrr2">
             <!-- <span class="fontColor" @click="scrollBottom">已读</span> -->
             <!-- <div class="tagmsg cfff"> -->
-            <div class="tagmsg" v-if="msg.Info">
-              <!-- <p v-if="msg.Info" class="boxSize">{{msg.Info}}</p> -->
-              <p class="boxSize" v-html="msg.Info"></p>
+            <div class="tagmsg" v-if="msg.Info" 
+                @longpress="gotouchstart(msg.text)">
+              <!-- <text v-if="msg.Info" class="boxSize">{{msg.Info}}</text> -->
+              <text class="boxSize" v-html="msg.Info"></text>
 
               <!-- :onload="scrollBottom()" -->
               <span class="sj rsj"></span>
@@ -30,19 +31,28 @@
             />
           </div>
           <div class="avatarbox mr0" v-if="chatStatu.a">
-            <img :src="chatStatu.a.Headimgurl" alt class="avatar"  @click="goUserCenter"/>
+            <img :src="chatStatu.a.Headimgurl" alt class="avatar" @click="goUserCenter" />
           </div>
         </div>
         <div class="flex flexAlignCenter boxSize plr20 justifyContentStart" v-if="msg.MsgId=='b'">
           <div class="avatarbox mr0" v-if="chatStatu.b">
-            <img :src="chatStatu.b.Headimgurl" alt class="avatar" @click="goUserCenter(chatStatu.b.TempId)"/>
+            <img
+              :src="chatStatu.b.Headimgurl"
+              alt
+              class="avatar"
+              @click="goUserCenter(chatStatu.b.TempId)"
+            />
           </div>
           <div class="flex flexAlignEnd mrl2">
             <!-- <span class="fontColor">已读</span> -->
-            <div class="tagmsg bg_fff black" v-if="msg.Info">
+            <div class="tagmsg bg_fff black" v-if="msg.Info" 
+                @longpress="gotouchstart(msg.text)">
               <span class="sj lsj"></span>
               <!-- <p v-if="msg.Info" class="boxSize" style="color:#1a1a1a">{{msg.Info}}</p> -->
-              <p class="boxSize" v-html="msg.Info"></p>
+              <text
+                class="boxSize"
+                v-html="msg.Info"
+              ></text>
               <!-- :onload="scrollBottom()" -->
             </div>
             <img
@@ -102,13 +112,7 @@
             @click="onShowModule('imgage')"
             v-if="!sendInfo"
           />
-          <img
-            src="/static/images/icons/send.png"
-            alt
-            class="logimg"
-            @click="sendMessage()"
-            v-else
-          />
+          <img src="/static/images/icons/send.png" alt class="logimg" @click="sendMessage()" v-else />
         </div>
       </div>
       <!--按钮组-->
@@ -405,7 +409,7 @@ export default {
       wx.sendSocketMessage({ data: JSON.stringify(data) });
     },
     //获取好友消息
-    getFriendMessage(scrollBottom,scrollPosition) {
+    getFriendMessage(scrollBottom, scrollPosition) {
       return new Promise((resolve, reject) => {
         const that = this;
         wx.request({
@@ -422,26 +426,28 @@ export default {
           success(_res) {
             let res = _res.data;
             if (res.code === 0) {
-
               let info = [];
               // 处理发送时间
-              let times=res.data.info[0]&&new Date(res.data.info[0].AddTime.replace('-','/'));
+              let times =
+                res.data.info[0] &&
+                new Date(res.data.info[0].AddTime.replace("-", "/"));
               res.data.info.reverse(); //数组翻转
-              res.data.info.map((item,i) => {
-                 let date = new Date(item.AddTime.replace('-','/'));
-                item.class='class'+date.getTime(); //时间戳类，用户下拉聊天记录滑动对应位置
-                if(i!==0){
-                  const year = (date.getFullYear())===(times.getFullYear());
-                  const Month = date.getMonth()===times.getMonth();
-                  const dates = date.getDate()===times.getDate();
-                  const Hours = date.getHours()===times.getHours();
-                  const Minutes = date.getMinutes()-times.getMinutes()<5
-                  if(year&&Month&&dates&&Hours&&Minutes){
-                    item.AddTime=''
-                  }else{
+              res.data.info.map((item, i) => {
+                let date = new Date(item.AddTime.replace("-", "/"));
+                item.class = "class" + date.getTime(); //时间戳类，用户下拉聊天记录滑动对应位置
+                if (i !== 0) {
+                  const year = date.getFullYear() === times.getFullYear();
+                  const Month = date.getMonth() === times.getMonth();
+                  const dates = date.getDate() === times.getDate();
+                  const Hours = date.getHours() === times.getHours();
+                  const Minutes = date.getMinutes() - times.getMinutes() < 5;
+                  if (year && Month && dates && Hours && Minutes) {
+                    item.AddTime = "";
+                  } else {
                     times = date;
                   }
                 }
+                item.text = item.Info;
                 // 将匹配结果替换表情图片
                 item.Info = item.Info.replace(
                   /\[[\u4E00-\u9FA5]{1,3}\]/gi,
@@ -458,7 +464,7 @@ export default {
                 // info.unshift(item);
                 info.push(item);
               });
-              
+
               // res.data.info = info;
               if (that.page === 1) {
                 that.chatList = info;
@@ -473,25 +479,23 @@ export default {
                 console.log("滚动了");
                 that.scrollBottom();
               }
-              if(scrollPosition){
-                  setTimeout(() => {
-                    wx
-                      .createSelectorQuery()
-                      .select("#"+scrollPosition)
-                      .boundingClientRect(function(rect) {
-                        // 使页面滚动到底部
-                        wx.pageScrollTo({
-                          scrollTop: rect.top,
-                          duration: 0
-                        });
-                      })
-                      .exec();
-                  }, 100);
-
+              if (scrollPosition) {
+                setTimeout(() => {
+                  wx
+                    .createSelectorQuery()
+                    .select("#" + scrollPosition)
+                    .boundingClientRect(function(rect) {
+                      // 使页面滚动到底部
+                      wx.pageScrollTo({
+                        scrollTop: rect.top,
+                        duration: 0
+                      });
+                    })
+                    .exec();
+                }, 100);
               }
               resolve();
-            } else if(res.code === 1){
-              
+            } else if (res.code === 1) {
               wx.showModal({
                 title: "开通会员",
                 content: "此功能需要开通会员，是否跳转开通会员页面?",
@@ -499,15 +503,16 @@ export default {
                 cancelColor: "#999",
                 success(res) {
                   if (res.confirm) {
-                    wx.navigateTo({ url: "/pages/member2/buyFunction/main?type=3" });
-                  }else{
+                    wx.navigateTo({
+                      url: "/pages/member2/buyFunction/main?type=3"
+                    });
+                  } else {
                     wx.navigateBack();
                     reject();
                   }
                 }
               });
-
-              }else {
+            } else {
               wx.showToast({ title: res.msg, icon: "none" });
               setTimeout(() => {
                 wx.navigateBack();
@@ -813,21 +818,26 @@ export default {
       }, 100);
     },
     // 查看个人资料
-    goUserCenter(id){
-      console.log('typeOf(id*1)',typeof(id),id)
-      if(typeof(id)==='number'){
-       wx.navigateTo({url:'/pages/mine/person/main?type=2&Id='+id})
-      }else{
-       wx.navigateTo({url:'/pages/mine/person/main?type=1'})
+    goUserCenter(id) {
+      console.log("typeOf(id*1)", typeof id, id);
+      if (typeof id === "number") {
+        wx.navigateTo({ url: "/pages/mine/person/main?type=2&Id=" + id });
+      } else {
+        wx.navigateTo({ url: "/pages/mine/person/main?type=1" });
       }
-    }
+    },
+    // ******************长按复制***************
+    gotouchstart(data) {
+        console.log('复制',data)
+        wx.setClipboardData({data})
+    },
   },
   //下拉刷新
   onPullDownRefresh() {
     this.initData();
     this.page += 1;
-    
-    this.getFriendMessage('',this.chatList[0].class);
+
+    this.getFriendMessage("", this.chatList[0].class);
     wx.stopPullDownRefresh();
   },
   created() {
@@ -837,16 +847,16 @@ export default {
 </script>
 <style scoped lang="scss">
 .padwid {
-// height:86vh;
-// width:100%;
-// box-sizing:border-box;
-// padding-bottom:180rpx;
-.time{
-  color:#888;
-  font-size:20rpx;
-  text-align:center;
-  margin:10rpx 0;
-}
+  // height:86vh;
+  // width:100%;
+  // box-sizing:border-box;
+  // padding-bottom:180rpx;
+  .time {
+    color: #888;
+    font-size: 20rpx;
+    text-align: center;
+    margin: 10rpx 0;
+  }
 }
 .showMessage {
   padding-bottom: 530rpx !important;

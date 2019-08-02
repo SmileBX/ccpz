@@ -149,7 +149,6 @@ export default {
           function aaa(a,b){
                 const aa = a.title
                 const bb = b.title
-              console.log("a-b",aa>bb);
               if(aa>bb){
                 return 1;
               }else if(aa==bb){
