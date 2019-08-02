@@ -49,6 +49,8 @@ const store = new Vuex.Store({
             Avatar:"",
             Name:  "",
             Area:  "",
+            NativePlace: "",
+            Age: "",
             WorkLife: "",
             WorkIdea:  "",
             WeChatNum: "",

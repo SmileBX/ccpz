@@ -22,13 +22,25 @@
         </div>
         <input type="text" placeholder="未认证" disabled v-model="IsAUT" @tap="goVertical">
       </div>
+      <div class="weui-cell">
+        <div class="weui-cell__bd">
+           <p class="txt">年龄</p>
+        </div>
+        <input type="number" placeholder="请输入" v-model="Age">
+      </div>
       <div class="weui-cell" @click="showArea = true">
         <div class="weui-cell__bd">
            <p class="txt">地区</p>
         </div>
         <input type="text" placeholder="请选择" disabled v-model="Area"  >
       </div>
-      <div class="weui-cell" @click="choseBusiness">
+      <div class="weui-cell" @click="showArea2=true">
+        <div class="weui-cell__bd">
+           <p class="txt">籍贯</p>
+        </div>
+        <input type="text" placeholder="请选择" disabled v-model="NativePlace"  >
+      </div>
+      <div class="weui-cell" @click="choseBusiness" v-if="Company">
         <div class="weui-cell__bd">
            <!--公司-->
             <p class="txt" v-if="Company">公司行业</p>
@@ -43,7 +55,7 @@
         </div>
         <input type="text" placeholder="请选择" disabled v-model="Name"  >
       </div>
-      <div class="weui-cell">
+      <div class="weui-cell" v-if="Company">
         <div class="weui-cell__bd">
            <p class="txt">职位</p>
         </div>
@@ -57,7 +69,7 @@
         <input type="text" placeholder="请输入" v-model="Name">
       </div>
       <!--个人-->
-      <div class="weui-cell" v-else @click="choseWorkTime">
+      <div class="weui-cell" @click="choseWorkTime" v-if="Company">
         <div class="weui-cell__bd">
            <p class="txt">工作年限</p>
         </div>
@@ -74,12 +86,6 @@
            <p class="txt">办公地址</p>
         </div>
         <input type="text" placeholder="请输入" v-model="Name"  >
-      </div>
-      <div class="weui-cell" @click="showArea2=true" v-if="Company">
-        <div class="weui-cell__bd">
-           <p class="txt">负责人籍贯</p>
-        </div>
-        <input type="text" placeholder="请选择" disabled v-model="Name"  >
       </div>
       <!-- <div class="pall bg_fff">
         <p style="margin-bottom:10rpx;">个人简介</p>
@@ -106,7 +112,7 @@
     </van-popup>
     <!--籍贯-->
     <van-popup :show="showArea2" position="bottom" :overlay="true" @close="showArea2 = false">
-      <van-area :area-list="areaList" @cancel="showArea2 = false" @confirm="confirmArea2" columns-num="2" title="籍贯"/>
+      <van-area :area-list="areaList" @cancel="showArea2 = false" @confirm="confirmArea2"  title="籍贯"/>
     </van-popup>
     <!--组建遮罩层-->
     <div class="mask" v-if="isShow"></div>
@@ -166,6 +172,8 @@ export default {
       Name:"", //昵称
       Job:'',//职位
       Area:"",//地区 格式：'1级,2级'
+      NativePlace:"",//籍贯
+      Age:"",//年龄
       Trade:"", //行业 格式：'1级,2级'
       WorkLife:"",//年限
       WorkIdea:"", //个人简介
@@ -209,6 +217,8 @@ export default {
       this.Contacts = this.$store.state.personInfo.Contacts
       this.ContactsTel = this.$store.state.personInfo.ContactsTel
       this.WorkIdea = this.$store.state.personInfo.WorkIdea
+      this.Age = this.$store.state.personInfo.Age
+      this.NativePlace = this.$store.state.personInfo.NativePlace
 
       this.columns = []
      
@@ -247,6 +257,8 @@ export default {
            this.WorkIdea = res.data.WorkIdea
            this.Trade = res.data.Trade
            this.Area = res.data.Area
+           this.Age = res.data.Age
+           this.NativePlace = res.data.NativePlace
            
         }
       })
@@ -355,15 +367,15 @@ export default {
     },
     confirmArea2(area){
       this.showArea2 = false
-      let text = ''
+      let text = []
       const areas = area.mp.detail.values
       for(let i=0;i<areas.length;i++){
-        text+=areas[i].name
+        text.push(areas[i].name)
       }
       this.provinceCode=areas[0].code||'',
       this.cityCode=areas[1].code||'',
       this.districtCode=areas[2].code||'',
-      this.area = text;
+      this.NativePlace = text.join(",");
 
     },
     
@@ -395,6 +407,8 @@ export default {
           Name:  this.Name,
           Job:  this.Job,
           Area:  this.Area,
+          Age:  this.Age,
+          NativePlace:  this.NativePlace,
           WorkLife: this.WorkLife,
           WorkIdea:  this.WorkIdea,
           WeChatNum: this.WeChatNum,

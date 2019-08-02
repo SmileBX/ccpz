@@ -15,7 +15,7 @@
         </p>
         <p class="priceArea">
           <!-- <span class="price">￥{{item.PropertyPrice}}</span> -->
-          <span class="price">{{item.PropertyPrice}} 元</span>
+          <span class="price">{{item.PropertyPrice}} 元/场</span>
         </p>
         <p class="msgList">
           <span class="msgItem" v-if="item.LegalPerson">{{item.LegalPerson}}</span>

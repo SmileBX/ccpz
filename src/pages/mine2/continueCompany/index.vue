@@ -7,12 +7,18 @@
           <input type="text" disabled :value="trade" class="weui-input" placeholder="请选择">
         </div>
       </div>
-      <!-- <div class="weui-cell">
-        <label class="weui-label"><span style="color:#f00">*</span>职位</label>
+      <div class="weui-cell">
+        <label class="weui-label">职位</label>
         <div class="weui-cell__bd text_r">
           <input type="text" class="weui-input" v-model="job" placeholder="请输入">
         </div>
-      </div> -->
+      </div>
+      <div class="weui-cell" @tap="showWork=true">
+        <label class="weui-label">工作年限</label>
+        <div class="weui-cell__bd text_r">
+          <input type="text" disabled class="weui-input" v-model="WorkLife" placeholder="请输入">
+        </div>
+      </div>
       <div class="weui-cell" @tap="showSelect(1)">
         <label class="weui-label"><span style="color:#f00">*</span>成立日期</label>
         <div class="weui-cell__bd text_r">
@@ -159,6 +165,20 @@
       </div>
     </div>
     <!-- 选择成立日期  end -->
+    <!--工作年限-->
+    <div class="modal_mask" v-if="showWork">
+        <div class="tileText flex">
+           <span @click="showWork=false">取消</span>
+           <span class="font32">工作年限</span>
+           <span @click="confirmWorkTime">确定</span>
+        </div>
+        <scroll-view :scroll-y="true" style="height:480rpx;" :style="showNoChange?'height:200rpx':''" class="showItem" @scrolltolower="loadMore">
+          <div v-for="(item,index) in workTime" :key="index">
+              <p :class="{'itemactive':statu == index}" @click="choseWork(index)" style="margin-top:3rpx;">{{item}}
+              </p>
+          </div>
+        </scroll-view>
+    </div>
     <!-- 选择籍贯弹窗 -->
     <div class="shade bottom__shade" v-show="areaStatus">
       <div class="mask" @tap="closearea"></div>
@@ -184,7 +204,7 @@ export default {
     this.token = wx.getStorageSync("token");
     if(this.$root.$mp.query.id !=="" && this.$root.$mp.query.id){
       this.id = this.$root.$mp.query.id;
-      this.getDetailInfo();
+      this.getDetailInfo();console.log("huoqushhuju")
     }
     this.curPage = getCurrentPageUrlWithArgs();
     this.columns = []
@@ -207,6 +227,10 @@ export default {
       id: "",
       trade: "",
       job: "",
+      statu:0,
+      showWork:false,
+      WorkLife:"",//工作年限
+      workTime:['1年以下','2年经验','3年经验','4年经验','5年经验','5年以上'],
       setUpDate: "",
       staffSize: "",
       officeArea: "",
@@ -245,6 +269,19 @@ export default {
         title: "认证新企业"
       });
     },
+    //选择弹层item
+    choseWork(e){
+        this.statu = e
+    },
+    //确认工作年限
+    confirmWorkTime(){
+      for(let i in this.workTime){
+        if(i== this.statu){
+          this.WorkLife = this.workTime[i]
+        }
+      }
+      this.showWork = false
+    },
     // 编辑企业认证下一步获取提交的资料
     async getDetailInfo(){  
       this.companyPic=[];
@@ -255,7 +292,9 @@ export default {
       })
         if(res.code===0){
           this.trade = res.data.Trade.join(',');
-          this.setUpDate = res.data.SetUpDate ;
+          this.setUpDate = res.data.SetUpDate;
+          this.job = res.data.Job;
+          this.WorkLife = res.data.WorkLife;
           this.capital = res.data.RegCapital;
           this.staffSize = res.data.StaffSize;
           this.officeArea = res.data.OfficeArea;
@@ -345,6 +384,7 @@ export default {
     initdata(){
       this.trade="";
       this.job="";
+      this.WorkLife="";
       this.setUpDate="";
       this.staffSize="";
       this.contactsTel="";
@@ -527,7 +567,8 @@ export default {
           Company: {
             Id: that.id, //企业认证id
             Trade: that.trade, //行业格式'企业,行业'
-            // Job: that.job, //职位
+            Job: that.job, //职位
+            WorkLife: that.WorkLife, //工作年限
             SetUpDate: that.setUpDate, //成立日期
             StaffSize: that.staffSize, //人员规模
             RegCapital: that.capital, //注册资本
@@ -614,4 +655,14 @@ export default {
 .uploadImage {
   padding-bottom: 30rpx;
 }
+.showItem{
+  p {
+        padding: 15rpx 30rpx;
+        text-align:center;
+    }
+}
+.itemactive {
+      background: #ff2925;
+      color: #fff
+  }
 </style>

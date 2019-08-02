@@ -52,6 +52,8 @@ export default {
       Name:"", //昵称
       Area:"",//地区 格式：'1级,2级'
       Trade:"", //行业 格式：'1级,2级'
+      NativePlace:"",//籍贯
+      Age:"",//年龄
       WorkLife:"",//年限
       Job:"",//职位
       WorkIdea:"", //理念
@@ -73,6 +75,8 @@ export default {
     this.Name = this.$store.state.personInfo.Name
     this.Job = this.$store.state.personInfo.Job
     this.Area = this.$store.state.personInfo.Area
+    this.Age = this.$store.state.personInfo.Age
+    this.NativePlace = this.$store.state.personInfo.NativePlace
     this.Trade = this.$store.state.personInfo.Trade
     this.WorkLife = this.$store.state.personInfo.WorkLife
     this.Contacts = this.$store.state.personInfo.Contacts
@@ -93,6 +97,8 @@ export default {
       this.Name = ""
       this.Job = ""
       this.Area = ""
+      this.Age = ""
+      this.NativePlace = ""
       this.Trade = ""
       this.WorkLife = ""
       this.WorkIdea = ""
@@ -106,6 +112,8 @@ export default {
           Name:  this.Name,
           Job:  this.Job,
           Area:  this.Area,
+          Age:  this.Age,
+          NativePlace:  this.NativePlace,
           WorkLife: this.WorkLife,
           WorkIdea:  this.WorkIdea,
           WeChatNum: this.WeChatNum,
@@ -157,7 +165,8 @@ export default {
           Avatar: this.AvatarwBase,
           Name: this.Name,
           Job: this.Job,
-          Area: this.Area,
+          Age: this.Age,
+          NativePlace: this.NativePlace,
           WorkLife: this.WorkLife,
           WeChatNum: this.WeChatNum,
           Contacts: this.Contacts,

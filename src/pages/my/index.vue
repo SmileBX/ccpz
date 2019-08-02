@@ -2,7 +2,7 @@
   <div class="pageContent">
     <div class="memberTop">
       <img src="/static/images/icons/set.png" @click="gotoSet" class="icon_set" alt>
-      <span class="btnModifyInfo" @tap="editInfo">修改资料</span>
+      <span class="btnModifyInfo" @tap="editInfo">修改个人资料</span>
       <!-- <div class="perInfo level__perInfo flex flexAlignCenter"> -->
       <div class="perInfo level__perInfo flex">
         <img @click="gotoPerson" :src="personInfo.Avatar" class="tx" alt>
@@ -170,7 +170,7 @@ export default {
   data() {
     return {
       menuArr:["/pages/member2/memberManage/main","/pages/member/serviceCardChange/main","/pages/member/integral/main","/pages/mine2/myVertical/main","/pages/mine2/myCoupon/main","/pages/member2/invoiceList/main","/pages/member2/feedback/main?type=2","/pages/member2/feedback/main?type=1","/pages/member2/feedback/main?type=3","/pages/member/help/main","/pages/member/contact/main"],
-      menuArr2:["/pages/mine2/account/main","/pages/mine2/myCollect/main","/pages/mine/publish/main","/pages/member/browse/main","/pages/inviteFriends/main"],
+      menuArr2:["/pages/mine2/account/main","/pages/mine2/myCollect/main","/pages/mine/publish/main","/pages/member/browse/main","/pages/member2/feedbackThank/main"],//"/pages/inviteFriends/main"
       curPage: "",
       userId: "",
       token: "",
