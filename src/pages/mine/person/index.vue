@@ -46,7 +46,7 @@
                   </p>
                 </div>
               </block>
-              <block  v-if="companyInfo.length==0">
+              <!-- <block  v-if="companyInfo.length==0">
                 <div class="msgList flex">
                     <p class="msgList">
                       未透露公司
@@ -55,7 +55,7 @@
                       <span class="icon-gou"></span> 去认证
                     </span>
                   </div>
-              </block>
+              </block> -->
               <!-- <p class="msgList list_itt">
                 <span class="msgItem" style="font-size:24rpx">个人简介：</span>
                 <span class="msgItem2" style="font-size:24rpx;line-height:1.3" v-if="personInfo.WorkIdea">{{personInfo.WorkIdea}}</span>
@@ -81,12 +81,12 @@
             <div class="group flex justifyContentBetween">
               <div class="weui-cell min-w300">
                 <div class="weui-cell__hd min-w120">职位</div>
-                <div class="weui-cell__bd" v-if="item.Trade">{{item.Job}}</div>
+                <div class="weui-cell__bd" v-if="item.Job">{{item.Job}}</div>
                 <div class="weui-cell__bd" v-else>未透露</div>
               </div>
               <div class="weui-cell min-w300">
-                <div class="weui-cell__hd min-w120">经验</div>
-                <div class="weui-cell__bd" v-if="item.NativePlace">{{item.WorkLife}}</div>
+                <div class="weui-cell__hd">经验</div>
+                <div class="weui-cell__bd" v-if="item.WorkLife">{{item.WorkLife}}</div>
                 <div class="weui-cell__bd" v-else>未透露</div>
               </div>
             </div>
@@ -297,7 +297,7 @@
         </div>
       </div>
       <!-- 公司介绍 -->
-      <div class="section" v-if="type==2 && companyInfo[0].CompanyIntro.length>0" style="margin-top:20rpx">
+      <div class="section" v-if="type==2 && companyInfo.length>0" style="margin-top:20rpx">
         <div class="locationBox pd15 company">
             <h3 class="title detail__title">公司简介</h3>
             <div class="con">{{companyInfo[0].CompanyIntro}}</div>
