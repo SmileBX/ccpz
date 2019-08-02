@@ -241,7 +241,11 @@ export default {
           cancelColor:"#999999",
           confirmColor:"#ff952e",
           success:(result)=>{
-            that.BatchApplyInvoice()
+            if (result.confirm){
+              that.BatchApplyInvoice()
+            }else{
+              that.OrderId=[]
+            }
           }
       })
       console.log(this.OrderId)
@@ -288,7 +292,9 @@ export default {
             icon:"none"
           })
         }
-        that.FeesOrderList();
+        setTimeout(() => {
+          that.FeesOrderList();
+        }, 1500);
       });
     },
     getInvoiceList() {  //获取发票列表
