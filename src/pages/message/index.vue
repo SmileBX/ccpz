@@ -82,7 +82,7 @@ export default {
       isData:false,//是否开始渲染
       messageInfo:{},
       inputName:'',
-      list:[], //联系人
+      list:[], //联系人.
     }
   },
    onLoad() {
