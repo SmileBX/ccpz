@@ -290,8 +290,8 @@ export default {
             success:function(){
               setTimeout(() => {
                 that.initData();
-                wx.switchTab({
-                  url: '/pages/my/main'
+                wx.navigateTo({
+                  url: '/pages/member2/feedbackThank/main'
                 })
               },1500)
             }
