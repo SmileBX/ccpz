@@ -170,7 +170,7 @@ export default {
   data() {
     return {
       menuArr:["/pages/member2/memberManage/main","/pages/member/serviceCardChange/main","/pages/member/integral/main","/pages/mine2/myVertical/main","/pages/mine2/myCoupon/main","/pages/member2/invoiceList/main","/pages/member2/feedback/main?type=2","/pages/member2/feedback/main?type=1","/pages/member2/feedback/main?type=3","/pages/member/help/main","/pages/member/contact/main"],
-      menuArr2:["/pages/mine2/account/main","/pages/mine2/myCollect/main","/pages/mine/publish/main","/pages/member/browse/main","/pages/member2/feedbackThank/main"],//"/pages/inviteFriends/main"
+      menuArr2:["/pages/mine2/account/main","/pages/mine2/myCollect/main","/pages/mine/publish/main","/pages/member/browse/main","/pages/inviteFriends/main"],//"/pages/inviteFriends/main"
       curPage: "",
       userId: "",
       token: "",
