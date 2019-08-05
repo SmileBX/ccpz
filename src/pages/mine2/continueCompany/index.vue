@@ -13,7 +13,7 @@
           <input type="text" class="weui-input" v-model="job" placeholder="请输入">
         </div>
       </div>
-      <div class="weui-cell" @tap="showWork=true">
+      <div class="weui-cell" @tap="showWork=true;showtextarea=false">
         <label class="weui-label">工作年限</label>
         <div class="weui-cell__bd text_r">
           <input type="text" disabled class="weui-input" v-model="WorkLife" placeholder="请输入">
@@ -166,18 +166,21 @@
     </div>
     <!-- 选择成立日期  end -->
     <!--工作年限-->
-    <div class="modal_mask" v-if="showWork">
-        <div class="tileText flex">
-           <span @click="showWork=false">取消</span>
-           <span class="font32">工作年限</span>
-           <span @click="confirmWorkTime">确定</span>
-        </div>
-        <scroll-view :scroll-y="true" style="height:480rpx;" :style="showNoChange?'height:200rpx':''" class="showItem" @scrolltolower="loadMore">
-          <div v-for="(item,index) in workTime" :key="index">
-              <p :class="{'itemactive':statu == index}" @click="choseWork(index)" style="margin-top:3rpx;">{{item}}
-              </p>
+    <div class="shade"  v-if="showWork">
+      <div class="mask" @click="quxiao"></div>
+      <div class="modal_mask">
+          <div class="tileText flex">
+            <span @click="quxiao">取消</span>
+            <span class="font32">工作年限</span>
+            <span @click="confirmWorkTime">确定</span>
           </div>
-        </scroll-view>
+          <scroll-view :scroll-y="true" style="height:480rpx;" :style="showNoChange?'height:200rpx':''" class="showItem" @scrolltolower="loadMore">
+            <div v-for="(item,index) in workTime" :key="index">
+                <p :class="{'itemactive':statu == index}" @click="choseWork(index)" style="margin-top:3rpx;">{{item}}
+                </p>
+            </div>
+          </scroll-view>
+      </div>
     </div>
     <!-- 选择籍贯弹窗 -->
     <div class="shade bottom__shade" v-show="areaStatus">
@@ -273,6 +276,10 @@ export default {
     choseWork(e){
         this.statu = e
     },
+    quxiao(){
+      this.showWork=false;
+      this.showtextarea=true;
+    },
     //确认工作年限
     confirmWorkTime(){
       for(let i in this.workTime){
@@ -280,7 +287,8 @@ export default {
           this.WorkLife = this.workTime[i]
         }
       }
-      this.showWork = false
+      this.showWork = false;
+      this.showtextarea=true;
     },
     // 编辑企业认证下一步获取提交的资料
     async getDetailInfo(){  
@@ -668,5 +676,9 @@ export default {
   textarea{
     width: 100%;
     min-height: 320rpx;
+  }
+  .tileText{
+    border-top: #ececec 1px solid;
+    border-bottom: #ececec 1px solid
   }
 </style>
