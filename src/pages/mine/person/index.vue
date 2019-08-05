@@ -33,7 +33,7 @@
                     <span class="msgItem font22" style="border-left: 1px solid #9A9A9A;" v-else>未透漏职位</span>
                     <span class="msgItem font22" v-if="item.WorkLife&&type==1">{{item.WorkLife}}</span>
                   </p>
-                  <p class="msgList list_itt">
+                  <span class="msgList list_itt">
                     <span class="attestationStatus color_white font22 my_attion"  @tap="editCompany(item.Id)" v-if="type==1">
                     <span> 编辑</span>
                     </span>
@@ -43,7 +43,7 @@
                     <span class="attestationStatus color_white font22 my_attion" v-if="item.IsAUT">
                       <span class="icon-gou"></span> 公司{{item.IsAUT}}
                     </span>
-                  </p>
+                  </span>
                 </div>
               </block>
               <!-- <block  v-if="companyInfo.length==0">
