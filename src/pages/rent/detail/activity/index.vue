@@ -14,7 +14,7 @@
       <div class="shortInfo">
         <h2 class="name">{{data.Title.Value}}</h2>
         <p class="priceArea">
-          <span class="price">{{data.PropertyPrice.Value}}</span>元/月
+          <span class="price">{{data.PropertyPrice.Value}}</span>元/场
         </p>
         <p class="msgList" v-if="data.FirstTags&&data.FirstTags.Value.length>0">
           <span class="msgItem" v-for="(item,index) in data.FirstTags.Value" :key="index">{{item}}</span>

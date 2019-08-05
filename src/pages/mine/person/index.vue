@@ -38,7 +38,7 @@
                     <span> 编辑</span>
                     </span>
                     <span class="attestationStatus color_white font22 my_attion" @tap="changeCompany"  v-if="type==1">
-                      <span > 切换</span>
+                      <span> 切换</span>
                     </span>
                     <span class="attestationStatus color_white font22 my_attion" v-if="item.IsAUT">
                       <span class="icon-gou"></span> 公司{{item.IsAUT}}
