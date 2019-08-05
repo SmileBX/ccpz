@@ -65,7 +65,7 @@
     </div>
     <div class="pall bg_fff" v-if="showtextarea">
       <p style="margin-bottom:10rpx;">公司简介</p>
-      <textarea name id cols="30" rows="10" v-model="companyIntro" placeholder="请输入公司简介"></textarea>
+      <textarea  v-model="companyIntro" placeholder="请输入公司简介"></textarea>
     </div>
     <!-- <div class="pall bg_fff" v-if="showtextarea">
       <p style="margin-bottom:10rpx;">公司理念</p>

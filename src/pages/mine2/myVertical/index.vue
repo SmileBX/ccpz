@@ -202,7 +202,9 @@ export default {
         cancelColor:"#999999",
         confirmColor:"#ff952e",
         success:(result)=>{
-          this.UserBusinessAuthDel(id)
+          if (result.confirm){
+            this.UserBusinessAuthDel(id)
+          }
         }
       })
     },
