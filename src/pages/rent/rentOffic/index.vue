@@ -2861,10 +2861,10 @@ export default {
               return false;
             }
           }
-          if (this.EducationLvl =='') {
-            this.toastTip("请选择学历结构!")
-            return false;
-          }
+          // if (this.EducationLvl =='') {
+          //   this.toastTip("请选择学历结构!")
+          //   return false;
+          // }
           if (this.CompanyTradeId =='') {
             this.toastTip("请选择公司行业!")
             return false;
