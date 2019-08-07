@@ -369,6 +369,10 @@ export function getNewMsgDot() {
             index: 3,
             text:num
           });
+        }else{
+            wx.removeTabBarBadge({
+              index: 3
+            });
         }
       });
     }

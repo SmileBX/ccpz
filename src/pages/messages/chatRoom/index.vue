@@ -189,7 +189,7 @@
     <div class="mask" v-if="isShowMask" catchtouchmove="true" @click="isShowMask=false"></div>
     <div class="centerMask" v-if="isShowMask">
       <div class="fontBold mestitle">新增常用语</div>
-      <textarea name id cols="30" rows="10" fixed placeholder="输入您的常用回复" v-model="useText"></textarea>
+      <textarea name id cols="30" rows="10" :maxlength="300" fixed placeholder="输入您的常用回复" v-model="useText"></textarea>
       <div class="flex mesbtn borderTop">
         <p @click="saveText">保存</p>
         <p class="fontColor99" @click="sendText">保存并发送</p>
@@ -652,16 +652,22 @@ export default {
     //保存常用语
     saveText() {
       // console.log(this.addId,"addId")
+      if(this.useText.length>300){
+        wx.showToast({
+          title:'常用语限制在300个字符以内！'
+        })
+        return false;
+      }
       let that = this;
       post(
         "User/AddUser_word",
         {
-          UserId: that.userId,
-          Token: that.token,
-          GroupId: that.addId,
-          Info: that.useText
+          UserId: this.userId,
+          Token: this.token,
+          GroupId: this.addId,
+          Info: this.useText
         },
-        that.curPage
+        this.curPage
       ).then(res => {
         if (res.code === 0) {
           wx.showToast({
@@ -670,6 +676,7 @@ export default {
             duration: 1500,
             success: function() {
               that.isShowMask = false;
+              that.useText='';
               that.getMessage(that.addId, true);
               console.log(that.messageList, "that.messageList");
               // that.messageList.reverse()
