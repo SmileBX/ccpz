@@ -406,7 +406,7 @@ export default {
     // this.Id = 10394
     // this.type = 2
     this.seeMore = '查看更多'
-    this.companyInfo = []
+    // this.companyInfo = []
     this.list = []
     this.hasData = false
     this.showMore = false
@@ -478,13 +478,16 @@ export default {
               this.ReportId = res.data.Footer.Value.IsReportId.Value
             }
           }
-          if(res.data.CyList.length>1){
+          if(this.companyInfo.length==0){
+            if(res.data.CyList.length>1){
             this.companyInfo.push(this.personInfo.CyList[0])
           console.log(this.companyInfo)
            }else{
              this.companyInfo = res.data.CyList
           console.log(this.companyInfo)
            }
+          }
+          
         }
       })
     },
