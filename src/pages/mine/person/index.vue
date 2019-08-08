@@ -22,7 +22,7 @@
               <p class="msgList list_itt" v-if="personInfo.NativePlace">
                 <span class="msgItem font22">籍贯：{{personInfo.NativePlace}}</span>
               </p>
-              <block v-if="companyInfo.length>0">
+              <block v-if="companyInfo.length>0&&type==1">
                 <div class="msgList list_itt" v-for="(item,key) in companyInfo" :key="key">
                   <p class="msgList">
                     <span class="msgItem font22" v-if="item.Name">{{item.Name}}</span>
@@ -40,6 +40,23 @@
                     <span class="attestationStatus color_white font22 my_attion" @tap="changeCompany"  v-if="type==1">
                       <span> 切换</span>
                     </span>
+                    <span class="attestationStatus color_white font22 my_attion" v-if="item.IsAUT">
+                      <span class="icon-gou"></span> 公司{{item.IsAUT}}
+                    </span>
+                  </span>
+                </div>
+              </block>
+              <block v-if="othercompanyInfo.length>0&&type==2">
+                <div class="msgList list_itt" v-for="(item,key) in othercompanyInfo" :key="key">
+                  <p class="msgList">
+                    <span class="msgItem font22" v-if="item.Name">{{item.Name}}</span>
+                    <span class="msgItem font22" v-else>未透漏公司</span>
+                    <span class="msgItem font22"  style="border-left: 1px solid #9A9A9A;" v-if="item.Trade">{{item.Trade}}</span>
+                    <span class="msgItem font22"  style="border-left: 1px solid #9A9A9A;" v-else>未透漏行业</span>
+                    <span class="msgItem font22" style="border-left: 1px solid #9A9A9A;" v-if="item.Job">{{item.Job}}</span>
+                    <span class="msgItem font22" style="border-left: 1px solid #9A9A9A;" v-else>未透漏职位</span>
+                  </p>
+                  <span class="msgList list_itt">
                     <span class="attestationStatus color_white font22 my_attion" v-if="item.IsAUT">
                       <span class="icon-gou"></span> 公司{{item.IsAUT}}
                     </span>
@@ -371,11 +388,13 @@ export default {
     return {
       type:0,//1-个人 2-他人
       Id:"",//他人的Id
+      CompanyId:"",//公司id
       curPage: "",
       userId: "",
       token: "",
       personInfo:{},
       companyInfo:[],
+      othercompanyInfo:[],
       hasData:false,
       isShowMask:false,
       showNoChange:false,//控制是否选择高度
@@ -401,6 +420,9 @@ export default {
     this.type = this.$root.$mp.query.type
     if(this.$root.$mp.query.Id){  //进入他人主页传递的Id
        this.Id = this.$root.$mp.query.Id
+    }
+    if(this.$root.$mp.query.CompanyId){  //进入他人主页传递的Id
+       this.CompanyId = this.$root.$mp.query.CompanyId
     }
     // console.log(this.type)
     // this.Id = 10394
@@ -435,6 +457,7 @@ export default {
       if(this.type==2){
         objUrl = 'User/OtherHomePage'
         pramas = {
+          CompanyId:this.CompanyId,
           UserId: this.userId,
           Token: this.token,
           ShopId :this.Id
@@ -477,17 +500,16 @@ export default {
               this.conFriendId = res.data.Footer.Value.IsContact.TempId
               this.ReportId = res.data.Footer.Value.IsReportId.Value
             }
+            this.othercompanyInfo = res.data.CyList
+          }else{
+            if(this.companyInfo.length==0){
+              if(res.data.CyList.length>1){
+                this.companyInfo.push(this.personInfo.CyList[0])
+              }else{
+                this.companyInfo = res.data.CyList[0]
+              }
+            }
           }
-          if(this.companyInfo.length==0){
-            if(res.data.CyList.length>1){
-            this.companyInfo.push(this.personInfo.CyList[0])
-          console.log(this.companyInfo)
-           }else{
-             this.companyInfo = res.data.CyList
-          console.log(this.companyInfo)
-           }
-          }
-          
         }
       })
     },

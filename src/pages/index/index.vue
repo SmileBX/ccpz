@@ -216,44 +216,15 @@
           <div class="filterContent" v-if="recomendList.length>0">
             <ul class="column levelPanel storeList">
               <!-- <li class="item">
-                <div class="outside">
-                  <div class="pictrueAll">
-                    <div class="pictrue img">
-                      <img src="/static/images/of/index_a1.jpg" alt>
-                    </div>
-                  </div>
-                  <div class="txtBox">
-                    <p class="title ellipsis">
-                      <span class="typeName">拼办公室</span>深圳连锁办公室拼租
-                    </p>
-                    <p class="priceArea">
-                      <span class="price">3000</span>元/月
-                    </p>
-                    <p class="msgList">
-                      <span class="msgItem">工程设计</span>
-                      <span class="msgItem">
-                        100m
-                        <span class="sup">2</span>
-                      </span>
-                      <span class="msgItem">3卡2独</span>
-                      <span class="msgItem">罗湖</span>
-                    </p>
-                    <p class="tipsList">
-                      <span>股份合作</span>
-                      <span>可使用公司资质</span>
-                      <span>可挂牌</span>
-                    </p>
-                  </div>
-                </div>
               </li>-->
               <!-- 拼租组件 -->
               <rentItem :list="recomendList" v-if="menuTab===0"></rentItem>
               <!-- 拼租组件  end -->
               <!-- 组建组件 -->
-              <formationItem :list="recomendList" v-if="menuTab===1"></formationItem>
+              <formationItem :list="recomendList" v-if="menuTab===2"></formationItem>
               <!-- 组建组件 end -->
               <!-- 拼活动组件 -->
-              <activityItem :list="recomendList" v-if="menuTab===2"></activityItem>
+              <activityItem :list="recomendList" v-if="menuTab===1"></activityItem>
               <!-- 拼活动组件  end -->
               <!-- 房源组件 -->
               <houseItem :list="recomendList" v-if="menuTab===3"></houseItem>
@@ -340,12 +311,12 @@ export default {
           title: "拼租"
         },
         {
-          id: 22,
-          title: "组建"
-        },
-        {
           id: 23,
           title: "拼活动"
+        },
+        {
+          id: 22,
+          title: "组建"
         },
         {
           id: 24,

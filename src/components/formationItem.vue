@@ -35,7 +35,7 @@
       <div class="info flex1">
         <div style="margin-bottom:16rpx;">
           <span class="name">{{item.NickName}}</span>
-          <img src="/static/images/icons/v.jpg" class="icon_attestation" alt v-if="item.IsAUT*1">
+          <img src="/static/images/icons/v.png" class="icon_attestation" alt v-if="item.IsAUT*1">
           <span class="lookAttestation">{{item.AddTime}}</span>
         </div>
         <p class="msgList">

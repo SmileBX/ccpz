@@ -212,7 +212,7 @@ export default {
     // 跳转到个人中心
     goUserCenter(){
       wx.navigateTo({
-        url: `/pages/mine/person/main?type=2&Id=${this.data.ShopInfo.Value.ShopId}`
+        url: `/pages/mine/person/main?type=2&Id=${this.data.ShopInfo.Value.ShopId}&CompanyId=${this.data.CompanyInfo.Value.Id.Value}`
       });
     },
     // 查看地理位置

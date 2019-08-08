@@ -13,7 +13,7 @@
           <!--标题-->
           <div class="form-cells-item">
             <div class="">
-              <div class="form-cells-hd">标题</div>
+              <div class="form-cells-hd">标题<span style="color:#ff3333">*</span></div>
               <div class="form-cell-bd">
                 <input
                   class="ipt"
@@ -28,7 +28,7 @@
           <!--公司名称 -->
           <div class="form-cells-item">
             <div :class="showDefaultCompany?'form-cells-navigate navigate-bottom':''">
-              <div class="form-cells-hd">公司/团队</div>
+              <div class="form-cells-hd">公司/团队<span style="color:#ff3333">*</span></div>
               <div class="form-cell-bd">
                 <input
                   class="ipt"
@@ -46,7 +46,7 @@
           <div v-if="PageId==25">
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column" @click="getProperty">
-                  <div class="form-cells-hd">物业形式</div>
+                  <div class="form-cells-hd">物业形式<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -57,7 +57,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">物业单价（元/m²）</div>
+                  <div class="form-cells-hd">物业单价（元/m²）<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -69,7 +69,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">意向购买区域</div>
+                  <div class="form-cells-hd">意向购买区域<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -81,7 +81,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">是否装修</div>
+                  <div class="form-cells-hd">是否装修<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -95,7 +95,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">计划购买日期</div>
+                  <div class="form-cells-hd">计划购买日期<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -107,7 +107,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">计划购买面积（&nbsp;m²&nbsp;）</div>
+                  <div class="form-cells-hd">计划购买面积（m²）<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -119,7 +119,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">意向拼购方行业</div>
+                  <div class="form-cells-hd">意向拼购方行业<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -143,7 +143,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">物业类型</div>
+                  <div class="form-cells-hd">物业类型<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -159,7 +159,7 @@
           <div v-if="PageId==26">
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">设备类型</div>
+                  <div class="form-cells-hd">设备类型<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -171,7 +171,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">规格型号</div>
+                  <div class="form-cells-hd">规格型号<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -183,7 +183,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">计划购买数量</div>
+                  <div class="form-cells-hd">计划购买数量<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -193,7 +193,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">设备形式</div>
+                  <div class="form-cells-hd">设备形式<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -207,7 +207,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">计划购买日期</div>
+                  <div class="form-cells-hd">计划购买日期<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -219,7 +219,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">设备使用区域</div>
+                  <div class="form-cells-hd">设备使用区域<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -233,7 +233,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">设备单价（元/台）</div>
+                  <div class="form-cells-hd">设备单价（元/台）<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -255,7 +255,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">意向行业</div>
+                  <div class="form-cells-hd">意向行业<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -271,7 +271,7 @@
           <div v-if="PageId==30">
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">意向拼租行业</div>
+                  <div class="form-cells-hd">意向拼租行业<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -283,7 +283,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">计划租赁日期</div>
+                  <div class="form-cells-hd">计划租赁日期<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -297,7 +297,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">意向区域</div>
+                  <div class="form-cells-hd">意向区域<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -309,7 +309,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd" style="position:relative;">面积（&nbsp;m<span style="position:absolute;font-size:18rpx">2</span>&nbsp;&nbsp;）</div>
+                  <div class="form-cells-hd" style="position:relative;">面积（m²）<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -321,7 +321,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">公司行业</div>
+                  <div class="form-cells-hd">公司行业<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -333,7 +333,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">租赁期限</div>
+                  <div class="form-cells-hd">租赁期限<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -347,7 +347,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">价格区间（元）</div>
+                  <div class="form-cells-hd">价格区间（元）<span style="color:#ff3333">*</span></div>
                   <div class="flex flexAlignCenter">
                         <input
                             class="ipt"
@@ -367,7 +367,7 @@
                   </div>
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">是否装修</div>
+                  <div class="form-cells-hd">是否装修<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -381,7 +381,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">需卡位数量</div>
+                  <div class="form-cells-hd">需卡位数量<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -395,7 +395,7 @@
           <div v-if="PageId==31">
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">意向拼租行业</div>
+                  <div class="form-cells-hd">意向拼租行业<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -407,7 +407,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">设备规格（台）</div>
+                  <div class="form-cells-hd">设备规格</div>
                   <input
                     class="ipt"
                     type="text"
@@ -419,7 +419,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">设备租金（元/台）</div>
+                  <div class="form-cells-hd">设备租金（元/台）<span style="color:#ff3333">*</span></div>
                   <input
                       class="ipt"
                       type="number"
@@ -443,7 +443,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">地区</div>
+                  <div class="form-cells-hd">地区<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -469,7 +469,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">设备形式</div>
+                  <div class="form-cells-hd">设备形式<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -505,7 +505,7 @@
           <div v-if="PageId==29">
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">意向拼租行业</div>
+                  <div class="form-cells-hd">意向拼租行业<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -529,7 +529,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">设备形式</div>
+                  <div class="form-cells-hd">设备形式<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -541,7 +541,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">设备数量（台）</div>
+                  <div class="form-cells-hd">设备数量（台）<span style="color:#ff3333">*</span></div>
                   <input
                       class="ipt"
                       type="text"
@@ -553,7 +553,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">出售价格（元/台）</div>
+                  <div class="form-cells-hd">出租价格（元/台）<span style="color:#ff3333">*</span></div>
                   <input
                       class="ipt"
                       type="text"
@@ -589,7 +589,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">区域</div>
+                  <div class="form-cells-hd">区域<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -605,7 +605,7 @@
           <div v-if="PageId==28">
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">意向拼租行业</div>
+                  <div class="form-cells-hd">意向拼租行业<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -617,7 +617,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">办公形式</div>
+                  <div class="form-cells-hd">办公形式<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -631,7 +631,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">出租价格（元）</div>
+                  <div class="form-cells-hd">出租价格（元）<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -641,7 +641,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">总面积(m²)</div>
+                  <div class="form-cells-hd">总面积（m²）</div>
                   <input
                       class="ipt"
                       type="text"
@@ -653,7 +653,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">出租面积(m²)</div>
+                  <div class="form-cells-hd">出租面积（m²）<span style="color:#ff3333">*</span></div>
                   <input
                       class="ipt"
                       type="text"
@@ -663,7 +663,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">卡位数量（个）</div>
+                  <div class="form-cells-hd">卡位数量（个）<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -687,7 +687,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">计划租赁日期</div>
+                  <div class="form-cells-hd">计划租赁日期<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -701,7 +701,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">公司行业</div>
+                  <div class="form-cells-hd">公司行业<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -713,7 +713,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">意向区域</div>
+                  <div class="form-cells-hd">意向区域<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -729,7 +729,7 @@
           <div v-if="PageId==27">
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">意向拼租行业</div>
+                  <div class="form-cells-hd">意向拼租行业<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -741,7 +741,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">卡座数量（个）</div>
+                  <div class="form-cells-hd">卡座数量（个）<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -765,7 +765,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">出租价格（元）</div>
+                  <div class="form-cells-hd">出租价格（元）<span style="color:#ff3333">*</span></div>
                   <input
                       class="ipt"
                       type="text"
@@ -777,7 +777,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd" style="position:relative;">面积（&nbsp;m<span style="position:absolute;font-size:18rpx">2</span>&nbsp;&nbsp;）</div>
+                  <div class="form-cells-hd" style="position:relative;">面积（m²）</div>
                   <input
                     class="ipt"
                     type="text"
@@ -787,7 +787,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">出租面积(m²)</div>
+                  <div class="form-cells-hd">出租面积（m²）<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -799,7 +799,7 @@
               </div>
               <div class="form-cells-item form-cells-item2">
                 <div class="item2-column">
-                  <div class="form-cells-hd">公司行业</div>
+                  <div class="form-cells-hd">公司行业<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -811,7 +811,7 @@
                   >
                 </div>
                 <div class="item2-column">
-                  <div class="form-cells-hd">区域</div>
+                  <div class="form-cells-hd">区域<span style="color:#ff3333">*</span></div>
                   <input
                     class="ipt"
                     type="text"
@@ -863,8 +863,8 @@
           <div class="form-cells-item">
             <div class="">
             <!-- <div class="form-cells-navigate navigate-right"> -->
-              <div class="form-cells-hd" v-if="PageId==26 ||PageId==25">拼购简介</div>
-              <div class="form-cells-hd" v-else>拼租简介</div>
+              <div class="form-cells-hd" v-if="PageId==26 ||PageId==25">拼购简介<span style="color:#ff3333">*</span></div>
+              <div class="form-cells-hd" v-else>拼租简介<span style="color:#ff3333">*</span></div>
               <div class="form-cell-bd">
                 <p class="ipt" style="height:200rpx!important;padding:0rpx;overflow:hidden" v-if="showp" @tap="showp=false" :class="Synopsis.length>0?'colorBlack':'colorPlace'">{{Synopsis ||  '描述细节能够更加吸引优质的候选人哦！'}}</p>
                 <textarea
@@ -884,7 +884,7 @@
           </div>
           <!--上传图片-->
           <div class="form-cells-item">
-            <div class="form-cells-hd">{{upImgTitle}}</div>
+            <div class="form-cells-hd">{{upImgTitle}}<span style="color:#ff3333">*</span></div>
             <div class="form-cell-bd form-cell-img">
               <div class="upbtn" v-for="(item,pindex) in imgArr" :key="pindex">
                 <span class="close" @click="delImg(pindex)">×</span>
@@ -897,8 +897,8 @@
           </div>
           <!--选项 start-->
           <div class="flex item-columnbox">
-              <div class="item2-column" v-if="PageId!=29">
-                <div class="form-cells-hd">业务分包</div>
+              <div class="item2-column" >
+                <div class="form-cells-hd"><span style="color:#ff3333">*</span>业务分包</div>
                 <input
                   class="ipt"
                   type="text"
@@ -909,7 +909,7 @@
                   placeholder-style="color:#b5b5b5;"
                 >
               </div>
-              <div class="item2-column" v-if="PageId!=29">
+              <!-- <div class="item2-column" v-if="PageId!=29">
                 <div class="form-cells-hd">资质使用</div>
                 <input
                   class="ipt"
@@ -920,7 +920,7 @@
                   v-model="IsSeniorMsg"
                   placeholder-style="color:#b5b5b5;"
                 >
-              </div>
+              </div> -->
               <div class="item2-column">
                 <div class="form-cells-hd">股份合作</div>
                 <input
@@ -933,8 +933,9 @@
                   placeholder-style="color:#b5b5b5;"
                 >
               </div>
-              <div class="item2-column" v-if="PageId == 26 || PageId==25 || PageId==30 || PageId==27">
-                  <div class="form-cells-hd">公司挂牌</div>
+              <!-- <div class="item2-column" v-if="PageId == 26 || PageId==25 || PageId==30 || PageId==27"> -->
+              <div class="item2-column">
+                <div class="form-cells-hd">公司挂牌</div>
                 <input
                   class="ipt"
                   type="text"
@@ -945,8 +946,9 @@
                   placeholder-style="color:#b5b5b5;"
                 >
               </div>
-              <div class="item2-column" v-if="PageId == 31 || PageId==25 || PageId==30  || PageId==27">
-                <div class="form-cells-hd">可否注册</div>
+              <!-- <div class="item2-column" v-if="PageId == 31 || PageId==25 || PageId==30  || PageId==27"> -->
+              <div class="item2-column" >
+                <div class="form-cells-hd"><span v-if="PageId != 25&&PageId != 26 " style="color:#ff3333">*</span>可否注册</div>
                 <input
                   class="ipt"
                   type="text"
@@ -957,8 +959,9 @@
                   placeholder-style="color:#b5b5b5;"
                 >
               </div>
-              <div class="item2-column" v-if="PageId!=30">
-                <div class="form-cells-hd">对方公司挂牌</div>
+              <!-- <div class="item2-column" v-if="PageId!=30"> -->
+              <div class="item2-column" >
+                <div class="form-cells-hd"><span v-if="PageId != 25&&PageId != 26 " style="color:#ff3333">*</span>对方公司挂牌</div>
                 <input
                   class="ipt"
                   type="text"
@@ -1003,8 +1006,8 @@
             </div>
           </div>
           <!--标签-->
-          <div class="form-cells-item" v-if="PageId == 30 || PageId == 27 || PageId == 28 || PageId == 27">
-              <div class="form-cells-hd">拼租设施</div>
+          <div class="form-cells-item" v-if="PageId == 30 || PageId == 27 || PageId == 28">
+              <div class="form-cells-hd">拼租设施<span style="color:#ff3333">*</span></div>
               <div class="form-cell-bd">
                 <div class="btns-group">
                   <div class="btn" :class="{'cur':item.active}" v-for="(item,dindex) in Devicelist" :key="dindex" @click="addDeviceNum(dindex)">{{item.Name}}</div>
@@ -2067,32 +2070,32 @@ export default {
           }
       }
       if(this.PageId == 25 ||　this.PageId ==26){
-          if (this.BuyBudget == '') {
-            this.toastTip("请输入购买预算!")
-            return false;
-          }
+          // if (this.BuyBudget == '') {
+          //   this.toastTip("请输入购买预算!")
+          //   return false;
+          // }
       }
       if(this.PageId == 25 ||　this.PageId ==26 || this.PageId ==28 || this.PageId == 27|| this.PageId == 31|| this.PageId == 29){ 
-          if (this.IsAllowOtherListMsg == '') {
-            this.toastTip("请选择是否允许对方挂牌!")
-            return false;
-          }
+          // if (this.IsAllowOtherListMsg == '') {
+          //   this.toastTip("请选择是否允许对方挂牌!")
+          //   return false;
+          // }
       }
       if(this.PageId == 25 ||　this.PageId ==26 || this.PageId == 31 || this.PageId == 29 || this.PageId == 28 || this.PageId == 27){
         if (this.PropertyPrice === '') {
           this.toastTip("请输入对应金额!")
           return false;
         }
-        if (this.CompanyDoorNum == '') {
-          this.toastTip("请输入门牌号!")
-          return false;
-        }
-        if (this.CompanyAddr == '') {
-          this.toastTip("请输入地址!")
-          return false;
-        }
+        // if (this.CompanyDoorNum == '') {
+        //   this.toastTip("请输入门牌号!")
+        //   return false;
+        // }
+        // if (this.CompanyAddr == '') {
+        //   this.toastTip("请输入地址!")
+        //   return false;
+        // }
       }
-      if(this.PageId == 25 ||　this.PageId ==26 || this.PageId == 30 || this.PageId == 27 || this.PageId == 29 || this.PageId == 28){
+      if(this.PageId == 25 ||　this.PageId ==26 || this.PageId == 30  || this.PageId == 28){
         if (this.PlanBuyDate =='') {
           this.toastTip("请选择时间!")
           return false;
@@ -2108,25 +2111,29 @@ export default {
         this.toastTip("请选择公司!")
         return false;
       }
-      if (this.IsStockCooperationMsg == '') {
-        this.toastTip("请选择是否合作!")
-        return false;
-      }
-      if(this.PageId!=29){
-        if (this.IsSeniorMsg == '') {
-            this.toastTip("请选择是否可用公司资质!")
-            return false;
-        }
+      // if (this.IsStockCooperationMsg == '') {
+      //   this.toastTip("请选择是否合作!")
+      //   return false;
+      // }
+      if(this.PageId!=25&&this.PageId!=26){
+        // if (this.IsSeniorMsg == '') {
+        //     this.toastTip("请选择是否可用公司资质!")
+        //     return false;
+        // }
         if (this.IsSubPackMsg == '') {
           this.toastTip("请选择是否业务分包!")
           return false;
         }
-      }
-      if(this.PageId==30 || this.PageId==26 || this.PageId==25 || this.PageId==27){
-        if (this.IsCompanyListMsg == '') {
-          this.toastTip("请选择本公司是否挂牌!")
+        if (this.IsAllowOtherListMsg == '') {
+          this.toastTip("请选择对方公司是否挂牌!")
           return false;
         }
+      }
+      if(this.PageId==30 || this.PageId==26 || this.PageId==25 || this.PageId==27){
+        // if (this.IsCompanyListMsg == '') {
+        //   this.toastTip("请选择本公司是否挂牌!")
+        //   return false;
+        // }
       }
       if (this.Synopsis == '') {
         this.toastTip("请输入简介!")
@@ -2167,7 +2174,7 @@ export default {
             return false;
         }
       }
-      if(this.PageId==25 ||this.PageId==27 ||this.PageId==30 || this.PageId==31){
+      if(this.PageId==27||this.PageId==28||this.PageId==29 ||this.PageId==30 || this.PageId==31){
           if(this.IsRegAreaMsg == ''){
             this.toastTip("请选择公司是否注册!")
             return false;
@@ -2175,7 +2182,13 @@ export default {
       }
       if(this.PageId == 26){
           if(this.PropertyType === ''){
-            this.toastTip("请选择公司物业类型!")
+            this.toastTip("请选择公司设备类型!")
+            return false;
+          }
+      }
+      if(this.PageId == 25){
+          if(this.PropertyType === ''){
+            this.toastTip("请选择物业类型!")
             return false;
           }
       }
@@ -2207,13 +2220,13 @@ export default {
           return false;
         }
       }
-      if(this.PageId == 26 || this.PageId == 31 || this.PageId == 29){
+      if(this.PageId == 26 ){
         if (this.SpecsType === '') {
           this.toastTip("请输入规格型号!")
           return false;
         }
       }
-      if(this.PageId == 31 || this.PageId == 29 || this.PageId == 28 || this.PageId == 30){
+      if( this.PageId == 30){
         if (this.RentTimeLimit == '') {
           this.toastTip("请选择期限!")
           return false;
@@ -2225,12 +2238,12 @@ export default {
             return false;
           }
       }
-      if(this.PageId == 28 || this.PageId == 27){
-          if (this.AllArea == '') {
-            this.toastTip("请输入总面积!")
-            return false;
-          }
-      }
+      // if(this.PageId == 28 ){
+      //     if (this.AllArea == '') {
+      //       this.toastTip("请输入总面积!")
+      //       return false;
+      //     }
+      // }
       if(this.PageId == 29 ||  this.PageId == 28 || this.PageId == 27){
           // if (this.ContentDetail == '') {
           //   this.toastTip("请描述办公室环境!")   
@@ -2244,14 +2257,14 @@ export default {
         //   }
       }
       if(this.PageId == 30){
-          if (this.CompanyDoorNum == '') {
-          this.toastTip("请输入门牌号!")
-          return false;  
-          }
-          if (this.CompanyAddr == '') {
-            this.toastTip("请输入地址!")
-            return false;
-          }
+          // if (this.CompanyDoorNum == '') {
+          // this.toastTip("请输入门牌号!")
+          // return false;  
+          // }
+          // if (this.CompanyAddr == '') {
+          //   this.toastTip("请输入地址!")
+          //   return false;
+          // }
       }
       if(this.PageId == 30 || this.PageId == 28 || this.PageId == 27){
           if (this.CompanyTrade == '') {
