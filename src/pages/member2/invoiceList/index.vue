@@ -82,6 +82,49 @@
         </div>
       </scroll-view>
     </div>
+    <div class="fapiaobox" v-if="Showfp">
+      <div class="maskfp"  @click.stop="Showfp=false"></div>
+      <div class="box">
+        <div class="itemfp">
+          <span class="fptit">发票格式</span>
+          <div class="fptype">
+            <span :class="{'active':fptype==0}" @click="fptype=0">电子</span>
+            <span :class="{'active':fptype==1}" @click="fptype=1">纸质</span>
+          </div>
+        </div>
+        <div class="itemfp">
+          <span class="fptit">发票抬头</span>
+          <div class="txtbox" @click="selectfpId">
+            <input type="text" v-model="InvoiceTxt" disabled=false>
+          </div>
+        </div>
+        <div class="itemfp">
+          <span class="fptit">总金额</span>
+          <div class="fpprice">
+            <span class="price">{{allprice}}元</span><span>共{{selectlen}}个订单</span>
+          </div>
+        </div>
+        <div class="itemfp">
+          <span class="fptit">电子邮箱</span>
+          <div class="txtbox">
+            <input type="text" placeholder="请输入" v-model="MailBox">
+          </div>
+        </div>
+        <div class="artxt" v-if="fptype==1">
+          <span>地址</span>
+          <div>
+            <textarea placeholder="请输入详细地址" v-model="Address"></textarea>
+          </div>
+        </div>
+        <div class="artxt">
+          <span>备注信息</span>
+          <div>
+            <textarea  placeholder="请输入备注信息" v-model="Remark"></textarea>
+          </div>
+        </div>
+        <div class="fpBtn" @click="submit">提交</div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -111,10 +154,17 @@ export default {
     return {
       navIndex:0,
       invIndex:0,//发票index
-      InvoiceIdF:"",
+      fptype:0,//发票格式 0电子 1纸质
+      MailBox:"",//发票邮箱
+      Remark:"",
+      Address:"",
+      InvoiceIdF:"",//抬头Id；
+      InvoiceTxt:"请选择",//抬头名称
+      allprice:0,
       allSelect:false,//全选
       selectlen:0,
       ShowMask:false,
+      Showfp:false,
       OrderId:[],
       OrderIdTxt:"",
       userId: "",
@@ -163,6 +213,10 @@ export default {
           }
         }
     },
+    selectfpId(){
+      this.Showfp=false;
+      this.ShowMask=true;
+    },
     //全选
     selectAll(){
       var that=this;
@@ -207,12 +261,24 @@ export default {
           title:"请选择所需要开发票的订单！"
         })
       }else{
-        this.ShowMask = true;
+        this.Showfp = true;
+        var that=this;
+        that.allprice=0;
+        that.OrderId=[];
+        that.invList.forEach(function(item) {console.log(item)
+          if(item.hascheck){
+            that.OrderId.push(item.Dy.Id);
+            that.allprice+=item.Dy.PayAmount;
+          }
+        });
+        that.allprice=that.allprice.toFixed(2)
+        that.OrderIdTxt=that.OrderId.join(",");console.log(that.OrderIdTxt)
       }
     },
     //取消选择
     cancle(){
-      this.ShowMask = false
+      this.ShowMask = false;
+      this.Showfp = true;
       // this.showDefaultCompany = false
       this.invIndex = 0;
       this.OrderId=[]
@@ -226,29 +292,15 @@ export default {
       var that=this;
       console.log(this.invIndex)
       this.InvoiceIdF=this.list[this.invIndex].Id;
-      that.invList.forEach(function(item) {console.log(item)
-        if(item.hascheck){
-          that.OrderId.push(item.Dy.Id)
-        }
-      });
-      that.OrderIdTxt=that.OrderId.join(",");console.log(that.OrderIdTxt)
+      this.InvoiceTxt=this.list[this.invIndex].HeaderName;
       this.ShowMask = false;
-      wx.showModal({
-        title:'开具发票',
-          content:'您本次选择的待开票订单'+that.selectlen+'个，请核对！',
-          confirmText:"确定",
-          cancelText:"取消",
-          cancelColor:"#999999",
-          confirmColor:"#ff952e",
-          success:(result)=>{
-            if (result.confirm){
-              that.BatchApplyInvoice()
-            }else{
-              that.OrderId=[]
-            }
-          }
-      })
+      this.Showfp = true;
       console.log(this.OrderId)
+    },
+    submit(){
+      if(this.Authentication()){console.log("11111111")
+        this.BatchApplyInvoice();
+      }
     },
     FeesOrderList() {  //获取开票订单列表
       let that = this;
@@ -270,6 +322,42 @@ export default {
         }
       });
     },
+    Authentication(){
+      if(this.InvoiceIdF==""){
+        wx.showToast({
+          icon:"none",
+          title:"请选择发票抬头！"
+        })
+        return false;
+      }
+      if(this.MailBox==""){
+        wx.showToast({
+          icon:"none",
+          title:"请输入邮箱地址！"
+        })
+        return false;
+      }else{
+        let reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+        if (!reg.test(this.MailBox)) {
+          wx.showToast({
+            title: "请输入正确的邮箱地址！",
+            icon: "none",
+            duration: 2000
+          });
+          return false;
+        }
+      }
+      if(this.fptype==1){
+        if(this.Address==""){
+          wx.showToast({
+            icon:"none",
+            title:"请输入地址！"
+          })
+          return false;
+        }
+      }
+      return true;
+    },
     BatchApplyInvoice() {  //批量开票
       let that = this;
       post(
@@ -279,12 +367,17 @@ export default {
           Token: that.token,
           OrderId:that.OrderIdTxt,
           InvoiceId:that.InvoiceIdF,
+          Remark:that.Remark,
+          MailBox:that.MailBox,
+          Invoiceformat:that.fptype,
         },
         that.curPage
       ).then(res => {
         if (res.code === 0) {
+          that.Showfp=false;
           wx.showToast({
-            title:res.msg
+            title:res.msg,
+            icon:"none"
           })
         }else{
           wx.showToast({
@@ -489,5 +582,94 @@ export default {
 }
 .maskType .flex .title{
   font-weight: bold;
+}
+.fapiaobox{
+  position: fixed;
+  background: rgba(0, 0, 0, .6);
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .maskfp{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    top: 0;
+    left: 0;
+  }
+  .box{
+    width: 80%;
+    padding: 30rpx;
+    box-sizing: border-box;
+    background: #fff;
+    border-radius: 16rpx;
+    .itemfp{
+      display: flex;
+      align-items: center;
+      height: 80rpx;
+      border-bottom: #ececec 1px solid;
+      .fptit{
+        width: 140rpx;
+      }
+      .fptype{
+        span{
+          padding: 6rpx 24rpx;
+          display: inline-block;
+          margin-right: 30rpx;
+          background: #aaa;
+          color: #fff;
+          border-radius: 6rpx;
+          font-size: 22rpx;
+        }
+        span.active{
+          background: #ff952e;
+        }
+      }
+      .fpprice{
+        display: flex;
+        flex: 1;
+        justify-content: space-between;
+        color: #999;
+        .price{
+          color: #ff952e;
+        }
+      }
+      .txtbox{
+        flex: 1;
+        color:#666;
+      }
+    }
+    .artxt{
+      width: 100%;
+      span{
+        display: block;
+        margin: 8rpx 0;
+      }
+      textarea{
+        width: 100%;
+        height: 100rpx;
+        background: #eee;
+        border-radius: 12rpx;
+        padding:10rpx 20rpx;
+        box-sizing: border-box;
+        font-size: 24rpx;
+      }
+    }
+    .fpBtn{
+      width: 100%;
+      height: 80rpx;
+      line-height: 80rpx;
+      color: #fff;
+      background: #ff952e;
+      text-align: center;
+      border-radius: 12rpx;
+      margin: 60rpx 0 20rpx;
+    }
+  }
 }
 </style>

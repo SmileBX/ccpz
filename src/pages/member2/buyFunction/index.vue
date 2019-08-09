@@ -111,7 +111,7 @@
           <div class="weui-cell__bd text_r"><span v-if="Denomination>0">-</span>{{Denomination}}</div>
           <span class="icon-arrow arrow-right"></span>
         </div>
-        <div class="weui-cell" @tap="goToPage(1)">
+        <div class="weui-cell" @tap="goToPage(1)" v-if="false">
           <div class="weui-cell__hd">发票</div>
           <div class="weui-cell__bd text_r">
             <p class="txt color_ff952e" v-if="InvoiceHeaderName.length>0">

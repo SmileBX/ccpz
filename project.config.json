@@ -43,7 +43,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 71,
+			"current": 36,
 			"list": [
 				{
 					"id": 0,
@@ -298,10 +298,10 @@
 					"scene": null
 				},
 				{
-					"id": 39,
+					"id": 36,
 					"name": "结算",
 					"pathName": "pages/member2/buyFunction/main",
-					"query": "",
+					"query": "type=3",
 					"scene": null
 				},
 				{
@@ -546,6 +546,7 @@
 					"id": -1,
 					"name": "000",
 					"pathName": "pages/member2/feedbackThank/main",
+					"query": "",
 					"scene": null
 				}
 			]

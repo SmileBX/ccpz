@@ -26,7 +26,7 @@
     </div>
     <!--组列表-->
     <div class="boxSize">
-      <IndexList :data="playerList" @btnDel="btnDelFriend" @setStar="btnSetStar" v-if="isShow"></IndexList>
+      <IndexList :data="playerList" @btnDel="btnDelFriend" @onClick="onClick" @setStar="btnSetStar" v-if="isShow"></IndexList>
     </div>
     <!--底部按钮-->
     <div class="btnSub2" @click="btnSubmit">完成</div>
@@ -82,6 +82,10 @@ export default {
       // this.groupName = "";
       this.groupId =""; //分组id
       this.groupName =""; //分组名称
+    },
+    onClick(item){
+      console.log("点击了++++++++++++",item);
+        wx.navigateTo({url: '/pages/messages/chatRoom/main?FriendId='+item.Id})
     },
     getResetFriends(arr) {
       let that = this;
